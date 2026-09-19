@@ -71,7 +71,7 @@ services:
       ollama:
         condition: service_healthy
     healthcheck:
-      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=5)"]
+      test: [CMD, python, -c, "import json,sys,urllib.request; sys.exit(0 if json.load(urllib.request.urlopen('http://localhost:8001/health', timeout=5)).get('ready') is True else 1)"]
       interval: 10s
       timeout: 6s
       retries: 30
@@ -116,14 +116,20 @@ services:
     networks: [private, ingress]
     depends_on:
       frontend:
-        condition: service_started
+        condition: service_healthy
         restart: true
       backend:
-        condition: service_started
+        condition: service_healthy
         restart: true
       ai:
-        condition: service_started
+        condition: service_healthy
         restart: true
+    healthcheck:
+      test: [CMD-SHELL, "wget -q --spider http://127.0.0.1:8080/ && wget -q --spider http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
     restart: unless-stopped
 
 networks:

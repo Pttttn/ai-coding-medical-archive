@@ -13,8 +13,11 @@ def main():
     parser.add_argument("--api", default="http://127.0.0.1:3000")
     parser.add_argument("--mode", choices=["container", "host"], default="container")
     parser.add_argument("--output", help="Write a separate report without replacing historical results")
+    parser.add_argument("--project", help="Compose project name, for an isolated deployment")
     args = parser.parse_args()
     compose = ["docker", "compose", "-f", "compose.yaml"]
+    if args.project:
+        compose += ["-p", args.project]
     if args.mode == "host":
         compose += ["-f", "compose.host-ollama.yaml"]
     results = []
