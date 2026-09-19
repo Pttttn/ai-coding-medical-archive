@@ -1,0 +1,10 @@
+SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.
+Patient: Elena Testova
+Doctor: Ivan Primerov
+Phone: +1 202-555-0147
+Email: elena.testova@example.test
+Record ID: MC-DEMO-00421
+Clinic: Fictional Cedar Clinic
+
+The privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.
+These statements describe synthetic test data and are not medical advice.

@@ -7,8 +7,8 @@ from medical_ai.indexer import Corpus, source_of
 from medical_ai.schemas import Page
 
 
-@pytest.mark.parametrize("extension", ["md", "txt", "py", "js", "ts", "json", "yaml"])
-def test_seven_required_formats_are_data(services, settings, provider, extension):
+@pytest.mark.parametrize("extension", ["md", "txt"])
+def test_medical_text_formats_are_data(services, settings, provider, extension):
     (settings.sample_docs_dir / ("fixture." + extension)).write_text("SYN-CASE-7F29 4.1 mmol/L", encoding="utf-8")
     result = services.demo.index_folder()
     assert result["files"] == 1 and result["chunks"] == 1
@@ -76,3 +76,57 @@ def test_symlink_escape_is_rejected(services, settings, tmp_path):
     assert result["errors"][0]["code"] == "PATH_NOT_ALLOWED"
     assert result["files"] == 0
 
+
+@pytest.mark.parametrize("extension", ["py", "js", "ts", "json", "yaml", "yml"])
+def test_legacy_code_formats_are_skipped(services, settings, provider, extension):
+    (settings.sample_docs_dir / ("legacy." + extension)).write_text("SYNTHETIC", encoding="utf-8")
+    result = services.demo.index_folder()
+    assert result["files"] == 0
+    assert result["skipped"] == [{"source": "legacy." + extension, "reason": "UNSUPPORTED_FORMAT"}]
+    assert provider.calls == []
+
+
+def test_format_policy_removes_existing_legacy_index_even_with_narrow_glob(services, settings):
+    (settings.sample_docs_dir / "legacy.py").write_text("SYNTHETIC legacy content", encoding="utf-8")
+    (settings.sample_docs_dir / "medical.md").write_text("SYNTHETIC retained content", encoding="utf-8")
+    services.demo.index_document("demo:legacy.py", "legacy.py", 1, "SYNTHETIC legacy content")
+    result = services.demo.index_folder(glob="*.md")
+    assert result["removed"] == 1 and result["files"] == 1
+    found = services.demo.retrieve("content")
+    assert found and all(doc.metadata["source"] == "medical.md" for doc in found)
+    assert services.demo.collection.count() == len(services.demo.rows) == 1
+
+
+def test_cleanup_removes_persisted_path_escape_without_reading_external_file(services, settings, tmp_path):
+    outside = tmp_path / "outside.md"
+    outside.write_text("PRIVATE", encoding="utf-8")
+    services.demo.index_document("demo:unsafe", "../outside.md", 1, "old content")
+    result = services.demo.index_folder()
+    assert result["removed"] == 1 and result["files"] == 0
+    assert services.demo.retrieve("old") == []
+    assert outside.read_text(encoding="utf-8") == "PRIVATE"
+
+
+def test_splitter_version_changes_content_hash_and_reindexes(services, provider, monkeypatch):
+    corpus = services.archive
+    corpus.index_document("a", "lab.txt", 1, "LDL 4.73 mmol/L.")
+    old_ids = {row["id"] for row in corpus.rows}
+    count = len(provider.calls)
+    assert corpus.index_document("a", "lab.txt", 1, "LDL 4.73 mmol/L.")["unchanged"]
+    assert len(provider.calls) == count
+    monkeypatch.setattr("medical_ai.indexer.SPLITTER_VERSION", "next-structural-version")
+    assert not corpus.index_document("a", "lab.txt", 1, "LDL 4.73 mmol/L.")["unchanged"]
+    assert len(provider.calls) == count + 1
+    assert not old_ids.intersection(row["id"] for row in corpus.rows)
+    assert corpus.collection.count() == 1
+
+
+def test_long_correction_chunks_are_bounded_and_each_remains_marked(services, settings):
+    services.archive.index_document("a", "lab.txt", 1, "LDL 4.1 mmol/L", corrections=[
+        {"id": "f", "name": "LDL", "valueText": "Synthetic correction statement. " * 40,
+         "unit": "mmol/L", "reviewStatus": "CORRECTED"}
+    ])
+    corrections = [doc for doc in services.archive.documents if doc.metadata["userCorrection"]]
+    assert len(corrections) > 1
+    assert all(doc.page_content.startswith("[Пользовательское исправление; не цитата оригинала]")
+               and len(doc.page_content) <= settings.chunk_size for doc in corrections)

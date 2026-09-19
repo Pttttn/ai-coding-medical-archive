@@ -4,6 +4,7 @@ from __future__ import annotations
 import calendar
 import hashlib
 import json
+import shutil
 from datetime import date, timedelta
 from pathlib import Path
 from uuid import NAMESPACE_URL, uuid5
@@ -19,14 +20,14 @@ CORPUS = ROOT / "sample_docs"
 TAGS = ["анализы", "кардиология", "наблюдение", "липиды", "давление", "сон", "активность", "питание", "терапевт", "дневник", "контроль", "рекомендации", "транскрипт", "лаборатория", "самочувствие", "синтетика", "осмотр", "вопросы"]
 
 FACTS = [
-    ("visit-01.md", "Cedar visit", "The Cedar visit reference code is SYN-CASE-7F29.", "What is the reference code of the Cedar visit?", "SYN-CASE-7F29"),
+    ("visit-01.md", "Cedar visit", "The Cedar visit recommends a follow-up after 17 days.", "How many days until the follow-up recommended in the Cedar visit?", "17"),
     ("visit-02.md", "Amber follow-up", "The Amber follow-up interval is 11 weeks.", "How many weeks until the Amber follow-up?", "11"),
     ("visit-03.md", "Saffron notebook", "The Saffron notebook contains 37 evening observations.", "How many evening observations are in the Saffron notebook?", "37"),
     ("visit-04.md", "Juniper laboratory", "The Juniper laboratory sample was collected on 2024-02-17.", "On what date was the Juniper laboratory sample collected?", "2024-02-17"),
     ("visit-05.md", "Willow walking diary", "The Willow walking diary records a route of 1730 metres.", "How long is the route recorded in the Willow walking diary?", "1730"),
-    ("visit-06.md", "Birch appointment", "The Birch appointment took place in room B-217.", "In which room did the Birch appointment take place?", "B-217"),
+    ("visit-06.md", "Birch appointment", "The Birch appointment records a breathing exercise lasting 6 minutes.", "How many minutes did the breathing exercise in the Birch appointment last?", "6"),
     ("visit-07.md", "Orchid measurement", "The Orchid synthetic measurement result is 4.73 mmol/L.", "What is the Orchid synthetic measurement result in mmol/L?", "4.73"),
-    ("visit-08.md", "Maple instructions", "The Maple instructions specify a violet notebook with a triangle on its cover.", "What colour notebook is specified in the Maple instructions?", "violet"),
+    ("visit-08.md", "Maple instructions", "The Maple instructions request observations on 7 consecutive mornings.", "For how many consecutive mornings do the Maple instructions request observations?", "7"),
     ("visit-09.md", "Pine review", "The Pine review was scheduled for 2025-09-23.", "What date was scheduled for the Pine review?", "2025-09-23"),
     ("visit-10.md", "Hazel transcript", "The Hazel transcript contains exactly 9 prepared questions.", "How many prepared questions does the Hazel transcript contain?", "9"),
     ("visit-11.md", "Rowan diary", "The Rowan diary records no dizziness on 2025-01-14.", "Was dizziness reported in the Rowan diary on 2025-01-14?", "no dizziness"),
@@ -36,7 +37,7 @@ FACTS = [
 
 def write(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def pdf(path: Path, number: int, day: str, value: float) -> str:
@@ -83,12 +84,17 @@ def generate_seed() -> None:
 
 
 def generate_corpus() -> None:
+    # Remove only the five legacy fixtures authored by this generator; never arbitrary user files.
+    for legacy in ("catalog.json", "index.yaml", "reference.py", "reference.js", "reference.ts"):
+        old = (CORPUS / "schemas" / legacy).resolve()
+        assert old.is_relative_to(CORPUS.resolve())
+        old.unlink(missing_ok=True)
     questions = []
     for filename, title, fact, question, answer in FACTS:
         source = f"visits/{filename}"
-        write(CORPUS / source, f"# {title}\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\n{fact}\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.\n")
+        write(CORPUS / source, f"# {title}\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\n{fact}\n\n## Fictional identifiers for privacy testing\nPatient: Elena Testova\nDoctor: Ivan Primerov\nPhone: +1 202-555-0147\nEmail: elena.testova@example.test\nRecord ID: MC-DEMO-00421\nClinic: Fictional Cedar Clinic\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.\n")
         questions.append({"id": f"fact-{len(questions)+1:02d}", "category": "exact_fact", "question": question, "expected": answer, "expectedSources": [source], "allowAbstain": False})
-    write(CORPUS / "overview.md", "# Archive guide\n\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and software metadata examples. All records concern a fictional participant Alex Example. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The Cedar and Amber encounters are separate; their facts must not be merged. Code files describe synthetic schema constants and are indexed as text, never executed.\n")
+    write(CORPUS / "overview.md", "# Archive guide\n\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and de-identification test records. All records concern a fictional participant Alex Example. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The Cedar and Amber encounters are separate; their facts must not be merged. Medical documents use Markdown, plain text and PDF with a text layer. Fictional names and contacts are included to test outbound privacy. Tree names such as Cedar and Amber label fictional encounters, not people.\n")
     feelings = ["rested after an early night", "tired after a late evening", "comfortable during a short walk", "busy with household tasks", "calm after a quiet afternoon", "more energetic after resting", "distracted by a changing schedule"]
     activities = ["walked around the indoor courtyard", "completed a quiet reading session", "visited the fictional botanical garden", "sorted the previous week's paper notes", "prepared questions for the next appointment", "walked beside the fictional canal", "reviewed the observation notebook"]
     uncertainties = ["No blood pressure measurement was taken", "No medication intake was recorded", "The exact time of the walk was not recorded", "No glucose measurement was taken", "The source of the pedometer estimate is self-report", "The pulse measurement was omitted", "No temperature measurement was available"]
@@ -104,27 +110,32 @@ def generate_corpus() -> None:
                 blocks.append(f"## {dt.isoformat()} — entry DAY-{n+1:04d}\nOn this observation date the fictional participant {activities[n % 7]} and described feeling {feelings[(n // 3) % 7]}. The recorded walk lasted {minutes} minutes. Estimated sleep was {sleep:.2f} hours, and the self-reported energy score was {energy} out of 10. The notebook contains {1 + n % 4} observations for this day, with {n % 3} questions left for a future discussion.\n{uncertainties[(n // 5) % 7]}; this missing value must remain unknown. The participant explicitly denied dizziness during this observation. No new diagnosis was established in the diary. This entry records what was written and does not infer causation from sleep, walking or energy. Planned actions and actual actions are separate: the notebook mentions a plan to review the previous {3 + n % 8} days, but completion of that review is not documented. The daily source label is OBS-{year}-{month:02d}-{d:02d}.\n")
             write(CORPUS / "diary" / f"{year}-{month:02d}.md", "\n".join(blocks))
     extras = {
-        "schemas/catalog.json": json.dumps({"synthetic": True, "formatVersion": "LMA-DEMO-1", "datePolicy": "unknown is null", "sourceStatuses": ["CONFIRMED", "SUSPECTED", "NEGATED", "PRESCRIBED", "UNKNOWN"], "reviewStatuses": ["UNREVIEWED", "CONFIRMED", "CORRECTED", "REJECTED"]}, indent=2),
-        "schemas/index.yaml": "synthetic: true\narchive_code: LMA-COPPER-608\nretention: local_snapshot\nunknown_date: null\nsource_policy: immutable_revision\n",
-        "schemas/reference.py": '# Synthetic schema sample, indexed as data only.\nSYNTHETIC_LABEL = "LMA-DEMO-1"\nMAX_CORRECTIVE_RETRIES = 2\nREVIEW_STATES = ("UNREVIEWED", "CONFIRMED", "CORRECTED", "REJECTED")\n',
-        "schemas/reference.js": '// Synthetic schema sample, never executed by the indexer.\nexport const archivePolicy = {unknownDate: null, automaticExternalSending: false};\n',
-        "schemas/reference.ts": '// Synthetic schema sample, indexed only as text.\nexport type AssertionStatus = "CONFIRMED" | "SUSPECTED" | "NEGATED" | "PRESCRIBED" | "UNKNOWN";\n',
         "notes/source-policy.txt": "Synthetic source policy: a prescription is not evidence of intake. User correction does not replace the original source quotation. An undated medical observation must not receive the technical upload date. Document identifiers are removed from a consultation export.\n",
         "visits/conflict-a.md": "# Synthetic Spruce original note\nThe Spruce observation initially records 17 minutes of walking on 2025-04-03. This is the original source value.\n",
         "visits/conflict-b.md": "# Synthetic Spruce corrected note\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. This is a user correction, not a new source quotation.\n",
     }
+    extras["privacy/Elena_Testova_card-MC-DEMO-00421.txt"] = (
+        "SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.\n"
+        "Patient: Elena Testova\nDoctor: Ivan Primerov\nPhone: +1 202-555-0147\n"
+        "Email: elena.testova@example.test\nRecord ID: MC-DEMO-00421\n"
+        "Clinic: Fictional Cedar Clinic\n\n"
+        "The privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; "
+        "actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.\n"
+        "These statements describe synthetic test data and are not medical advice.\n")
+    (CORPUS / "labs").mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(SEED / "originals" / "lab-01.pdf", CORPUS / "labs" / "synthetic-laboratory.pdf")
     for path, value in extras.items():
         write(CORPUS / path, value)
     questions.extend([
-        {"id": "paraphrase-01", "category": "paraphrase", "question": "What identifier lets me look up the Cedar encounter?", "expected": "SYN-CASE-7F29", "expectedSources": ["visits/visit-01.md"], "allowAbstain": False},
+        {"id": "paraphrase-01", "category": "paraphrase", "question": "How long should the fictional participant wait before the Cedar follow-up?", "expected": "17", "expectedSources": ["visits/visit-01.md"], "allowAbstain": False},
         {"id": "paraphrase-02", "category": "paraphrase", "question": "How long is the waiting period before returning for Amber?", "expected": "11", "expectedSources": ["visits/visit-02.md"], "allowAbstain": False},
         {"id": "overview-01", "category": "overview", "question": "What kinds of records are in this synthetic archive?", "expected": "diary", "expectedSources": ["overview.md"], "allowAbstain": False},
-        {"id": "multi-01", "category": "multiple_sources", "question": "Give the Cedar reference code and the Amber follow-up interval.", "expected": "SYN-CASE-7F29", "expectedSources": ["visits/visit-01.md", "visits/visit-02.md"], "allowAbstain": False},
+        {"id": "multi-01", "category": "multiple_sources", "question": "Give the Cedar and Amber follow-up intervals.", "expected": ["17", "11"], "expectedSources": ["visits/visit-01.md", "visits/visit-02.md"], "allowAbstain": False},
         {"id": "negation-01", "category": "negation", "question": "Does the Elm prescription prove the medication was taken?", "expected": "unknown", "expectedSources": ["visits/visit-12.md"], "allowAbstain": False},
         {"id": "conflict-01", "category": "contradiction", "question": "What were the original and corrected Spruce walking durations?", "expected": "19", "expectedSources": ["visits/conflict-a.md", "visits/conflict-b.md"], "allowAbstain": False},
         {"id": "missing-01", "category": "missing", "question": "What is the fictional participant's blood group?", "expected": None, "expectedSources": [], "allowAbstain": True},
         {"id": "unrelated-01", "category": "unrelated", "question": "What is the capital of Argentina?", "expected": None, "expectedSources": [], "allowAbstain": True},
-        {"id": "russian-01", "category": "paraphrase", "question": "Какой код указан у визита Cedar?", "expected": "SYN-CASE-7F29", "expectedSources": ["visits/visit-01.md"], "allowAbstain": False},
+        {"id": "russian-01", "category": "paraphrase", "question": "Через сколько дней в записи Cedar рекомендован повторный визит?", "expected": "17", "expectedSources": ["visits/visit-01.md"], "allowAbstain": False},
     ])
     write(ROOT / "evaluation" / "questions.json", json.dumps(questions, ensure_ascii=False, indent=2))
     paths = sorted(p for p in CORPUS.rglob("*") if p.is_file())
@@ -133,7 +144,7 @@ def generate_corpus() -> None:
     assert size >= 512000, size
     assert len({x["sha256"] for x in entries}) == len(entries)
     write(ROOT / "evaluation" / "corpus-manifest.json", json.dumps({"provenance": "Deterministically authored synthetic data, no real patients, no third-party sources", "indexedBytes": size, "files": entries}, indent=2))
-    print(f"Generated {len(entries)} unique corpus files, {size} bytes, {len(questions)} questions, 36 seed records")
+    print(f"Generated {len(entries)} unique corpus files, {size} bytes, {len(questions)} questions; seed is generated separately")
 
 
 if __name__ == "__main__":

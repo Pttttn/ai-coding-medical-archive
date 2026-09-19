@@ -12,9 +12,9 @@ from chromadb.config import Settings as ChromaSettings
 from langchain_classic.retrievers import EnsembleRetriever
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from rank_bm25 import BM25Okapi
 
+from .chunking import SPLITTER_VERSION, MedicalTextSplitter
 from .config import Settings
 from .errors import ServiceError
 from .parsing import SUPPORTED_EXTENSIONS, confined_path, parse_file
@@ -95,15 +95,14 @@ class Corpus:
                        pages: list[Page] | None = None, corrections: list[dict] | None = None) -> dict:
         content_hash = hashlib.sha256(json.dumps([title, version, text,
             [p.model_dump() for p in pages] if pages else None, corrections,
-            self.settings.embedding_model, self.settings.chunk_size, self.settings.chunk_overlap],
+            self.settings.embedding_model, self.settings.chunk_size, self.settings.chunk_overlap, SPLITTER_VERSION],
             ensure_ascii=False, sort_keys=True).encode()).hexdigest()
         with self.lock:
             existing = self.db.execute("SELECT hash FROM documents WHERE id=?", (document_id,)).fetchone()
             if existing and existing[0] == content_hash:
                 return {"ok": True, "unchanged": True, **self.status()}
-            splitter = RecursiveCharacterTextSplitter(chunk_size=self.settings.chunk_size,
-                                                       chunk_overlap=self.settings.chunk_overlap,
-                                                       separators=["\n\n", "\n", ". ", " ", ""])
+            splitter = MedicalTextSplitter(chunk_size=self.settings.chunk_size,
+                                           chunk_overlap=self.settings.chunk_overlap)
             chunks = []
             for page in pages or [Page(text=text)]:
                 for chunk in splitter.split_text(page.text):
@@ -113,9 +112,11 @@ class Corpus:
                     continue
                 value = "; ".join(str(v) for v in [correction.get("valueText"), correction.get("valueNumber")]
                                   if v is not None)
-                chunks.append((f"[Пользовательское исправление; не цитата оригинала] "
-                               f"{correction['name']}: {value} {correction.get('unit') or ''} "
-                               f"(correctionId={correction['id']})", 0, True))
+                marker = "[Пользовательское исправление; не цитата оригинала] "
+                correction_text = (f"{correction['name']}: {value} {correction.get('unit') or ''} "
+                                   f"(correctionId={correction['id']})")
+                correction_splitter = MedicalTextSplitter(self.settings.chunk_size - len(marker))
+                chunks.extend((marker + part, 0, True) for part in correction_splitter.split_text(correction_text))
             embeddings = self.provider.embed([c[0] for c in chunks]) if chunks else []
             new_rows = []
             for position, ((chunk, page, corrected), embedding) in enumerate(zip(chunks, embeddings), 1):
@@ -205,7 +206,8 @@ class Corpus:
                 safe = confined_path(candidate, root)
                 if not safe.is_file():
                     continue
-                if safe.suffix.lower() not in SUPPORTED_EXTENSIONS:
+                if (candidate.suffix.lower() not in SUPPORTED_EXTENSIONS
+                        or safe.suffix.lower() not in SUPPORTED_EXTENSIONS):
                     skipped.append({"source": relative, "reason": "UNSUPPORTED_FORMAT"})
                     continue
                 text, pages, warnings = parse_file(safe, self.settings.max_file_bytes)
@@ -221,7 +223,15 @@ class Corpus:
             docs = self.db.execute("SELECT id,source FROM documents").fetchall()
             for doc in docs:
                 candidate = root / doc["source"]
-                if not candidate.exists() or not candidate.resolve().is_relative_to(root):
+                try:
+                    safe = confined_path(candidate, root)
+                    retained = (safe.is_file() and candidate.suffix.lower() in SUPPORTED_EXTENSIONS
+                                and safe.suffix.lower() in SUPPORTED_EXTENSIONS)
+                except ServiceError:
+                    retained = False
+                # Reconcile the entire persisted corpus even for a narrow glob:
+                # deleted, escaped and now-unsupported files must not stay queryable.
+                if not retained:
                     self.remove(doc["id"])
                     removed += 1
         return {"indexed": indexed, "unchanged": unchanged, "removed": removed,

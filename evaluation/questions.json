@@ -2,8 +2,8 @@
   {
     "id": "fact-01",
     "category": "exact_fact",
-    "question": "What is the reference code of the Cedar visit?",
-    "expected": "SYN-CASE-7F29",
+    "question": "How many days until the follow-up recommended in the Cedar visit?",
+    "expected": "17",
     "expectedSources": [
       "visits/visit-01.md"
     ],
@@ -52,8 +52,8 @@
   {
     "id": "fact-06",
     "category": "exact_fact",
-    "question": "In which room did the Birch appointment take place?",
-    "expected": "B-217",
+    "question": "How many minutes did the breathing exercise in the Birch appointment last?",
+    "expected": "6",
     "expectedSources": [
       "visits/visit-06.md"
     ],
@@ -72,8 +72,8 @@
   {
     "id": "fact-08",
     "category": "exact_fact",
-    "question": "What colour notebook is specified in the Maple instructions?",
-    "expected": "violet",
+    "question": "For how many consecutive mornings do the Maple instructions request observations?",
+    "expected": "7",
     "expectedSources": [
       "visits/visit-08.md"
     ],
@@ -122,8 +122,8 @@
   {
     "id": "paraphrase-01",
     "category": "paraphrase",
-    "question": "What identifier lets me look up the Cedar encounter?",
-    "expected": "SYN-CASE-7F29",
+    "question": "How long should the fictional participant wait before the Cedar follow-up?",
+    "expected": "17",
     "expectedSources": [
       "visits/visit-01.md"
     ],
@@ -152,8 +152,11 @@
   {
     "id": "multi-01",
     "category": "multiple_sources",
-    "question": "Give the Cedar reference code and the Amber follow-up interval.",
-    "expected": "SYN-CASE-7F29",
+    "question": "Give the Cedar and Amber follow-up intervals.",
+    "expected": [
+      "17",
+      "11"
+    ],
     "expectedSources": [
       "visits/visit-01.md",
       "visits/visit-02.md"
@@ -200,8 +203,8 @@
   {
     "id": "russian-01",
     "category": "paraphrase",
-    "question": "Какой код указан у визита Cedar?",
-    "expected": "SYN-CASE-7F29",
+    "question": "Через сколько дней в записи Cedar рекомендован повторный визит?",
+    "expected": "17",
     "expectedSources": [
       "visits/visit-01.md"
     ],

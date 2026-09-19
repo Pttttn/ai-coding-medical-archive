@@ -1,5 +1,0 @@
-synthetic: true
-archive_code: LMA-COPPER-608
-retention: local_snapshot
-unknown_date: null
-source_policy: immutable_revision

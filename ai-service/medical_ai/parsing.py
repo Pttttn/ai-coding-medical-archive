@@ -6,7 +6,7 @@ from .errors import ServiceError
 from .schemas import Page
 
 PARSER_VERSION = f"pypdf-{pdf_version}/text-v1"
-SUPPORTED_EXTENSIONS = {".md", ".txt", ".py", ".js", ".ts", ".json", ".yaml", ".yml", ".pdf"}
+SUPPORTED_EXTENSIONS = {".md", ".txt", ".pdf"}
 
 
 def confined_path(path: str | Path, root: Path) -> Path:

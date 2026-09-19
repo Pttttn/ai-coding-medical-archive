@@ -1,4 +1,0 @@
-# Synthetic schema sample, indexed as data only.
-SYNTHETIC_LABEL = "LMA-DEMO-1"
-MAX_CORRECTIVE_RETRIES = 2
-REVIEW_STATES = ("UNREVIEWED", "CONFIRMED", "CORRECTED", "REJECTED")
