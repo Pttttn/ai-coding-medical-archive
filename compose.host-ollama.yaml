@@ -16,7 +16,7 @@ services:
     environment:
       EGRESS_TARGETS: host.docker.internal
     volumes:
-      - ./infra/host-ollama.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./infra/host-ollama.conf:/etc/nginx/host-ollama.conf:ro
     extra_hosts:
       - host.docker.internal:host-gateway
     networks: [private, host_access]

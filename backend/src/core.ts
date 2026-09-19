@@ -33,6 +33,9 @@ export class AiError extends ServiceUnavailableException {
 const ERROR_MESSAGES:Record<string,string>={
   UNSUPPORTED_OCR_REQUIRED:'В PDF нет текстового слоя; OCR не входит в MVP', MALFORMED_PDF:'PDF повреждён или не поддерживается',
   MODEL_UNAVAILABLE:'Локальная модель недоступна', EXTRACTION_INVALID:'Ответ модели не прошёл проверку структуры',
+  MODEL_OUTPUT_LIMIT:'Модель исчерпала лимит ответа; попробуйте сократить запрос',
+  MODEL_OUTPUT_INVALID:'Ответ модели не соответствует ожидаемой структуре',
+  PRIVACY_CHECK_FAILED:'Локальная проверка приватности не завершилась успешно; повторите подготовку пакета',
   EMBEDDING_UNAVAILABLE:'Модель эмбеддингов недоступна', INDEX_UNAVAILABLE:'Поисковый индекс недоступен', AI_UNAVAILABLE:'Локальный AI-сервис недоступен',
 };
 @Injectable()

@@ -4,7 +4,7 @@ COPY package*.json ./
 RUN npm ci
 COPY tsconfig.json ./
 COPY src ./src
-RUN npm run build && npm prune --omit=dev
+RUN npm run build && npm prune --omit=dev --no-audit --no-fund
 
 FROM node:24-bookworm-slim
 ENV NODE_ENV=production

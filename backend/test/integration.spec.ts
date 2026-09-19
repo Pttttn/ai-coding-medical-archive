@@ -3,6 +3,7 @@ import {Test} from '@nestjs/testing';
 import {INestApplication,ValidationPipe} from '@nestjs/common';
 import request from 'supertest';
 import {DataSource} from 'typeorm';
+import {randomUUID} from 'node:crypto';
 import {mkdtemp,readFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
@@ -28,7 +29,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     return {ok:true};
   };
   const note=async(text='LDL 4.7 mmol/L.')=>(await request(app.getHttpServer()).post('/api/documents/note').send({title:'Лабораторная заметка',text,tags:['lipid']}).expect(201)).body;
-  const ready=async()=>{const d=await note();await worker.tick();return (await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;};
+  const ready=async(text?:string)=>{const d=await note(text);await worker.tick();return (await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;};
   beforeAll(async()=>{
     const url=process.env.TEST_DATABASE_URL!;
     if(!new URL(url).pathname.includes('test'))throw new Error('Integration tests require a dedicated test database');
@@ -60,6 +61,54 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   it('shows partial parsing warnings and safe extraction metadata without raw AI content',async()=>{ai.call.mockImplementation(async(route,body)=>{const r=await mock(route,body);return route==='process'?{...r,warnings:['Page 2 has no text layer',42,{unexpected:'data'}]}:r;});const d=await ready();expect(d.processingWarnings).toEqual(['Page 2 has no text layer']);expect(d.extraction.model).toBe('unit-double');expect(d.extraction.textVersion).toBe(1);expect(d.extraction).not.toHaveProperty('rawJson');});
   it('records extraction versions and safe raw structured output locally',async()=>{const d=await ready();const run=await db.getRepository(ExtractionRun).findOneByOrFail({documentId:d.id});expect(run.model).toBe('unit-double');expect(run.status).toBe('READY');expect(run.textVersion).toBe(1);});
   it('blocks consultation export until exact review and invalidates it after edit',async()=>{const d=await ready();const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context',documentIds:[d.id]}).expect(201)).body;await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(409);await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:contentHash('wrong')}).expect(409);await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:c.contentHash}).expect(201);expect((await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(200)).text).toBe(c.content);await request(app.getHttpServer()).patch('/api/consultations/'+c.id).send({content:c.content+'\nReviewed edit'}).expect(200);await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(409);});
+  it('prepares explicitly selected sources even when QA abstains and preserves corrections',async()=>{
+    const d=await ready();
+    await request(app.getHttpServer()).patch('/api/facts/'+d.facts[0].id).send({valueNumber:4.1,reviewStatus:'CORRECTED'}).expect(200);
+    await worker.tick();ai.call.mockClear();
+    ai.call.mockImplementation(async(route,body)=>route==='ask'?{answer:'Insufficient',sources:[],insufficientContext:true}:mock(route,body));
+    const r=await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare the selected record',documentIds:[d.id]}).expect(201);
+    expect(ai.call.mock.calls.some(([route])=>route==='ask')).toBe(false);
+    const payload=ai.call.mock.calls.find(([route])=>route==='consultation')![1];
+    expect(payload.contexts[0].text).toContain('LDL 4.7 mmol/L.');
+    expect(payload.contexts[0].text).toContain('USER CORRECTED LDL 4.1 mmol/L');
+    expect(r.body.sourceRefs[0]).toMatchObject({documentId:d.id,textVersion:1});
+  });
+  it('keeps rejected fact markers in an explicitly selected consultation context',async()=>{
+    const d=await ready();
+    await request(app.getHttpServer()).patch('/api/facts/'+d.facts[0].id).send({reviewStatus:'REJECTED'}).expect(200);
+    await worker.tick();ai.call.mockClear();
+    await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Review selected findings',documentIds:[d.id]}).expect(201);
+    expect(ai.call.mock.calls.find(([route])=>route==='consultation')![1].contexts[0].text).toContain('USER REJECTED LDL');
+  });
+  it('blocks an explicitly selected consultation if its source changes during privacy pass',async()=>{
+    const d=await ready();ai.call.mockClear();
+    ai.call.mockImplementation(async(route,body)=>{if(route==='consultation')await db.getRepository(Document).increment({id:d.id},'generation',1);return mock(route,body);});
+    const r=await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Selected source context',documentIds:[d.id]}).expect(409);
+    expect(r.body.code).toBe('SOURCE_CHANGED');
+    expect(await db.getRepository(Consultation).count()).toBe(0);
+    expect(ai.call.mock.calls.some(([route])=>route==='ask')).toBe(false);
+  });
+  it('rejects deleted or unready explicit sources instead of silently preparing a partial selection',async()=>{
+    const d=await ready(),pending=await note('Another source still queued.');
+    ai.call.mockClear();
+    await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Both selected sources',documentIds:[d.id,pending.id]}).expect(400);
+    await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+    await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Deleted source',documentIds:[d.id]}).expect(400);
+    expect(ai.call).not.toHaveBeenCalled();
+    expect(await db.getRepository(Consultation).count()).toBe(0);
+  });
+  it('enforces eight documents per explicit consultation',async()=>{
+    await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Too many selected documents',documentIds:Array.from({length:9},()=>randomUUID())}).expect(400);
+    expect(ai.call).not.toHaveBeenCalled();
+  });
+  it('warns when selected source text is truncated to the consultation context limit',async()=>{
+    const text='SYNTHETIC note. '+'x'.repeat(11000),d=await ready(text);
+    ai.call.mockClear();
+    const r=await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Selected long source',documentIds:[d.id]}).expect(201);
+    expect(r.body.warnings.some((w:string)=>w.includes('10000'))).toBe(true);
+    const context=ai.call.mock.calls.find(([route])=>route==='consultation')![1].contexts[0].text;
+    expect(context).toContain(text.slice(0,10000));expect(context).not.toContain(text);
+  });
   it('never exports local source IDs, filenames or paths',async()=>{const d=await ready();const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context'}).expect(201)).body;const updated=(await request(app.getHttpServer()).patch('/api/consultations/'+c.id).send({content:'Dose 20 mg. '+d.id+' C:\\private\\patient.pdf'}).expect(200)).body;expect(updated.content).not.toContain(d.id);await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:updated.contentHash}).expect(201);expect((await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(200)).text).toBe(updated.content);});
   it('suppresses stale RAG answers when document generation changes even if status is READY',async()=>{const d=await ready();ai.call.mockImplementation(async(route,body)=>{if(route==='ask'){await db.getRepository(Document).increment({id:d.id},'generation',1);}return mock(route,body);});const r=await request(app.getHttpServer()).post('/api/ask').send({question:'What is LDL?'}).expect(201);expect(r.body.insufficientContext).toBe(true);expect(r.body.sources).toHaveLength(0);});
   it('rejects consultation generation if a source changes during privacy pass',async()=>{const d=await ready();ai.call.mockImplementation(async(route,body)=>{if(route==='consultation')await db.getRepository(Document).increment({id:d.id},'generation',1);return mock(route,body);});await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context'}).expect(409);expect(await db.getRepository(Consultation).count()).toBe(0);});

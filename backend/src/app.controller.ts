@@ -7,7 +7,7 @@ import {DataSource} from 'typeorm';
 import {createReadStream} from 'node:fs';
 import {ArchiveService} from './archive.service';
 import {ConsultationService} from './consultation.service';
-import {AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
+import {AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
 import {MAX_UPLOAD_BYTES} from './core';
 
 @ApiTags('Local archive')
@@ -78,7 +78,7 @@ export class AppController {
   @Delete('tags/:id') @ApiOperation({summary:'Delete a tag from catalogue and documents'})
   deleteTag(@Param('id',ParseUUIDPipe)id:string){return this.archive.deleteTag(id);}
   @Post('consultations/prepare') @ApiOperation({summary:'Prepare a locally sanitized consultation draft; never sends it externally'})
-  prepare(@Body()dto:AskDto){return this.consultation.prepare(dto);}
+  prepare(@Body()dto:PrepareConsultationDto){return this.consultation.prepare(dto);}
   @Get('consultations/:id') @ApiOperation({summary:'Local consultation preview, warnings, and source refs'})
   getConsultation(@Param('id',ParseUUIDPipe)id:string){return this.consultation.get(id);}
   @Patch('consultations/:id') @ApiOperation({summary:'Edit draft and invalidate prior review'})

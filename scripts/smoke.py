@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--base", default="http://127.0.0.1:3000")
     parser.add_argument("--output", default="docs/evaluation/application-smoke.json")
+    parser.add_argument("--resume-document", help="Continue checks using an existing SYNTHETIC acceptance record after a documented failed run")
     args = parser.parse_args()
     assert urllib.parse.urlsplit(args.base).hostname in {"localhost", "127.0.0.1"}, "Local demo only"
     checks = []
@@ -68,7 +69,12 @@ def main():
     request("POST", "/api/documents/note", {"title": "", "text": ""}, expected=400)
     check("backend validation")
     title = "SYNTHETIC acceptance record " + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
-    note = request("POST", "/api/documents/note", {"title": title, "documentType": "NOTE", "documentDate": "2025-06-17", "tags": ["синтетика", "acceptance"], "text": "SYNTHETIC SOFTWARE TEST, not medical advice. Patient: Alex Example. Document date: 2025-06-17. The unique Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. Dizziness is explicitly denied. Medication intake is unknown. Synthetic test instance: " + uuid4().hex})
+    if args.resume_document:
+        note = request("GET", f"/api/documents/{args.resume_document}")
+        assert note["title"].startswith("SYNTHETIC acceptance record "), "Resume supports only script-created synthetic records"
+        title = note["title"]
+    else:
+        note = request("POST", "/api/documents/note", {"title": title, "documentType": "NOTE", "documentDate": "2025-06-17", "tags": ["синтетика", "acceptance"], "text": "SYNTHETIC SOFTWARE TEST, not medical advice. Patient: Alex Example. Document date: 2025-06-17. The unique Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. Dizziness is explicitly denied. Medication intake is unknown. Synthetic test instance: " + uuid4().hex})
     document_id = note.get("id") or note.get("document", {}).get("id") or note.get("documentId")
     assert document_id, note
     ready(document_id)
@@ -121,7 +127,7 @@ def main():
     request("DELETE", f"/api/documents/{document_id}")
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps({"timestamp": datetime.now(timezone.utc).isoformat(), "base": args.base, "mode": "real Ollama on synthetic demo", "checks": checks, "seconds": round(time.monotonic() - started, 2)}, ensure_ascii=False, indent=2), encoding="utf-8")
+    output.write_text(json.dumps({"timestamp": datetime.now(timezone.utc).isoformat(), "base": args.base, "mode": "real Ollama on synthetic demo", "resumedDocumentId": args.resume_document, "checks": checks, "seconds": round(time.monotonic() - started, 2)}, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 if __name__ == "__main__":

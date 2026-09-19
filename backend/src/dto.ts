@@ -61,6 +61,10 @@ export class AskDto {
   @ApiProperty() @IsString() @Length(3,4000) @Matches(/\S/) question:string;
   @ApiPropertyOptional({type:[String]}) @IsOptional() @IsArray() @ArrayMaxSize(100) @IsUUID('all',{each:true}) documentIds?:string[];
 }
+export class PrepareConsultationDto extends AskDto {
+  @ApiPropertyOptional({type:[String],maxItems:8,description:'Explicit ready source documents; omitted for automatic RAG selection'})
+  @ArrayMaxSize(8) declare documentIds?:string[];
+}
 export class TagDto {
   @ApiProperty() @IsString() @Length(1,80) @Matches(/\S/) name:string;
 }
