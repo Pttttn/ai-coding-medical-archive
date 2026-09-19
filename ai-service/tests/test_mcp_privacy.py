@@ -296,3 +296,62 @@ def test_contacts_are_opaque_before_short_name_replacement(provider):
     assert "[PERSON_A].[PERSON_A]" not in received[0]
     assert "[EMAIL]" in received[0]
     assert "17 days" in result["texts"][1]
+
+@pytest.mark.parametrize("cue", ["a fictional participant", "participant", "patient", "Patient", "patient named"])
+def test_narrative_name_cues_preserve_sentence_boundary_and_clinical_data(provider, cue):
+    from medical_ai.privacy import sanitize_fields
+    provider.json = lambda *args: {"identifiers": [], "warnings": []}
+    source = (f"All records concern {cue} Morgan Sample. Monthly diaries cover January 2024 through "
+              "December 2025. No dizziness. Review in 17 days.")
+    checked = sanitize_fields(provider, ["Sample", source], strict=True)
+    assert "Morgan" not in "\n".join(checked["texts"])
+    assert "Sample" not in "\n".join(checked["texts"])
+    assert ". Monthly diaries cover January 2024 through December 2025." in checked["texts"][1]
+    assert "No dizziness. Review in 17 days." in checked["texts"][1]
+
+
+async def test_real_overview_narrative_name_hidden_over_mcp_http(public_http, settings, provider):
+    # Regression from the actual synthetic corpus: a model can classify fictional names as safe.
+    # Rules must still hide them, including a surname-only answer without the original name cue.
+    client, _ = public_http
+    # Exact excerpt from sample_docs/overview.md, kept here so Linux image tests need no corpus mount.
+    content = ("All records concern a fictional participant Alex Example. Monthly diaries cover January 2024 "
+               "through December 2025. They record self-reported sleep, walking, observation counts, energy "
+               "and the status of notes. Entries are not diagnoses. A missing measurement is unknown, "
+               "and an explicit denial must stay negative.")
+    (settings.sample_docs_dir / "overview.md").write_text(content, encoding="utf-8")
+    original = provider.json
+
+    def empty_privacy(task, payload, schema=None):
+        if "privacy_pass" in task:
+            assert "also fictional names" in task
+            return {"identifiers": [], "warnings": []}
+        return original(task, payload, schema)
+
+    provider.json = empty_privacy
+    await client.call_tool("index_folder", {})
+    found = await client.call_tool("find_relevant_docs", {"query": "fictional participant", "top_k": 5})
+    encoded = serialized(found)
+    assert "Alex" not in encoded and "Example" not in encoded
+    assert "2024" in encoded and "2025" in encoded
+
+
+def test_real_manual_address_case_is_not_a_medical_unit(provider):
+    from medical_ai.privacy import consultation
+    from real_privacy_evaluation import CASES
+    provider.json = lambda *args: {"identifiers": [], "warnings": []}
+    case = CASES[1]
+    assert case["id"] == "en-name-clinic-insurance"
+    result = consultation(provider, case["question"], case["contexts"])
+    for identifier in case["mustRemove"]:
+        assert identifier not in result["content"]
+    for clinical in case["mustKeep"]:
+        assert clinical in result["content"]
+
+
+@pytest.mark.parametrize("labelled_clinical", ["Address: 5 mg", "Clinic: Review in 17 days"])
+def test_location_label_cannot_bypass_known_medical_unit_guard(provider, labelled_clinical):
+    from medical_ai.privacy import sanitize_fields
+    provider.json = lambda *args: {"identifiers": [], "warnings": []}
+    with pytest.raises(ServiceError):
+        sanitize_fields(provider, [labelled_clinical], strict=True)

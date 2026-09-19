@@ -45,9 +45,13 @@ def letter_suffix(index: int) -> str:
 
 
 def redact_known_people(text: str, identifier_context: str = "") -> str:
-    """Propagate labelled names across fields without consuming another line/label."""
+    """Propagate names from labels or participant/patient cues without crossing sentence/line boundaries."""
+    # Name matching itself stays case-sensitive; only the cue/label is case-insensitive.
+    # Horizontal whitespace never consumes a new line and a period ends the name.
     label_pattern = (
-        r"\b(?P<label>(?i:ФИО|пациент|patient(?:[ \t]+name)?|врач|doctor))[ \t]*[:=][ \t]*"
+        r"\b(?P<label>(?i:ФИО|пациент(?:ка)?|patient(?:[ \t]+name)?|врач|doctor|"
+        r"(?:fictional[ \t]+)?participant|участник(?:ца)?))"
+        r"(?:[ \t]*[:=][ \t]*|[ \t]+(?:named[ \t]+|по[ \t]+имени[ \t]+)?)"
         r"(?P<name>[А-ЯA-ZЁ][а-яa-zё]+(?:[ \t]+[А-ЯA-ZЁ][а-яa-zё]+){1,2})"
     )
     aliases = {}
@@ -109,7 +113,11 @@ def protected_clinical_values(text: str) -> tuple[list[str], list[str]]:
     dates = re.findall(r"\b(?:\d{4}-\d{2}-\d{2}|\d{2}[./]\d{2}[./]\d{4})\b", dates_text)
     quantities = re.findall(CLINICAL_NUMBER, text, re.I)
     # Preserve adjacent units even when they are not in the common-unit vocabulary (%, °C, µg, etc.).
-    quantities += re.findall(r"(?<!\w)\d+(?:[.,]\d+)?[ \t]*[%°µμA-Za-zА-Яа-яЁё][%°µμA-Za-zА-Яа-яЁё/\d^−+-]*", text)
+    # A labelled address such as "15 Pine Street" is not a measurement/unit pair.
+    # The strict known-unit scan above still sees the original location text, so an address
+    # label cannot hide a dose/duration and bypass the clinical invariant.
+    generic_unit_text = re.sub(LOCATION_LABEL, "[LOCATION]", text)
+    quantities += re.findall(r"(?<!\w)\d+(?:[.,]\d+)?[ \t]*[%°µμA-Za-zА-Яа-яЁё][%°µμA-Za-zА-Яа-яЁё/\d^−+-]*", generic_unit_text)
     return quantities, dates
 
 def reject_numeric_identifier_collisions(fields: list[str], context: str):
@@ -152,7 +160,7 @@ def sanitize_fields(provider: Any, fields: list[str], *, identifier_context: str
     before = [clinical_signature(value) for value in cleaned]
     protected_before = [protected_clinical_values(value) for value in cleaned]
     output = provider.json("TASK: privacy_pass. Inspect the ENTIRE package including all answers and source excerpts. "
-        "List EXACT substrings containing personal names, doctor names, clinic names, addresses, birth dates, "
+        "List EXACT substrings containing personal names (also fictional names in synthetic records), doctor names, clinic names, addresses, birth dates, "
         "contacts or identifiers that must be redacted. Do not redact medical measurements, dates of medical "
         "events, doses, ages, codes for clinical procedures, negations, or already bracketed placeholders. "
         "Do not rewrite the text. Return identifiers:[{text,category}], warnings:[string] about quasi-identifiers. "
