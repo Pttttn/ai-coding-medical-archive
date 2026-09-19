@@ -1,0 +1,33 @@
+import 'reflect-metadata';
+import {plainToInstance} from 'class-transformer';
+import {validate} from 'class-validator';
+import {CreateNoteDto,DocumentQueryDto,UpdateFactDto} from '../src/dto';
+import {contentHash,ensureReviewed,exportSafe,normalizeTags,safeStoragePath,validatePdf,MAX_UPLOAD_BYTES} from '../src/core';
+import {ProcessResult,sameReviewedFact,validateExtraction} from '../src/processing.service';
+import {MedicalFact} from '../src/entities';
+
+const extraction=():ProcessResult=>({text:'LDL 4.7 mmol/L.',pages:[{pageNumber:null,text:'LDL 4.7 mmol/L.'}],extraction:{documentType:'LAB_REPORT',documentDate:null,summary:'Lab',tags:[],facts:[{type:'LAB_RESULT',name:'LDL',valueText:null,valueNumber:4.7,unit:'mmol/L',eventDate:null,assertionStatus:'CONFIRMED',confidence:0.8,provenance:{page:null,sourceText:'LDL 4.7 mmol/L.'}}]}});
+const file=(data='%PDF-1.7'):Express.Multer.File=>({originalname:'demo.pdf',mimetype:'application/pdf',buffer:Buffer.from(data),size:Buffer.byteLength(data)} as Express.Multer.File);
+describe('Archive input, provenance and export boundaries',()=>{
+  it('rejects whitespace-only notes',async()=>{expect((await validate(plainToInstance(CreateNoteDto,{title:'  ',text:'   '}))).length).toBeGreaterThan(0);});
+  it('rejects impossible dates',async()=>{expect((await validate(plainToInstance(CreateNoteDto,{title:'demo',text:'valid text',documentDate:'2025-02-30'}))).length).toBeGreaterThan(0);});
+  it('rejects unsupported note types',async()=>{expect((await validate(plainToInstance(CreateNoteDto,{title:'demo',text:'valid text',documentType:'PDF'}))).length).toBeGreaterThan(0);});
+  it('rejects unbounded and negative pagination',async()=>{expect((await validate(plainToInstance(DocumentQueryDto,{page:'0',pageSize:'1000'}))).length).toBe(2);});
+  it('rejects SQL fragments as sort keys',async()=>{expect((await validate(plainToInstance(DocumentQueryDto,{sort:'title; DROP TABLE documents'}))).length).toBe(1);});
+  it('allows unknown clinical date and null fact numeric values',async()=>{expect(await validate(plainToInstance(UpdateFactDto,{eventDate:null,valueNumber:null,reviewStatus:'CORRECTED'}))).toHaveLength(0);});
+  it('rejects unsupported assertion status',async()=>{expect((await validate(plainToInstance(UpdateFactDto,{assertionStatus:'probably fine'}))).length).toBe(1);});
+  it('normalizes duplicate tags without changing clinical labels',()=>{expect(normalizeTags([' lipid ','lipid','','LDL'])).toEqual(['lipid','LDL']);});
+  it('validates PDF magic in addition to the extension',()=>{expect(()=>validatePdf(file('not a PDF'))).toThrow();expect(()=>validatePdf(file())).not.toThrow();});
+  it('rejects oversized PDFs',()=>{const f=file();f.size=MAX_UPLOAD_BYTES+1;expect(()=>validatePdf(f)).toThrow();});
+  it('rejects path traversal outside uploads',()=>{expect(()=>safeStoragePath(process.cwd(),'../outside.pdf')).toThrow();});
+  it('hashes exact UTF-8 text including whitespace',()=>{expect(contentHash('Доза 20 мг')).not.toBe(contentHash('Доза 20 мг '));});
+  it('blocks export without exact content review',()=>{const content='Safe preview';const hash=contentHash(content);expect(()=>ensureReviewed({content,contentHash:hash,reviewedHash:null,status:'NEEDS_REVIEW'})).toThrow();expect(()=>ensureReviewed({content,contentHash:hash,reviewedHash:hash,status:'REVIEWED'})).not.toThrow();});
+  it('blocks content tampering even when stored hashes agree',()=>{const hash=contentHash('old');expect(()=>ensureReviewed({content:'new',contentHash:hash,reviewedHash:hash,status:'REVIEWED'})).toThrow();});
+  it('strips local file paths, source IDs and filenames before review',()=>{const cleaned=exportSafe('C:\\private\\patient.pdf /data/uploads/secret.pdf 123e4567-e89b-12d3-a456-426614174000');expect(cleaned).not.toContain('secret');expect(cleaned).not.toContain('123e4567');expect(cleaned).not.toContain('patient');});
+  it('retains clinical numbers and negations at export boundary',()=>{expect(exportSafe('No fever. LDL 4.1 mmol/L; 20 mg daily.')).toBe('No fever. LDL 4.1 mmol/L; 20 mg daily.');});
+  it('accepts text-note provenance without invented page/date',()=>{expect(()=>validateExtraction(extraction())).not.toThrow();});
+  it('rejects hallucinated quotations',()=>{const r=extraction();r.extraction.facts[0].provenance.sourceText='Invented diagnosis';expect(()=>validateExtraction(r)).toThrow();});
+  it('rejects provenance for a nonexistent PDF page',()=>{const r=extraction();r.extraction.facts[0].provenance.page=9;expect(()=>validateExtraction(r)).toThrow();});
+  it('rejects invalid confidence and impossible clinical dates',()=>{const r=extraction();r.extraction.facts[0].confidence=2;expect(()=>validateExtraction(r)).toThrow();r.extraction.facts[0].confidence=null;r.extraction.documentDate='2025-02-30';expect(()=>validateExtraction(r)).toThrow();});
+  it('recognizes a reviewed fact even after the user renames it',()=>{const f={type:'LAB_RESULT',name:'LDL corrected label',eventDate:null,originalValue:{type:'LAB_RESULT',name:'LDL',eventDate:null}} as unknown as MedicalFact;expect(sameReviewedFact(f,extraction().extraction.facts[0])).toBe(true);});
+});
