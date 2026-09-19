@@ -1,0 +1,382 @@
+{
+  "timestamp": "2026-09-19T11:52:18.524048+00:00",
+  "version": "1.2",
+  "provider": "real-local-ollama",
+  "models": {
+    "ollama": true,
+    "ready": true,
+    "llmModel": "qwen2.5:3b",
+    "embeddingModel": "nomic-embed-text",
+    "models": [
+      {
+        "name": "qwen2.5:3b",
+        "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    ]
+  },
+  "config": {
+    "chunkSize": 900,
+    "chunkOverlap": 120,
+    "retrievalK": 5
+  },
+  "indexing": {
+    "status": "READY",
+    "corpus": "mcp_demo",
+    "files": 42,
+    "chunks": 773,
+    "chunkSize": 900,
+    "chunkOverlap": 120,
+    "indexed": 42,
+    "unchanged": 0,
+    "removed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "results": [
+    {
+      "id": "fact-01",
+      "category": "exact_fact",
+      "question": "How many days until the follow-up recommended in the Cedar visit?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 11.781
+    },
+    {
+      "id": "fact-02",
+      "category": "exact_fact",
+      "question": "How many weeks until the Amber follow-up?",
+      "expected": "11",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 14.141
+    },
+    {
+      "id": "fact-03",
+      "category": "exact_fact",
+      "question": "How many evening observations are in the Saffron notebook?",
+      "expected": "37",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 14.25
+    },
+    {
+      "id": "fact-04",
+      "category": "exact_fact",
+      "question": "On what date was the Juniper laboratory sample collected?",
+      "expected": "2024-02-17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 14.015
+    },
+    {
+      "id": "fact-05",
+      "category": "exact_fact",
+      "question": "How long is the route recorded in the Willow walking diary?",
+      "expected": "1730",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 14.204
+    },
+    {
+      "id": "fact-06",
+      "category": "exact_fact",
+      "question": "How many minutes did the breathing exercise in the Birch appointment last?",
+      "expected": "6",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 13.796
+    },
+    {
+      "id": "fact-07",
+      "category": "exact_fact",
+      "question": "What is the Orchid synthetic measurement result in mmol/L?",
+      "expected": "4.73",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 14.0
+    },
+    {
+      "id": "fact-08",
+      "category": "exact_fact",
+      "question": "For how many consecutive mornings do the Maple instructions request observations?",
+      "expected": "7",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 13.985
+    },
+    {
+      "id": "fact-09",
+      "category": "exact_fact",
+      "question": "What date was scheduled for the Pine review?",
+      "expected": "2025-09-23",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 14.359
+    },
+    {
+      "id": "fact-10",
+      "category": "exact_fact",
+      "question": "How many prepared questions does the Hazel transcript contain?",
+      "expected": "9",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 14.594
+    },
+    {
+      "id": "fact-11",
+      "category": "exact_fact",
+      "question": "Was dizziness reported in the Rowan diary on 2025-01-14?",
+      "expected": "no dizziness",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 9.609
+    },
+    {
+      "id": "fact-12",
+      "category": "exact_fact",
+      "question": "What dose does the Elm prescription state and is actual intake confirmed?",
+      "expected": "2.5",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 9.36
+    },
+    {
+      "id": "paraphrase-01",
+      "category": "paraphrase",
+      "question": "How long should the fictional participant wait before the Cedar follow-up?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 9.593
+    },
+    {
+      "id": "paraphrase-02",
+      "category": "paraphrase",
+      "question": "How long is the waiting period before returning for Amber?",
+      "expected": "11",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 13.86
+    },
+    {
+      "id": "overview-01",
+      "category": "overview",
+      "question": "What kinds of records are in this synthetic archive?",
+      "expected": "diary",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 16.719
+    },
+    {
+      "id": "multi-01",
+      "category": "multiple_sources",
+      "question": "Give the Cedar and Amber follow-up intervals.",
+      "expected": [
+        "17",
+        "11"
+      ],
+      "rawExpectedTextPresent": false,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": false,
+      "privacyPassed": true,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": false,
+      "public": {
+        "responseRef": "Ra5a241c9f5929e6fd0257131ccb226e9",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": false,
+      "seconds": 13.984
+    },
+    {
+      "id": "negation-01",
+      "category": "negation",
+      "question": "Does the Elm prescription prove the medication was taken?",
+      "expected": "unknown",
+      "rawExpectedTextPresent": false,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": false,
+      "privacyPassed": true,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": false,
+      "public": {
+        "responseRef": "Ra3c6eeaf09ed2a0204b27a4c4bac70b1",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": false,
+      "seconds": 13.906
+    },
+    {
+      "id": "conflict-01",
+      "category": "contradiction",
+      "question": "What were the original and corrected Spruce walking durations?",
+      "expected": "19",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 27.172
+    },
+    {
+      "id": "missing-01",
+      "category": "missing",
+      "question": "What is the fictional participant's blood group?",
+      "expected": null,
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R529dbb48767d00d336759f3f9ec42ebe",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": true,
+      "seconds": 15.344
+    },
+    {
+      "id": "unrelated-01",
+      "category": "unrelated",
+      "question": "What is the capital of Argentina?",
+      "expected": null,
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rf1b644b013ebc540417669061031fa2b",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": true,
+      "seconds": 10.297
+    },
+    {
+      "id": "russian-01",
+      "category": "paraphrase",
+      "question": "Через сколько дней в записи Cedar рекомендован повторный визит?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "passed": false,
+      "seconds": 9.312
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "total": 21,
+    "privacyPassed": 4
+  }
+}

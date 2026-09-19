@@ -22,7 +22,7 @@ async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default="http://127.0.0.1:8002/mcp")
     parser.add_argument("--expect-empty", action="store_true")
-    parser.add_argument("--output", default="docs/evaluation/mcp-http-smoke.json")
+    parser.add_argument("--output", default="docs/evaluation/v12-mcp-http-smoke.json")
     args = parser.parse_args()
     events = []
     async with Client(args.url, timeout=600) as client:
@@ -33,21 +33,26 @@ async def main():
             ("index_status", {}),
             ("index_folder", {"path": "./sample_docs", "glob": "**/*"}),
             ("index_status", {}),
-            ("find_relevant_docs", {"query": "Cedar reference code", "top_k": 5}),
-            ("ask_question", {"question": "What is the reference code of the Cedar visit?"}),
+            ("find_relevant_docs", {"query": "Cedar follow-up interval", "top_k": 5}),
+            ("ask_question", {"question": "How many days until the follow-up recommended in the Cedar visit?"}),
         ]:
             start = time.monotonic()
             value = unpack(await client.call_tool(tool, arguments))
             if not events and args.expect_empty:
-                assert value["files"] == value["chunks"] == 0 and value["lastIndexedAt"] is None
+                assert value["files"] == value["chunks"] == 0 and value["status"] == "EMPTY"
             if tool == "index_folder":
-                assert value["files"] >= 45 and not value["errors"], value
+                assert value["files"] >= 42 and not value["errors"], value
+            if tool in {"ask_question", "find_relevant_docs"}:
+                assert value["privacy"]["status"] == "checked" and value["responseRef"]
+                serialized = json.dumps(value, ensure_ascii=False).casefold()
+                for forbidden in ("elena testova", "ivan primerov", "elena.testova@example.test", "mc-demo-00421", "202-555-0147", "visit-01.md", "chunkid", "documentid", '"trace"'):
+                    assert forbidden not in serialized, f"Private field escaped through {tool}"
             if tool == "ask_question":
-                assert "SYN-CASE-7F29" in value["answer"] and any(s["source"] == "visits/visit-01.md" for s in value["sources"]), value
+                assert "17" in value["answer"] and bool(value["sources"]) and all(s["reference"].startswith("S") for s in value["sources"]), value
             events.append({"tool": tool, "arguments": arguments, "seconds": round(time.monotonic() - start, 2), "result": value})
             print(f"PASS {tool}", flush=True)
         unchanged = unpack(await client.call_tool("index_folder", {"path": "./sample_docs", "glob": "**/*"}))
-        assert unchanged["indexed"] == 0 and unchanged["unchanged"] >= 45
+        assert unchanged["indexed"] == 0 and unchanged["unchanged"] >= 42
         traversal = await client.call_tool("index_folder", {"path": "../seed"}, raise_on_error=False)
         assert traversal.is_error
         events.append({"tool": "index_folder", "reindexUnchanged": unchanged["unchanged"], "pathTraversalRejected": traversal.is_error})

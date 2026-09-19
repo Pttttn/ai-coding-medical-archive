@@ -1,0 +1,726 @@
+{
+  "timestamp": "2026-09-19T12:06:58.448394+00:00",
+  "version": "1.2",
+  "provider": "real-local-ollama",
+  "models": {
+    "ollama": true,
+    "ready": true,
+    "llmModel": "qwen2.5:3b",
+    "embeddingModel": "nomic-embed-text",
+    "models": [
+      {
+        "name": "qwen2.5:3b",
+        "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    ]
+  },
+  "codeSha256": {
+    "chunking.py": "fa5ceba957ac5648bc20f9876699de3a7638c58b5af0fb255968f9d50a8c932a",
+    "indexer.py": "17ea0f4725b0031e1ec9abbe59279b62ec299888cb386deacdcc0af58602941c",
+    "rag.py": "c8d9172dcdc5c7af509010f941c86a31010a896fb441eeb6d2344a671796a226",
+    "privacy.py": "e02d818dc6ead73495adacec0df001d5b80fe922ccda6ba096694daa8049e821",
+    "external_output.py": "0c1aff02385e5a645356a43c9e9b628c949c58550a9ea4c80fd842ef4eaac414"
+  },
+  "config": {
+    "chunkSize": 900,
+    "chunkOverlap": 120,
+    "retrievalK": 5
+  },
+  "indexing": {
+    "status": "READY",
+    "corpus": "mcp_demo",
+    "files": 42,
+    "chunks": 773,
+    "chunkSize": 900,
+    "chunkOverlap": 120,
+    "indexed": 0,
+    "unchanged": 42,
+    "removed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "results": [
+    {
+      "id": "fact-01",
+      "category": "exact_fact",
+      "question": "How many days until the follow-up recommended in the Cedar visit?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R19bbfcde9f350af789824836b38858b5",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Cedar visit recommends a follow-up after 17 days. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 20.187
+    },
+    {
+      "id": "fact-02",
+      "category": "exact_fact",
+      "question": "How many weeks until the Amber follow-up?",
+      "expected": "11",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rd9b9f0321c0c12fca6d2aa3be8772081",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 9.844
+    },
+    {
+      "id": "fact-03",
+      "category": "exact_fact",
+      "question": "How many evening observations are in the Saffron notebook?",
+      "expected": "37",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rc254730e24050f69bb0647a221dada00",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Saffron notebook contains 37 evening observations. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Saffron notebook\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 14.266
+    },
+    {
+      "id": "fact-04",
+      "category": "exact_fact",
+      "question": "On what date was the Juniper laboratory sample collected?",
+      "expected": "2024-02-17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Raeade93524d2aaad1800c61ec2928557",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Juniper laboratory sample was collected on 2024-02-17. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Juniper laboratory\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Juniper laboratory sample was collected on 2024-02-17.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 27.218
+    },
+    {
+      "id": "fact-05",
+      "category": "exact_fact",
+      "question": "How long is the route recorded in the Willow walking diary?",
+      "expected": "1730",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R569d52646ac90907682f45f1b0009be7",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Willow walking diary records a route of 1730 metres. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Willow walking diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Willow walking diary records a route of 1730 metres.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 27.407
+    },
+    {
+      "id": "fact-06",
+      "category": "exact_fact",
+      "question": "How many minutes did the breathing exercise in the Birch appointment last?",
+      "expected": "6",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R34d0a1961921c9d061592966fa33847f",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Birch appointment records a breathing exercise lasting 6 minutes. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Birch appointment\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Birch appointment records a breathing exercise lasting 6 minutes.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 30.468
+    },
+    {
+      "id": "fact-07",
+      "category": "exact_fact",
+      "question": "What is the Orchid synthetic measurement result in mmol/L?",
+      "expected": "4.73",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Re9b96c33b7a8d2e77c937e5c89d2a0c8",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Orchid synthetic measurement result is 4.73 mmol/L. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Orchid measurement\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Orchid synthetic measurement result is 4.73 mmol/L.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 6.829
+    },
+    {
+      "id": "fact-08",
+      "category": "exact_fact",
+      "question": "For how many consecutive mornings do the Maple instructions request observations?",
+      "expected": "7",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rb00f51377f2c65713912dfa631371924",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Maple instructions request observations on 7 consecutive mornings. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Maple instructions\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Maple instructions request observations on 7 consecutive mornings.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 15.296
+    },
+    {
+      "id": "fact-09",
+      "category": "exact_fact",
+      "question": "What date was scheduled for the Pine review?",
+      "expected": "2025-09-23",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R1fa3b850eefaad5df49d2a11de622cc2",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Pine review was scheduled for 2025-09-23. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Pine review\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Pine review was scheduled for 2025-09-23.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 16.235
+    },
+    {
+      "id": "fact-10",
+      "category": "exact_fact",
+      "question": "How many prepared questions does the Hazel transcript contain?",
+      "expected": "9",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R9ddf303b5f66d7f5d491269e6f5be270",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Hazel transcript contains exactly 9 prepared questions. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Hazel transcript\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Hazel transcript contains exactly 9 prepared questions.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 15.734
+    },
+    {
+      "id": "fact-11",
+      "category": "exact_fact",
+      "question": "Was dizziness reported in the Rowan diary on 2025-01-14?",
+      "expected": "no dizziness",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R5fc3a3b3be9dcde8c078c26cbac7006a",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Rowan diary records no dizziness on 2025-01-14. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Rowan diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Rowan diary records no dizziness on 2025-01-14.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 15.047
+    },
+    {
+      "id": "fact-12",
+      "category": "exact_fact",
+      "question": "What dose does the Elm prescription state and is actual intake confirmed?",
+      "expected": "2.5",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R9440d619ef4a3de27773a0ac46c645b3",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Elm prescription says 2.5 mg once daily, but actual intake is unknown. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Elm prescription\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Elm prescription says 2.5 mg once daily, but actual intake is unknown.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 15.703
+    },
+    {
+      "id": "paraphrase-01",
+      "category": "paraphrase",
+      "question": "How long should the fictional participant wait before the Cedar follow-up?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rb62eb0381a60b6fd9f0c6b0d3fc32b9b",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [S1]\n\nThe Cedar visit recommends a follow-up after 17 days. [S2]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 17.156
+    },
+    {
+      "id": "paraphrase-02",
+      "category": "paraphrase",
+      "question": "How long is the waiting period before returning for Amber?",
+      "expected": "11",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R582b3b387578f458f1095a06dee4acdc",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 15.157
+    },
+    {
+      "id": "overview-01",
+      "category": "overview",
+      "question": "What kinds of records are in this synthetic archive?",
+      "expected": "diary",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Re58ca5107289236cac6eec5d45bdcc3c",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance. [S1]\n\n## Recorded observation\nThe Rowan diary records no dizziness on 2025-01-14. [S1]\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown. [S1]\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations. [S2]\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown. [S2]\n\n## Recorded observation\nThe Birch appointment records a breathing exercise lasting 6 minutes. [S3]\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown. [S3]\n\n## Recorded observation\nThe Maple instructions request observations on 7 consecutive mornings. [S4]\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown. [S4]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Rowan diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Rowan diary records no dizziness on 2025-01-14.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "# Saffron notebook\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S3",
+            "text": "# Birch appointment\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Birch appointment records a breathing exercise lasting 6 minutes.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S4",
+            "text": "# Maple instructions\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Maple instructions request observations on 7 consecutive mornings.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": false,
+      "seconds": 16.484
+    },
+    {
+      "id": "multi-01",
+      "category": "multiple_sources",
+      "question": "Give the Cedar and Amber follow-up intervals.",
+      "expected": [
+        "17",
+        "11"
+      ],
+      "rawExpectedTextPresent": false,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": false,
+      "privacyPassed": true,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": false,
+      "public": {
+        "responseRef": "Rf8560e6c0ab291c24c88894d50f1e138",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": false,
+      "seconds": 13.688
+    },
+    {
+      "id": "negation-01",
+      "category": "negation",
+      "question": "Does the Elm prescription prove the medication was taken?",
+      "expected": "unknown",
+      "rawExpectedTextPresent": false,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": false,
+      "privacyPassed": true,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": false,
+      "public": {
+        "responseRef": "R23fc2660f4f2aba82185fd58edb081d4",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": false,
+      "seconds": 13.578
+    },
+    {
+      "id": "conflict-01",
+      "category": "contradiction",
+      "question": "What were the original and corrected Spruce walking durations?",
+      "expected": "19",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": false,
+      "errorType": "ServiceError",
+      "errorCode": "PRIVACY_CHECK_FAILED",
+      "passed": false,
+      "seconds": 13.406
+    },
+    {
+      "id": "missing-01",
+      "category": "missing",
+      "question": "What is the fictional participant's blood group?",
+      "expected": null,
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R4cfac45f90d64c0e7db80442da0f7d96",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": true,
+      "seconds": 9.953
+    },
+    {
+      "id": "unrelated-01",
+      "category": "unrelated",
+      "question": "What is the capital of Argentina?",
+      "expected": null,
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rf82d1e7e9fca0fd26f337555c00e58bb",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "passed": true,
+      "seconds": 14.515
+    },
+    {
+      "id": "russian-01",
+      "category": "paraphrase",
+      "question": "Через сколько дней в записи Cedar рекомендован повторный визит?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rce240a7155357fb44ae81165476c34ac",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "По источникам архива:\n\nThe Cedar visit recommends a follow-up after 17 days. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "passed": true,
+      "seconds": 14.063
+    }
+  ],
+  "summary": {
+    "passed": 17,
+    "total": 21,
+    "privacyPassed": 20
+  }
+}

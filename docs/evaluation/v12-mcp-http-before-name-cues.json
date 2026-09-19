@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-09-19T11:59:41.800399+00:00",
+  "transport": "Streamable HTTP",
+  "url": "http://127.0.0.1:8002/mcp",
+  "events": [
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "seconds": 0.0,
+      "result": {
+        "status": "READY",
+        "corpus": "mcp_demo",
+        "files": 45,
+        "chunks": 777,
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      }
+    },
+    {
+      "tool": "index_folder",
+      "arguments": {
+        "path": "./sample_docs",
+        "glob": "**/*"
+      },
+      "seconds": 60.97,
+      "result": {
+        "status": "READY",
+        "corpus": "mcp_demo",
+        "files": 42,
+        "chunks": 773,
+        "chunkSize": 900,
+        "chunkOverlap": 120,
+        "indexed": 42,
+        "unchanged": 0,
+        "removed": 5,
+        "skipped": 0,
+        "errors": 0
+      }
+    },
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "seconds": 0.0,
+      "result": {
+        "status": "READY",
+        "corpus": "mcp_demo",
+        "files": 42,
+        "chunks": 773,
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      }
+    },
+    {
+      "tool": "find_relevant_docs",
+      "arguments": {
+        "query": "Cedar follow-up interval",
+        "top_k": 5
+      },
+      "seconds": 12.27,
+      "result": {
+        "responseRef": "Raf4e9115bf1f2b5eaf034f808164c2cb",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "chunks": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S3",
+            "text": "# Archive guide\n\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and de-identification test records. All records concern a fictional participant Alex Example. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The Cedar and Amber encounters are separate; their facts must not be merged. Medical documents use Markdown, plain text and PDF with a text layer. Fictional names and contacts are included to test outbound privacy. Tree names such as Cedar and Amber label fictional encounters, not people."
+          },
+          {
+            "reference": "S4",
+            "text": "# Synthetic Spruce original note\nThe Spruce observation initially records 17 minutes of walking on 2025-04-03. This is the original source value."
+          },
+          {
+            "reference": "S5",
+            "text": "# Synthetic Spruce corrected note\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. This is a user correction, not a new source quotation."
+          }
+        ]
+      }
+    },
+    {
+      "tool": "ask_question",
+      "arguments": {
+        "question": "How many days until the follow-up recommended in the Cedar visit?"
+      },
+      "seconds": 27.95,
+      "result": {
+        "responseRef": "R994ff839cf3e0f228cc95026255c9b57",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+            "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Cedar visit recommends a follow-up after 17 days. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      }
+    },
+    {
+      "tool": "index_folder",
+      "reindexUnchanged": 42,
+      "pathTraversalRejected": true
+    }
+  ]
+}

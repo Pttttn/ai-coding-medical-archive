@@ -1,0 +1,205 @@
+{
+  "timestamp": "2026-09-19T12:18:15.646402+00:00",
+  "provider": "real-local-ollama",
+  "transport": "Streamable HTTP",
+  "cases": [
+    {
+      "id": "unlabelled-participant",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"Rc641a453af2d8c56866b6a570ca70057\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\",\"QUASI_IDENTIFIERS_REQUIRE_CAUTION\"]},\"chunks\":[{\"reference\":\"S1\",\"text\":\"# Archive guide\\n\\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and de-identification test records. All records concern a fictional participant [PERSON_A]. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The [CLINIC_A] and [CLINIC_B] encounters are separate; their facts must not be merged. Medical documents use Markdown, plain text and PDF with a text layer. Fictional names and contacts are included to test outbound privacy. Tree names such as [CLINIC_A] and [CLINIC_B] label fictional encounters, not people.\"}]}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "Rc641a453af2d8c56866b6a570ca70057",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+              "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+            ]
+          },
+          "chunks": [
+            {
+              "reference": "S1",
+              "text": "# Archive guide\n\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and de-identification test records. All records concern a fictional participant [PERSON_A]. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The [CLINIC_A] and [CLINIC_B] encounters are separate; their facts must not be merged. Medical documents use Markdown, plain text and PDF with a text layer. Fictional names and contacts are included to test outbound privacy. Tree names such as [CLINIC_A] and [CLINIC_B] label fictional encounters, not people."
+            }
+          ]
+        },
+        "isError": false
+      },
+      "seconds": 7.891
+    },
+    {
+      "id": "clinical-fragment",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"R45d45c0c61b5a75102b3828007a8e824\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\",\"QUASI_IDENTIFIERS_REQUIRE_CAUTION\"]},\"chunks\":[{\"reference\":\"S1\",\"text\":\"SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.\\nPatient: [PERSON_A]\\nDoctor: [DOCTOR_B]\\nPhone: [PHONE]\\nEmail: [EMAIL]\\n[IDENTIFIER]\\n[LOCATION]\\n\\nThe privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.\\nThese statements describe synthetic test data and are not medical advice.\"}]}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "R45d45c0c61b5a75102b3828007a8e824",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+              "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+            ]
+          },
+          "chunks": [
+            {
+              "reference": "S1",
+              "text": "SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\nThe privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.\nThese statements describe synthetic test data and are not medical advice."
+            }
+          ]
+        },
+        "isError": false
+      },
+      "seconds": 8.0
+    },
+    {
+      "id": "direct-name",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"Re9b29f19844e410c89de55f8cdb0a89c\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\",\"QUASI_IDENTIFIERS_REQUIRE_CAUTION\"]},\"answer\":\"В архиве недостаточно подтверждённых данных для ответа на этот вопрос.\",\"sources\":[],\"insufficientContext\":true}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "Re9b29f19844e410c89de55f8cdb0a89c",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+              "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+            ]
+          },
+          "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+          "sources": [],
+          "insufficientContext": true
+        },
+        "isError": false
+      },
+      "seconds": 23.282
+    },
+    {
+      "id": "direct-card",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"Rbc65a7ac8ec41da08f845fa9a600bb70\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\",\"QUASI_IDENTIFIERS_REQUIRE_CAUTION\"]},\"answer\":\"В архиве недостаточно подтверждённых данных для ответа на этот вопрос.\",\"sources\":[],\"insufficientContext\":true}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "Rbc65a7ac8ec41da08f845fa9a600bb70",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE",
+              "QUASI_IDENTIFIERS_REQUIRE_CAUTION"
+            ]
+          },
+          "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+          "sources": [],
+          "insufficientContext": true
+        },
+        "isError": false
+      },
+      "seconds": 26.156
+    },
+    {
+      "id": "invalid-path",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.094
+    },
+    {
+      "id": "invalid-type",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.0
+    },
+    {
+      "id": "unknown-argument",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.0
+    },
+    {
+      "id": "unknown-tool",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.015
+    }
+  ]
+}

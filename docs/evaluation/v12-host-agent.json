@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-09-19T12:11:07.758007+00:00",
+  "host": "minimal local Ollama reference host",
+  "model": "qwen3.5:4b",
+  "modelDigest": "2a654d98e6fba55d452b7043684e9b57a947e393bbffa62485a7aac05ee4eefd",
+  "question": "How many days until the follow-up recommended in the Cedar visit?",
+  "selectedTools": [
+    "ask_question"
+  ],
+  "success": true,
+  "events": [
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_ckbyxezx",
+            "function": {
+              "index": 0,
+              "name": "ask_question",
+              "arguments": {
+                "question": "How many days until the follow-up recommended in the Cedar visit?"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "ask_question",
+      "arguments": {
+        "question": "How many days until the follow-up recommended in the Cedar visit?"
+      },
+      "evidenceChecked": true,
+      "result": "{\"responseRef\":\"R655dd169fe1e9c6cdc24ef6a4b595250\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\",\"QUASI_IDENTIFIERS_REQUIRE_CAUTION\"]},\"answer\":\"Archive evidence:\\n\\nThe Cedar visit recommends a follow-up after 17 days. [S1]\",\"sources\":[{\"reference\":\"S1\",\"text\":\"# Cedar visit\\n\\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\\n\\n## Recorded observation\\nThe Cedar visit recommends a follow-up after 17 days.\\n\\n## Fictional identifiers for privacy testing\\nPatient: [PERSON_A]\\nDoctor: [DOCTOR_B]\\nPhone: [PHONE]\\nEmail: [EMAIL]\\n[IDENTIFIER]\\n[LOCATION]\\n\\n## Source scope\\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.\"}],\"insufficientContext\":false}"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "The Cedar visit recommends a follow-up after 17 days."
+      }
+    }
+  ]
+}

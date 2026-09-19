@@ -1,4 +1,5 @@
 """Explicit synthetic privacy/injection evaluation against the real local model."""
+import argparse
 import json
 from pathlib import Path
 import time
@@ -43,6 +44,9 @@ CASES = [
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", default="../docs/evaluation/v12-manual-privacy.json")
+    args = parser.parse_args()
     provider = Ollama(Settings())
     original = provider.json
     model_tasks = []
@@ -87,11 +91,15 @@ def main():
                                      "warnings": warnings}
     except Exception as exc:
         result["smokeExtraction"] = {"input": smoke_text, "error": str(exc)}
-    output = Path("../docs/evaluation/adversarial-privacy-final.json")
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"cases": [{k: v for k, v in case.items() if k not in {"question", "contexts", "response"}}
                                 for case in result["cases"]],
                       "extractionInjection": result["extractionInjection"]}, ensure_ascii=False, indent=2))
+
+    if not all(case.get("identifiersRemoved") and case.get("clinicalTextPreserved") for case in result["cases"]):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

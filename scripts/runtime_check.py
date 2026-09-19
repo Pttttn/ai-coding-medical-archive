@@ -12,6 +12,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--api", default="http://127.0.0.1:3000")
     parser.add_argument("--mode", choices=["container", "host"], default="container")
+    parser.add_argument("--output", help="Write a separate report without replacing historical results")
     args = parser.parse_args()
     compose = ["docker", "compose", "-f", "compose.yaml"]
     if args.mode == "host":
@@ -45,7 +46,7 @@ def main():
         denied = run("ai", "python", "import json,urllib.request,urllib.error\ntry:\n urllib.request.urlopen(urllib.request.Request('http://host-ollama:11434/api/pull',data=b'{}'),timeout=5)\n print(json.dumps({'status':200}))\nexcept urllib.error.HTTPError as e:\n print(json.dumps({'status':e.code}))")
         assert denied["status"] == 403, denied
         results.append({"check": "host proxy rejects model downloads", "passed": True, **denied})
-    target = Path("docs/evaluation") / ("runtime-" + args.mode + ".json")
+    target = Path(args.output) if args.output else Path("docs/evaluation") / ("runtime-" + args.mode + ".json")
     target.write_text(json.dumps({"timestamp": datetime.now(timezone.utc).isoformat(), "mode": args.mode, "checks": results}, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"PASS {len(results)} runtime checks ({args.mode})")
 
