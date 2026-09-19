@@ -1,0 +1,6 @@
+{
+  "check": "Compose AI readiness command against the real service",
+  "ollamaStoppedExitCode": 1,
+  "ollamaRestoredExitCode": 0,
+  "passed": true
+}

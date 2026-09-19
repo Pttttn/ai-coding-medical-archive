@@ -1,0 +1,90 @@
+{
+  "timestamp": "2026-09-19T13:13:22.267Z",
+  "base": "http://127.0.0.1:18080",
+  "results": [
+    {
+      "path": "/",
+      "title": "Всё важное — в одном месте",
+      "viewport": "desktop",
+      "loaded": true
+    },
+    {
+      "path": "/archive",
+      "title": "Архив документов",
+      "viewport": "desktop",
+      "loaded": true
+    },
+    {
+      "path": "/timeline",
+      "title": "Хронология здоровья",
+      "viewport": "desktop",
+      "loaded": true
+    },
+    {
+      "path": "/ask",
+      "title": "Спросить архив",
+      "viewport": "desktop",
+      "loaded": true
+    },
+    {
+      "path": "/consultation",
+      "title": "Важный контекст. Без лишнего.",
+      "viewport": "desktop",
+      "loaded": true
+    },
+    {
+      "path": "/history",
+      "title": "История изменений",
+      "viewport": "desktop",
+      "loaded": true
+    },
+    {
+      "path": "/upload",
+      "title": "Добавить в архив",
+      "viewport": "desktop",
+      "loaded": true
+    },
+    {
+      "path": "/archive/8fd521af-a55e-4184-9653-f6c859c15424",
+      "title": "SYNTHETIC acceptance record 20260919T131309",
+      "loaded": true
+    },
+    {
+      "path": "/",
+      "viewport": "mobile",
+      "noHorizontalOverflow": true
+    },
+    {
+      "path": "/archive",
+      "viewport": "mobile",
+      "noHorizontalOverflow": true
+    },
+    {
+      "path": "/timeline",
+      "viewport": "mobile",
+      "noHorizontalOverflow": true
+    },
+    {
+      "path": "/ask",
+      "viewport": "mobile",
+      "noHorizontalOverflow": true
+    },
+    {
+      "path": "/consultation",
+      "viewport": "mobile",
+      "noHorizontalOverflow": true
+    },
+    {
+      "path": "/history",
+      "viewport": "mobile",
+      "noHorizontalOverflow": true
+    },
+    {
+      "path": "/upload",
+      "viewport": "mobile",
+      "noHorizontalOverflow": true
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": []
+}

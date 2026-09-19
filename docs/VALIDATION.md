@@ -47,3 +47,16 @@ Backend и frontend не изменялись: прежние 48 и 22 тест�
 [GitHub Actions 35442666973](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35442666973) на commit **e02afee** завершился успешно: backend **48**, frontend **22**, AI **143** — всего **213 passed**. Lint, application builds, corpus/seed checks, обе Compose-конфигурации и сборка всех Docker images PASS. [Структурированный результат](evaluation/v12-github-ci.json). Это повторная проверка backend/frontend на GitHub, в дополнение к явно отделённым прежним локальным прогонам. Последующие правки этой записи относятся только к документации.
 
 Gitleaks v8.30.1 проверил полную историю до e02afee: 12 коммитов, около 3.53 MB, **0 findings**. Отдельно подтверждено отсутствие отслеживаемых .env, runtime directories, баз и индексов. Вымышленные имена в fixtures и сохранённых неудачных оценках намеренны.
+
+
+## Повторный аудит и чистый Docker-запуск
+
+19 сентября 2026 выполнен [аудит формальных требований и пожеланий преподавателя](REQUIREMENTS_AUDIT.md). Исходная ревизия 4680ced клонирована заново с GitHub; использованы новые пустые тома PostgreSQL, оригиналов, обоих индексов и Ollama. Без `.env`, host Ollama, предварительных зависимостей или ручной подготовки весов `docker compose up -d --wait` собрал сервисы и загрузил модели. Использованы отдельное имя проекта и порты, поскольку рабочие сервисы оставались запущенными; Docker image/build cache не очищался.
+
+Новые реальные результаты: [application 20/20 за 79.89 с](evaluation/cold-start-application.json), [PDF 4/4](evaluation/cold-start-pdf.json), [browser 15 без JS errors/external requests](evaluation/cold-start-browser.json), [HTTP MCP EMPTY → 42/773 → ask/find/reindex](evaluation/cold-start-mcp.json), [runtime 5/5](evaluation/cold-start-runtime.json). Модели контейнерные, CPU. Эти результаты отдельно подтверждают чистый старт, а не заменяют расширенную оценку RAG 17/21.
+
+Исправлен AI healthcheck: HTTP 200 недостаточно, теперь требуется ready=true; проверено с реальной остановкой/восстановлением Ollama. Gateway ожидает healthy upstream и проверяет публичные UI/API. После down/up с обновлённым Compose полностью совпали хеши 11 таблиц БД, 36 seed READY и MCP 42/773; [снимки и подробности](REQUIREMENTS_AUDIT.md). README теперь содержит clone/cd/up, критерии готовности, диагностику и сохранение данных.
+
+Опубликованное исправление **4bb2205** повторно клонировано с GitHub и запущено с ещё пятью пустыми томами. `up --wait` завершился примерно за 131 с с использованием image/build cache и новым автоматическим скачиванием моделей; [шесть healthy, 36 READY, MCP EMPTY](evaluation/cold-start-final-fresh.json). [CI 35445509270](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35445509270) для этого коммита также успешен, включая все четыре jobs и Docker images.
+
+На финальном чистом экземпляре дополнительно успешны [настоящий HTTP MCP](evaluation/cold-final-mcp.json) и [runtime 5/5](evaluation/cold-final-runtime.json): пустой индекс, 42/773 после индексации, проверенный ответ 17 days, отсутствие дублей и ограничения сети.

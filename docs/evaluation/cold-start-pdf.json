@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-09-19T13:15:06.217259+00:00",
+  "base": "http://127.0.0.1:18000",
+  "results": [
+    {
+      "kind": "text",
+      "status": "READY",
+      "warnings": [],
+      "seconds": 20.28
+    },
+    {
+      "kind": "scan",
+      "status": "UNSUPPORTED_OCR_REQUIRED",
+      "warnings": [],
+      "seconds": 2.01
+    },
+    {
+      "kind": "malformed",
+      "status": "FAILED",
+      "warnings": [],
+      "seconds": 2.01
+    },
+    {
+      "kind": "partial",
+      "status": "READY",
+      "warnings": [
+        "Текст извлечён не со всех страниц PDF. Пустые страницы: 2"
+      ],
+      "seconds": 12.2
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "timestamp": "2026-09-19T13:20:16.175215+00:00",
+  "project": "lma-cold-20260919",
+  "phase": "after-restart",
+  "dashboard": {
+    "totalDocuments": 36,
+    "processedDocuments": 36,
+    "failedDocuments": 0,
+    "pendingDocuments": 0
+  },
+  "database": {
+    "documents": {
+      "count": 41,
+      "contentHash": "246ba0598adee6a8b771f9de7e4b961f"
+    },
+    "text_revisions": {
+      "count": 39,
+      "contentHash": "01e1a08951ac76779bb960c0ad5062a1"
+    },
+    "medical_facts": {
+      "count": 44,
+      "contentHash": "1fb2fb5186bfea98bc2544c676f570bd"
+    },
+    "fact_provenance": {
+      "count": 44,
+      "contentHash": "fabc1ef7d7e7ab01d2ff206ce7ed89b1"
+    },
+    "fact_revisions": {
+      "count": 6,
+      "contentHash": "ee414c8aa2f46fe1184e76ca45425594"
+    },
+    "tags": {
+      "count": 19,
+      "contentHash": "37e1a24fd27fc9e857f72193e7caa458"
+    },
+    "audit_events": {
+      "count": 109,
+      "contentHash": "7155be078b40f548835820a0e158eb66"
+    },
+    "timeline_events": {
+      "count": 82,
+      "contentHash": "0f4cb8f2e075892faedb6538068037ee"
+    },
+    "consultations": {
+      "count": 1,
+      "contentHash": "60c64c42231bda04e06673f3a52fdd15"
+    },
+    "processing_jobs": {
+      "count": 51,
+      "contentHash": "0dd5522c76396ef91dc72444654a76be"
+    },
+    "migrations": {
+      "count": 1,
+      "contentHash": "045938d50594050a51ee73d99eeb6f53"
+    },
+    "seed": {
+      "count": 36,
+      "ready": 36,
+      "idsHash": "0714937101c0e8a2571de0508ca5c44d"
+    }
+  },
+  "mcp": {
+    "status": "READY",
+    "corpus": "mcp_demo",
+    "files": 42,
+    "chunks": 773,
+    "chunkSize": 900,
+    "chunkOverlap": 120
+  },
+  "containers": [
+    {
+      "name": "lma-cold-20260919-gateway-1",
+      "imageId": "sha256:dac87746c2fdaeaa8cc1621b5c3c022f06fbc191362e064a7072474a099d3a2b",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:19:04.231981419Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-cold-20260919-frontend-1",
+      "imageId": "sha256:edbc65c5035cec9881ad99b6ddded9abe3b7ee73216d8145a0f75ed01b0d7473",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:18:31.834714889Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-cold-20260919-backend-1",
+      "imageId": "sha256:7eabfd775529711af493f88251cdb1c14c79a110095aaab0b4f97d53323ac27f",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:18:31.464973998Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-cold-20260919-ai-1",
+      "imageId": "sha256:eb950d8ba808b7c374cc0b6b33af963e743b37ff1953ce9ca667ce227e107136",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:18:24.411977089Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-cold-20260919-ollama-1",
+      "imageId": "sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:18:13.497228329Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-cold-20260919-model-init-1",
+      "imageId": "sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65",
+      "state": "exited",
+      "health": null,
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:18:11.366689395Z",
+      "finishedAt": "2026-09-19T13:18:13.076243896Z"
+    },
+    {
+      "name": "lma-cold-20260919-postgres-1",
+      "imageId": "sha256:f02121de6f74d30d8a94cd1d9584125e2178d7e6c377d8130112d4e52d867995",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:18:11.370691049Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    }
+  ]
+}

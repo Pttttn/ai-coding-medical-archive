@@ -12,6 +12,10 @@
 - [x] Проект опубликован в [GitHub](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive); исправлена найденная первым CI проблема CRLF/LF.
 - [x] GitHub Actions для e02afee: backend 48 + frontend 22 + AI 143 = **213 passed**, lint/build и все Docker images PASS. [Run 35442666973](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35442666973).
 
+- [x] Повторный аудит формальных критериев и консультации: [REQUIREMENTS_AUDIT](docs/REQUIREMENTS_AUDIT.md), с явными незакрытыми условиями сдачи.
+- [x] Реальный чистый GitHub clone / пустые тома / автоматическая загрузка весов: application 20/20, PDF 4/4, browser 15, MCP 42/773, runtime 5/5. Down/up сохранил содержимое 11 таблиц и индексов.
+- [x] Чёткий README clone/cd/up и readiness; AI проверяет ready=true, gateway ждёт healthy и проверяет UI/API.
+
 ## Открытые ограничения и действия автора
 
 - [ ] Известные model cases: overview-01, multi-01, negation-01, conflict-01. Точность и полная анонимность вне контрольного набора не гарантируются.

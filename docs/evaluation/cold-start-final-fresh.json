@@ -1,0 +1,135 @@
+{
+  "timestamp": "2026-09-19T13:23:41.483614+00:00",
+  "project": "lma-final-20260919",
+  "phase": "final-fresh",
+  "dashboard": {
+    "totalDocuments": 36,
+    "processedDocuments": 36,
+    "failedDocuments": 0,
+    "pendingDocuments": 0
+  },
+  "database": {
+    "documents": {
+      "count": 36,
+      "contentHash": "ff197e434ce61cde788c36f45dcb30de"
+    },
+    "text_revisions": {
+      "count": 36,
+      "contentHash": "5db1b63a9eec803dfe9c6e20be815e0e"
+    },
+    "medical_facts": {
+      "count": 36,
+      "contentHash": "c2200ff392b848fad2c8abe1b8d5803f"
+    },
+    "fact_provenance": {
+      "count": 36,
+      "contentHash": "71c0b9e26f7b99e57e8dbf685f23bb94"
+    },
+    "fact_revisions": {
+      "count": 5,
+      "contentHash": "0d85f6d76326e206179e86329c561446"
+    },
+    "tags": {
+      "count": 18,
+      "contentHash": "abdb746d433e7dfb96d53b663b913c94"
+    },
+    "audit_events": {
+      "count": 77,
+      "contentHash": "fa00d8269064694d0a528665392af83c"
+    },
+    "timeline_events": {
+      "count": 72,
+      "contentHash": "7471d3c0a184b4529a52e8f3edd4ff21"
+    },
+    "consultations": {
+      "count": 0,
+      "contentHash": null
+    },
+    "processing_jobs": {
+      "count": 36,
+      "contentHash": "b1ff1491c22462c474aa741bc68a7459"
+    },
+    "migrations": {
+      "count": 1,
+      "contentHash": "045938d50594050a51ee73d99eeb6f53"
+    },
+    "seed": {
+      "count": 36,
+      "ready": 36,
+      "idsHash": "0714937101c0e8a2571de0508ca5c44d"
+    }
+  },
+  "mcp": {
+    "status": "EMPTY",
+    "corpus": "mcp_demo",
+    "files": 0,
+    "chunks": 0,
+    "chunkSize": 900,
+    "chunkOverlap": 120
+  },
+  "containers": [
+    {
+      "name": "lma-final-20260919-gateway-1",
+      "imageId": "sha256:9d665d95eab9583ea5ff43bd47bb5af59a2e6fa0071c047d4f44bf91f26c77b5",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:23:32.508385156Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-final-20260919-frontend-1",
+      "imageId": "sha256:5a407e00bd6f87b687b5fd39d7a74ce34ca4f590713735672ee2aa691861cac2",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:23:00.520623571Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-final-20260919-backend-1",
+      "imageId": "sha256:197a8ac66b5917bd97af994f30682dc9d7758940a2129daed3e55d62d47bbb21",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:23:00.135637861Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-final-20260919-ai-1",
+      "imageId": "sha256:a3b6ef2f2e03a1c65c91109f473e5eb8694516b8fcf01efcb050e5d9686f541a",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:22:54.537766477Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-final-20260919-postgres-1",
+      "imageId": "sha256:f02121de6f74d30d8a94cd1d9584125e2178d7e6c377d8130112d4e52d867995",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:21:34.24763556Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-final-20260919-ollama-1",
+      "imageId": "sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65",
+      "state": "running",
+      "health": "healthy",
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:22:43.635707781Z",
+      "finishedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lma-final-20260919-model-init-1",
+      "imageId": "sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65",
+      "state": "exited",
+      "health": null,
+      "exitCode": 0,
+      "startedAt": "2026-09-19T13:21:34.242725621Z",
+      "finishedAt": "2026-09-19T13:22:43.200797095Z"
+    }
+  ]
+}

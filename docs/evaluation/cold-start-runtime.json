@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-09-19T13:16:02.094356+00:00",
+  "mode": "container",
+  "checks": [
+    {
+      "check": "API health",
+      "passed": true
+    },
+    {
+      "check": "local model readiness",
+      "passed": true,
+      "provider": "http://ollama:11434",
+      "health": {
+        "status": "running",
+        "ollama": true,
+        "ready": true,
+        "llmModel": "qwen2.5:3b",
+        "embeddingModel": "nomic-embed-text",
+        "models": [
+          {
+            "name": "nomic-embed-text:latest",
+            "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+          },
+          {
+            "name": "qwen2.5:3b",
+            "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b"
+          }
+        ],
+        "promptVersion": "medical-extract-v3",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      }
+    },
+    {
+      "check": "AI external egress blocked",
+      "passed": true,
+      "blocked": true,
+      "socketCode": 101
+    },
+    {
+      "check": "backend external egress blocked",
+      "passed": true
+    },
+    {
+      "check": "gateway external egress blocked",
+      "passed": true,
+      "policy": "OUTPUT DROP",
+      "exitCode": 1
+    }
+  ]
+}
