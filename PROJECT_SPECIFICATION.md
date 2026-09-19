@@ -1,5 +1,7 @@
 # Спецификация проекта
 
-Актуальный полный текст: [PROJECT_SPECIFICATION_Local_Medical_Archive_v1.1.md](PROJECT_SPECIFICATION_Local_Medical_Archive_v1.1.md).
+Актуальный полный текст: [PROJECT_SPECIFICATION_Local_Medical_Archive_v1.2.md](PROJECT_SPECIFICATION_Local_Medical_Archive_v1.2.md).
 
-Исходные учебные задания сохранены в корне. Фактическая архитектура — ARCHITECTURE.md, результаты проверок — docs/VALIDATION.md, незавершённые действия — TASKS.md. Наличие требования не означает, что оно уже проверено.
+Редакция учитывает предоставленный пользователем конспект консультации. [Карта изменений и происхождение решений](docs/CONSULTATION_CHANGES.md) отделяет пересказ пояснений преподавателя от принятых проектных решений. [v1.1](PROJECT_SPECIFICATION_Local_Medical_Archive_v1.1.md) сохранена без изменений как историческая версия.
+
+Исходные учебные задания сохранены в корне. Фактическая архитектура — ARCHITECTURE.md, результаты проверок — docs/VALIDATION.md, незавершённые действия — TASKS.md. Требование или старый результат проверки не означают, что новый контракт уже принят и проверен.
