@@ -1,0 +1,3 @@
+# Archive guide
+
+This is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and software metadata examples. All records concern a fictional participant Alex Example. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The Cedar and Amber encounters are separate; their facts must not be merged. Code files describe synthetic schema constants and are indexed as text, never executed.

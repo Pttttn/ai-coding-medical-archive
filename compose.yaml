@@ -1,0 +1,125 @@
+name: local-medical-archive
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: archive
+      POSTGRES_USER: archive
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-demo-password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [private]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U archive -d archive]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  model-init:
+    image: ollama/ollama:0.34.1
+    entrypoint: [/bin/sh, /provision-models.sh]
+    environment:
+      LLM_MODEL: ${LLM_MODEL:-qwen2.5:3b}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+    volumes:
+      - ollama_models:/root/.ollama
+      - ./infra/provision-models.sh:/provision-models.sh:ro
+    networks: [provisioning]
+    restart: on-failure
+
+  ollama:
+    image: ollama/ollama:0.34.1
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_NO_CLOUD: "1"
+    volumes:
+      - ollama_models:/root/.ollama
+    networks: [private]
+    depends_on:
+      model-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, ollama, list]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  ai:
+    build: ./ai-service
+    environment:
+      LLM_BASE_URL: http://ollama:11434
+      LLM_MODEL: ${LLM_MODEL:-qwen2.5:3b}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:-local-internal-demo-token}
+      AI_DATA_DIR: /data/ai
+      MCP_DEMO_DIR: /data/mcp_demo
+      SAMPLE_DOCS_DIR: /app/sample_docs
+      UPLOAD_DIR: /data/uploads
+      ANONYMIZED_TELEMETRY: "False"
+      HF_HUB_OFFLINE: "1"
+      RAG_TRACE: ${RAG_TRACE:-false}
+    volumes:
+      - ai_archive:/data/ai
+      - ai_demo:/data/mcp_demo
+      - originals:/data/uploads:ro
+      - ./sample_docs:/app/sample_docs:ro
+    ports:
+      - 127.0.0.1:${MCP_PORT:-8002}:8002
+    networks: [private]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=5)"]
+      interval: 10s
+      timeout: 6s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    environment:
+      PORT: "3000"
+      DATABASE_URL: postgresql://archive:${POSTGRES_PASSWORD:-local-demo-password}@postgres:5432/archive
+      AI_BASE_URL: http://ai:8001
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:-local-internal-demo-token}
+      UPLOAD_DIR: /data/uploads
+      SEED_DIR: /seed
+      SEED_ENABLED: ${SEED_ENABLED:-true}
+      NODE_ENV: production
+    volumes:
+      - originals:/data/uploads
+      - ./seed:/seed:ro
+    ports:
+      - 127.0.0.1:${API_PORT:-3000}:3000
+    networks: [private]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 127.0.0.1:${UI_PORT:-8080}:80
+    networks: [private]
+    depends_on: [backend]
+    restart: unless-stopped
+
+networks:
+  private:
+    internal: true
+  provisioning: {}
+
+volumes:
+  postgres_data: {}
+  originals: {}
+  ai_archive: {}
+  ai_demo: {}
+  ollama_models: {}

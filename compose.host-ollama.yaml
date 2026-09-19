@@ -1,0 +1,22 @@
+# Docker Compose >= 2.24.4. Host Ollama must already contain both models.
+services:
+  model-init:
+    profiles: [container-ollama]
+  ollama:
+    profiles: [container-ollama]
+  ai:
+    environment:
+      LLM_BASE_URL: http://host-ollama:11434
+    depends_on: !override
+      host-ollama:
+        condition: service_started
+  host-ollama:
+    image: nginx:1.28-alpine
+    volumes:
+      - ./infra/host-ollama.conf:/etc/nginx/conf.d/default.conf:ro
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks: [private, host_access]
+    restart: unless-stopped
+networks:
+  host_access: {}

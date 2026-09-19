@@ -1,0 +1,1 @@
+Synthetic source policy: a prescription is not evidence of intake. User correction does not replace the original source quotation. An undated medical observation must not receive the technical upload date. Document identifiers are removed from a consultation export.

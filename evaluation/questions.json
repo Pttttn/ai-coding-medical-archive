@@ -1,0 +1,210 @@
+[
+  {
+    "id": "fact-01",
+    "category": "exact_fact",
+    "question": "What is the reference code of the Cedar visit?",
+    "expected": "SYN-CASE-7F29",
+    "expectedSources": [
+      "visits/visit-01.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-02",
+    "category": "exact_fact",
+    "question": "How many weeks until the Amber follow-up?",
+    "expected": "11",
+    "expectedSources": [
+      "visits/visit-02.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-03",
+    "category": "exact_fact",
+    "question": "How many evening observations are in the Saffron notebook?",
+    "expected": "37",
+    "expectedSources": [
+      "visits/visit-03.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-04",
+    "category": "exact_fact",
+    "question": "On what date was the Juniper laboratory sample collected?",
+    "expected": "2024-02-17",
+    "expectedSources": [
+      "visits/visit-04.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-05",
+    "category": "exact_fact",
+    "question": "How long is the route recorded in the Willow walking diary?",
+    "expected": "1730",
+    "expectedSources": [
+      "visits/visit-05.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-06",
+    "category": "exact_fact",
+    "question": "In which room did the Birch appointment take place?",
+    "expected": "B-217",
+    "expectedSources": [
+      "visits/visit-06.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-07",
+    "category": "exact_fact",
+    "question": "What is the Orchid synthetic measurement result in mmol/L?",
+    "expected": "4.73",
+    "expectedSources": [
+      "visits/visit-07.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-08",
+    "category": "exact_fact",
+    "question": "What colour notebook is specified in the Maple instructions?",
+    "expected": "violet",
+    "expectedSources": [
+      "visits/visit-08.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-09",
+    "category": "exact_fact",
+    "question": "What date was scheduled for the Pine review?",
+    "expected": "2025-09-23",
+    "expectedSources": [
+      "visits/visit-09.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-10",
+    "category": "exact_fact",
+    "question": "How many prepared questions does the Hazel transcript contain?",
+    "expected": "9",
+    "expectedSources": [
+      "visits/visit-10.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-11",
+    "category": "exact_fact",
+    "question": "Was dizziness reported in the Rowan diary on 2025-01-14?",
+    "expected": "no dizziness",
+    "expectedSources": [
+      "visits/visit-11.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "fact-12",
+    "category": "exact_fact",
+    "question": "What dose does the Elm prescription state and is actual intake confirmed?",
+    "expected": "2.5",
+    "expectedSources": [
+      "visits/visit-12.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "paraphrase-01",
+    "category": "paraphrase",
+    "question": "What identifier lets me look up the Cedar encounter?",
+    "expected": "SYN-CASE-7F29",
+    "expectedSources": [
+      "visits/visit-01.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "paraphrase-02",
+    "category": "paraphrase",
+    "question": "How long is the waiting period before returning for Amber?",
+    "expected": "11",
+    "expectedSources": [
+      "visits/visit-02.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "overview-01",
+    "category": "overview",
+    "question": "What kinds of records are in this synthetic archive?",
+    "expected": "diary",
+    "expectedSources": [
+      "overview.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "multi-01",
+    "category": "multiple_sources",
+    "question": "Give the Cedar reference code and the Amber follow-up interval.",
+    "expected": "SYN-CASE-7F29",
+    "expectedSources": [
+      "visits/visit-01.md",
+      "visits/visit-02.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "negation-01",
+    "category": "negation",
+    "question": "Does the Elm prescription prove the medication was taken?",
+    "expected": "unknown",
+    "expectedSources": [
+      "visits/visit-12.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "conflict-01",
+    "category": "contradiction",
+    "question": "What were the original and corrected Spruce walking durations?",
+    "expected": "19",
+    "expectedSources": [
+      "visits/conflict-a.md",
+      "visits/conflict-b.md"
+    ],
+    "allowAbstain": false
+  },
+  {
+    "id": "missing-01",
+    "category": "missing",
+    "question": "What is the fictional participant's blood group?",
+    "expected": null,
+    "expectedSources": [],
+    "allowAbstain": true
+  },
+  {
+    "id": "unrelated-01",
+    "category": "unrelated",
+    "question": "What is the capital of Argentina?",
+    "expected": null,
+    "expectedSources": [],
+    "allowAbstain": true
+  },
+  {
+    "id": "russian-01",
+    "category": "paraphrase",
+    "question": "Какой код указан у визита Cedar?",
+    "expected": "SYN-CASE-7F29",
+    "expectedSources": [
+      "visits/visit-01.md"
+    ],
+    "allowAbstain": false
+  }
+]

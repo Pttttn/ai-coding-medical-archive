@@ -1,0 +1,1388 @@
+[
+  {
+    "id": "00b21fe3-0d6b-5849-b4b9-265f8b6ba7e2",
+    "title": "Липидный профиль · 2024-01-12",
+    "documentType": "LAB_REPORT",
+    "documentDate": "2024-01-12",
+    "sourceType": "PDF",
+    "originalFile": "originals/lab-01.pdf",
+    "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 01\nDocument date: 2024-01-12\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.10\nmmol/L\nGlucose\n4.63\nmmol/L\nLDL cholesterol 3.10 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 01\nDocument date: 2024-01-12\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.10\nmmol/L\nGlucose\n4.63\nmmol/L\nLDL cholesterol 3.10 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "давление",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "LAB_RESULT",
+        "name": "LDL cholesterol",
+        "valueNumber": 3.1,
+        "valueText": null,
+        "unit": "mmol/L",
+        "eventDate": "2024-01-12",
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "LDL cholesterol 3.10 mmol/L"
+        },
+        "correction": {
+          "valueNumber": 3.11,
+          "valueText": "Учебная ручная поправка: исходное значение сохранено в цитате",
+          "unit": "mmol/L"
+        }
+      }
+    ]
+  },
+  {
+    "id": "86401fac-1f7a-53c9-a3b2-58c414037966",
+    "title": "Липидный профиль · 2024-02-01",
+    "documentType": "LAB_REPORT",
+    "documentDate": "2024-02-01",
+    "sourceType": "PDF",
+    "originalFile": "originals/lab-02.pdf",
+    "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 02\nDocument date: 2024-02-01\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.27\nmmol/L\nGlucose\n4.66\nmmol/L\nLDL cholesterol 3.27 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 02\nDocument date: 2024-02-01\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.27\nmmol/L\nGlucose\n4.66\nmmol/L\nLDL cholesterol 3.27 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "кардиология",
+      "синтетика",
+      "сон"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "LAB_RESULT",
+        "name": "LDL cholesterol",
+        "valueNumber": 3.27,
+        "valueText": null,
+        "unit": "mmol/L",
+        "eventDate": "2024-02-01",
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "LDL cholesterol 3.27 mmol/L"
+        },
+        "correction": {
+          "valueNumber": 3.28,
+          "valueText": "Учебная ручная поправка: исходное значение сохранено в цитате",
+          "unit": "mmol/L"
+        }
+      }
+    ]
+  },
+  {
+    "id": "b724ed7b-1746-5f6c-a27d-1cfe63394db8",
+    "title": "Липидный профиль · 2024-02-21",
+    "documentType": "LAB_REPORT",
+    "documentDate": "2024-02-21",
+    "sourceType": "PDF",
+    "originalFile": "originals/lab-03.pdf",
+    "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 03\nDocument date: 2024-02-21\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.44\nmmol/L\nGlucose\n4.69\nmmol/L\nLDL cholesterol 3.44 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 03\nDocument date: 2024-02-21\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.44\nmmol/L\nGlucose\n4.69\nmmol/L\nLDL cholesterol 3.44 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n"
+      }
+    ],
+    "tags": [
+      "активность",
+      "анализы",
+      "наблюдение",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "LAB_RESULT",
+        "name": "LDL cholesterol",
+        "valueNumber": 3.44,
+        "valueText": null,
+        "unit": "mmol/L",
+        "eventDate": "2024-02-21",
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "LDL cholesterol 3.44 mmol/L"
+        },
+        "correction": {
+          "valueNumber": 3.45,
+          "valueText": "Учебная ручная поправка: исходное значение сохранено в цитате",
+          "unit": "mmol/L"
+        }
+      }
+    ]
+  },
+  {
+    "id": "308cadf0-fec5-5034-ad13-f86fa7476eef",
+    "title": "Липидный профиль · 2024-03-12",
+    "documentType": "LAB_REPORT",
+    "documentDate": "2024-03-12",
+    "sourceType": "PDF",
+    "originalFile": "originals/lab-04.pdf",
+    "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 04\nDocument date: 2024-03-12\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.61\nmmol/L\nGlucose\n4.72\nmmol/L\nLDL cholesterol 3.61 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 04\nDocument date: 2024-03-12\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.61\nmmol/L\nGlucose\n4.72\nmmol/L\nLDL cholesterol 3.61 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "липиды",
+      "питание",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "LAB_RESULT",
+        "name": "LDL cholesterol",
+        "valueNumber": 3.61,
+        "valueText": null,
+        "unit": "mmol/L",
+        "eventDate": "2024-03-12",
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "LDL cholesterol 3.61 mmol/L"
+        },
+        "correction": {
+          "valueNumber": 3.62,
+          "valueText": "Учебная ручная поправка: исходное значение сохранено в цитате",
+          "unit": "mmol/L"
+        }
+      }
+    ]
+  },
+  {
+    "id": "087afb9e-8be4-5175-a0b9-0953d9a50656",
+    "title": "Липидный профиль · 2024-04-01",
+    "documentType": "LAB_REPORT",
+    "documentDate": "2024-04-01",
+    "sourceType": "PDF",
+    "originalFile": "originals/lab-05.pdf",
+    "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 05\nDocument date: 2024-04-01\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.78\nmmol/L\nGlucose\n4.75\nmmol/L\nLDL cholesterol 3.78 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 05\nDocument date: 2024-04-01\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.78\nmmol/L\nGlucose\n4.75\nmmol/L\nLDL cholesterol 3.78 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "давление",
+      "синтетика",
+      "терапевт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "LAB_RESULT",
+        "name": "LDL cholesterol",
+        "valueNumber": 3.78,
+        "valueText": null,
+        "unit": "mmol/L",
+        "eventDate": "2024-04-01",
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "LDL cholesterol 3.78 mmol/L"
+        },
+        "correction": {
+          "valueNumber": 3.79,
+          "valueText": "Учебная ручная поправка: исходное значение сохранено в цитате",
+          "unit": "mmol/L"
+        }
+      }
+    ]
+  },
+  {
+    "id": "fec70dcc-9fa2-5a0a-852a-9b2b253cf0f8",
+    "title": "Липидный профиль · 2024-04-21",
+    "documentType": "LAB_REPORT",
+    "documentDate": "2024-04-21",
+    "sourceType": "PDF",
+    "originalFile": "originals/lab-06.pdf",
+    "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 06\nDocument date: 2024-04-21\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.95\nmmol/L\nGlucose\n4.78\nmmol/L\nLDL cholesterol 3.95 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 06\nDocument date: 2024-04-21\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.95\nmmol/L\nGlucose\n4.78\nmmol/L\nLDL cholesterol 3.95 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "дневник",
+      "синтетика",
+      "сон"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "LAB_RESULT",
+        "name": "LDL cholesterol",
+        "valueNumber": 3.95,
+        "valueText": null,
+        "unit": "mmol/L",
+        "eventDate": "2024-04-21",
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "LDL cholesterol 3.95 mmol/L"
+        }
+      }
+    ]
+  },
+  {
+    "id": "bbfa9f28-ace1-5f63-bd55-486672a81cf6",
+    "title": "Приём терапевта · 2024-05-11",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2024-05-11",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-07.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-05-11.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 8 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-05-11.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 8 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "активность",
+      "контроль",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-05-11",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "40ea1430-963a-5c70-9fd6-79a268f6acdc",
+    "title": "Дневник самочувствия · 2024-05-31",
+    "documentType": "NOTE",
+    "documentDate": "2024-05-31",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-08.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-05-31.\nЛичная заметка: прогулка 25 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 4 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-05-31.\nЛичная заметка: прогулка 25 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 4 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "питание",
+      "рекомендации",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-05-31",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "74bb9d3d-00d3-5023-b448-fb458d918f72",
+    "title": "Приём терапевта · 2024-06-20",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2024-06-20",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-09.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-06-20.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 10 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-06-20.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 10 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "синтетика",
+      "терапевт",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-06-20",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "37f737c1-8caa-5d82-b925-ad00d3f91c70",
+    "title": "Дневник самочувствия · 2024-07-10",
+    "documentType": "NOTE",
+    "documentDate": "2024-07-10",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-10.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-07-10.\nЛичная заметка: прогулка 27 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 6 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-07-10.\nЛичная заметка: прогулка 27 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 6 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "лаборатория",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-07-10",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "83e4db7f-c0ad-5c16-b89e-7242551e2eb3",
+    "title": "Приём терапевта · 2024-07-30",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2024-07-30",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-11.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-07-30.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 12 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-07-30.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 12 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "контроль",
+      "самочувствие",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-07-30",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "562537d7-0de4-5571-b287-60eaeeec4afd",
+    "title": "Дневник самочувствия · 2024-08-19",
+    "documentType": "NOTE",
+    "documentDate": "2024-08-19",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-12.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-08-19.\nЛичная заметка: прогулка 29 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 3 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-08-19.\nЛичная заметка: прогулка 29 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 3 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "рекомендации",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-08-19",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "b6a5d379-42a9-510c-8f1a-42d3bf265885",
+    "title": "Приём терапевта · 2024-09-08",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2024-09-08",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-13.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-09-08.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 14 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-09-08.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 14 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "осмотр",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-09-08",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "41fbf9ed-164f-5918-a6b5-8105c6b02c69",
+    "title": "Дневник самочувствия · 2024-09-28",
+    "documentType": "NOTE",
+    "documentDate": "2024-09-28",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-14.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-09-28.\nЛичная заметка: прогулка 31 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 5 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-09-28.\nЛичная заметка: прогулка 31 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 5 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "дневник",
+      "лаборатория",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-09-28",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "35b436ed-a76e-53fa-8a1a-ba322a308d10",
+    "title": "Приём терапевта · 2024-10-18",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2024-10-18",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-15.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-10-18.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 16 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-10-18.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 16 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "кардиология",
+      "самочувствие",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-10-18",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "d6965b95-bca2-51e3-b1bc-ec542d678be6",
+    "title": "Дневник самочувствия · 2024-11-07",
+    "documentType": "NOTE",
+    "documentDate": "2024-11-07",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-16.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-11-07.\nЛичная заметка: прогулка 33 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 2 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-11-07.\nЛичная заметка: прогулка 33 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 2 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "наблюдение",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-11-07",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "5cb51c7a-2199-5312-9ae7-a211b7f66806",
+    "title": "Приём терапевта · 2024-11-27",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2024-11-27",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-17.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-11-27.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 18 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-11-27.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 18 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "липиды",
+      "осмотр",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-11-27",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "a9f6a24b-2274-5b92-b812-c628625d481e",
+    "title": "Дневник самочувствия · 2024-12-17",
+    "documentType": "NOTE",
+    "documentDate": "2024-12-17",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-18.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-12-17.\nЛичная заметка: прогулка 35 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 4 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2024-12-17.\nЛичная заметка: прогулка 35 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 4 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "давление",
+      "дневник",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2024-12-17",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "86ff3c59-935e-567b-961a-92b6d36c92ee",
+    "title": "Приём терапевта · 2025-01-06",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-01-06",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-19.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-01-06.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 20 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-01-06.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 20 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "кардиология",
+      "синтетика",
+      "сон",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-01-06",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "59019eb5-cc24-5238-9674-8f1527d043fc",
+    "title": "Дневник самочувствия · 2025-01-26",
+    "documentType": "NOTE",
+    "documentDate": "2025-01-26",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-20.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-01-26.\nЛичная заметка: прогулка 37 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 6 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-01-26.\nЛичная заметка: прогулка 37 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 6 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "активность",
+      "дневник",
+      "наблюдение",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-01-26",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "6e6d506e-16f3-554b-ba3b-6a4b8708ccd4",
+    "title": "Приём терапевта · 2025-02-15",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-02-15",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-21.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-02-15.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 22 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-02-15.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 22 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "липиды",
+      "питание",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-02-15",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "028f6a15-bfe2-5211-87df-0cfc5505b3ce",
+    "title": "Дневник самочувствия · 2025-03-07",
+    "documentType": "NOTE",
+    "documentDate": "2025-03-07",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-22.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-03-07.\nЛичная заметка: прогулка 39 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 3 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-03-07.\nЛичная заметка: прогулка 39 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 3 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "давление",
+      "дневник",
+      "синтетика",
+      "терапевт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-03-07",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "ce3d3c30-9df1-588d-96d5-9f5b28898375",
+    "title": "Приём терапевта · 2025-03-27",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-03-27",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-23.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-03-27.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 24 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-03-27.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 24 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "синтетика",
+      "сон",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-03-27",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "d5cfbb2a-9892-5985-9a51-c57511ac99fc",
+    "title": "Дневник самочувствия · 2025-04-16",
+    "documentType": "NOTE",
+    "documentDate": "2025-04-16",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-24.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-04-16.\nЛичная заметка: прогулка 41 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 5 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-04-16.\nЛичная заметка: прогулка 41 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 5 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "активность",
+      "дневник",
+      "контроль",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-04-16",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2bce4b64-e843-5584-a267-d8fb1cbf659e",
+    "title": "Приём терапевта · 2025-05-06",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-05-06",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-25.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-05-06.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 26 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-05-06.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 26 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "питание",
+      "рекомендации",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-05-06",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "5961cf1f-d675-5a54-84a6-ebaa6c6dbb01",
+    "title": "Дневник самочувствия · 2025-05-26",
+    "documentType": "NOTE",
+    "documentDate": "2025-05-26",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-26.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-05-26.\nЛичная заметка: прогулка 43 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 2 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-05-26.\nЛичная заметка: прогулка 43 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 2 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "синтетика",
+      "терапевт",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-05-26",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "c268a511-534c-5a24-80e2-932778d8a7af",
+    "title": "Приём терапевта · 2025-06-15",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-06-15",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-27.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-06-15.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 28 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-06-15.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 28 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "лаборатория",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-06-15",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "3b554dbd-0e05-5376-913f-037d8da70cca",
+    "title": "Дневник самочувствия · 2025-07-05",
+    "documentType": "NOTE",
+    "documentDate": "2025-07-05",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-28.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-07-05.\nЛичная заметка: прогулка 45 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 4 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-07-05.\nЛичная заметка: прогулка 45 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 4 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "контроль",
+      "самочувствие",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-07-05",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "281978ed-bc54-5332-afd7-746cfa4db161",
+    "title": "Приём терапевта · 2025-07-25",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-07-25",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-29.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-07-25.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 30 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-07-25.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 30 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "рекомендации",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-07-25",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "b93db984-d36c-560e-a6b8-501a9fd14bcc",
+    "title": "Дневник самочувствия · 2025-08-14",
+    "documentType": "NOTE",
+    "documentDate": "2025-08-14",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-30.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-08-14.\nЛичная заметка: прогулка 47 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 6 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-08-14.\nЛичная заметка: прогулка 47 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 6 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "осмотр",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-08-14",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "3ed25062-172e-56c4-bea5-12667e7f7f87",
+    "title": "Приём терапевта · 2025-09-03",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-09-03",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-31.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-09-03.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 32 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-09-03.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 32 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "лаборатория",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-09-03",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "9ef4701f-9a2a-541e-beee-5dae83dab16d",
+    "title": "Дневник самочувствия · 2025-09-23",
+    "documentType": "NOTE",
+    "documentDate": "2025-09-23",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-32.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-09-23.\nЛичная заметка: прогулка 49 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 3 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-09-23.\nЛичная заметка: прогулка 49 минут, сон 7 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 3 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "кардиология",
+      "самочувствие",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-09-23",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "7a0d1c58-58f2-537b-9d7a-85fced5d66a7",
+    "title": "Приём терапевта · 2025-10-13",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-10-13",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-33.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-10-13.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 34 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-10-13.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 34 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "наблюдение",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-10-13",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "8a51f949-cf86-59b3-9bce-77ae5f1d124e",
+    "title": "Дневник самочувствия · 2025-11-02",
+    "documentType": "NOTE",
+    "documentDate": "2025-11-02",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-34.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-11-02.\nЛичная заметка: прогулка 51 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 5 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-11-02.\nЛичная заметка: прогулка 51 минут, сон 6 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 5 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "липиды",
+      "осмотр",
+      "синтетика"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-11-02",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  },
+  {
+    "id": "1c3af4aa-502e-541d-ae3b-aa023fd703e4",
+    "title": "Приём терапевта · 2025-11-22",
+    "documentType": "VISIT_TRANSCRIPT",
+    "documentDate": "2025-11-22",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-35.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-11-22.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 36 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-11-22.\nПациент: Алексей Примеров. Врач: Ирина Тестовая. Клиника: Учебная клиника.\nВрач: расскажите о дневнике наблюдений.\nПациент: зафиксировано 36 записей. Головокружение отрицаю.\nРекомендация: обсудить записи на следующем визите; фактический приём препаратов неизвестен.\n"
+      }
+    ],
+    "tags": [
+      "анализы",
+      "давление",
+      "синтетика",
+      "транскрипт"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-11-22",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружение отрицаю."
+        }
+      }
+    ]
+  },
+  {
+    "id": "84a9a28d-a477-5789-b14f-c17b6c1de326",
+    "title": "Дневник самочувствия · 2025-12-12",
+    "documentType": "NOTE",
+    "documentDate": "2025-12-12",
+    "sourceType": "TEXT",
+    "originalFile": "originals/record-36.txt",
+    "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-12-12.\nЛичная заметка: прогулка 53 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 2 вопросов.\n",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "СИНТЕТИЧЕСКИЙ ПРИМЕР. Вымышленный пациент, не медицинский совет.\nДата: 2025-12-12.\nЛичная заметка: прогулка 53 минут, сон 8 часов. Головокружения не отмечал.\nДля следующего визита подготовлено 2 вопросов.\n"
+      }
+    ],
+    "tags": [
+      "дневник",
+      "кардиология",
+      "синтетика",
+      "сон",
+      "вопросы"
+    ],
+    "summary": "Заранее подготовленная синтетическая запись для демонстрации архива. Не результат нового AI inference.",
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Головокружение",
+        "valueNumber": null,
+        "valueText": "Отрицается в источнике",
+        "unit": null,
+        "eventDate": "2025-12-12",
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Головокружения не отмечал."
+        }
+      }
+    ]
+  }
+]

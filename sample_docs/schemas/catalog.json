@@ -1,0 +1,18 @@
+{
+  "synthetic": true,
+  "formatVersion": "LMA-DEMO-1",
+  "datePolicy": "unknown is null",
+  "sourceStatuses": [
+    "CONFIRMED",
+    "SUSPECTED",
+    "NEGATED",
+    "PRESCRIBED",
+    "UNKNOWN"
+  ],
+  "reviewStatuses": [
+    "UNREVIEWED",
+    "CONFIRMED",
+    "CORRECTED",
+    "REJECTED"
+  ]
+}

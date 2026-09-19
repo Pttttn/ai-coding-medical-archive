@@ -1,0 +1,6 @@
+# A distinct Compose project name creates distinct archive volumes.
+# Usage: docker compose -p medical-personal -f compose.yaml -f compose.personal.yaml up
+services:
+  backend:
+    environment:
+      SEED_ENABLED: "false"
