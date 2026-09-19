@@ -11,6 +11,6 @@ until ollama list >/dev/null 2>&1; do
   if [ "$attempt" -gt 120 ]; then echo 'Model provisioning server did not become ready'; exit 1; fi
   sleep 1
 done
-ollama pull "$LLM_MODEL"
-ollama pull "$EMBEDDING_MODEL"
+if ! ollama show "$LLM_MODEL" >/dev/null 2>&1; then ollama pull "$LLM_MODEL"; fi
+if ! ollama show "$EMBEDDING_MODEL" >/dev/null 2>&1; then ollama pull "$EMBEDDING_MODEL"; fi
 echo 'Local model provisioning complete; archive data was not mounted.'

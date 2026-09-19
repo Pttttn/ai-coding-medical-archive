@@ -11,7 +11,10 @@ services:
       host-ollama:
         condition: service_started
   host-ollama:
-    image: nginx:1.28-alpine
+    build: ./infra/gateway
+    cap_add: [NET_ADMIN]
+    environment:
+      EGRESS_TARGETS: host.docker.internal
     volumes:
       - ./infra/host-ollama.conf:/etc/nginx/conf.d/default.conf:ro
     extra_hosts:

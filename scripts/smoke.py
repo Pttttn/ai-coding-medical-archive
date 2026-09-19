@@ -10,6 +10,7 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+from uuid import uuid4
 
 
 def main():
@@ -50,7 +51,15 @@ def main():
             time.sleep(2)
         raise AssertionError("Document processing exceeded 600 seconds")
 
-    dashboard = request("GET", "/api/dashboard")
+    deadline = time.monotonic() + 60
+    while True:
+        try:
+            dashboard = request("GET", "/api/dashboard")
+            break
+        except (AssertionError, OSError):
+            if time.monotonic() > deadline:
+                raise
+            time.sleep(1)
     check("dashboard seed", dashboard["totalDocuments"] >= 30)
     first = request("GET", "/api/documents?page=1&pageSize=5")
     second = request("GET", "/api/documents?page=2&pageSize=5")
@@ -59,7 +68,7 @@ def main():
     request("POST", "/api/documents/note", {"title": "", "text": ""}, expected=400)
     check("backend validation")
     title = "SYNTHETIC acceptance record " + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
-    note = request("POST", "/api/documents/note", {"title": title, "documentType": "NOTE", "documentDate": "2025-06-17", "tags": ["синтетика", "acceptance"], "text": "SYNTHETIC SOFTWARE TEST, not medical advice. Patient: Alex Example. Document date: 2025-06-17. The unique Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. Dizziness is explicitly denied. Medication intake is unknown."})
+    note = request("POST", "/api/documents/note", {"title": title, "documentType": "NOTE", "documentDate": "2025-06-17", "tags": ["синтетика", "acceptance"], "text": "SYNTHETIC SOFTWARE TEST, not medical advice. Patient: Alex Example. Document date: 2025-06-17. The unique Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. Dizziness is explicitly denied. Medication intake is unknown. Synthetic test instance: " + uuid4().hex})
     document_id = note.get("id") or note.get("document", {}).get("id") or note.get("documentId")
     assert document_id, note
     ready(document_id)
@@ -68,7 +77,22 @@ def main():
     check("full text search", any(d["id"] == document_id for d in found["items"]))
     answer = request("POST", "/api/ask", {"question": "What is the Copper Finch visit code?"})
     check("real archive RAG citations", "SYN-COPPER-931" in answer["answer"] and any(s.get("documentId") == document_id for s in answer["sources"]))
+    facts = request("GET", f"/api/documents/{document_id}/facts")
+    assert facts, "No source-backed facts extracted from the synthetic note"
+    fact_id = facts[0]["id"]
+    source_before = request("GET", f"/api/facts/{fact_id}/source")
+    correction = "Synthetic user correction; original quotation retained."
+    request("PATCH", f"/api/facts/{fact_id}", {"valueText": correction, "reviewStatus": "CORRECTED"})
+    ready(document_id)
+    revisions = request("GET", f"/api/facts/{fact_id}/history")
+    check("fact correction audit", bool(revisions))
+    request("POST", f"/api/documents/{document_id}/reprocess", {})
+    ready(document_id)
+    current_facts = request("GET", f"/api/documents/{document_id}/facts")
+    check("real reprocess preserves correction", any(f["id"] == fact_id and f["valueText"] == correction for f in current_facts))
+    check("source quotation immutable", request("GET", f"/api/facts/{fact_id}/source")["sourceText"] == source_before["sourceText"])
     request("PATCH", f"/api/documents/{document_id}", {"title": title + " edited"})
+    ready(document_id)
     check("metadata update", request("GET", f"/api/documents/{document_id}")["title"].endswith("edited"))
     preparation = request("POST", "/api/consultations/prepare", {"question": "Summarize the Copper Finch visit for patient Alex Example, email alex@example.test.", "documentIds": [document_id]})
     consultation_id = preparation["id"]

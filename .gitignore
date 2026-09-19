@@ -21,3 +21,5 @@ playwright-report/
 .codex/
 .agents/
 !seed/originals/
+.local-evaluation/
+*.tsbuildinfo
