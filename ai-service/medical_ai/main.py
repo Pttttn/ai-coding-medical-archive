@@ -9,6 +9,7 @@ from fastmcp import FastMCP
 from .config import Settings
 from .errors import ServiceError
 from .extraction import PROMPT_VERSION, SCHEMA_VERSION, extract
+from .external_output import PublicOutput, PublicToolErrors
 from .indexer import Corpus, source_of
 from .ollama import Ollama
 from .parsing import PARSER_VERSION, confined_path, parse_file
@@ -25,6 +26,7 @@ class Services:
         self.demo = Corpus("mcp_demo", settings, self.provider)
         self.archive_rag = CorrectiveRAG(self.archive, self.provider, settings)
         self.demo_rag = CorrectiveRAG(self.demo, self.provider, settings)
+        self.public_output = PublicOutput(self.demo, self.provider)
 
 
 @lru_cache
@@ -92,38 +94,47 @@ def create_app(services: Services | None = None) -> FastAPI:
 
 def create_mcp(services: Services | None = None) -> FastMCP:
     services = services or get_services()
-    mcp = FastMCP("Local Medical Archive — synthetic medical archive", instructions=
+    public = services.public_output
+    mcp = FastMCP("Local Medical Archive — synthetic medical archive", mask_error_details=True,
+        middleware=[PublicToolErrors()], instructions=
         "Search the SYNTHETIC medical archive for visits, laboratory results, prescriptions, timelines and "
-        "unusual verification facts. Answers are grounded in local sources. This server has no access to "
-        "the user's real medical archive and does not provide general medical advice. If the index is empty, "
-        "index ./sample_docs first. Use ask_question for grounded answers and find_relevant_docs for evidence.")
+        "verification facts. Answers and excerpts undergo a local privacy check. Source aliases are scoped "
+        "to one response; they cannot resolve local files. This server has no access to the user's real "
+        "medical archive and does not provide general medical advice. If the index is empty, index "
+        "./sample_docs first. Use ask_question for grounded answers and find_relevant_docs for evidence.")
 
-    @mcp.tool(description="Index synthetic medical visits, laboratory reports, prescriptions and code/data "
-              "fixtures under the allowed ./sample_docs folder. Supports md, txt, py, js, ts, json, yaml and PDF. "
-              "Uses local embeddings only; does not invoke a generative model. Re-index after source changes.")
+    @mcp.tool(description="Index synthetic medical visits, laboratory reports and prescriptions under the "
+              "fixed allowed ./sample_docs folder. Supports Markdown, plain text and text PDF. "
+              "Returns safe numerical statistics. Uses local embeddings, no generative model. "
+              "Re-index after source changes; arbitrary folders and the private archive are inaccessible.")
     def index_folder(path: str = "./sample_docs", glob: str = "**/*") -> dict:
-        return services.demo.index_folder(path, glob)
+        return public.indexing(services.demo.index_folder(path, glob))
 
-    @mcp.tool(description="Check whether the synthetic medical archive is indexed: file/chunk counts and "
-              "last indexing time. This calls no model and reads no private archive. Empty means index_folder "
-              "must be called before asking about synthetic visits, lab values or prescription details.")
+    @mcp.tool(description="Check numerical file/chunk statistics of the synthetic medical archive. "
+              "No document content, paths or model calls. Empty means index_folder must be called before "
+              "asking about synthetic visits, lab values or prescription details.")
     def index_status() -> dict:
-        return services.demo.status()
+        return public.status(services.demo.status())
 
-    @mcp.tool(description="Find source excerpts in the synthetic medical archive about visits, blood tests, "
-              "medications, recommendations and verification codes. Returns ranked text with source and position "
-              "using BM25 plus vector search and RRF. No generative answer, rewrite or grading is performed.")
+    @mcp.tool(description="Find relevant medical source excerpts using BM25 plus vector search and RRF. "
+              "A local privacy model checks and cleans ALL excerpts before returning them with per-response "
+              "source aliases. No answer generation, query rewrite or relevance grading is performed. "
+              "If privacy validation fails, no raw excerpts are returned.")
     def find_relevant_docs(query: str, top_k: int = 5) -> dict:
         if not query.strip() or len(query) > 4000:
-            raise ServiceError("INVALID_QUESTION", "Запрос должен содержать от 1 до 4000 символов.")
-        return {"chunks": [source_of(d, demo=True) for d in services.demo.retrieve(query, top_k)]}
+            raise ServiceError("INVALID_QUESTION", "Недопустимый запрос.")
+        sources = [source_of(d, demo=True) for d in services.demo.retrieve(query, top_k)]
+        return public.checked(sources)
 
-    @mcp.tool(description="Answer a question about synthetic medical visits, lab measurements, treatments, "
-              "dates, negations or unusual codes using local archive evidence and citations. Runs Corrective "
-              "RAG: rewrite, hybrid search, per-chunk LLM grading, at most two corrective searches, then grounded "
-              "answer or explicit insufficient-data response. Use for factual questions about this archive.")
+    @mcp.tool(description="Answer factual questions about synthetic medical visits, lab measurements, "
+              "prescriptions, intervals and negations. Runs Corrective RAG: query rewrite, hybrid retrieval, "
+              "per-chunk relevance grading, at most two corrective searches and a grounded answer or "
+              "insufficient-data response. A local privacy check cleans BOTH answer and source excerpts. "
+              "Returns only checked text and per-response source aliases. No raw identifying metadata, "
+              "raw source filenames or traces. No raw fallback if checking fails.")
     def ask_question(question: str) -> dict:
-        return services.demo_rag.ask(question)
+        raw = services.demo_rag.ask(question)
+        return public.checked(raw["sources"], answer=raw["answer"],
+                              insufficient_context=raw["insufficientContext"], answer_parts=raw.get("answerParts"))
 
     return mcp
-

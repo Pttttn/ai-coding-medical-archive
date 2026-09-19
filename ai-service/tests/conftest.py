@@ -38,7 +38,8 @@ class FakeProvider:
         if "generate_answer" in task:
             return {"evidence": [{"citation": 1, "quote": payload["sources"][0]["text"]}], "insufficientContext": False}
         if "privacy_pass" in task:
-            return {"identifiers": [{"text": "Иванов Иван", "category": "PERSON"}], "warnings": []}
+            return {"identifiers": ([{"text": "Иванов Иван", "category": "PERSON"}]
+                                    if "Иванов Иван" in payload["package"] else []), "warnings": []}
         if "extraction" in task:
             return {"documentType": "NOTE", "documentDate": None, "summary": "Наблюдение", "tags": [],
                     "facts": [{"type": "OBSERVATION", "name": "LDL", "valueNumber": 4.1, "unit": "mmol/L",

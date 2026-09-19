@@ -189,8 +189,12 @@ class CorrectiveRAG:
         sources = [{"citation": i, **source_of(chunks[i - 1], demo=self.corpus.name == "mcp_demo")} for i in used]
         introduction = "По источникам архива:" if re.search(r"[А-Яа-яЁё]", state["question"]) else "Archive evidence:"
         answer = introduction + "\n\n" + "\n\n".join(f"{quote} [{number}]" for number, quote in quotes)
-        return {"result": {"answer": answer, "sources": sources, "insufficientContext": False,
-                "trace": trace, "retryCount": state["retry_count"]}}
+        result = {"answer": answer, "sources": sources, "insufficientContext": False,
+                  "trace": trace, "retryCount": state["retry_count"]}
+        if self.corpus.name == "mcp_demo":
+            # Keep citation structure separate from verbatim medical text for the public boundary.
+            result["answerParts"] = [{"citation": number, "text": quote} for number, quote in quotes]
+        return {"result": result}
 
     def ask(self, question: str, document_ids: list[str] | None = None) -> dict:
         if not question.strip() or len(question) > 4000:
