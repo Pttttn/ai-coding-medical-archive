@@ -1,0 +1,96 @@
+{
+  "models": {
+    "ollama": true,
+    "ready": true,
+    "llmModel": "qwen2.5:3b",
+    "embeddingModel": "nomic-embed-text",
+    "models": [
+      {
+        "name": "qwen2.5:3b",
+        "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    ]
+  },
+  "input": "Synthetic laboratory report. Sample date: 2025-03-12. LDL cholesterol 4.1 mmol/L. No dizziness reported. Medication: 2.5 mg once daily prescribed; actual intake unknown.",
+  "extraction": {
+    "documentType": "LAB_REPORT",
+    "documentDate": null,
+    "summary": "LDL cholesterol level is 4.1 mmol/L. No reports of dizziness. A medication of 2.5 mg once daily is prescribed, but the actual intake is unknown.",
+    "tags": [
+      "LDL cholesterol",
+      "Medication",
+      "Dizziness"
+    ],
+    "facts": [
+      {
+        "type": "LAB_RESULT",
+        "name": "LDL cholesterol",
+        "valueText": "4.1 mmol/L",
+        "valueNumber": 4.1,
+        "unit": "mmol/L",
+        "eventDate": null,
+        "assertionStatus": "UNKNOWN",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "LDL cholesterol 4.1 mmol/L."
+        }
+      },
+      {
+        "type": "MEDICATION",
+        "name": "Medication",
+        "valueText": "2.5 mg once daily",
+        "valueNumber": 2.5,
+        "unit": "mg",
+        "eventDate": null,
+        "assertionStatus": "PRESCRIBED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "Medication: 2.5 mg once daily prescribed"
+        }
+      },
+      {
+        "type": "MEDICATION",
+        "name": "Medication",
+        "valueText": "unknown",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "UNKNOWN",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "Medication: 2.5 mg once daily prescribed; actual intake unknown"
+        }
+      },
+      {
+        "type": "SYMPTOM",
+        "name": "Dizziness",
+        "valueText": "No dizziness reported",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": 1,
+          "sourceText": "No dizziness reported."
+        }
+      }
+    ]
+  },
+  "warnings": [],
+  "privacy": {
+    "content": "# Контекст для консультации\n\n## Вопрос\n\nDoes [PERSON_1] need to discuss LDL 4.1 mmol/L? [EMAIL]\n\n## Данные архива\n\n[PERSON]\n[DOB]\n[LOCATION]. LDL 4.1 mmol/L. Не принимает 10 мг.",
+    "warnings": [
+      "Требуется ручная проверка перед экспортом. Полная анонимность не гарантируется.",
+      "Медицинские даты, редкие диагнозы, процедуры и точный возраст могут быть косвенными идентификаторами.",
+      "Локальная модель отметила дополнительные косвенные идентификаторы; проверьте весь пакет."
+    ]
+  }
+}

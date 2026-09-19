@@ -1,0 +1,194 @@
+{
+  "timestamp": "2026-09-19T09:06:43.651136+00:00",
+  "transport": "Streamable HTTP",
+  "url": "http://127.0.0.1:8002/mcp",
+  "events": [
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "seconds": 0.02,
+      "result": {
+        "files": 0,
+        "chunks": 0,
+        "lastIndexedAt": null,
+        "corpus": "mcp_demo",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      }
+    },
+    {
+      "tool": "index_folder",
+      "arguments": {
+        "path": "./sample_docs",
+        "glob": "**/*"
+      },
+      "seconds": 136.7,
+      "result": {
+        "indexed": 45,
+        "unchanged": 0,
+        "removed": 0,
+        "skipped": [],
+        "errors": [],
+        "files": 45,
+        "chunks": 777,
+        "lastIndexedAt": "2026-09-19T09:06:30.585219+00:00",
+        "corpus": "mcp_demo",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      }
+    },
+    {
+      "tool": "index_status",
+      "arguments": {},
+      "seconds": 0.02,
+      "result": {
+        "files": 45,
+        "chunks": 777,
+        "lastIndexedAt": "2026-09-19T09:06:30.585219+00:00",
+        "corpus": "mcp_demo",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      }
+    },
+    {
+      "tool": "find_relevant_docs",
+      "arguments": {
+        "query": "Cedar reference code",
+        "top_k": 5
+      },
+      "seconds": 0.03,
+      "result": {
+        "chunks": [
+          {
+            "source": "visits/visit-01.md",
+            "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+            "position": 1,
+            "pageNumber": null,
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit reference code is SYN-CASE-7F29.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+            "version": 1,
+            "userCorrection": false
+          },
+          {
+            "source": "diary/2025-06.md",
+            "chunkId": "209f627b5749b8ba821e2038365427da77d8754cce0e578ecd0439cdc1e3a743",
+            "position": 8,
+            "pageNumber": null,
+            "text": "## 2025-06-07 — entry DAY-0524\nOn this observation date the fictional participant walked beside the fictional canal and described feeling distracted by a changing schedule. The recorded walk lasted 52 minutes. Estimated sleep was 7.50 hours, and the self-reported energy score was 3 out of 10. The notebook contains 4 observations for this day, with 1 questions left for a future discussion.\nNo temperature measurement was available; this missing value must remain unknown. The participant explicitly denied dizziness during this observation. No new diagnosis was established in the diary. This entry records what was written and does not infer causation from sleep, walking or energy. Planned actions and actual actions are separate: the notebook mentions a plan to review the previous 6 days, but completion of that review is not documented. The daily source label is OBS-2025-06-07.",
+            "version": 1,
+            "userCorrection": false
+          },
+          {
+            "source": "overview.md",
+            "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "position": 1,
+            "pageNumber": null,
+            "text": "# Archive guide\n\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and software metadata examples. All records concern a fictional participant Alex Example. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The Cedar and Amber encounters are separate; their facts must not be merged. Code files describe synthetic schema constants and are indexed as text, never executed.",
+            "version": 1,
+            "userCorrection": false
+          },
+          {
+            "source": "diary/2024-12.md",
+            "chunkId": "a810ca15211627b08cd813a7758c85dcb6e04906ff32b100e8f5d1d07e7e4b39",
+            "position": 12,
+            "pageNumber": null,
+            "text": "## 2024-12-11 — entry DAY-0346\nOn this observation date the fictional participant visited the fictional botanical garden and described feeling busy with household tasks. The recorded walk lasted 47 minutes. Estimated sleep was 8.00 hours, and the self-reported energy score was 8 out of 10. The notebook contains 2 observations for this day, with 0 questions left for a future discussion.\nNo temperature measurement was available; this missing value must remain unknown. The participant explicitly denied dizziness during this observation. No new diagnosis was established in the diary. This entry records what was written and does not infer causation from sleep, walking or energy. Planned actions and actual actions are separate: the notebook mentions a plan to review the previous 4 days, but completion of that review is not documented. The daily source label is OBS-2024-12-11.",
+            "version": 1,
+            "userCorrection": false
+          },
+          {
+            "source": "diary/2024-01.md",
+            "chunkId": "10ff71c01d11eb52f45b8682cc3384b0cf2cc691953eba238e460482c6a3208b",
+            "position": 24,
+            "pageNumber": null,
+            "text": "## 2024-01-23 — entry DAY-0023\nOn this observation date the fictional participant completed a quiet reading session and described feeling rested after an early night. The recorded walk lasted 15 minutes. Estimated sleep was 8.25 hours, and the self-reported energy score was 5 out of 10. The notebook contains 3 observations for this day, with 1 questions left for a future discussion.\nThe source of the pedometer estimate is self-report; this missing value must remain unknown. The participant explicitly denied dizziness during this observation. No new diagnosis was established in the diary. This entry records what was written and does not infer causation from sleep, walking or energy. Planned actions and actual actions are separate: the notebook mentions a plan to review the previous 9 days, but completion of that review is not documented. The daily source label is OBS-2024-01-23.",
+            "version": 1,
+            "userCorrection": false
+          }
+        ]
+      }
+    },
+    {
+      "tool": "ask_question",
+      "arguments": {
+        "question": "What is the reference code of the Cedar visit?"
+      },
+      "seconds": 11.5,
+      "result": {
+        "answer": "Archive evidence:\n\nThe Cedar visit reference code is SYN-CASE-7F29. [1]",
+        "sources": [
+          {
+            "citation": 1,
+            "source": "visits/visit-01.md",
+            "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+            "position": 1,
+            "pageNumber": null,
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit reference code is SYN-CASE-7F29.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+            "version": 1,
+            "userCorrection": false
+          }
+        ],
+        "insufficientContext": false,
+        "trace": [
+          {
+            "node": "rewrite_query",
+            "query": "What is the reference code of the Cedar visit?"
+          },
+          {
+            "node": "retrieve",
+            "query": "What is the reference code of the Cedar visit?",
+            "pass": 1,
+            "chunkIds": [
+              "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+              "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f"
+            ]
+          },
+          {
+            "node": "grade_chunks",
+            "grades": [
+              {
+                "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+                "relevant": true,
+                "evidence": "The Cedar visit reference code is SYN-CASE-7F29."
+              },
+              {
+                "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+                "relevant": false,
+                "evidence": ""
+              },
+              {
+                "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+                "relevant": false,
+                "evidence": ""
+              },
+              {
+                "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+                "relevant": false,
+                "evidence": ""
+              },
+              {
+                "chunkId": "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+                "relevant": false,
+                "evidence": ""
+              }
+            ]
+          },
+          {
+            "node": "generate_answer"
+          }
+        ],
+        "retryCount": 0
+      }
+    },
+    {
+      "tool": "index_folder",
+      "reindexUnchanged": 45,
+      "pathTraversalRejected": true
+    }
+  ]
+}

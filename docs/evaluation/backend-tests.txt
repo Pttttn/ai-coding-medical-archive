@@ -1,0 +1,13 @@
+Backend final verification summary after explicit consultation selection fix
+Recorded UTC: 2026-09-19T09:46:58.9949415Z
+Source: actual local command results; this file contains only the safe summary.
+Dedicated synthetic PostgreSQL 16 database; no personal archive.
+AI: explicit unit-double; no real model calls in the suite.
+Command: npm test
+Test Suites: 2 passed, 2 total
+Tests: 48 passed, 48 total (21 unit + 27 PostgreSQL integration)
+Snapshots: 0 total
+Time: 17.834 s
+Tests exit code: 0
+ESLint + TypeScript exit code: 0
+Production build exit code: 0

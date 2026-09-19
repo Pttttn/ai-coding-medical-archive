@@ -1,0 +1,27 @@
+{
+  "documents": [
+    {
+      "id": "5666b92b-e594-407c-84f1-a951144bf5a0",
+      "source": "SYNTHETIC acceptance record 20260919T094939",
+      "indexed_at": "2026-09-19T09:49:55.296404+00:00"
+    }
+  ],
+  "copperChunks": [
+    {
+      "id": "f7e37dc0586bc4942cfbe83d3f9e8b2032405f3b0969c82faad25d10e57aaf5a",
+      "document_id": "5666b92b-e594-407c-84f1-a951144bf5a0",
+      "text": "SYNTHETIC SOFTWARE TEST, not medical advice. Patient: Alex Example. Document date: 2025-06-17. The unique Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. Dizziness is explicitly denied. Medication intake is unknown. Synthetic test instance: dd4c48a2c7134dbc955ba741612b7056",
+      "metadata": {
+        "chunkId": "f7e37dc0586bc4942cfbe83d3f9e8b2032405f3b0969c82faad25d10e57aaf5a",
+        "documentId": "5666b92b-e594-407c-84f1-a951144bf5a0",
+        "source": "SYNTHETIC acceptance record 20260919T094939",
+        "version": 1,
+        "position": 1,
+        "pageNumber": 0,
+        "userCorrection": false
+      }
+    }
+  ],
+  "totalDocuments": 37,
+  "totalChunks": 42
+}

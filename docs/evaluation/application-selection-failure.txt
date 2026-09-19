@@ -1,0 +1,21 @@
+PASS dashboard seed
+PASS server pagination
+PASS swagger local
+PASS backend validation
+PASS real note extraction and indexing
+PASS full text search
+PASS real archive RAG citations
+PASS fact correction audit
+PASS real reprocess preserves correction
+PASS source quotation immutable
+PASS metadata update
+Traceback (most recent call last):
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 128, in <module>
+    main()
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 97, in main
+    preparation = request("POST", "/api/consultations/prepare", {"question": "Summarize the Copper Finch visit for patient Alex Example, email alex@example.test.", "documentIds": [document_id]})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 36, in request
+    assert 200 <= code < 300, (method, path, code, raw[:300])
+           ^^^^^^^^^^^^^^^^^
+AssertionError: ('POST', '/api/consultations/prepare', 400, b'{"message":"\xd0\x9d\xd0\xb5 \xd0\xbd\xd0\xb0\xd0\xb9\xd0\xb4\xd0\xb5\xd0\xbd\xd1\x8b \xd1\x80\xd0\xb5\xd0\xbb\xd0\xb5\xd0\xb2\xd0\xb0\xd0\xbd\xd1\x82\xd0\xbd\xd1\x8b\xd0\xb5 \xd0\xb3\xd0\xbe\xd1\x82\xd0\xbe\xd0\xb2\xd1\x8b\xd0\xb5 \xd0\xb4\xd0\xbe\xd0\xba\xd1\x83\xd0\xbc\xd0\xb5\xd0\xbd\xd1\x82\xd1\x8b. \xd0\xa3\xd1\x82\xd0\xbe\xd1\x87\xd0\xbd\xd0\xb8\xd1\x82\xd0\xb5 \xd0\xb2\xd0\xbe\xd0\xbf\xd1\x80\xd0\xbe\xd1\x81.","code":"INSUFFICIENT_CONTEXT","statusCode":400}')

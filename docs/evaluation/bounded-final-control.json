@@ -1,0 +1,2051 @@
+{
+  "provider": "real-local-ollama",
+  "models": {
+    "ollama": true,
+    "ready": true,
+    "llmModel": "qwen2.5:3b",
+    "embeddingModel": "nomic-embed-text",
+    "models": [
+      {
+        "name": "qwen2.5:3b",
+        "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    ]
+  },
+  "config": {
+    "chunkSize": 900,
+    "chunkOverlap": 120,
+    "retrievalK": 5,
+    "minRelevantChunks": 1
+  },
+  "indexing": {
+    "indexed": 0,
+    "unchanged": 45,
+    "removed": 0,
+    "skipped": [],
+    "errors": [],
+    "files": 45,
+    "chunks": 777,
+    "lastIndexedAt": "2026-09-19T08:49:01.272885+00:00",
+    "corpus": "mcp_demo",
+    "embeddingModel": "nomic-embed-text",
+    "chunkSize": 900,
+    "chunkOverlap": 120
+  },
+  "retrievalOnly": false,
+  "results": [
+    {
+      "id": "fact-01",
+      "category": "exact_fact",
+      "question": "What is the reference code of the Cedar visit?",
+      "expected": "SYN-CASE-7F29",
+      "expectedSources": [
+        "visits/visit-01.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-01.md",
+        "overview.md",
+        "visits/conflict-a.md",
+        "diary/2025-12.md",
+        "visits/conflict-b.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Cedar visit reference code is SYN-CASE-7F29. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-01.md",
+          "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit reference code is SYN-CASE-7F29.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What is the reference code of the Cedar visit?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What is the reference code of the Cedar visit?",
+          "pass": 1,
+          "chunkIds": [
+            "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+            "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+            "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+              "relevant": true,
+              "evidence": "The Cedar visit reference code is SYN-CASE-7F29.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 2.609
+    },
+    {
+      "id": "fact-02",
+      "category": "exact_fact",
+      "question": "How many weeks until the Amber follow-up?",
+      "expected": "11",
+      "expectedSources": [
+        "visits/visit-02.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-02.md",
+        "overview.md",
+        "diary/2024-01.md",
+        "diary/2025-06.md",
+        "diary/2024-01.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-02.md",
+          "chunkId": "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "How many weeks until the Amber follow-up?"
+        },
+        {
+          "node": "retrieve",
+          "query": "How many weeks until the Amber follow-up?",
+          "pass": 1,
+          "chunkIds": [
+            "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+            "8a4e3811a2b03a8882be7eea1aa3b0abdf5c367432fc814291ba8acc444d9769",
+            "9ec0c84a4885bd35f4988bb5b498c0156718babc1979446e14803bdc528625f4"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+              "relevant": true,
+              "evidence": "The Amber follow-up interval is 11 weeks.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "8a4e3811a2b03a8882be7eea1aa3b0abdf5c367432fc814291ba8acc444d9769",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9ec0c84a4885bd35f4988bb5b498c0156718babc1979446e14803bdc528625f4",
+              "relevant": true,
+              "evidence": "The exact time of the walk was not recorded; this missing value must remain unknown.",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.063
+    },
+    {
+      "id": "fact-03",
+      "category": "exact_fact",
+      "question": "How many evening observations are in the Saffron notebook?",
+      "expected": "37",
+      "expectedSources": [
+        "visits/visit-03.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-03.md",
+        "diary/2025-12.md",
+        "diary/2024-01.md",
+        "diary/2025-06.md",
+        "diary/2024-05.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Saffron notebook contains 37 evening observations. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-03.md",
+          "chunkId": "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Saffron notebook\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "How many evening observations are in the Saffron notebook?"
+        },
+        {
+          "node": "retrieve",
+          "query": "How many evening observations are in the Saffron notebook?",
+          "pass": 1,
+          "chunkIds": [
+            "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+            "57dcfa64b9e00769f1a2d33fe71561a055102153f0190fcf6020c77afa5a2b04",
+            "ea646762be9486c0af37172f11d1f34f0e1f2fdbc68918dae74f12c2857aba3c",
+            "3817fc8e9204f75d237e9466db6463d813432f9188e74bedd45454e2f6a5b722",
+            "6ba12749beefadcc7cea20817ecf11471bf133201da13634eacfa79c76e31177"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+              "relevant": true,
+              "evidence": "The Saffron notebook contains 37 evening observations.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "57dcfa64b9e00769f1a2d33fe71561a055102153f0190fcf6020c77afa5a2b04",
+              "relevant": true,
+              "evidence": "The notebook contains 4 observations for this day, with 0 questions left for a future discussion.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ea646762be9486c0af37172f11d1f34f0e1f2fdbc68918dae74f12c2857aba3c",
+              "relevant": true,
+              "evidence": "The notebook contains 3 observations for this day, with 2 questions left for a future discussion.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "3817fc8e9204f75d237e9466db6463d813432f9188e74bedd45454e2f6a5b722",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "6ba12749beefadcc7cea20817ecf11471bf133201da13634eacfa79c76e31177",
+              "relevant": true,
+              "evidence": "The notebook contains 4 observations for this day, with 2 questions left for a future discussion.",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.25
+    },
+    {
+      "id": "fact-04",
+      "category": "exact_fact",
+      "question": "On what date was the Juniper laboratory sample collected?",
+      "expected": "2024-02-17",
+      "expectedSources": [
+        "visits/visit-04.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-04.md",
+        "schemas/reference.js",
+        "visits/visit-11.md",
+        "diary/2024-01.md",
+        "visits/conflict-a.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Juniper laboratory sample was collected on 2024-02-17. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-04.md",
+          "chunkId": "a9a45cddc2c602fe188844ebc85ce6a9e11afa099f0105c3a7873437abebfc84",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Juniper laboratory\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Juniper laboratory sample was collected on 2024-02-17.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "On what date was the Juniper laboratory sample collected?\nWhen was the Juniper laboratory sample collected?"
+        },
+        {
+          "node": "retrieve",
+          "query": "On what date was the Juniper laboratory sample collected?\nWhen was the Juniper laboratory sample collected?",
+          "pass": 1,
+          "chunkIds": [
+            "a9a45cddc2c602fe188844ebc85ce6a9e11afa099f0105c3a7873437abebfc84",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "6ff05d8deb71d2df041ae8c1aa7522af55aa8786928ff37039d18cd0a2b1fdc4",
+            "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+            "dc16912c0816a3205bda3f91423d038702025e024f5fdca5c649a6f33052cbe0"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "a9a45cddc2c602fe188844ebc85ce6a9e11afa099f0105c3a7873437abebfc84",
+              "relevant": true,
+              "evidence": "The Juniper laboratory sample was collected on 2024-02-17.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "6ff05d8deb71d2df041ae8c1aa7522af55aa8786928ff37039d18cd0a2b1fdc4",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "dc16912c0816a3205bda3f91423d038702025e024f5fdca5c649a6f33052cbe0",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 0.984
+    },
+    {
+      "id": "fact-05",
+      "category": "exact_fact",
+      "question": "How long is the route recorded in the Willow walking diary?",
+      "expected": "1730",
+      "expectedSources": [
+        "visits/visit-05.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-05.md",
+        "diary/2025-12.md",
+        "visits/conflict-a.md",
+        "diary/2024-01.md",
+        "diary/2025-08.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Willow walking diary records a route of 1730 metres. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-05.md",
+          "chunkId": "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Willow walking diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Willow walking diary records a route of 1730 metres.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "How long is the route recorded in the Willow walking diary?\nHow long was the route recorded in the Willow walking diary?"
+        },
+        {
+          "node": "retrieve",
+          "query": "How long is the route recorded in the Willow walking diary?\nHow long was the route recorded in the Willow walking diary?",
+          "pass": 1,
+          "chunkIds": [
+            "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+            "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+            "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+            "9ec0c84a4885bd35f4988bb5b498c0156718babc1979446e14803bdc528625f4",
+            "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+              "relevant": true,
+              "evidence": "The Willow walking diary records a route of 1730 metres.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "relevant": true,
+              "evidence": "The exact time of the walk was not recorded; this missing value must remain unknown.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "relevant": true,
+              "evidence": "The Spruce observation initially records 17 minutes of walking on 2025-04-03.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9ec0c84a4885bd35f4988bb5b498c0156718babc1979446e14803bdc528625f4",
+              "relevant": true,
+              "evidence": "The recorded walk lasted 21 minutes.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.203
+    },
+    {
+      "id": "fact-06",
+      "category": "exact_fact",
+      "question": "In which room did the Birch appointment take place?",
+      "expected": "B-217",
+      "expectedSources": [
+        "visits/visit-06.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-06.md",
+        "diary/2024-04.md",
+        "diary/2025-12.md",
+        "diary/2024-07.md",
+        "visits/visit-01.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Birch appointment took place in room B-217. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-06.md",
+          "chunkId": "7da85b318010e665c8776cd69768944f6543103cdbd1f1e49d8a70a2bdd6850a",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Birch appointment\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Birch appointment took place in room B-217.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "In which room did the Birch appointment take place?"
+        },
+        {
+          "node": "retrieve",
+          "query": "In which room did the Birch appointment take place?",
+          "pass": 1,
+          "chunkIds": [
+            "7da85b318010e665c8776cd69768944f6543103cdbd1f1e49d8a70a2bdd6850a",
+            "9a0226cc50644c13ce107125bbf45f66c5be8f00eaee56845da434bcb6235989",
+            "57dcfa64b9e00769f1a2d33fe71561a055102153f0190fcf6020c77afa5a2b04",
+            "b6b7affdc1fb08de96b5770252a4b95d35e65661d9e95f1ce303d836d969c0c7",
+            "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "7da85b318010e665c8776cd69768944f6543103cdbd1f1e49d8a70a2bdd6850a",
+              "relevant": true,
+              "evidence": "The Birch appointment took place in room B-217.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9a0226cc50644c13ce107125bbf45f66c5be8f00eaee56845da434bcb6235989",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "57dcfa64b9e00769f1a2d33fe71561a055102153f0190fcf6020c77afa5a2b04",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "b6b7affdc1fb08de96b5770252a4b95d35e65661d9e95f1ce303d836d969c0c7",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 0.984
+    },
+    {
+      "id": "fact-07",
+      "category": "exact_fact",
+      "question": "What is the Orchid synthetic measurement result in mmol/L?",
+      "expected": "4.73",
+      "expectedSources": [
+        "visits/visit-07.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-07.md",
+        "visits/conflict-a.md",
+        "overview.md",
+        "visits/visit-12.md",
+        "visits/visit-02.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Orchid synthetic measurement result is 4.73 mmol/L. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-07.md",
+          "chunkId": "292844d1cb07e32b1e604681fbc067d7d8b59d4ca1530522da9340358889269c",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Orchid measurement\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Orchid synthetic measurement result is 4.73 mmol/L.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What is the Orchid synthetic measurement result in mmol/L?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What is the Orchid synthetic measurement result in mmol/L?",
+          "pass": 1,
+          "chunkIds": [
+            "292844d1cb07e32b1e604681fbc067d7d8b59d4ca1530522da9340358889269c",
+            "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "93f664f729766870065d89b6c540276dce6f5550a21cfba1da56b2bc39e2d80e",
+            "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "292844d1cb07e32b1e604681fbc067d7d8b59d4ca1530522da9340358889269c",
+              "relevant": true,
+              "evidence": "The Orchid synthetic measurement result is 4. 73 mmol/L.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "93f664f729766870065d89b6c540276dce6f5550a21cfba1da56b2bc39e2d80e",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 0.938
+    },
+    {
+      "id": "fact-08",
+      "category": "exact_fact",
+      "question": "What colour notebook is specified in the Maple instructions?",
+      "expected": "violet",
+      "expectedSources": [
+        "visits/visit-08.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-08.md",
+        "diary/2025-03.md",
+        "diary/2025-12.md",
+        "diary/2024-08.md",
+        "diary/2024-01.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Maple instructions specify a violet notebook with a triangle on its cover. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-08.md",
+          "chunkId": "c87ae9c9f4a3fe7d652b6331f888412a530915af44eb20d72dd3d37486018017",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Maple instructions\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Maple instructions specify a violet notebook with a triangle on its cover.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What colour notebook is specified in the Maple instructions?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What colour notebook is specified in the Maple instructions?",
+          "pass": 1,
+          "chunkIds": [
+            "c87ae9c9f4a3fe7d652b6331f888412a530915af44eb20d72dd3d37486018017",
+            "7c3b193e01d6fe26669a2d292fd208829cc848dde76a4b5cb50c056a4994df4a",
+            "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+            "16cac59ce121dcb27e57db44fb3e5b796b12694f7f692c7d377c99c738273044",
+            "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "c87ae9c9f4a3fe7d652b6331f888412a530915af44eb20d72dd3d37486018017",
+              "relevant": true,
+              "evidence": "The Maple instructions specify a violet notebook with a triangle on its cover.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "7c3b193e01d6fe26669a2d292fd208829cc848dde76a4b5cb50c056a4994df4a",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "16cac59ce121dcb27e57db44fb3e5b796b12694f7f692c7d377c99c738273044",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 0.969
+    },
+    {
+      "id": "fact-09",
+      "category": "exact_fact",
+      "question": "What date was scheduled for the Pine review?",
+      "expected": "2025-09-23",
+      "expectedSources": [
+        "visits/visit-09.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-09.md",
+        "diary/2024-04.md",
+        "diary/2025-12.md",
+        "diary/2024-07.md",
+        "diary/2025-06.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Pine review was scheduled for 2025-09-23. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-09.md",
+          "chunkId": "57f32bdb26bdd40172e3795d8289c7e0feac2501c79c50273ecb9e41151b96e0",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Pine review\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Pine review was scheduled for 2025-09-23.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What date was scheduled for the Pine review?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What date was scheduled for the Pine review?",
+          "pass": 1,
+          "chunkIds": [
+            "57f32bdb26bdd40172e3795d8289c7e0feac2501c79c50273ecb9e41151b96e0",
+            "9a0226cc50644c13ce107125bbf45f66c5be8f00eaee56845da434bcb6235989",
+            "57dcfa64b9e00769f1a2d33fe71561a055102153f0190fcf6020c77afa5a2b04",
+            "b6b7affdc1fb08de96b5770252a4b95d35e65661d9e95f1ce303d836d969c0c7",
+            "133f39f896fb1229f34ba4c5fc5d7a42eadef3d170de537465badb2c303502fa"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "57f32bdb26bdd40172e3795d8289c7e0feac2501c79c50273ecb9e41151b96e0",
+              "relevant": true,
+              "evidence": "The Pine review was scheduled for 2025-09-23.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9a0226cc50644c13ce107125bbf45f66c5be8f00eaee56845da434bcb6235989",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "57dcfa64b9e00769f1a2d33fe71561a055102153f0190fcf6020c77afa5a2b04",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "b6b7affdc1fb08de96b5770252a4b95d35e65661d9e95f1ce303d836d969c0c7",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "133f39f896fb1229f34ba4c5fc5d7a42eadef3d170de537465badb2c303502fa",
+              "relevant": true,
+              "evidence": "2025-06-08 — entry DAY-0525",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.078
+    },
+    {
+      "id": "fact-10",
+      "category": "exact_fact",
+      "question": "How many prepared questions does the Hazel transcript contain?",
+      "expected": "9",
+      "expectedSources": [
+        "visits/visit-10.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-10.md",
+        "diary/2024-04.md",
+        "visits/visit-08.md",
+        "diary/2024-07.md",
+        "overview.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Hazel transcript contains exactly 9 prepared questions. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-10.md",
+          "chunkId": "3e66eeba81dda2416f7a9855baff8776f60241f1e037fd9a1014b39b8ab9c4ed",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Hazel transcript\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Hazel transcript contains exactly 9 prepared questions.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "How many prepared questions does the Hazel transcript contain?"
+        },
+        {
+          "node": "retrieve",
+          "query": "How many prepared questions does the Hazel transcript contain?",
+          "pass": 1,
+          "chunkIds": [
+            "3e66eeba81dda2416f7a9855baff8776f60241f1e037fd9a1014b39b8ab9c4ed",
+            "9a0226cc50644c13ce107125bbf45f66c5be8f00eaee56845da434bcb6235989",
+            "c87ae9c9f4a3fe7d652b6331f888412a530915af44eb20d72dd3d37486018017",
+            "b6b7affdc1fb08de96b5770252a4b95d35e65661d9e95f1ce303d836d969c0c7",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "3e66eeba81dda2416f7a9855baff8776f60241f1e037fd9a1014b39b8ab9c4ed",
+              "relevant": true,
+              "evidence": "The Hazel transcript contains exactly 9 prepared questions.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9a0226cc50644c13ce107125bbf45f66c5be8f00eaee56845da434bcb6235989",
+              "relevant": true,
+              "evidence": "The notebook contains 4 observations for this day, with 2 questions left for a future discussion.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "c87ae9c9f4a3fe7d652b6331f888412a530915af44eb20d72dd3d37486018017",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "b6b7affdc1fb08de96b5770252a4b95d35e65661d9e95f1ce303d836d969c0c7",
+              "relevant": true,
+              "evidence": "The notebook contains 1 observations for this day, with 2 questions left for a future discussion.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.234
+    },
+    {
+      "id": "fact-11",
+      "category": "exact_fact",
+      "question": "Was dizziness reported in the Rowan diary on 2025-01-14?",
+      "expected": "no dizziness",
+      "expectedSources": [
+        "visits/visit-11.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-11.md",
+        "diary/2025-02.md",
+        "diary/2025-01.md",
+        "diary/2025-05.md",
+        "diary/2024-01.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe participant explicitly denied dizziness during this observation. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "diary/2025-02.md",
+          "chunkId": "b8dea9a0d1ab8bf9e8ce4fee952e28f409748cc8919b5a70244a31b56a1c1b2b",
+          "position": 15,
+          "pageNumber": null,
+          "text": "## 2025-02-14 — entry DAY-0411\nOn this observation date the fictional participant prepared questions for the next appointment and described feeling busy with household tasks. The recorded walk lasted 39 minutes. Estimated sleep was 8.00 hours, and the self-reported energy score was 7 out of 10. The notebook contains 3 observations for this day, with 2 questions left for a future discussion.\nThe pulse measurement was omitted; this missing value must remain unknown. The participant explicitly denied dizziness during this observation. No new diagnosis was established in the diary. This entry records what was written and does not infer causation from sleep, walking or energy. Planned actions and actual actions are separate: the notebook mentions a plan to review the previous 5 days, but completion of that review is not documented. The daily source label is OBS-2025-02-14.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "Was dizziness reported in the Rowan diary on 2025-01-14?"
+        },
+        {
+          "node": "retrieve",
+          "query": "Was dizziness reported in the Rowan diary on 2025-01-14?",
+          "pass": 1,
+          "chunkIds": [
+            "cb4d0c7cce0ba9a796ca3cd118ce0880ca8809a343e894032858b55032a8efd8",
+            "b8dea9a0d1ab8bf9e8ce4fee952e28f409748cc8919b5a70244a31b56a1c1b2b",
+            "47701098e2f68af7ba1f693ab3785173f53543879c12ee2506eac8c91fa300e2",
+            "05bc3d3368d62dc488edf110f007bd2449268d1ddf5d402d278850e44cae824e",
+            "9ec0c84a4885bd35f4988bb5b498c0156718babc1979446e14803bdc528625f4"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "cb4d0c7cce0ba9a796ca3cd118ce0880ca8809a343e894032858b55032a8efd8",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "b8dea9a0d1ab8bf9e8ce4fee952e28f409748cc8919b5a70244a31b56a1c1b2b",
+              "relevant": true,
+              "evidence": "The participant explicitly denied dizziness during this observation.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "47701098e2f68af7ba1f693ab3785173f53543879c12ee2506eac8c91fa300e2",
+              "relevant": true,
+              "evidence": "The participant explicitly denied dizziness during this observation.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "05bc3d3368d62dc488edf110f007bd2449268d1ddf5d402d278850e44cae824e",
+              "relevant": true,
+              "evidence": "The participant explicitly denied dizziness during this observation.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9ec0c84a4885bd35f4988bb5b498c0156718babc1979446e14803bdc528625f4",
+              "relevant": true,
+              "evidence": "The participant explicitly denied dizziness during this observation.",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": true,
+      "seconds": 1.235
+    },
+    {
+      "id": "fact-12",
+      "category": "exact_fact",
+      "question": "What dose does the Elm prescription state and is actual intake confirmed?",
+      "expected": "2.5",
+      "expectedSources": [
+        "visits/visit-12.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-12.md",
+        "notes/source-policy.txt",
+        "visits/visit-07.md",
+        "schemas/catalog.json",
+        "diary/2024-01.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Elm prescription says 2.5 mg once daily, but actual intake is unknown. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-12.md",
+          "chunkId": "93f664f729766870065d89b6c540276dce6f5550a21cfba1da56b2bc39e2d80e",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Elm prescription\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Elm prescription says 2.5 mg once daily, but actual intake is unknown.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What dose does the Elm prescription state and is actual intake confirmed?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What dose does the Elm prescription state and is actual intake confirmed?",
+          "pass": 1,
+          "chunkIds": [
+            "93f664f729766870065d89b6c540276dce6f5550a21cfba1da56b2bc39e2d80e",
+            "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+            "292844d1cb07e32b1e604681fbc067d7d8b59d4ca1530522da9340358889269c",
+            "7e3ef041fe95a6b5d1c686315701ce616c29dcf6d71cadf872f6734d5e136110",
+            "1f436083d5607aa8fe25dc3ea1e7742eb6d058915ed85987032efbc749d567c1"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "93f664f729766870065d89b6c540276dce6f5550a21cfba1da56b2bc39e2d80e",
+              "relevant": true,
+              "evidence": "The Elm prescription says 2.5 mg once daily, but actual intake is unknown.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "292844d1cb07e32b1e604681fbc067d7d8b59d4ca1530522da9340358889269c",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "7e3ef041fe95a6b5d1c686315701ce616c29dcf6d71cadf872f6734d5e136110",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "1f436083d5607aa8fe25dc3ea1e7742eb6d058915ed85987032efbc749d567c1",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.125
+    },
+    {
+      "id": "paraphrase-01",
+      "category": "paraphrase",
+      "question": "What identifier lets me look up the Cedar encounter?",
+      "expected": "SYN-CASE-7F29",
+      "expectedSources": [
+        "visits/visit-01.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-01.md",
+        "visits/visit-04.md",
+        "visits/visit-03.md",
+        "visits/visit-06.md",
+        "visits/visit-05.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Cedar visit reference code is SYN-CASE-7F29. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-01.md",
+          "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit reference code is SYN-CASE-7F29.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What identifier lets me look up the Cedar encounter?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What identifier lets me look up the Cedar encounter?",
+          "pass": 1,
+          "chunkIds": [
+            "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+            "a9a45cddc2c602fe188844ebc85ce6a9e11afa099f0105c3a7873437abebfc84",
+            "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+            "7da85b318010e665c8776cd69768944f6543103cdbd1f1e49d8a70a2bdd6850a",
+            "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+              "relevant": true,
+              "evidence": "The Cedar visit reference code is SYN-CASE-7F29.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "a9a45cddc2c602fe188844ebc85ce6a9e11afa099f0105c3a7873437abebfc84",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "7da85b318010e665c8776cd69768944f6543103cdbd1f1e49d8a70a2bdd6850a",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 0.937
+    },
+    {
+      "id": "paraphrase-02",
+      "category": "paraphrase",
+      "question": "How long is the waiting period before returning for Amber?",
+      "expected": "11",
+      "expectedSources": [
+        "visits/visit-02.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-02.md",
+        "overview.md",
+        "diary/2024-01.md",
+        "visits/conflict-b.md",
+        "diary/2024-02.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-02.md",
+          "chunkId": "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "How long is the waiting period before returning for Amber?"
+        },
+        {
+          "node": "retrieve",
+          "query": "How long is the waiting period before returning for Amber?",
+          "pass": 1,
+          "chunkIds": [
+            "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+            "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+            "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+              "relevant": true,
+              "evidence": "The Amber follow-up interval is 11 weeks.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 0.984
+    },
+    {
+      "id": "overview-01",
+      "category": "overview",
+      "question": "What kinds of records are in this synthetic archive?",
+      "expected": "diary",
+      "expectedSources": [
+        "overview.md"
+      ],
+      "retrievedSources": [
+        "overview.md",
+        "visits/visit-03.md",
+        "visits/visit-11.md",
+        "visits/visit-10.md",
+        "visits/visit-06.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Saffron notebook contains 37 evening observations. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-03.md",
+          "chunkId": "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Saffron notebook\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What kinds of records are in this synthetic archive?\nWhat kinds of records are in this synthetic medical archive?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What kinds of records are in this synthetic archive?\nWhat kinds of records are in this synthetic medical archive?",
+          "pass": 1,
+          "chunkIds": [
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+            "7da85b318010e665c8776cd69768944f6543103cdbd1f1e49d8a70a2bdd6850a",
+            "cb4d0c7cce0ba9a796ca3cd118ce0880ca8809a343e894032858b55032a8efd8",
+            "3e66eeba81dda2416f7a9855baff8776f60241f1e037fd9a1014b39b8ab9c4ed"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9a0fa6bd508a0a1cd60add28c759216633197a3f66169ec5709171cd4adc5761",
+              "relevant": true,
+              "evidence": "The Saffron notebook contains 37 evening observations.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "7da85b318010e665c8776cd69768944f6543103cdbd1f1e49d8a70a2bdd6850a",
+              "relevant": true,
+              "evidence": "This record reports only the named encounter. It does not establish a diagnosis or confirm medication use.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "cb4d0c7cce0ba9a796ca3cd118ce0880ca8809a343e894032858b55032a8efd8",
+              "relevant": true,
+              "evidence": "The Rowan diary records no dizziness on 2025-01-14.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "3e66eeba81dda2416f7a9855baff8776f60241f1e037fd9a1014b39b8ab9c4ed",
+              "relevant": true,
+              "evidence": "The Hazel transcript contains exactly 9 prepared questions.",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": true,
+      "seconds": 1.235
+    },
+    {
+      "id": "multi-01",
+      "category": "multiple_sources",
+      "question": "Give the Cedar reference code and the Amber follow-up interval.",
+      "expected": "SYN-CASE-7F29",
+      "expectedSources": [
+        "visits/visit-01.md",
+        "visits/visit-02.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-02.md",
+        "visits/visit-01.md",
+        "overview.md",
+        "diary/2024-01.md",
+        "visits/conflict-a.md"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [1]\n\nThe Cedar visit reference code is SYN-CASE-7F29. [2]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-02.md",
+          "chunkId": "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        },
+        {
+          "citation": 2,
+          "source": "visits/visit-01.md",
+          "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit reference code is SYN-CASE-7F29.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "Give the Cedar reference code and the Amber follow-up interval."
+        },
+        {
+          "node": "retrieve",
+          "query": "Give the Cedar reference code and the Amber follow-up interval.",
+          "pass": 1,
+          "chunkIds": [
+            "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+            "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+            "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "bc87bde5c8cfb0fd02c161be3a7cf8ddd3fd747658c7c4b3e973b824e6db8019",
+              "relevant": true,
+              "evidence": "The Amber follow-up interval is 11 weeks.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+              "relevant": true,
+              "evidence": "The Cedar visit reference code is SYN-CASE-7F29.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": true,
+              "evidence": "The Cedar and Amber encounters are separate; their facts must not be merged.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.172
+    },
+    {
+      "id": "negation-01",
+      "category": "negation",
+      "question": "Does the Elm prescription prove the medication was taken?",
+      "expected": "unknown",
+      "expectedSources": [
+        "visits/visit-12.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-12.md",
+        "notes/source-policy.txt",
+        "diary/2024-01.md",
+        "visits/visit-05.md",
+        "diary/2024-01.md"
+      ],
+      "sourceRecall": true,
+      "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+      "sources": [],
+      "insufficientContext": true,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "Does the Elm prescription prove the medication was taken?\nDoes the Elm prescription indicate the medication was taken?"
+        },
+        {
+          "node": "retrieve",
+          "query": "Does the Elm prescription prove the medication was taken?\nDoes the Elm prescription indicate the medication was taken?",
+          "pass": 1,
+          "chunkIds": [
+            "93f664f729766870065d89b6c540276dce6f5550a21cfba1da56b2bc39e2d80e",
+            "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+            "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+            "1f436083d5607aa8fe25dc3ea1e7742eb6d058915ed85987032efbc749d567c1",
+            "2a766f589a5f049928a1e5596353b52ea61040cc27b4196e9173ab5516b06c03"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "93f664f729766870065d89b6c540276dce6f5550a21cfba1da56b2bc39e2d80e",
+              "relevant": true,
+              "evidence": "The Elm prescription says 2.5 mg once daily, but actual intake is unknown.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+              "relevant": true,
+              "evidence": "Synthetic source policy: a prescription is not evidence of intake.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "1f436083d5607aa8fe25dc3ea1e7742eb6d058915ed85987032efbc749d567c1",
+              "relevant": true,
+              "evidence": "No medication intake was recorded; this missing value must remain unknown.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "2a766f589a5f049928a1e5596353b52ea61040cc27b4196e9173ab5516b06c03",
+              "relevant": true,
+              "evidence": "No medication intake was recorded; this missing value must remain unknown.",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": false,
+      "seconds": 1.015
+    },
+    {
+      "id": "conflict-01",
+      "category": "contradiction",
+      "question": "What were the original and corrected Spruce walking durations?",
+      "expected": "19",
+      "expectedSources": [
+        "visits/conflict-a.md",
+        "visits/conflict-b.md"
+      ],
+      "retrievedSources": [
+        "visits/conflict-b.md",
+        "visits/conflict-a.md",
+        "notes/source-policy.txt",
+        "visits/visit-05.md",
+        "schemas/reference.py"
+      ],
+      "sourceRecall": true,
+      "answer": "Archive evidence:\n\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/conflict-b.md",
+          "chunkId": "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Synthetic Spruce corrected note\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. This is a user correction, not a new source quotation.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What were the original and corrected Spruce walking durations?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What were the original and corrected Spruce walking durations?",
+          "pass": 1,
+          "chunkIds": [
+            "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+            "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+            "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+            "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+            "6596a6ff5a2d9973e888b168d7d519d6e7699ff8949914c2435519da1924aef7"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f",
+              "relevant": true,
+              "evidence": "A later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ca277978545de405ccc47578dd22c558271068dd20f6129c49acbae375909bef",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "6596a6ff5a2d9973e888b168d7d519d6e7699ff8949914c2435519da1924aef7",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": true,
+      "seconds": 1.094
+    },
+    {
+      "id": "missing-01",
+      "category": "missing",
+      "question": "What is the fictional participant's blood group?",
+      "expected": null,
+      "expectedSources": [],
+      "retrievedSources": [
+        "diary/2024-02.md",
+        "diary/2025-01.md",
+        "diary/2024-03.md",
+        "diary/2025-12.md",
+        "diary/2024-05.md"
+      ],
+      "sourceRecall": true,
+      "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+      "sources": [],
+      "insufficientContext": true,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What is the fictional participant's blood group?\nWhat is the blood group of the fictional participant?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What is the fictional participant's blood group?\nWhat is the blood group of the fictional participant?",
+          "pass": 1,
+          "chunkIds": [
+            "09fcbc6f999b9d7eb2b93c44b6fef148c8b1dcee1a19b496496ea95d9f4b9678",
+            "e0a1bda7761a49302ff3bb1f37e1c19f8bb1def273e624a22df701d7d1c8aa97",
+            "7ef15f9463fc103786bf0bb0950437cae1d63c13bdbd1d32ac0094886aecaae1",
+            "bd25349ca3b0d0dce146fc08c7130033c0cdc739422fb0460d4bf9ba2b62c364",
+            "871f263c12bcfe1f757b38c61c9203410d7cf5dc53351b3066c87b89df641b90"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "09fcbc6f999b9d7eb2b93c44b6fef148c8b1dcee1a19b496496ea95d9f4b9678",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "e0a1bda7761a49302ff3bb1f37e1c19f8bb1def273e624a22df701d7d1c8aa97",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "7ef15f9463fc103786bf0bb0950437cae1d63c13bdbd1d32ac0094886aecaae1",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "bd25349ca3b0d0dce146fc08c7130033c0cdc739422fb0460d4bf9ba2b62c364",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "871f263c12bcfe1f757b38c61c9203410d7cf5dc53351b3066c87b89df641b90",
+              "relevant": true,
+              "evidence": "No blood pressure measurement was taken; this missing value must remain unknown.",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 0.812
+    },
+    {
+      "id": "unrelated-01",
+      "category": "unrelated",
+      "question": "What is the capital of Argentina?",
+      "expected": null,
+      "expectedSources": [],
+      "retrievedSources": [
+        "diary/2025-12.md",
+        "schemas/index.yaml",
+        "diary/2024-01.md",
+        "visits/conflict-a.md",
+        "diary/2024-02.md"
+      ],
+      "sourceRecall": true,
+      "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+      "sources": [],
+      "insufficientContext": true,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "What is the capital of Argentina?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What is the capital of Argentina?",
+          "pass": 1,
+          "chunkIds": [
+            "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+            "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+            "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+            "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+            "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "broaden_query",
+          "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?",
+          "pass": 2,
+          "chunkIds": [
+            "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+            "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+            "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "broaden_query",
+          "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?"
+        },
+        {
+          "node": "retrieve",
+          "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?",
+          "pass": 3,
+          "chunkIds": [
+            "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+            "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+            "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "212e9a0bc4a46cb714e037bfcc3ab6da572f2c27ecefb856b2e900bf0b304ca2",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "254db624d570ecb87609bfff93bdbe6f199ac3541a76a638a1d6332fc1476019",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 2,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.938
+    },
+    {
+      "id": "russian-01",
+      "category": "paraphrase",
+      "question": "Какой код указан у визита Cedar?",
+      "expected": "SYN-CASE-7F29",
+      "expectedSources": [
+        "visits/visit-01.md"
+      ],
+      "retrievedSources": [
+        "visits/visit-01.md",
+        "overview.md",
+        "diary/2024-01.md",
+        "visits/conflict-a.md",
+        "diary/2024-01.md"
+      ],
+      "sourceRecall": true,
+      "answer": "По источникам архива:\n\nThe Cedar visit reference code is SYN-CASE-7F29. [1]",
+      "sources": [
+        {
+          "citation": 1,
+          "source": "visits/visit-01.md",
+          "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+          "position": 1,
+          "pageNumber": null,
+          "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit reference code is SYN-CASE-7F29.\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.",
+          "version": 1,
+          "userCorrection": false
+        }
+      ],
+      "insufficientContext": false,
+      "trace": [
+        {
+          "node": "rewrite_query",
+          "query": "Какой код указан у визита Cedar?\nSELECT `code` WHERE `visit`='Cedar' FROM `synthetic_medical_archive`"
+        },
+        {
+          "node": "retrieve",
+          "query": "Какой код указан у визита Cedar?\nSELECT `code` WHERE `visit`='Cedar' FROM `synthetic_medical_archive`",
+          "pass": 1,
+          "chunkIds": [
+            "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+            "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+            "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+            "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+            "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d"
+          ]
+        },
+        {
+          "node": "grade_chunks",
+          "grades": [
+            {
+              "chunkId": "e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643",
+              "relevant": true,
+              "evidence": "The Cedar visit reference code is SYN-CASE-7F29.",
+              "errorCode": null
+            },
+            {
+              "chunkId": "4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "3258ec668f8e04b1ae203880a33ed879765eecc02c160699f53e46ce0b6b8dfb",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            },
+            {
+              "chunkId": "ddc41e64b731ab4030c55ea17fba172fc1c89fce1d61f00402433d1e620afed4",
+              "relevant": true,
+              "evidence": "archive_code: LMA-COPPER-608",
+              "errorCode": null
+            },
+            {
+              "chunkId": "9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d",
+              "relevant": false,
+              "evidence": "",
+              "errorCode": null
+            }
+          ]
+        },
+        {
+          "node": "generate_answer"
+        }
+      ],
+      "retryCount": 0,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "seconds": 1.187
+    }
+  ]
+}

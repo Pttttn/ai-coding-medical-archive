@@ -1,0 +1,25 @@
+{
+  "timestampUtc": "2026-09-19T09:28:02.9110739Z",
+  "inspector": {
+    "package": "@modelcontextprotocol/inspector",
+    "version": "2.7.0",
+    "mode": "CLI"
+  },
+  "server": "http://127.0.0.1:8002/mcp",
+  "transport": "http (Streamable HTTP)",
+  "modelCallsPerformed": false,
+  "commands": [
+    {
+      "command": "npx --yes @modelcontextprotocol/inspector@2.7.0 --cli http://127.0.0.1:8002/mcp --transport http --method tools/list --format json",
+      "exitCode": 0,
+      "stdout": "{\"result\":{\"tools\":[{\"name\":\"index_folder\",\"description\":\"Index synthetic medical visits, laboratory reports, prescriptions and code/data fixtures under the allowed ./sample_docs folder. Supports md, txt, py, js, ts, json, yaml and PDF. Uses local embeddings only; does not invoke a generative model. Re-index after source changes.\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"path\":{\"default\":\"./sample_docs\",\"type\":\"string\"},\"glob\":{\"default\":\"**/*\",\"type\":\"string\"}}},\"outputSchema\":{\"type\":\"object\",\"additionalProperties\":true},\"_meta\":{\"_fastmcp\":{\"tags\":[]}}},{\"name\":\"index_status\",\"description\":\"Check whether the synthetic medical archive is indexed: file/chunk counts and last indexing time. This calls no model and reads no private archive. Empty means index_folder must be called before asking about synthetic visits, lab values or prescription details.\",\"inputSchema\":{\"type\":\"object\",\"properties\":{}},\"outputSchema\":{\"type\":\"object\",\"additionalProperties\":true},\"_meta\":{\"_fastmcp\":{\"tags\":[]}}},{\"name\":\"find_relevant_docs\",\"description\":\"Find source excerpts in the synthetic medical archive about visits, blood tests, medications, recommendations and verification codes. Returns ranked text with source and position using BM25 plus vector search and RRF. No generative answer, rewrite or grading is performed.\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"query\":{\"type\":\"string\"},\"top_k\":{\"default\":5,\"type\":\"integer\"}},\"required\":[\"query\"]},\"outputSchema\":{\"type\":\"object\",\"additionalProperties\":true},\"_meta\":{\"_fastmcp\":{\"tags\":[]}}},{\"name\":\"ask_question\",\"description\":\"Answer a question about synthetic medical visits, lab measurements, treatments, dates, negations or unusual codes using local archive evidence and citations. Runs Corrective RAG: rewrite, hybrid search, per-chunk LLM grading, at most two corrective searches, then grounded answer or explicit insufficient-data response. Use for factual questions about this archive.\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"question\":{\"type\":\"string\"}},\"required\":[\"question\"]},\"outputSchema\":{\"type\":\"object\",\"additionalProperties\":true},\"_meta\":{\"_fastmcp\":{\"tags\":[]}}}]}}\r\n",
+      "stderr": "npm warn deprecated @modelcontextprotocol/server-legacy@2.0.0: This package is a frozen copy of v1's SSE transport and OAuth Authorization Server helpers for migration purposes only. Use StreamableHTTP from @modelcontextprotocol/server and a dedicated OAuth server in production. Will not receive new features.\r\n"
+    },
+    {
+      "command": "npx --yes @modelcontextprotocol/inspector@2.7.0 --cli http://127.0.0.1:8002/mcp --transport http --method tools/call --tool-name index_status --format json",
+      "exitCode": 0,
+      "stdout": "{\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"files\\\":45,\\\"chunks\\\":777,\\\"lastIndexedAt\\\":\\\"2026-09-19T09:06:30.585219+00:00\\\",\\\"corpus\\\":\\\"mcp_demo\\\",\\\"embeddingModel\\\":\\\"nomic-embed-text\\\",\\\"chunkSize\\\":900,\\\"chunkOverlap\\\":120}\"}],\"structuredContent\":{\"files\":45,\"chunks\":777,\"lastIndexedAt\":\"2026-09-19T09:06:30.585219+00:00\",\"corpus\":\"mcp_demo\",\"embeddingModel\":\"nomic-embed-text\",\"chunkSize\":900,\"chunkOverlap\":120},\"isError\":false}}\r\n",
+      "stderr": null
+    }
+  ]
+}

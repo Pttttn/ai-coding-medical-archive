@@ -1,0 +1,13 @@
+PASS dashboard seed
+PASS server pagination
+PASS swagger local
+PASS backend validation
+Traceback (most recent call last):
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 104, in <module>
+    main()
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 65, in main
+    ready(document_id)
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 49, in ready
+    assert doc["status"] not in {"FAILED", "UNSUPPORTED_OCR_REQUIRED"}, doc.get("latestJob", doc["status"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id': '497bd792-d68b-400b-9606-fa4a148630cd', 'documentId': '2def7e7a-f157-434d-8721-a239eb199612', 'operation': 'PROCESS', 'status': 'FAILED', 'attempt': 1, 'generation': 1, 'errorCode': 'EXTRACTION_INVALID', 'availableAt': None, 'createdAt': '2026-09-19T09:04:07.561Z', 'updatedAt': '2026-09-19T09:06:30.841Z'}

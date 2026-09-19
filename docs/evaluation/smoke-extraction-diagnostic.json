@@ -1,0 +1,136 @@
+{
+  "input": "SYNTHETIC SOFTWARE TEST, not medical advice. Patient: Alex Example. Document date: 2025-06-17. The unique Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. Dizziness is explicitly denied. Medication intake is unknown.",
+  "modelCalls": [
+    {
+      "payload": {
+        "title": "SYNTHETIC acceptance record 20260919T090000",
+        "pages": [
+          {
+            "pageNumber": null,
+            "text": "SYNTHETIC SOFTWARE TEST, not medical advice. Patient: Alex Example. Document date: 2025-06-17. The unique Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. Dizziness is explicitly denied. Medication intake is unknown."
+          }
+        ],
+        "validationRetry": 0,
+        "previousError": null
+      },
+      "response": {
+        "documentType": "NOTE",
+        "summary": "Alex Example's visit on 2025-06-17 includes a unique Copper Finch visit code of SYN-COPPER-931. Alex Example denied experiencing dizziness. Medication intake status is unknown.",
+        "tags": [
+          "Alex Example",
+          "SYN-COPPER-931",
+          "dizziness denied",
+          "unknown medication intake"
+        ],
+        "facts": [
+          {
+            "type": "SYMPTOM",
+            "name": "Dizziness",
+            "provenance": {
+              "sourceText": "Dizziness is explicitly denied.",
+              "page": null
+            },
+            "assertionStatus": "NEGATED"
+          },
+          {
+            "type": "MEDICATION",
+            "name": "Medication intake",
+            "provenance": {
+              "sourceText": "Medication intake is unknown.",
+              "page": null
+            },
+            "assertionStatus": "UNKNOWN"
+          },
+          {
+            "type": "MEDICATION",
+            "name": "Walking duration",
+            "provenance": {
+              "sourceText": "Walking duration: 23 minutes.",
+              "page": null
+            },
+            "assertionStatus": "CONFIRMED"
+          },
+          {
+            "type": "MEDICATION",
+            "name": "Medication",
+            "provenance": {
+              "sourceText": "Medication intake is unknown.",
+              "page": null
+            },
+            "assertionStatus": "UNKNOWN"
+          }
+        ]
+      }
+    }
+  ],
+  "result": {
+    "documentType": "NOTE",
+    "documentDate": null,
+    "summary": "Alex Example's visit on 2025-06-17 includes a unique Copper Finch visit code of SYN-COPPER-931. Alex Example denied experiencing dizziness. Medication intake status is unknown.",
+    "tags": [
+      "Alex Example",
+      "SYN-COPPER-931",
+      "dizziness denied",
+      "unknown medication intake"
+    ],
+    "facts": [
+      {
+        "type": "SYMPTOM",
+        "name": "Dizziness",
+        "valueText": null,
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Dizziness is explicitly denied."
+        }
+      },
+      {
+        "type": "MEDICATION",
+        "name": "Medication intake",
+        "valueText": null,
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "UNKNOWN",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Medication intake is unknown."
+        }
+      },
+      {
+        "type": "MEDICATION",
+        "name": "Walking duration",
+        "valueText": null,
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Walking duration: 23 minutes."
+        }
+      },
+      {
+        "type": "MEDICATION",
+        "name": "Medication",
+        "valueText": null,
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "UNKNOWN",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Medication intake is unknown."
+        }
+      }
+    ]
+  },
+  "warnings": []
+}

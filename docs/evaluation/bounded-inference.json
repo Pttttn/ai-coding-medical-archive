@@ -1,0 +1,675 @@
+{
+  "models": {
+    "ollama": true,
+    "ready": true,
+    "llmModel": "qwen2.5:3b",
+    "embeddingModel": "nomic-embed-text",
+    "models": [
+      {
+        "name": "qwen2.5:3b",
+        "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "before-removal",
+      "question": "What is the Copper Finch visit code?",
+      "result": {
+        "answer": "Archive evidence:\n\nThe Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes. [1]",
+        "sources": [
+          {
+            "citation": 1,
+            "source": "copper.md",
+            "chunkId": "93c864a59148182b856ad2ca3087c18cf74d265774ba6fb8cf6608534266d4b1",
+            "position": 1,
+            "pageNumber": null,
+            "text": "The Copper Finch visit code is SYN-COPPER-931. Walking duration: 23 minutes.",
+            "version": 1,
+            "userCorrection": false
+          }
+        ],
+        "insufficientContext": false,
+        "trace": [
+          {
+            "node": "rewrite_query",
+            "query": "What is the Copper Finch visit code?"
+          },
+          {
+            "node": "retrieve",
+            "query": "What is the Copper Finch visit code?",
+            "pass": 1,
+            "chunkIds": [
+              "93c864a59148182b856ad2ca3087c18cf74d265774ba6fb8cf6608534266d4b1",
+              "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+              "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+              "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+              "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727"
+            ]
+          },
+          {
+            "node": "grade_chunks",
+            "grades": [
+              {
+                "chunkId": "93c864a59148182b856ad2ca3087c18cf74d265774ba6fb8cf6608534266d4b1",
+                "relevant": true,
+                "evidence": "The Copper Finch visit code is SYN-COPPER-931.",
+                "errorCode": null
+              },
+              {
+                "chunkId": "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+                "relevant": true,
+                "evidence": "The Cedar visit reference code is SYN-CASE-7F29.",
+                "errorCode": null
+              },
+              {
+                "chunkId": "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              }
+            ]
+          },
+          {
+            "node": "generate_answer"
+          }
+        ],
+        "retryCount": 0
+      },
+      "seconds": 1.016,
+      "calls": [
+        {
+          "stage": "TASK: rewrite_query",
+          "numPredict": 128,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.109
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 30,
+          "seconds": 0.156
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 30,
+          "seconds": 0.157
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.093
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: generate_answer",
+          "numPredict": 1024,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 47,
+          "seconds": 0.266
+        }
+      ]
+    },
+    {
+      "id": "after-removal",
+      "question": "What is the Copper Finch visit code?",
+      "result": {
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true,
+        "trace": [
+          {
+            "node": "rewrite_query",
+            "query": "What is the Copper Finch visit code?"
+          },
+          {
+            "node": "retrieve",
+            "query": "What is the Copper Finch visit code?",
+            "pass": 1,
+            "chunkIds": [
+              "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+              "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+              "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+              "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+              "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23"
+            ]
+          },
+          {
+            "node": "grade_chunks",
+            "grades": [
+              {
+                "chunkId": "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+                "relevant": true,
+                "evidence": "The Cedar visit reference code is SYN-CASE-7F29.",
+                "errorCode": null
+              },
+              {
+                "chunkId": "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+                "relevant": true,
+                "evidence": "actual intake is unknown.",
+                "errorCode": null
+              },
+              {
+                "chunkId": "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              }
+            ]
+          },
+          {
+            "node": "generate_answer"
+          }
+        ],
+        "retryCount": 0
+      },
+      "seconds": 0.813,
+      "calls": [
+        {
+          "stage": "TASK: rewrite_query",
+          "numPredict": 128,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 30,
+          "seconds": 0.157
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.109
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 20,
+          "seconds": 0.125
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: generate_answer",
+          "numPredict": 1024,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 14,
+          "seconds": 0.109
+        }
+      ]
+    },
+    {
+      "id": "unrelated",
+      "question": "What is the capital of Argentina?",
+      "result": {
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true,
+        "trace": [
+          {
+            "node": "rewrite_query",
+            "query": "What is the capital of Argentina?"
+          },
+          {
+            "node": "retrieve",
+            "query": "What is the capital of Argentina?",
+            "pass": 1,
+            "chunkIds": [
+              "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+              "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+              "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+              "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+              "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39"
+            ]
+          },
+          {
+            "node": "grade_chunks",
+            "grades": [
+              {
+                "chunkId": "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              }
+            ]
+          },
+          {
+            "node": "broaden_query",
+            "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?"
+          },
+          {
+            "node": "retrieve",
+            "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?",
+            "pass": 2,
+            "chunkIds": [
+              "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+              "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+              "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+              "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+              "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52"
+            ]
+          },
+          {
+            "node": "grade_chunks",
+            "grades": [
+              {
+                "chunkId": "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              }
+            ]
+          },
+          {
+            "node": "broaden_query",
+            "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?"
+          },
+          {
+            "node": "retrieve",
+            "query": "What is the capital of Argentina?\nWhat is the seat of government in Argentina?",
+            "pass": 3,
+            "chunkIds": [
+              "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+              "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+              "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+              "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+              "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52"
+            ]
+          },
+          {
+            "node": "grade_chunks",
+            "grades": [
+              {
+                "chunkId": "3834b7ec7dd4e953e69356ceada8be9fcf756dfc6b1b3e47390df49178b15727",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "63ea8be2ab436247cf91f500298ae55335935fa4e81720ebf8e8bb4f8032b6b2",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "178f1f67cd44e29c0b116264f2897dcf25f2a5834ffe5928d45e337c6a5c1d23",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "5e8738ae56ce5f56a4d4f5436a2164656ce9956cf1f831b76a8e96578cb03a39",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              },
+              {
+                "chunkId": "32fef28fef2fc30e54c1ae5ebe47e1a1ad44b0df1a503eff0f72b0d986247e52",
+                "relevant": false,
+                "evidence": "",
+                "errorCode": null
+              }
+            ]
+          },
+          {
+            "node": "generate_answer"
+          }
+        ],
+        "retryCount": 2
+      },
+      "seconds": 1.828,
+      "calls": [
+        {
+          "stage": "TASK: rewrite_query",
+          "numPredict": 128,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 14,
+          "seconds": 0.109
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.093
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.109
+        },
+        {
+          "stage": "TASK: broaden_query",
+          "numPredict": 128,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 14,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.11
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.093
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: broaden_query",
+          "numPredict": 128,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 14,
+          "seconds": 0.093
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.093
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.11
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.093
+        },
+        {
+          "stage": "TASK: grade_chunks",
+          "numPredict": 256,
+          "numCtx": 8192,
+          "doneReason": "stop",
+          "evalCount": 15,
+          "seconds": 0.094
+        }
+      ]
+    },
+    {
+      "id": "one-page-pdf",
+      "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 01\nDocument date: 2024-01-12\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.10\nmmol/L\nGlucose\n4.63\nmmol/L\nLDL cholesterol 3.10 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n",
+      "pages": [
+        {
+          "pageNumber": 1,
+          "text": "LOCAL MEDICAL ARCHIVE\nSYNTHETIC DEMO - NOT A REAL PATIENT\nSynthetic laboratory report 01\nDocument date: 2024-01-12\nPatient: Alex Example\nClinic: Fictional Cedar Clinic\nTest\nResult\nUnit\nLDL cholesterol\n3.10\nmmol/L\nGlucose\n4.63\nmmol/L\nLDL cholesterol 3.10 mmol/L\nThe values are generated fixtures for software testing. They do not establish a diagnosis. A recommendation\nor prescription is not evidence of medication intake. No medical advice is provided.\n"
+        }
+      ],
+      "parserWarnings": [],
+      "result": {
+        "documentType": "LAB_REPORT",
+        "documentDate": null,
+        "summary": "LDL cholesterol and glucose levels are within normal range.",
+        "tags": [
+          "LDL cholesterol",
+          "Glucose",
+          "Normal range"
+        ],
+        "facts": [
+          {
+            "type": "MEDICATION",
+            "name": "Unknown",
+            "valueText": null,
+            "valueNumber": null,
+            "unit": null,
+            "eventDate": null,
+            "assertionStatus": "UNKNOWN",
+            "confidence": 1.0,
+            "provenance": {
+              "page": 1,
+              "sourceText": "The values are generated fixtures for software testing. They do not establish a diagnosis."
+            }
+          },
+          {
+            "type": "LAB_RESULT",
+            "name": "LDL cholesterol",
+            "valueText": null,
+            "valueNumber": null,
+            "unit": null,
+            "eventDate": null,
+            "assertionStatus": "CONFIRMED",
+            "confidence": 1.0,
+            "provenance": {
+              "page": 1,
+              "sourceText": "LDL cholesterol 3.10 mmol/L"
+            }
+          },
+          {
+            "type": "LAB_RESULT",
+            "name": "Glucose",
+            "valueText": null,
+            "valueNumber": null,
+            "unit": null,
+            "eventDate": null,
+            "assertionStatus": "CONFIRMED",
+            "confidence": 1.0,
+            "provenance": {
+              "page": 1,
+              "sourceText": "Glucose 4.63 mmol/L"
+            }
+          }
+        ]
+      },
+      "warnings": [],
+      "nonEmptyFacts": true,
+      "allFactsPage1": true,
+      "calls": [
+        {
+          "stage": "TASK: extraction",
+          "numPredict": 2048,
+          "numCtx": 16384,
+          "doneReason": "stop",
+          "evalCount": 258,
+          "seconds": 7.657
+        }
+      ],
+      "seconds": 7.672
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "os": "Майкрософт Windows 11 Pro",
+  "cpu": [
+    {
+      "Name": "13th Gen Intel(R) Core(TM) i9-13900K",
+      "NumberOfCores": 24,
+      "NumberOfLogicalProcessors": 32
+    }
+  ],
+  "memoryBytes": 137189564416,
+  "gpu": "NVIDIA GeForce RTX 5080, 16303"
+}

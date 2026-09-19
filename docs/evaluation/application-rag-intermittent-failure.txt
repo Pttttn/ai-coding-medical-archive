@@ -1,0 +1,15 @@
+PASS dashboard seed
+PASS server pagination
+PASS swagger local
+PASS backend validation
+PASS real note extraction and indexing
+PASS full text search
+Traceback (most recent call last):
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 128, in <module>
+    main()
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 79, in main
+    check("real archive RAG citations", "SYN-COPPER-931" in answer["answer"] and any(s.get("documentId") == document_id for s in answer["sources"]))
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 40, in check
+    assert condition, name
+           ^^^^^^^^^
+AssertionError: real archive RAG citations

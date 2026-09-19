@@ -1,0 +1,27 @@
+PASS dashboard seed
+PASS server pagination
+PASS swagger local
+PASS backend validation
+PASS real note extraction and indexing
+PASS full text search
+PASS real archive RAG citations
+PASS fact correction audit
+PASS real reprocess preserves correction
+PASS source quotation immutable
+PASS metadata update
+PASS privacy pass
+PASS unreviewed export blocked
+PASS reviewed exact export
+PASS edit clears review
+PASS stale review cannot export
+PASS soft delete excludes search
+Traceback (most recent call last):
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 128, in <module>
+    main()
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 113, in main
+    answer = request("POST", "/api/ask", {"question": "What is the Copper Finch visit code?"})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\otus\ai-coding\project-work\scripts\smoke.py", line 36, in request
+    assert 200 <= code < 300, (method, path, code, raw[:300])
+           ^^^^^^^^^^^^^^^^^
+AssertionError: ('POST', '/api/ask', 503, b'{"message":"\xd0\x9b\xd0\xbe\xd0\xba\xd0\xb0\xd0\xbb\xd1\x8c\xd0\xbd\xd0\xb0\xd1\x8f \xd0\xbc\xd0\xbe\xd0\xb4\xd0\xb5\xd0\xbb\xd1\x8c \xd0\xbd\xd0\xb5\xd0\xb4\xd0\xbe\xd1\x81\xd1\x82\xd1\x83\xd0\xbf\xd0\xbd\xd0\xb0","code":"MODEL_UNAVAILABLE","statusCode":503}')

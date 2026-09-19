@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-09-19T09:08:41.380345+00:00",
+  "host": "minimal local Ollama reference host",
+  "model": "qwen3.5:4b",
+  "question": "What is the reference code of the Cedar visit?",
+  "selectedTools": [
+    "ask_question"
+  ],
+  "success": true,
+  "events": [
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_esx8klei",
+            "function": {
+              "index": 0,
+              "name": "ask_question",
+              "arguments": {
+                "question": "What is the reference code of the Cedar visit?"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tool": "ask_question",
+      "arguments": {
+        "question": "What is the reference code of the Cedar visit?"
+      },
+      "result": "{\"answer\":\"Archive evidence:\\n\\nThe Cedar visit reference code is SYN-CASE-7F29. [1]\",\"sources\":[{\"citation\":1,\"source\":\"visits/visit-01.md\",\"chunkId\":\"e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643\",\"position\":1,\"pageNumber\":null,\"text\":\"# Cedar visit\\n\\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\\n\\n## Recorded observation\\nThe Cedar visit reference code is SYN-CASE-7F29.\\n\\n## Source scope\\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.\",\"version\":1,\"userCorrection\":false}],\"insufficientContext\":false,\"trace\":[{\"node\":\"rewrite_query\",\"query\":\"What is the reference code of the Cedar visit?\"},{\"node\":\"retrieve\",\"query\":\"What is the reference code of the Cedar visit?\",\"pass\":1,\"chunkIds\":[\"e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643\",\"4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d\",\"f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e\",\"9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d\",\"2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f\"]},{\"node\":\"grade_chunks\",\"grades\":[{\"chunkId\":\"e85b9866e7097416568242283a802e88ee2463f384effda7d92f995fc0f3f643\",\"relevant\":true,\"evidence\":\"The Cedar visit reference code is SYN-CASE-7F29.\"},{\"chunkId\":\"4d7d4ee4e39a43b9fee82db5c63104dc5f8b0ff00c2c966f330f6fcc3d0c4e6d\",\"relevant\":false,\"evidence\":\"\"},{\"chunkId\":\"f168d483a2ce7e68d408fa29c28a7c163cabedd1fcc6bcebf673ae9636b99f3e\",\"relevant\":false,\"evidence\":\"\"},{\"chunkId\":\"9ed5bcf19adf71d3023784c0732b7a1a4697e9663603a3d777838f3b4e80b81d\",\"relevant\":false,\"evidence\":\"\"},{\"chunkId\":\"2ab8b88d3e6823a876d243f43d53e913a6224a91b7dc8a04a85f327edfa2c42f\",\"relevant\":false,\"evidence\":\"\"}]},{\"node\":\"generate_answer\"}],\"retryCount\":0}"
+    },
+    {
+      "assistant": {
+        "role": "assistant",
+        "content": "The reference code of the Cedar visit is **SYN-CASE-7F29**."
+      }
+    }
+  ]
+}
