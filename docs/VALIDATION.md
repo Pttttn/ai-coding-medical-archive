@@ -38,6 +38,12 @@ Backend и frontend не изменялись: прежние 48 и 22 тест�
 
 ## Git и воспроизведение
 
-Первый опубликованный CI [35439096699](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35439096699) выявил различие CRLF/LF в manifest. Генератор теперь пишет LF; проверка staged Git blobs прошла. Новый CI должен проверять опубликованную ревизию, отдельно от локальных моделей.
+Первый опубликованный CI [35439096699](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35439096699) выявил различие CRLF/LF в manifest. Генератор теперь пишет LF; проверка staged Git blobs прошла. Новый CI подтвердил исправление на опубликованной ревизии; результат приведён ниже и отделён от локальных модельных оценок.
 
 Команды находятся в [README](../README.md), [AI README](../ai-service/README.md) и [журнале оценок](evaluation/README.md). Реальные результаты v1.1 сохранены без перезаписи; текущие JSON имеют префикс v12-. В Git не добавлены attachment, .env, индексы, архивные данные или содержательные runtime logs.
+
+### Подтверждённый опубликованный CI
+
+[GitHub Actions 35442666973](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35442666973) на commit **e02afee** завершился успешно: backend **48**, frontend **22**, AI **143** — всего **213 passed**. Lint, application builds, corpus/seed checks, обе Compose-конфигурации и сборка всех Docker images PASS. [Структурированный результат](evaluation/v12-github-ci.json). Это повторная проверка backend/frontend на GitHub, в дополнение к явно отделённым прежним локальным прогонам. Последующие правки этой записи относятся только к документации.
+
+Gitleaks v8.30.1 проверил полную историю до e02afee: 12 коммитов, около 3.53 MB, **0 findings**. Отдельно подтверждено отсутствие отслеживаемых .env, runtime directories, баз и индексов. Вымышленные имена в fixtures и сохранённых неудачных оценках намеренны.

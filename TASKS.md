@@ -10,7 +10,7 @@
 - [x] 143 AI tests в Linux без skips, Ruff; настоящие MCP 8/8 privacy, manual 3/3, application 20/20, runtime 5/5, самостоятельный host выбор ask_question.
 - [x] Полный реальный RAG 17/21, первые 10 — 10/10; сравнение 900/120 и 1400/180. Неудачи сохранены и описаны, не отмечены успешными.
 - [x] Проект опубликован в [GitHub](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive); исправлена найденная первым CI проблема CRLF/LF.
-- [ ] Проверить новый GitHub Actions run после публикации этой ревизии.
+- [x] GitHub Actions для e02afee: backend 48 + frontend 22 + AI 143 = **213 passed**, lint/build и все Docker images PASS. [Run 35442666973](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35442666973).
 
 ## Открытые ограничения и действия автора
 

@@ -118,7 +118,7 @@ uv run pytest
 
 Backend integration tests используют отдельную PostgreSQL БД из `TEST_DATABASE_URL`, никогда личную базу. Например: `postgresql://archive:local-test-password@127.0.0.1:5432/archive_test`. Имя базы должно содержать `test`; без переменной integration-набор пропускается. Детерминированные CI-тесты используют явно тестовые адаптеры моделей и не доказывают качество настоящего Ollama.
 
-[GitHub-репозиторий опубликован](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive). Workflow проверяет lint/типы, тесты и сборку. Прежний удалённый CI завершился ошибкой проверки corpus manifest из-за различия LF/CRLF; генератор исправлен на LF и проверка SHA256 усилена. Результат нового удалённого прогона нужно сверять с [GitHub Actions](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions) и VALIDATION; локальные тесты не обозначаются как удалённый зелёный CI.
+[GitHub-репозиторий опубликован](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive). Workflow проверяет lint/типы, тесты и сборку. Прежний удалённый CI завершился ошибкой проверки corpus manifest из-за различия LF/CRLF; генератор исправлен на LF и проверка SHA256 усилена. Новый [удалённый прогон e02afee](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35442666973) прошёл; детали и фактические результаты сохранены в VALIDATION.
 
 ## Реальные проверки v1.2
 
@@ -206,3 +206,5 @@ docker compose up -d ai gateway
 ## Подтверждённые проверки v1.2
 
 [Полная матрица](docs/VALIDATION.md): 143 AI tests в Linux, MCP privacy 8/8, manual privacy 3/3, application smoke 20/20, runtime 5/5. Реальный публичный RAG: **17/21**, первые десять фактов **10/10**; оставшиеся ошибки и закрытые отказы перечислены в отчёте. Reference host действительно сам выбрал ask_question. Результаты v1.1 сохранены отдельно и не подменяют эти проверки.
+
+Опубликованный [GitHub CI для e02afee](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/35442666973) также прошёл: **213 тестов**, lint/build и сборка всех Docker-образов.
