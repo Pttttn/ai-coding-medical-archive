@@ -50,7 +50,7 @@
     ]
   },
   "acceptanceOnFinalChain": {
-    "runtimeCheck": "PASS 7 checks (--mode host, output v125-runtime-host-mpc1.json, kept outside repo history)",
+    "runtimeCheck": "PASS 7 checks (--mode host, output kept outside repo history)",
     "mcpHttpSmoke": "PASS 5/5 (index_status EMPTY->READY 42/773, find, ask)",
     "canonicalEval": "21/21"
   },
@@ -367,7 +367,7 @@
     },
     {
       "llmModel": "qwen3.8-27b-q8-100k-cuda",
-      "environment": "llama.cpp CUDA 10.44.0.67:11435 via host-process shim",
+      "environment": "in-contour llama.cpp server (URL omitted)",
       "score": "21/21",
       "avgSecondsPerQuestion": 29.5,
       "questions": [

@@ -72,8 +72,8 @@ docker compose -f compose.yaml -f compose.host-ollama.yaml up --build
 
 ```sh
 ollama pull nomic-embed-text
-# .env: LLM_MODEL=<id модели>, LLAMA_MPC1_URL=..., LLAMA_MPC1_KEY_FILE=... (см. .env.example)
-docker compose -f compose.yaml -f compose.host-ollama.yaml -f compose.llama-mpc1.yaml up -d --wait --wait-timeout 1800
+# .env: LLM_MODEL=<id модели>, LLAMA_CPP_URL=..., LLAMA_CPP_KEY_FILE=... (см. .env.example)
+docker compose -f compose.yaml -f compose.host-ollama.yaml -f compose.llama-cpp.yaml up -d --wait --wait-timeout 1800
 ```
 
 Требования: на host Ollama заранее установлена `nomic-embed-text` и задан `OLLAMA_HOST=0.0.0.0:11434`; standalone Compose 2.24.4+ из-за `!override` (в комплекте Docker Desktop может быть старее). Вопросы, чанки и пакеты консультаций уходят на указанный сервер llama.cpp — для личного архива это осознанное решение в границах своего контура, а не полностью локальная обработка. Модели семейства qwen3 требуют патча `think: false` в [ollama.py](ai-service/medical_ai/ollama.py) — без него thinking-модель исчерпывает бюджет токенов и сервис отвечает безопасным отказом. После пересоздания `ai` или `llama-shim` nginx-прокси кеширует старый IP: выполните `docker compose ... up -d host-ollama gateway` или `docker restart` этих контейнеров.

@@ -12,11 +12,11 @@ import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-REMOTE_CHAT = os.environ.get("REMOTE_CHAT_URL", "http://10.44.0.67:11435/v1/chat/completions")
+REMOTE_CHAT = os.environ["REMOTE_CHAT_URL"]  # no default: endpoints are deployment-specific
 REMOTE_MODEL = os.environ.get("REMOTE_MODEL", "qwen3.8-27b-q8-100k-cuda")
 LOCAL_OLLAMA = os.environ.get("LOCAL_OLLAMA_URL", "http://host.docker.internal:11434")
 PORT = int(os.environ.get("SHIM_PORT", "11435"))
-API_KEY = open(os.environ.get("API_KEY_FILE", "/keys/llama-mpc1.keys")).read().strip().splitlines()[0]
+API_KEY = open(os.environ.get("API_KEY_FILE", "/keys/llama-cpp.keys")).read().strip().splitlines()[0]
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -48,7 +48,7 @@ class Handler(BaseHTTPRequestHandler):
             names = {m.get("name", "") for m in tags.get("models", [])}
             if REMOTE_MODEL not in names and REMOTE_MODEL + ":latest" not in names:
                 tags.setdefault("models", []).append(
-                    {"name": REMOTE_MODEL, "model": REMOTE_MODEL, "size": 0, "digest": "remote-mpc1"})
+                    {"name": REMOTE_MODEL, "model": REMOTE_MODEL, "size": 0, "digest": "remote-llama-cpp"})
             self._send(200, tags)
         elif path == "/api/version":
             self._send(200, {"version": "shim-1.0"})
