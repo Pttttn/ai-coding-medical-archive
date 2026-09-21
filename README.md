@@ -66,6 +66,18 @@ docker compose -f compose.yaml -f compose.host-ollama.yaml up --build
 
 На Docker Desktop Ollama должен принимать соединения через `host.docker.internal:11434`; при необходимости задайте `OLLAMA_HOST=0.0.0.0:11434` для процесса Ollama и перезапустите его. Не открывайте порт в публичную сеть. На Linux используется `host-gateway`; host firewall должен разрешать только Docker-подсеть. Фиксированный локальный Ollama proxy разрешает inference/metadata, запрещает произвольные URL и загрузку моделей. Реально проверенные среды и режимы перечислены в [VALIDATION](docs/VALIDATION.md).
 
+### Необязательный режим с llama.cpp (OpenAI-совместимый) сервером в контуре
+
+Генерация может выполняться внешним для машины, но внутренним для контура сервером llama.cpp с OpenAI-совместимым Chat Completions API; эмбеддинги остаются на локальной host Ollama. Протокол Ollama транслируется контейнерным `llama-shim` (схема-нормализация ответов под строгие JSON-схемы сервиса, Bearer-ключ читается из файла вне репозитория); фиксированный host-ollama proxy продолжает разрешать только нужные пути. Три модели, проверенные на каноничном наборе `evaluation/questions.json`: контейнерная `qwen2.5:3b` — 11/21, host `qwen3.5:9b` — 20/21, контурная `qwen3.8-27b` (q8, llama.cpp CUDA) — 21/21.
+
+```sh
+ollama pull nomic-embed-text
+# .env: LLM_MODEL=<id модели>, LLAMA_MPC1_URL=..., LLAMA_MPC1_KEY_FILE=... (см. .env.example)
+docker compose -f compose.yaml -f compose.host-ollama.yaml -f compose.llama-mpc1.yaml up -d --wait --wait-timeout 1800
+```
+
+Требования: на host Ollama заранее установлена `nomic-embed-text` и задан `OLLAMA_HOST=0.0.0.0:11434`; standalone Compose 2.24.4+ из-за `!override` (в комплекте Docker Desktop может быть старее). Вопросы, чанки и пакеты консультаций уходят на указанный сервер llama.cpp — для личного архива это осознанное решение в границах своего контура, а не полностью локальная обработка. Модели семейства qwen3 требуют патча `think: false` в [ollama.py](ai-service/medical_ai/ollama.py) — без него thinking-модель исчерпывает бюджет токенов и сервис отвечает безопасным отказом. После пересоздания `ai` или `llama-shim` nginx-прокси кеширует старый IP: выполните `docker compose ... up -d host-ollama gateway` или `docker restart` этих контейнеров.
+
 ## Сценарий демонстрации кабинета
 
 1. Откройте кабинет: 36 записей за 2024–2025 годы, распределение типов и история изменений.
