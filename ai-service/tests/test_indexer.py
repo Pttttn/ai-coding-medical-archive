@@ -130,3 +130,46 @@ def test_long_correction_chunks_are_bounded_and_each_remains_marked(services, se
     assert len(corrections) > 1
     assert all(doc.page_content.startswith("[Пользовательское исправление; не цитата оригинала]")
                and len(doc.page_content) <= settings.chunk_size for doc in corrections)
+
+
+
+def test_restart_keeps_existing_graph_and_repairs_only_missing_content_ids(services, monkeypatch):
+    corpus = services.demo
+    for identifier in ("a", "b", "c"):
+        corpus.index_document(identifier, identifier + ".md", 1, "LDL 4.1 " + identifier)
+    ids = [r["id"] for r in corpus.rows]
+    original = corpus.collection.upsert
+    repaired = []
+
+    def observed(**kwargs):
+        repaired.extend(kwargs["ids"])
+        return original(**kwargs)
+
+    monkeypatch.setattr(corpus.collection, "upsert", observed)
+    corpus._restore()
+    assert repaired == []
+    corpus.collection.delete(ids=[ids[1]])
+    # Simulate a vector mutation committed before an interrupted SQLite transaction.
+    original(ids=["orphan"], documents=["orphan"], metadatas=[{"chunkId": "orphan"}], embeddings=[[0.0] * 32])
+    corpus._restore()
+    assert repaired == [ids[1]]
+    assert set(corpus.collection.get(include=[])["ids"]) == set(ids)
+
+
+def test_equal_vector_scores_are_ordered_before_candidate_cutoff(services, monkeypatch):
+    corpus = services.demo
+    for i in range(20):
+        corpus.index_document(str(i), f"{i}.md", 1, "same synthetic clinical observation")
+    documents = corpus.documents
+    reverse = False
+
+    def tied(**kwargs):
+        assert kwargs["n_results"] == len(documents)
+        rows = list(reversed(documents)) if reverse else documents
+        return {"ids": [[d.metadata["chunkId"] for d in rows]], "distances": [[0.5] * len(rows)]}
+
+    monkeypatch.setattr(corpus.collection, "query", tied)
+    first = [d.metadata["chunkId"] for d in corpus.retrieve("synthetic", 3)]
+    reverse = True
+    second = [d.metadata["chunkId"] for d in corpus.retrieve("synthetic", 3)]
+    assert first == second == sorted(d.metadata["chunkId"] for d in documents)[:3]

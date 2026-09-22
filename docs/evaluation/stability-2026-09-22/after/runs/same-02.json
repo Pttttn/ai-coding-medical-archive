@@ -1,0 +1,2547 @@
+{
+  "timestamp": "2026-09-22T07:23:50.384890+00:00",
+  "version": "1.2",
+  "provider": "real-local-ollama",
+  "models": {
+    "ollama": true,
+    "ready": true,
+    "llmModel": "qwen3.5:2b",
+    "embeddingModel": "nomic-embed-text",
+    "models": [
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      },
+      {
+        "name": "qwen3.5:2b",
+        "digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df"
+      }
+    ]
+  },
+  "codeSha256": {
+    "chunking.py": "fa5ceba957ac5648bc20f9876699de3a7638c58b5af0fb255968f9d50a8c932a",
+    "indexer.py": "17a3211f0ff7156e241841c2a137ccc51b54909eeba2fad966714af63c12b7ef",
+    "rag.py": "27cd044261c97aa04ca6a6a0282eb663aa54ba8633d5da746f6f6f884062a98d",
+    "privacy.py": "0c13b838b73f4815cc654924004f5aad7c3b0d2e165abbaf893eeadcee961c2a",
+    "external_output.py": "0c1aff02385e5a645356a43c9e9b628c949c58550a9ea4c80fd842ef4eaac414"
+  },
+  "config": {
+    "chunkSize": 900,
+    "chunkOverlap": 120,
+    "retrievalK": 5
+  },
+  "indexing": {
+    "status": "READY",
+    "corpus": "mcp_demo",
+    "files": 42,
+    "chunks": 773,
+    "chunkSize": 900,
+    "chunkOverlap": 120,
+    "indexed": 0,
+    "unchanged": 42,
+    "removed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "manifest": {
+    "ollamaVersion": "0.34.1",
+    "models": {
+      "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "qwen3.5:2b": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df"
+    },
+    "llmModel": "qwen3.5:2b",
+    "embeddingModel": "nomic-embed-text",
+    "thinking": false,
+    "generation": {
+      "rewrite_query": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 128
+      },
+      "broaden_query": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 128
+      },
+      "grade_chunks": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 256
+      },
+      "generate_answer": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 1024
+      },
+      "extraction": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 2048
+      },
+      "privacy_pass": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 1024
+      }
+    },
+    "retrieval": {
+      "chunk_size": 900,
+      "chunk_overlap": 120,
+      "retrieval_k": 5,
+      "min_relevant_chunks": 1,
+      "rag_max_corrective_retries": 2,
+      "llm_timeout": 180.0,
+      "max_file_bytes": 20971520,
+      "extraction_max_facts_per_batch": 8
+    },
+    "corpusSha256": "f9eeee0dc679e48bcd4d80223c6b7c2d2582c1810eff831b8aed4eaa52dd93f0",
+    "questionsSha256": "3b76b4edfd7521d521c07c82c3d1cbb12935e601ac3e7697d1d3b931a50ba9d2",
+    "codeSha256": "8f74f5eaa4bff96ff8de3b88fdc9d4ec847e16488abc0f3991ba213124bc909b",
+    "dependenciesSha256": "d59cd0d6e46c59a77ae1ab6b2a107e574c2cdd0d2250a33ffb089a2706e15a80",
+    "runtime": {
+      "python": "3.12.14",
+      "system": "Linux",
+      "machine": "x86_64",
+      "packages": {
+        "chromadb": "1.4.0",
+        "rank-bm25": "0.2.2",
+        "langgraph": "1.0.5",
+        "pypdf": "6.5.0",
+        "httpx": "0.28.1"
+      }
+    }
+  },
+  "completed": true,
+  "results": [
+    {
+      "id": "fact-01",
+      "category": "exact_fact",
+      "question": "How many days until the follow-up recommended in the Cedar visit?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R1617fcbd32faae05a75378c952eb0997",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Cedar visit recommends a follow-up after 17 days. [S1]\n\nThe recommended review interval is 17 days. [S2]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\nThe privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.\nThese statements describe synthetic test data and are not medical advice."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "31aa3dfd0a5e238a5dd63662b58babd584467a5887edeb81dfd5c89782acc65e"
+          ],
+          "retrieve": [
+            "8521dcd26cd2d4853e9f4500cdd245b5ad50c792505ce05d8557c07f35264cb1"
+          ],
+          "grade_chunks": [
+            "fb540235405b6c93d7e5e7c75d8de3c8ea9a14534ab9fac01e7a1d729d53b6e3"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "993c33e410f3b88f62ecf87ef0c243fb69962e8658bb87283b35a016305443b8"
+          ],
+          "rawAnswer": [
+            "3c0addc5b8c289cf83a03386e141160975c3f11c9d1bd37170f9a8c069769ea0"
+          ],
+          "publicAnswer": [
+            "5308a204b97db94672db588f6105f70d7cf4e0dbbca20a40f45e5676b684edfd"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "51edad5828835b30fa18dc9ef21e1990605f5feae390c4523e8ec68123963747",
+            "outputSha256": "80580e2e0312deb2360e765f620f693859b18a63a21d699e43307203a9297935"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "5be2380cb30bcaac4230dda0224f0e89f335027564a9bb8ca197500d759feb6b",
+            "outputSha256": "a284a3893d49afd178fe9676db3fdc722c62735b3b1231aed91d2fff7a6f068b"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "69dad8fde989fa42ba8b03ec4737599224f3743f85bd71e4505e4c1356dbff01",
+            "outputSha256": "41a2b5d9703baf930280b9c4c425e1d1d3b5001582659277aaef22564d0a7ea8"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "e121fba684b8797c4e9d419493d72236e7655882010198141349a91475afbaa6",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "568ad18be664ac68f3defea5873414ce704b1c54e3c20448b5acfbc32f638fc5",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "05fef2b3466ef6f256b6566bf63e7762f74a69fefa888f7cf2e513aafd2ceebc",
+            "outputSha256": "107652c4d28caa2780573af97c26f4c69aa7287fc314f01279fb53d485933b54"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "b1e7662a31b06f88226173452f4885d737e37a3c170e550cff1277569b0c66b2",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "f99f1f5d3e32b2deebcb966af0c7dd4c00df850b9ca1d964de6d3ea553b6b887",
+            "outputSha256": "615b2660af88c6807b63c4cc478558377d72c59162ed0a25b3fad99c79238304"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "7d34f589da8c7f9f5248b03adc0f214b7e31a96a6021a0aa130dd5420b12f9dd",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.62
+    },
+    {
+      "id": "fact-02",
+      "category": "exact_fact",
+      "question": "How many weeks until the Amber follow-up?",
+      "expected": "11",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R3558ca4b2dbfe795625f3b7fb5465088",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "bc8b57339a25221964d6cda8e9d8973c5bc837ff464db601b5cf66962475c66b"
+          ],
+          "retrieve": [
+            "f03fe3afe2986f11cdb5ba9d3ce4bb4bd6af284f809790aa5ad81115ff38d70e"
+          ],
+          "grade_chunks": [
+            "4973f2b2acf6b288e3fc2d8fb90d24c1db1948d8bcc9df8d965fcb31300fc4ae"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "c99a482adfd24999d55979502049b884aadbe1724ae6a76206ea65f95eb6f916"
+          ],
+          "rawAnswer": [
+            "2c5be643139de1de9b665753ba512fe7a9c597e5dacbdea2ffe0f23daf8b78c0"
+          ],
+          "publicAnswer": [
+            "dc5d3aa62edf04488bbed680a0d7fde1e0d2add2ff3e590f971451a96ff43551"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "ec4d8f72f674a57626aad03c218b95a758fbc995cebe906f6bcb220e1e2b7276",
+            "outputSha256": "15dd414f63f342a59c8d18a39ebe78b4922f8257b243e5fa34cfae7b241ad6dc"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "4bfff24f718fe4fecd91278437a1687ea59a8149b487e2cca57d0260e2e5b647",
+            "outputSha256": "65d6fe001443054691b4895823d1f88c2e990584a6f7c8767c989932cebc4628"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "63c0795b05948c3978043f961b0903ba25925e312c0265ced988b142cc0c281e",
+            "outputSha256": "cd2bd1ee01ab61e442e44754a60c2f764a520bc7919dd4b60fb6ab5077c1a009"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "285762c406274cfddf81960a65799d53da268b4b3bae20e214b8c1988c0a4efc",
+            "outputSha256": "41a2b5d9703baf930280b9c4c425e1d1d3b5001582659277aaef22564d0a7ea8"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "0a560ba6371fd5c3587e4a3c22bd1b8e1c8f9f12b24413491e91ffc843866357",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "2e9a75348f412b3c30a4e2109c71f8445abd1128b8f95ce37e4775863eb05b06",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "48ed02ba1b3f8fddc4085182f20376a807cc1f927214dd532c5fa19b8db63c97",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "82c46c99358a6f22ee56aa8e648282e5eaa58af47087eb050f200f490eaf1674",
+            "outputSha256": "c5f11871d74988e7657c3219c86e454a133f63ae471db2edccdb08793d32798e"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "ca887047e4d471a7a5e45dce3f79d8f9be320564564625ff2534421fd69289bc",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 10.778
+    },
+    {
+      "id": "fact-03",
+      "category": "exact_fact",
+      "question": "How many evening observations are in the Saffron notebook?",
+      "expected": "37",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rbea2b00e1fae4af891afa3c77338f1bc",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Saffron notebook contains 37 evening observations. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Saffron notebook\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "42f9aac64637ff58ebd6ea7e5f8511b97f9baf436d03aa378e2135b50a772021"
+          ],
+          "retrieve": [
+            "ddd36624ed6e9c8f625358418425dd75fcc836167fb0179d2cec7c4eed00aacb"
+          ],
+          "grade_chunks": [
+            "668d2766d22bdb3ba44e7ea6da4a7ac7790304de82f2c6a83f78b30d1767c9be"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "d5a3906214f215963e6ca77cef2e6ccb2c6813fb69a3709d977a9e0a433aeba7"
+          ],
+          "rawAnswer": [
+            "d0fdb20a1491a6522d6d56b6b582fd72e5a0cf7b1f5c51199a3a1b390a484438"
+          ],
+          "publicAnswer": [
+            "a41a6404f4bf78e3976c1f8131f7ff6bf16e6a8c0699e6c7b9145f1e261f6d87"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "386be78878bc4c78a00a7e9d214f5c532c5f3b027f91c87d47754fcb5e1b2c50",
+            "outputSha256": "fc37d3308d316741664dc8f11bad276635cc8de03bed07a40c9b9a8b0b01d3fd"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "070c02983082aa1f6e4ca1040cc4a14795bae13f03744e58cba6b0af6ba0d255",
+            "outputSha256": "5d3167f015792666f4f8eea8bab182896fed141e9992ebd8b11a7576eef95582"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3ba6b9d9b85f1597f2e9f2fd4a59bd171233708a074af282b81ed201903a4d0a",
+            "outputSha256": "ab5e5bfda2a8b839347a915281a1e13aee3a7af55c88be5b04a47f7fe81d9632"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "8f9698d67ac30ebf09dd0e16c34d61f29dc4c2ce1d90476c0238c3289df50a7e",
+            "outputSha256": "25169f6c712b0852be57b62b8debccb94fbc6cd204fbb999293c2d98d1b685d9"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "7a44975bfb47d6155e8c18c07faeafe60d6c0ac45e8386d1368858a1d0285078",
+            "outputSha256": "ff95105d458c5a7796acf8ded91d2eb9494637a80ddb44feeb876dc68d1b8b63"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "f0b0c75908cb18bacde3468cc4c8cea6c9abe3ec93423844f0ac9db563831ba2",
+            "outputSha256": "23a890681ff0f7d87a010d39e7dbae7600ff4d8518abf97891c427110c2d282a"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "491326577134b90e255859bbacf5ddc66082df4e003e4534172a0e731ba0baf0",
+            "outputSha256": "be9f03de98e1774b8f53890f46720d3a3a958dda8efe52d6c6f73f714455097a"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "8a7a0b31205db187f9b4d119443b0303a880f2bf72902b1b020152ad94dbfd82",
+            "outputSha256": "76c8ab519d0a1a874e799ebe2abd252b294b484fc4f8dcbc542ed8734a53d9b9"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "f69a239d57504b1cd741c38449a47b6eada56310f9c7a0a6f113f7f8a980237b",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 11.431
+    },
+    {
+      "id": "fact-04",
+      "category": "exact_fact",
+      "question": "On what date was the Juniper laboratory sample collected?",
+      "expected": "2024-02-17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R9b19c15988dc2eaaeb89f376c774711f",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Juniper laboratory sample was collected on 2024-02-17. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Juniper laboratory\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Juniper laboratory sample was collected on 2024-02-17.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "18d56b92a774688ae95241b91b902a4720c6e6ae1e635a01c6234e351fbf8641"
+          ],
+          "retrieve": [
+            "4ac287b166a9205743254eae7e2d6302a63e45d2f1cbc8e78a84feab39e7d04a"
+          ],
+          "grade_chunks": [
+            "498417d3c23fee574bc63d7c65dfaa2fffbace8de2667aa4101204696ce28fb9"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "baf7710247f3edc59ca6e8ce4ff53344752752bb709c09ce007c21640a03baba"
+          ],
+          "rawAnswer": [
+            "5dfdf16b45d5168521f138ee43b250e481c0b5a1d5a0514d0b8012567d8e6e10"
+          ],
+          "publicAnswer": [
+            "4dfa91912facb34e42b580271cff98200f9949bb4933ab4af964dba90d95aa4e"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "ee289077c041188343956a110ef6193799495da5feb0d7b699d826692da17eb6",
+            "outputSha256": "8740e36b0f5ca9c58ed1874adbd95d4fcddf57c55a2c7a5e0cad26c95a1eee1d"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "1a4f7faa7effb9303ee51badfd926431b8b7c76f0e85fadadfc6c2223c828816",
+            "outputSha256": "8558d8c40da040171b76e8b70e6359a8852dcbb862be7f5c2a70efd925864d3b"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "cc4582dd24ce6e752687785509adbeb61e318aedcd6d6bf5870b6dcdf369fe04",
+            "outputSha256": "ce6bda5603faa0490d6b72f94c8b07f0eb3838aaeec0e83599781fbeaa1c6383"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "4cce33ec23722780d07c1624aab18a1c17080b3d370977e0800631098da7320f",
+            "outputSha256": "022d3e1f750462b38cadd69edf79d89d01566dcb877b654fea37076c757df1f5"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "b9fc16414811c8f9b6852c7458fac60e8ed975fb559d8e61c21201aaf04071e5",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "4112c8ba54d8c7815f9ea0e4212f204550ea84e90a17038138e762962ec0a0c2",
+            "outputSha256": "022d3e1f750462b38cadd69edf79d89d01566dcb877b654fea37076c757df1f5"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "4ba0d9406cfc73864e78657b9a7adc3ff2aaa2177fe704638bd568cef590ed65",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "c43a1c5c7f51fd83c89868ab153f4821579f4a5be256f8c7d6624aa7ccfb7e76",
+            "outputSha256": "a7050b6020239f56b25a8b1baf9105e4bab2a6bffc74b584302dcb6afd504b49"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "ee3b4af46cf40e6e0e16ea7379d5e45677df896990027f82bce5e636879b82a6",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 7.134
+    },
+    {
+      "id": "fact-05",
+      "category": "exact_fact",
+      "question": "How long is the route recorded in the Willow walking diary?",
+      "expected": "1730",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R81a17479978e1c043645c0bdee452963",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Willow walking diary records a route of 1730 metres. [S1]\n\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. [S2]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Willow walking diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Willow walking diary records a route of 1730 metres.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "# Synthetic Spruce corrected note\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. This is a user correction, not a new source quotation."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "cc4958d9c842663c85e14472595c203c008e2498d2712f1f3cc19bb45be53996"
+          ],
+          "retrieve": [
+            "780c2bb47bd1bb43f5f95b42a4a62e3ddf8a0b1d635745ce87618449cb8524d3"
+          ],
+          "grade_chunks": [
+            "baa7564f1bd85f27eace9eeafd6a9af02f17e009b2f3281ebc308703aa5e7247"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "14cd3ce41b1ea8a870a4397ac5382cc1e1e3b926355d77d5f13de92b0be5ace2"
+          ],
+          "rawAnswer": [
+            "830ff7acde2fc08f8bd687a8595cb2d5c117ce5b259d42d3380ff96c8ce2c500"
+          ],
+          "publicAnswer": [
+            "24dea4263e0d90beec4cb06dbed75341f9c42373fa51b97a4e901da833f74847"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "4a95a4ae20c69e18839c7e3f02351d0ae17252a1fd2912c37d68abc800873001",
+            "outputSha256": "3620fd08699ae7907752fdee6122a29ef74bfdce86c2a3101028c2e581b5b63d"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "1356c5f185ba32165bf27a4352c5535c5afa27e0d9502d02df96dbce1c11722c",
+            "outputSha256": "601694b91b955578f0d18d1207b7e3b0de1254a0d271e02dc51081357d1741a6"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "7b1cfeb60697e29c0dfb5d9afdb045872db2df0f066914ee0b8a867b8444e26f",
+            "outputSha256": "37b4746ff9fa8cd8d7e952928ab6c5bb980b105f594addb6153aaafb9ff49680"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "e427f901c625fdcb290f1a296a1d8629fa457093285dc5f257904e0dbf6eb541",
+            "outputSha256": "2d329129308b3e34ae0fb8c3b7c60e7fc43163174e86cfd7faa6fefb3899063b"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "1509613b8c30cffe3c1a3b8e8934483b39cf1c18a4c4d8b8d5017810417ae8e0",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "e3885854028ad26993fd4992d14bcc664887f84aa8beefd8ced9b95a815f1181",
+            "outputSha256": "defad846ccd238787f62d34a91c199bc12db06fdcdd9b77619ee2bdc49bf7f9f"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "acef734782a967ffcd2649d66df491a96c7962b3b026ed06549cab559c0b8910",
+            "outputSha256": "6eb159663f567a3cda5d149d346a9715a740d06769dd84a990b5672f35c993fd"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "308d53b0e0d93ad7d32f2c4b38e97ca0ee67f6f29d0d0ebdb5023c1d98d9fc12",
+            "outputSha256": "d52eafd0d3c2b7ce1fce74825e5a6b0476ef7d965a3e907f9ec0e4aad079c48f"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "5115f7f8531b38dafe04b44010c7e5e68637c55987e69d6dde79ddf34deeb415",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.686
+    },
+    {
+      "id": "fact-06",
+      "category": "exact_fact",
+      "question": "How many minutes did the breathing exercise in the Birch appointment last?",
+      "expected": "6",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R8f963d1d763baf73bb3a926535e3e1ed",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Birch appointment records a breathing exercise lasting 6 minutes. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Birch appointment\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Birch appointment records a breathing exercise lasting 6 minutes.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "1c356e6a783b9c0e1f5aae56db5c75948ad31a25fe7e7686bbf4d5612320ea25"
+          ],
+          "retrieve": [
+            "217d3e1855017f2a59811e2b3a3c775357b08d08936b84edb23797bc120623b2"
+          ],
+          "grade_chunks": [
+            "2aaa53f8d5c63a42c89d79c9094a03c7b2f240efd1a6f4701c5d7cf2a7d34de5"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "3bbc1c75200d85a3caf6383e8006fdaccc2140069100373eafb6092d82d460ea"
+          ],
+          "rawAnswer": [
+            "d21c73a64ca1ed273209ea15a4dc01bbdc807598014391c261d665b729d51c6c"
+          ],
+          "publicAnswer": [
+            "3902e43337d1cda6fb39ff956eac0ffc589c5bc81c0e27bffc70c35f650e6cc8"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "52003967297aa637e56bf9899582ae2f06d9964d3d1d5a4d98bd9db1df6de631",
+            "outputSha256": "432a8115eef2925111c60f1a221cc6cc2436005eb3c05ad7b4704bd08cdeb1e6"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "53d05863ad2e394cb19bb2e83ee7595d98eded84c3bfc550c283ce9b1bf8d811",
+            "outputSha256": "89ac560032828338a4aa043c0683b146b798697176b664e96dd5c046f0b6c342"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "7c8ed1413c358a5fc428e8206b0873f4a897e76e0cec748e0902b8866caf9eb1",
+            "outputSha256": "85926a4198b4daa4fd3733dbd1301b162f4d0e6cb06012af73be088f65ebae79"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "0c283755e796949e266edf4c9faaf5aec168581482f6c5e7de1af110749966e2",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3e0533b301436ccb3f016f8d3d03104c7ac410f09b903813b3b3e15c658c5e1d",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "ea155715b92a0391a327796cfd08465157515776688432600e287b201a511112",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "ab36aadac26b584d16999837b10fe19946afdc7ad04412912ed0403f3be43964",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "3cb6547037e7ca8730edde2aec43936ca2cb8f96fae2fb89f905a7316d12d93a",
+            "outputSha256": "5a0f20f16227295a51816b42f1a07ce67cad92832b70fea79a9d097927f6f728"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "0a5d7e4e6a3bc2669937c58af383835ba67c5cacac89c9e6a89091f6b68d70c4",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 10.925
+    },
+    {
+      "id": "fact-07",
+      "category": "exact_fact",
+      "question": "What is the Orchid synthetic measurement result in mmol/L?",
+      "expected": "4.73",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R98c643502c299aee6948d3ebdb55f089",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Orchid synthetic measurement result is 4.73 mmol/L. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Orchid measurement\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Orchid synthetic measurement result is 4.73 mmol/L.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "fb70ef9297e755d73bbd236d4dfa7dd360993503ce2ff20c37400f3eb465222e"
+          ],
+          "retrieve": [
+            "6b533a0dd5903a8f281319a09e918858cc29c98745584b76cf0d1b3e5ddf2902"
+          ],
+          "grade_chunks": [
+            "1a1a53acca3f8fbfb98e34ba5aa1d7d6376084a85ff4d441362a01cfa1eac814"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "21aeca2946296d02e813b9af2225a10a45ebce2fdfb19dca844a8ab779f77100"
+          ],
+          "rawAnswer": [
+            "78299ff2ffaa448bec08f68450fa4aac523288885b4792ec8daf270e28dbc38f"
+          ],
+          "publicAnswer": [
+            "0038909b8f2d5adf6696a206d0b55fcf04dbe1e8fb74d43f7942cbb05dd0c01a"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "3c6df71583fe1c22f8b8ba64b986a69f463e02f9d82193e9461cb08e59c0c57b",
+            "outputSha256": "541fd3151ebed6e10e4ea2e6bd6acb45f51217af825f0202900f66fad53f3b35"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "1ea8b4f0f5d7280c11beccd45a7fb898b152133578d7a774ccfeea79525195c0",
+            "outputSha256": "6b8c8e77cadc1d072b9ae7157e77a3c85d03f3adeb6f39761b742caed7718792"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "e80455b029601648a1da02d479237ec80b858787345ef711bb633c21a767d00a",
+            "outputSha256": "2be90c214e42abf9ffd911e3603deabccc368a4897f5d2d8294b0d006f981657"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "2de5123a353e8de4a84eff8af734d866eab01b13643a6de155be56dac5b17578",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "d75290a8c493cdf518ded816178ad4fae242927b87c16c9ae6b1bcc0f430e0f0",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3df7e8d37cd3cfdc5d1e8d0a9af4ab246dd4966e04b3e3b646d0bc5f127b6a1f",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "386a45a73b8582d9e0d0da0f14e4bb38dd434e336712f0427f90705bbe346b20",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "e5ff7fc7b95951b16e275b3224ea7e022a2c80c9154bc9374b89634cd0489452",
+            "outputSha256": "d1af724953d6a94ab83c677b657452206177904ebbc98c0bdfee02354f8d09d1"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "ef4b4dfd70f31e5453844cc85e6086bf74b33ede08da580efeba4ae5d1ac8a41",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 11.341
+    },
+    {
+      "id": "fact-08",
+      "category": "exact_fact",
+      "question": "For how many consecutive mornings do the Maple instructions request observations?",
+      "expected": "7",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R9aaef5939c52564668597ed3270e5ac1",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Maple instructions request observations on 7 consecutive mornings. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Maple instructions\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Maple instructions request observations on 7 consecutive mornings.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "09549de728920b367428955daaca2aa1bca8f1bc00f0c3ad6d9af85a26a9429a"
+          ],
+          "retrieve": [
+            "803aac308e49ce6cc9555b03380e0a9cea818187d52f616ee35fc58027643ee7"
+          ],
+          "grade_chunks": [
+            "97e52e823ee067aa2d63fe58d79dd757d5e168a59c2dc7d16f2151dd48b3c18d"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "63914249b64d4598a22c0a08afdbda23b667294ac32f3f94195e3b31e1b648ac"
+          ],
+          "rawAnswer": [
+            "767a70b376f56e1469dff07170e420d76ca9b1cd8d93b3b5f5b33baec3ddae7f"
+          ],
+          "publicAnswer": [
+            "4fe855f73f0f14ced0cd5303746a78a28e9c4b5c75ddb7e460f3b185f057165f"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "9e12d2dbfc1004e7413a48e6d613854cd8d48d86367b24b3c0f5f08dc785369b",
+            "outputSha256": "a176ca264c24703c3c667d21e120d5abe85d9ce5eb7658067115492b58ca2dbe"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "2124ffbe9a28c7e77ec66f15c7d9f6d7f58745ed25272ea8d09218593736c49b",
+            "outputSha256": "4b505a2ca7193fc669ee6afdcd3f294a3a37250d268f2f38cbd2edd7b306499a"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "935db6eff1711becbf0a2cc9e5c594bf4b0b5faaf4ab658456d1ec6bc75459ce",
+            "outputSha256": "688b80049a68fd0ffe8037e82887fdcb7313626fc72272a16605fd15fbf2b278"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "52b1adda760e9de6e62db8092aa3671896ec59e975038d16c37df56c018cbc6b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "f4ca2e160103d8af7491dcece05950427035d6c9faf082ea7075df99eaf86658",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "8dbaae1ce17ca211645288e438b6a0e667bb5747f2237defc89afb8168155387",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "7312b65f9bcb4daf47147646fd7d35758d023a07f221709576b28353f2b8ec77",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "eaa31d075d9314a41da44c2653a454966aeada538a3925f07827a29bb847d15d",
+            "outputSha256": "2d31121f32737522dca4018615d018de30e42a1c24f94c14c1e1f52b59990b1b"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "d1ca768224110c9926eb889c3f7f333d7753235cb33c3a396b214e2109af67a8",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.273
+    },
+    {
+      "id": "fact-09",
+      "category": "exact_fact",
+      "question": "What date was scheduled for the Pine review?",
+      "expected": "2025-09-23",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rf306004e8a297dfa65960f45e5a9fe67",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Pine review was scheduled for 2025-09-23. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Pine review\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Pine review was scheduled for 2025-09-23.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "fa68523bb7172dc874057acb8c08f0df40daeb2c84a57c533edbc8981110890e"
+          ],
+          "retrieve": [
+            "47195b5e78db3d60636dd9507a0a89fec9e809040b4745457229814f2a8015f4"
+          ],
+          "grade_chunks": [
+            "357e871a419e35929194cffeab705bea75a65d23417b4c731f6a290f47b368c1"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "4041ed8db7c0422f405ea380ac15fbf47d726f0263e9418e32bf243bdc028f8d"
+          ],
+          "rawAnswer": [
+            "f83e80014185ddca49319044ff9534277844d0965c9208542ebd39c88462b903"
+          ],
+          "publicAnswer": [
+            "ad49d77b47a2e14950ff3ce96f773a66ac87e928576fb7e26bcb54e3e584f4d6"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "83cd2575779a5aaa48fd1646410d3ed24a4252ff8af4f0cc534a8e78fb90a54c",
+            "outputSha256": "c506c4bedcb466549f0b035779af45146999d3ed028b95dc332335df708df531"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "fea82047a34f6d35f3d9839d2a158599fefb1f1b23a59c661da64b20bce6d68f",
+            "outputSha256": "906144f934cb2df3b22b316939fea770bc7fb44fd4caf3acbae78e98dced8015"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "2ce3d08296bf43aef950c195186c21a6adf4bdafc47fb5d4cc191b32eaefc1c4",
+            "outputSha256": "721cf57f6ce136ab7b63527fd99d707d1f208f4b303bce1a1fc845102a7ebb1e"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "7d673cd2fefa30f5a72cc8b88546cb963b8ff09c157b09ca47433d394329710b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "abf54745af53b3bc11888d7608ad64e557de88e22cd8686c88d417a2e70482a0",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "db4041f58243dcdc73ac70e21966c8ac0301e4e81df2268baff2b487056cc924",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "0fcdbfed8620203590c1a7f3d5d71d46d4eb28945cf1f079c86b70031354e6a1",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "752013d98b1cf4a249600bdd08c347ae0d93d4c3d9aa68d6f83ed554c445e800",
+            "outputSha256": "905a88849202dd2c1b9994aa1252db3e609f256b2ec8920611670f22fbde5e4b"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "7dae7eb89ca1f249a7d4e3cae6aa3771ca3239ccb5639f2701ea0038622afaf3",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.051
+    },
+    {
+      "id": "fact-10",
+      "category": "exact_fact",
+      "question": "How many prepared questions does the Hazel transcript contain?",
+      "expected": "9",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R59279ead03e6df86c22e922bd572fd22",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Hazel transcript contains exactly 9 prepared questions. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Hazel transcript\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Hazel transcript contains exactly 9 prepared questions.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "c0aa91418305c99c27bf5af4b372a5de63cb1841f957aab63755cca8739b898a"
+          ],
+          "retrieve": [
+            "36dacdc83370caea7520db28bc0a435634b8a91e8f35e29cb868ca6cf1c50907"
+          ],
+          "grade_chunks": [
+            "f1e066d933537166c34c3d4e7e8cc7d912032323e426c8fbc9b34456aa64c932"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "afc372fe7ce3980f966fea8397c2d0ad57317a6dc459e47621fb988ca8454603"
+          ],
+          "rawAnswer": [
+            "f41037d107dd74e20456a867c797d2623323acf4c7c585115c18b7911c75b9e7"
+          ],
+          "publicAnswer": [
+            "a746df2bd456b72301c0391ecdff850dd61b24d2117d495b035878caff23c349"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "455d47c8e194ad0f67f0ea88a8403ff8052e3a78177c2b0dabf5dccb52d3bd47",
+            "outputSha256": "67aeda59c762113201aef89d80db212f7b5f5703aeececf5fe2ea196adbad852"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "ad174cd16e57ea9dccf0cf73aefec25b50c1b3326c987c3aceba6aa9553c99ea",
+            "outputSha256": "ba6f67f1fb634ed6e4005a7f5b0293a6eb88a95bfd1e8c443457cb2513e54f9a"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c79fe153b2390d3e67d997176d96179e81c3dd61d4794728c78e9a82e4d45238",
+            "outputSha256": "353318d25ec7633eb690d172c03c3d88880019e73f1ed47d16c0be2dcaa0f5ef"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "35c3d2d4ce9e08be3e2df9d416e82e0cca8d930f93c6595912678a81257a0492",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "6caa34f93697c0124b628bd4b657def2acf5cd42f8e2fe39b3bd5cfc0ad61ca4",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c5ec6ebf6b8500a52bda386b0e34f96d6ee74984f300337d4a20a007558678a7",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "f735fcdd217b0d22e4dccd8a2b9654d6cccc28f2aeb8cabdfc31c2337a35b7f0",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "2e6a8209a1c84ea909fd23449e538746c419758d1403c717d0ef2469c86414e0",
+            "outputSha256": "6437a7fd5b08e359d48b8728b081cddf90316a5531aa85ed5d621d7b5bfd146d"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "b52e061b7ff14ed0a289b1914cb9b8332a973f53428e26da842e7958960da122",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.064
+    },
+    {
+      "id": "fact-11",
+      "category": "exact_fact",
+      "question": "Was dizziness reported in the Rowan diary on 2025-01-14?",
+      "expected": "no dizziness",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R48e5069550bb4183f3cc4a79463f67ff",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Rowan diary records no dizziness on 2025-01-14. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Rowan diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Rowan diary records no dizziness on 2025-01-14.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "f71f85043e5f8e2417daa98f39cb6581edf8ef1020e0cd054824f0b09bd4bf65"
+          ],
+          "retrieve": [
+            "f620f440eb859f7a39a10dc4e458d0a073e4d5919504a2479e4db4beb5889f39"
+          ],
+          "grade_chunks": [
+            "cf63136fef9c2dff177696098bfb3be9359daa540ff1e0fd5a6e7b020d2c8fc8"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "5648434319290427cdf5a93b10412597309bbba29721e5ed418815dfc9ee4196"
+          ],
+          "rawAnswer": [
+            "a5b9a4fd90d050238b4ef156d780eb06dbdce335d908145d4cdf9f2c7c90bb22"
+          ],
+          "publicAnswer": [
+            "f27245684b48bc3fce3f84b56e36cb89871c9e04cdd8d6f80424dd839aa4f623"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "b73618287645a2c4ac4b01aecd0bbcffb18aac5f7bf23e32ab425f41bb8ac3e4",
+            "outputSha256": "cd2502b43aa36925d42dd910d411cb9e981e163f01178d99d017298b8835d192"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "2e532b17b6b7f648b4fcb958775be01f02373eac35b91e24c020192769859ce7",
+            "outputSha256": "bf30a449c51478584c2b6b240da176d21f82cc010c0df6a16c6d3ee37f5c77a2"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3aa0fb56c307de046f3d64865992abbdaec23e6533fd1e66925290aaa3719897",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "f6106cb51fb8f9ac4d968436dd3e1844787180cdce3a3d9a0f03688a12cf171a",
+            "outputSha256": "d7a92387c513721d17b52e846bc29922a59228c574b4a737c8ce4b6dcccebb55"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "41a4f7b9bdaa51876e7d876c5c2d386dcd7db8010b0c67a22daa226fef4c1840",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "d02086f76398cbcf42955669899d3db102ed90e392f5e11917e5b3b52bf31fd6",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "0006ee31472f5cc8055a0d52f97a2c265e2f01b4502470d2837a59f21d348da1",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "a4828453423061545c8e42abc7cf83c3b9cf7507893aaed54315a99f2153befb",
+            "outputSha256": "ff45bf2200dfdf68cd4ea8b82765c4b430a6da10a9d628050c18ec4561496e15"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "11b7002caa8f65d8e57cf3cce7779371e53a3890e8476c3b90973c9436f37338",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.114
+    },
+    {
+      "id": "fact-12",
+      "category": "exact_fact",
+      "question": "What dose does the Elm prescription state and is actual intake confirmed?",
+      "expected": "2.5",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Red5d551f69a6cc74e94c44fb8ece2b9e",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Elm prescription says 2.5 mg once daily [S1]\n\nactual intake is unknown [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Elm prescription\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Elm prescription says 2.5 mg once daily, but actual intake is unknown.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "8bde9f41d79246ab5f2ef1f9857899f917bed5406166e4c4b59f2a19ccfdff33"
+          ],
+          "retrieve": [
+            "328243f1bbadfb541a148dc16b7a14bad5f16197a47c897e9f069ba35e800d28"
+          ],
+          "grade_chunks": [
+            "f3b8ed42dc62bac3d4a774024d2a35db04ad41058e140a3ba792c3ecdd4bf806"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "2adb7de3de00c08959b172428bc43c773cfed1dc34982f066807a4d292e90512"
+          ],
+          "rawAnswer": [
+            "6a65285e7d4502a5c5c98779043549053e974a3327b4d0345072bf08ac94a6e2"
+          ],
+          "publicAnswer": [
+            "6c5468bf1d4bd6ab1cba748c8b71e58fa8f3ff03d6ba099227f9c8d42717eabe"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "a9ddfaaced482f71a4a54168eda6760bea6ad98060fd1804bdfc5da7b60e4f46",
+            "outputSha256": "89ffbbf069b10c790bb4c0e809e424c61e1987ed057ecfbda5c2ee4e8e91d108"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "b5bb60398af6d7393e33f59895275dd91121f778b28d1b1765fd188ad23b6893",
+            "outputSha256": "52b0dd01ecf6b082e2cbf9dc29d19e1856c27598192daf6ba47206e44c6e34d5"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "0403cd19b012cb3e244924b39cb3c5e8ed92f19fdb5034cc6818a76a24a1f3dc",
+            "outputSha256": "779c96ab6e22ed77f06938094b4629de0b9f3199ade564f667b551c036175d95"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "4c30702c516da22e6f2a684c24017645d327871b671e0c4c8d81aea7aeda0d20",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "0d1f695101a43e78f70553dd175be8750476c59183a1b69f4dafcee4b177f412",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "33a707cca897043107b8e7c04a192f1a7f3f8fbe2a542393170eb6ab72fe08ef",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "4fcc448c0cda15bf1d5d33d7c6c183225c64c194f54a2392ab24881274ad56fa",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "2a2e8fa74434f32ceb7ea98ec2de378914ab1d8dde3a0827ac9d60e3f7d3933e",
+            "outputSha256": "b791999b7baaa10fd2a1fdfe5b4c3ccdf7c37296730eb8145899137b2354bbe7"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "ffc36ef48c4b2be7636790fc1442fa8d601e9c3b998bba94862150fb3314c44b",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 11.083
+    },
+    {
+      "id": "paraphrase-01",
+      "category": "paraphrase",
+      "question": "How long should the fictional participant wait before the Cedar follow-up?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R5a339dfb53c0320f561c489592392281",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [S1]\n\nThe Cedar visit recommends a follow-up after 17 days. [S2]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "d62df916dde07f135b4618a81bced095d7f12e34695bde3f825957d5abdd97fd"
+          ],
+          "retrieve": [
+            "597cc9f363f24ed004c74181a9a72e9143668033a19d100b41cf4cfabba83e96"
+          ],
+          "grade_chunks": [
+            "0a0c5dd9b1271ea72ab6d09023ade0bcb28b366041f0cf2371948d39642d7265"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "7d5f83efc45dd89651ac01ae3d62ad261700e188e034ad3dce9f1ffe0d72b136"
+          ],
+          "rawAnswer": [
+            "0e995f7ef4542b874e0b37398b0925455e41148aa30dced1023061788199551e"
+          ],
+          "publicAnswer": [
+            "8a261e6657742237c2d8ce8c7f81dd0dc0f60e94eb29d46fc363248bccf94b06"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "8e55dce4028f91fc34df60bf2af79ce528c35c284adff90b8e30fda19ce0e911",
+            "outputSha256": "930cc8864881af40bf31bbb9d26ef2469aaa0547dc7c75020a5aae71539fc609"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "9206a9f2ecc1284e146ca7c75fb96710dcc082afd2d4c9ecfada89b8d3e05168",
+            "outputSha256": "2345cfff2a950435ebfa007df6b668cb18c1793991aeef70607977eb9937c5cf"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "4594138f85e894574591089dfd55d00ba329f295a3abd83574c33cf292cf87e3",
+            "outputSha256": "cd2bd1ee01ab61e442e44754a60c2f764a520bc7919dd4b60fb6ab5077c1a009"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "213272d8515542e4a2162cf81a13cb982ad47e2b7cc392d9d98845358ce33864",
+            "outputSha256": "41a2b5d9703baf930280b9c4c425e1d1d3b5001582659277aaef22564d0a7ea8"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "62a93f1cca8f11cdfe386dc448e23489efcb50ee04a85741b9ae1674ccd5ec99",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "b3a964e3b78db18791bf324d4d0feabb3b35a6c8ff0672f11cf70394bc6bf1aa",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "9f7f0cf26a53bf7cc49cce42216cbd80386808b1a1ed7a7fb0591a8aea972180",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "c381c9e1e5bbaf62f5ce9875a47cf802f617c85797647ad38e0db33b0c3c1237",
+            "outputSha256": "c42d6a152ef194ceee1b899becb640ebc569d95961654b213e2aa7e48894b97b"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "013ff011dbf02864e867453951b9a43696570421851500eb2b4e7dc459c13530",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.482
+    },
+    {
+      "id": "paraphrase-02",
+      "category": "paraphrase",
+      "question": "How long is the waiting period before returning for Amber?",
+      "expected": "11",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R5501a5ea7f7cb2b3754a567c03ae18f6",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "09fbbf211d16cbaee4d06f4c2dd822400f71ebe810e8ef028d9df7916e371869"
+          ],
+          "retrieve": [
+            "feda6041f2d3e6b238e5347f24c134be1be6edf9484254a43f9b578c86fcda6f"
+          ],
+          "grade_chunks": [
+            "9dbd8e38a928ba2a15ada292d4647de38f5f42725f1f06cb8ae25b708085cae9"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "c99a482adfd24999d55979502049b884aadbe1724ae6a76206ea65f95eb6f916"
+          ],
+          "rawAnswer": [
+            "2c5be643139de1de9b665753ba512fe7a9c597e5dacbdea2ffe0f23daf8b78c0"
+          ],
+          "publicAnswer": [
+            "dc5d3aa62edf04488bbed680a0d7fde1e0d2add2ff3e590f971451a96ff43551"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "ee16a7e3dc2314402201e1eea7721c08cf45236c3bee00dd089ad6afd6cfb36b",
+            "outputSha256": "97f9889687900ddc02e4887e454d9c1c9815b8bd3e4d2c9957451e18daa1c271"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "d979f4bfcdcdd6c50f141293c91a227b7bce666c8fa24437cb3095ab69670884",
+            "outputSha256": "bcb578fc267528e45d0c77cfea1d976bc2ac7b907639c4009537e5a686cb4401"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "6a4310c1d85312e0033ba664886da65cd5f847283e20bea199d1987704d8b089",
+            "outputSha256": "cd2bd1ee01ab61e442e44754a60c2f764a520bc7919dd4b60fb6ab5077c1a009"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "858435bbd7bd93d9b5b1c894207de8e795bf6d88df25effa0de75eebc906f26e",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "e808640f4fa1e4e5bd9312be9451f8c5f75aad53d2d557f4adad7897913d4ec6",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "8cfe7d2d46c4570ccf371c812e0e182b160cec841354fb971439bc497556c62f",
+            "outputSha256": "41a2b5d9703baf930280b9c4c425e1d1d3b5001582659277aaef22564d0a7ea8"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3006716ce665ab4ccbe05413970d00097bcb13f04512e30baed63440da5701c8",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "b3c87c27ec034fb7728d7714c1c1a8b9cfa50acb669cfc05953fe859acdd4674",
+            "outputSha256": "c5f11871d74988e7657c3219c86e454a133f63ae471db2edccdb08793d32798e"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "ca887047e4d471a7a5e45dce3f79d8f9be320564564625ff2534421fd69289bc",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 11.006
+    },
+    {
+      "id": "overview-01",
+      "category": "overview",
+      "question": "What kinds of records are in this synthetic archive?",
+      "expected": "diary",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Ra75022c46be87ae0feb37adcb22b7e39",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\n# Rowan diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Rowan diary records no dizziness on 2025-01-14. [S1]\n\n# Saffron notebook\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations. [S2]\n\n# Hazel transcript\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Hazel transcript contains exactly 9 prepared questions. [S3]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Rowan diary\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Rowan diary records no dizziness on 2025-01-14.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "# Saffron notebook\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Saffron notebook contains 37 evening observations.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S3",
+            "text": "# Hazel transcript\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Hazel transcript contains exactly 9 prepared questions.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "08503fca26331d18e4b841bba35985d1748775af90b9e0ebf311f8137b45def5"
+          ],
+          "retrieve": [
+            "cdd72ba9e6394eec4fcb9824daeb9d3ea3f3088321b95e6161aab624b5d90c72"
+          ],
+          "grade_chunks": [
+            "f54e0f68256ab057c3eb611a505e376cdb3c1d215fef86d2de4e620faa28168e"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "0284888798a5d23df0e8a589429ad6d2fce475f171af887e3120eb11f40aac7e"
+          ],
+          "rawAnswer": [
+            "2c18a7da979c8bed8a021133b1a584ecf5a8e4d6386fa79fffa2cde689861455"
+          ],
+          "publicAnswer": [
+            "b1259106ad0fc7a334083c70f2d2a9bda67bb0e391e4d6e4df4c537f2a1fd761"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "293b30046f2916fc9ef7aa7408f51c51e032213fd02c10e0aec48d04ec0005fb",
+            "outputSha256": "7922bef353f46a2d74d935cc1b13b1832404031c9882d680dafc95cbb97d7727"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "4c1ef2c6bf083871211d11ee24f4b2a5537b524f9027f7116971af8a7ad18a9c",
+            "outputSha256": "9cc2ca71bb5655557e60c04fd4af555a729e9dd8ce01093783d5db14a4926a8e"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "f5b17fb7c00d870566146f77a8e30af8527e4dcfd00c28b194014fdc3c8e322f",
+            "outputSha256": "6155a2565c1e566b2e73790f1f061dd9cb9bcdd17ab3d8a7a96ac118b64fcbd7"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "64d5e0aad9f0d0523565451bc7c3bec22d386584968602f8549c54960d0065db",
+            "outputSha256": "d7a92387c513721d17b52e846bc29922a59228c574b4a737c8ce4b6dcccebb55"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "919ea4d414c3e0318cd4728817fda3ef8d04e68eb2f66a6bbc05fc7614a1c8ab",
+            "outputSha256": "ab5e5bfda2a8b839347a915281a1e13aee3a7af55c88be5b04a47f7fe81d9632"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "1d6a17d0fc04789652a44c214a3c4d44672fccbea19821fd6086bc2a0e718332",
+            "outputSha256": "27177330c31abaecb2a398e50b522de67456c0d3964a5c68790ecd732892a53f"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "736de004e99517d8d50435a33f9739a206f840e6e1b885e8ea0080581a16d89f",
+            "outputSha256": "353318d25ec7633eb690d172c03c3d88880019e73f1ed47d16c0be2dcaa0f5ef"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "edb3e95cc8683da7c2513172c886c2029b42dae3f57b65099a3e5d0a0eff1938",
+            "outputSha256": "f1cd3c48acc567a64bc53962532a63579a1c13254ab9376fd4941194f6e9ecb7"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "5d5bdfa2a3c5c2d875341e3d463db88889d977e8351ae1284e8e4aa42477bdd5",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": false,
+      "seconds": 8.127
+    },
+    {
+      "id": "multi-01",
+      "category": "multiple_sources",
+      "question": "Give the Cedar and Amber follow-up intervals.",
+      "expected": [
+        "17",
+        "11"
+      ],
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R9f7213dd732a50fc2c48c5c763362440",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nThe Amber follow-up interval is 11 weeks. [S1]\n\nThe Cedar visit recommends a follow-up after 17 days. [S2]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Amber follow-up\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Amber follow-up interval is 11 weeks.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          },
+          {
+            "reference": "S2",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "8661f967bd5b19aa290773d8b97011f9c09cc22144cd937b168e41d7d9a18c5d"
+          ],
+          "retrieve": [
+            "b2c3ce8aed0debe58ef55cbacbea4337a8304032618e12b21edc6d0d75fd7749"
+          ],
+          "grade_chunks": [
+            "2d15887ef866cd14ec8f96fe94b51f4a85aa1622cce2d0c62f011391a0cfe463"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "7d5f83efc45dd89651ac01ae3d62ad261700e188e034ad3dce9f1ffe0d72b136"
+          ],
+          "rawAnswer": [
+            "0e995f7ef4542b874e0b37398b0925455e41148aa30dced1023061788199551e"
+          ],
+          "publicAnswer": [
+            "8a261e6657742237c2d8ce8c7f81dd0dc0f60e94eb29d46fc363248bccf94b06"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "110f337912c8fe4c8083f26a1a2600d1b85d78be01ceab5cfe0d345d5a003390",
+            "outputSha256": "4dfa1a6a351622a6400140cd71f675eedb18bea596bf22422a370dcbea9a75a1"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "b76adc48276e1fa7ae890bec79b38e90a778cb092741a1521d707f1b3012abc1",
+            "outputSha256": "740feaa09bf7a92af2f4a1557e8360f80edcd030e0cf06c20eda6983c611f3ad"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "76e8feb748512d01a693e430004221a4227d8c2e0ed4c0a0db01e6845e37cfb3",
+            "outputSha256": "cd2bd1ee01ab61e442e44754a60c2f764a520bc7919dd4b60fb6ab5077c1a009"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "07f7190f93d8bff7e18bae0ee8e3ef16c35f63c64bcd4ef3a52701cbe04732d4",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "8a7e0abbc287dc0b3d4c2581442841c52c4b1a8a12efc538f96390119637607d",
+            "outputSha256": "41a2b5d9703baf930280b9c4c425e1d1d3b5001582659277aaef22564d0a7ea8"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3aec491a6b55ec15b34e4ddb1e2fb44193056cdac2f37105127fdd1006e8460f",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "0b188478837bc12568b78a3034af6b116dbebc4e40b752c4efd2ddb8109cfa7f",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "167c40f7efffaec4632d33030751cd3bbe47da296b388004399fa1a82e5e796f",
+            "outputSha256": "c42d6a152ef194ceee1b899becb640ebc569d95961654b213e2aa7e48894b97b"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "013ff011dbf02864e867453951b9a43696570421851500eb2b4e7dc459c13530",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 7.069
+    },
+    {
+      "id": "negation-01",
+      "category": "negation",
+      "question": "Does the Elm prescription prove the medication was taken?",
+      "expected": "unknown",
+      "rawExpectedTextPresent": false,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": false,
+      "privacyPassed": true,
+      "expectedTextPresent": false,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": false,
+      "public": {
+        "responseRef": "R8be916a9e76c8f4140b2f6f6fa2df09a",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "52b0344e4e3e9261dbb4a1bd84981f7a89c1e16c2e70c73af523ef113aaa9a1d"
+          ],
+          "retrieve": [
+            "adbc5af6cd6a5b130dc87ba7b3377a0e9d5548bc6f77b613fa8bcf77e3ecd5b4",
+            "d7505d2c39052f452395ddf5308ceb5bbe247f29928d1e454d3139728b2b7365",
+            "3fce54ea5d4a898248fd1b2d6748476f80f8bc6cffb9b6e38de1ca438dfecc3a"
+          ],
+          "grade_chunks": [
+            "21c46c0c52f413230453503a8633fe023a7f2d5aa26b0e228b1e5cf2059c96d6",
+            "4f0d95cb625db5d0522c6043a0d0f57bdeebbdd65a38b39abea2d3f30baefa4b",
+            "9fc7143dd6caf3d45e0013fba9d39b8d0ff0d7dfa42342a5448b4ec622cbee2a"
+          ],
+          "broaden_query": [
+            "6db2fd017115af0f2293ac38caa8382542e5d70dce378b446a5d364558dca44a",
+            "e467f0a88f4ed9110e8a344dec844cd9e4277ace3d267cbbd5ff4a752b80232e"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          ],
+          "rawAnswer": [
+            "b1aa524f77ad3ebc68c01ba756d927a28faaed84c00436db3f9207b68fe76aaf"
+          ],
+          "publicAnswer": [
+            "5aa41fe601891329122ab7f4e04325e3be858e3e1df99d98e652eed88b3425fe"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "af856cd31cdf31a57dc15472c60f93c1a594e2cf89217de3cda014b2add628c3",
+            "outputSha256": "8b309ccfe3017fb11c110d0ab72a5ba9280d56c1061171b8669447342b272778"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "d46dc729f7037bb38e15d55f46327fafd3cc32d6e21c7f7484dd1fddc7e8fb20",
+            "outputSha256": "54687e4422c0cb4c919066e212ee978201d80ae7bae9f74255610b817611317a"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3b20c87b64dab8f8c735c31f95ad521b8e8a9aa4a5fd5ede495f4266dcff0a9b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "6765f218c096034917d8c351fc3cc514811630e2a470db1bd9dad66ef0a697ea",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "23957787485961df239d46ff56e064d0de305e5c70e781caad0da93ac5b58914",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "a9243d1ffef13c209830a1e8256cfc2c7c03becfdcea1e3dbdadc5969029829b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "26ec877a45629dd063b175a012ac62c8c195e5427468f781fcacc6dc2d604aa2",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "broaden_query",
+            "inputSha256": "cd5643aebb187854d64e9a1043b21f5970f44ded9388e22b9352e353ee8443f2",
+            "outputSha256": "1af9cb19c46c59df523a4f567c5289afb17ea6621ee02a3b9fe1a14045bb092a"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "4f9bef501e3fe4c91785d7a06572003327a5b0b362c66b83b17bc103dc5ccc7b",
+            "outputSha256": "8731de99f96886756fb1fc00e29d83e71a69973095ad87cf11dda3bb1fc37197"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3b20c87b64dab8f8c735c31f95ad521b8e8a9aa4a5fd5ede495f4266dcff0a9b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "6765f218c096034917d8c351fc3cc514811630e2a470db1bd9dad66ef0a697ea",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "23957787485961df239d46ff56e064d0de305e5c70e781caad0da93ac5b58914",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "be381c4112c9b416731414ad45728ee1f3dec68869270afb9e919993b7690e90",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "ab389391719bf8cd99f44e0110068caff1d0de86fa3f4f1fd6df62d4aa7eb61d",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "broaden_query",
+            "inputSha256": "83d6e77e6d798ed22c3512dd35c69f661aeed4c46c5b27907acb474c1b77ceb7",
+            "outputSha256": "d0ad01c9a150bacdb6a6e23d454633294174ac54fcbe17aee21fdbfbb76ed7c8"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "b3c6a54a6d3be0046a5ec28fe9797017b0f12002282624e47d2498473b0a7b5d",
+            "outputSha256": "8469f9c4d1c40a67ba816192dc3b5506e2e7f9d0280a7079f51ad907e7b6fe51"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3b20c87b64dab8f8c735c31f95ad521b8e8a9aa4a5fd5ede495f4266dcff0a9b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "6765f218c096034917d8c351fc3cc514811630e2a470db1bd9dad66ef0a697ea",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "be381c4112c9b416731414ad45728ee1f3dec68869270afb9e919993b7690e90",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "ab389391719bf8cd99f44e0110068caff1d0de86fa3f4f1fd6df62d4aa7eb61d",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "11a9a9338a053193360bcf6b07d7b9e2549f3f61ed3219d3f8258bd75003dbcf",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "8ffff7fc91bdd7b1aaeb18028be852801c12e0338998589fc6233d0b9afca654",
+            "outputSha256": "36b1b1c2620db20bc73227b336d3258ed2fc71dca2d5fce89771db05d48a93d1"
+          }
+        ]
+      },
+      "passed": false,
+      "seconds": 6.983
+    },
+    {
+      "id": "conflict-01",
+      "category": "contradiction",
+      "question": "What were the original and corrected Spruce walking durations?",
+      "expected": "19",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": false,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": false,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R121a1257d216d775b7d97bc7a1ee5cd2",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "Archive evidence:\n\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. [S1]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "# Synthetic Spruce corrected note\nA later user correction changes the Spruce walking duration on 2025-04-03 to 19 minutes. The original source had 17 minutes. This is a user correction, not a new source quotation."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "f47a2a48261791127df7632f4e8798387962040d5bfd6813134a16dac56188fb"
+          ],
+          "retrieve": [
+            "557ef968db16bd1593c28274ed0a027222fc332954b42630d38219bdfc9fe32e"
+          ],
+          "grade_chunks": [
+            "bc4bbb0873a5ae9f353b47a001970952f822336a1da8dc91635ee7f500246cf0"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "238ca65c4fbeca85fd00f4300926d6af0ff347f34e7cebd3d14d437490e7d598"
+          ],
+          "rawAnswer": [
+            "76c2322351e4bf44f7d4459e55449697dd22d3e88eca08c5f98b2c35b0fc92dc"
+          ],
+          "publicAnswer": [
+            "b36a673e1f4dca973ae81a5e7191bfa3ce7ec6a55c289776806ac694b6663c4e"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "d28452d2d237c4966dbc74b114ad0af28fc05684fd020572eed3a671226bfc70",
+            "outputSha256": "8de6d1ae5d1b0accb81c07b1e198f9679f6d83104e556245efa1eb389ee67400"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "c7a2de25d80cae775b75ee7353ad0211f3871666e11b32f8da0787d1cad60107",
+            "outputSha256": "34237e7a718f8058a4e3138a3f2410c6cff9ace754de4ac968579526b3ee3fd5"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "b73e39be5acd2cdb99dd4081e9d094f51183965b60487cc87c62e34b001ec333",
+            "outputSha256": "8216fe69e069a2c657dd3272667a34071400898fbfa710fb1bb57213c5a99feb"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "114681eb292cf1192e060d079abcbfaa2ceeb219dcc64ad3ad67c9ea5585629b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "a8a460bb620cbf6ae5dd852c1d9f1497923c162e369069ef4126b0e84840ba03",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "676facef4f693c5ec9122a2a1b140a934c35c90044606253e37ec4be362c5955",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "a9ddf3838adaa93ed43b63e6c96b3790aad77543c42b60588c1a9d677c6162a6",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "7d939a7ed396147aa24958abcc3e3f2646d18a71970edd2ebb9ce60da6e1e75d",
+            "outputSha256": "4b6a91656285584c8b171fd440b2ab4937076b305990a57855c982e70bea2817"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "1d1e4efeb8f0eeed8f88a76442714347d0406386e5eda5a88325dfd16de36936",
+            "outputSha256": "36b1b1c2620db20bc73227b336d3258ed2fc71dca2d5fce89771db05d48a93d1"
+          }
+        ]
+      },
+      "passed": false,
+      "seconds": 5.632
+    },
+    {
+      "id": "missing-01",
+      "category": "missing",
+      "question": "What is the fictional participant's blood group?",
+      "expected": null,
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "Rf090434a3165abd52fc78b08f5b98235",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "bb7731025d148091b1f05c739e064830935f223a3c372aec6bd5be4948ccca12"
+          ],
+          "retrieve": [
+            "04033e7ca4adaa1395f5ea5a96d065655421a91f7f6997bf4826336a83225b65",
+            "cf65eac9d90ee344c4c029642f2a3167a6524f1c0663a0ddfbab9c5d5c1a323f",
+            "6bd2396652dd9760d03ba162c29f238de57e2aeea87dd790cd2902c5aff4f4be"
+          ],
+          "grade_chunks": [
+            "387ed260ea09697ab93912cea3150c4819c8f05a8e23d8a6d558bcb1069d15f2",
+            "bb1a7de38c4258860724db3191d07c1604cdae66bb1463710e19bdff58f008af",
+            "bb1a7de38c4258860724db3191d07c1604cdae66bb1463710e19bdff58f008af"
+          ],
+          "broaden_query": [
+            "a54d700fd7e935056e7212fd8456a2814a4c6dc6fa02af027887c1a94044e401",
+            "a54d700fd7e935056e7212fd8456a2814a4c6dc6fa02af027887c1a94044e401"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          ],
+          "rawAnswer": [
+            "b1aa524f77ad3ebc68c01ba756d927a28faaed84c00436db3f9207b68fe76aaf"
+          ],
+          "publicAnswer": [
+            "5aa41fe601891329122ab7f4e04325e3be858e3e1df99d98e652eed88b3425fe"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "8499db018508dd544b772ad78ab135adf8c761762ae27f291d233b2b1570587d",
+            "outputSha256": "008912232b191be1446fb6b3a537e150ee6d2ae7159248676a6affef84cab332"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "47506ed869c5e024ad2f895f2765ce71b8da5b23061fa0d66f1f040a01ec44a2",
+            "outputSha256": "18a009b0ad892e6561a2e8f372cbd30012fafd890b5e6384575c2efbe9fe8c8c"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3cf1ed56cc6c1b985c239ca2621c70afd503d98442f7b2bbf38717604fc13945",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "a4aa8fdb167b5dd887bcfbaa4fad1f5b0b5c98f58b18296764b33d1401b96987",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "781a96802f1110c338298381edc3c8ee55f67f9b519955610156b4d626139fa4",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c7a9c53a99d6ceda6d5942716dbe9e20419c3a6e39bc2cd8260517cf6b8f27dc",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c99e083f109ecabb27fd617d5ec44eb3b8ca18f994ce86e79d73f8f7410694d7",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "broaden_query",
+            "inputSha256": "a08dd1af77414de029bcbe2b3a4dafd734677da9d15aa5621aa0a96b2da86c8c",
+            "outputSha256": "e96380ff5f90780078f02916c016972a65272f76e2543540d7522ab6e37a6fda"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "4a912f84db9fa95e36f657244a16c23159542e0fd58785ff368a394b60ca57c1",
+            "outputSha256": "700d67d90d41f84baae56e2a966c68f5418d8f4ec79a94bb1c7b9f626b07489c"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3cf1ed56cc6c1b985c239ca2621c70afd503d98442f7b2bbf38717604fc13945",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c7a9c53a99d6ceda6d5942716dbe9e20419c3a6e39bc2cd8260517cf6b8f27dc",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "781a96802f1110c338298381edc3c8ee55f67f9b519955610156b4d626139fa4",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "a4aa8fdb167b5dd887bcfbaa4fad1f5b0b5c98f58b18296764b33d1401b96987",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c99e083f109ecabb27fd617d5ec44eb3b8ca18f994ce86e79d73f8f7410694d7",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "broaden_query",
+            "inputSha256": "a754760bf99814c0066989ffbed9b09680f4b0066232832f7236bd16b4a7f2c5",
+            "outputSha256": "e96380ff5f90780078f02916c016972a65272f76e2543540d7522ab6e37a6fda"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "4a912f84db9fa95e36f657244a16c23159542e0fd58785ff368a394b60ca57c1",
+            "outputSha256": "700d67d90d41f84baae56e2a966c68f5418d8f4ec79a94bb1c7b9f626b07489c"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "3cf1ed56cc6c1b985c239ca2621c70afd503d98442f7b2bbf38717604fc13945",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c7a9c53a99d6ceda6d5942716dbe9e20419c3a6e39bc2cd8260517cf6b8f27dc",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "781a96802f1110c338298381edc3c8ee55f67f9b519955610156b4d626139fa4",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "a4aa8fdb167b5dd887bcfbaa4fad1f5b0b5c98f58b18296764b33d1401b96987",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c99e083f109ecabb27fd617d5ec44eb3b8ca18f994ce86e79d73f8f7410694d7",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "8ffff7fc91bdd7b1aaeb18028be852801c12e0338998589fc6233d0b9afca654",
+            "outputSha256": "36b1b1c2620db20bc73227b336d3258ed2fc71dca2d5fce89771db05d48a93d1"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.812
+    },
+    {
+      "id": "unrelated-01",
+      "category": "unrelated",
+      "question": "What is the capital of Argentina?",
+      "expected": null,
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R3698d5d9849d3e813ec0a0a39501aaf0",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос.",
+        "sources": [],
+        "insufficientContext": true
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "3074d5e06ecd2c768ccc2a57b62004c95b81da57152e27717dfc873d0b12ee43"
+          ],
+          "retrieve": [
+            "9c88f0f78f5a95eaf100c95599fae68b559dfe1f618ad44e7ae3ee8c53c6a8ad",
+            "fa7ec8c94073312fbb0313f4a0d14b53f31978c567ed1bc058d80bad451cc957",
+            "ed8f44b8ab224265ed3c4b377381ff514d90400f67d59fb2f84afe78f692e9f9"
+          ],
+          "grade_chunks": [
+            "40d27acf8561d4af16355923161b44638bc6d69ae5757e011d297404b45db07d",
+            "805f64b3714346007de6a563bfa9525c0d79157663488317bba252f3c7e5a2e4",
+            "805f64b3714346007de6a563bfa9525c0d79157663488317bba252f3c7e5a2e4"
+          ],
+          "broaden_query": [
+            "8c53de094190b26247e4f3f5a817e9957d685eb1b5cb29612253c2cd647ed9cf",
+            "8c53de094190b26247e4f3f5a817e9957d685eb1b5cb29612253c2cd647ed9cf"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          ],
+          "rawAnswer": [
+            "b1aa524f77ad3ebc68c01ba756d927a28faaed84c00436db3f9207b68fe76aaf"
+          ],
+          "publicAnswer": [
+            "5aa41fe601891329122ab7f4e04325e3be858e3e1df99d98e652eed88b3425fe"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "94e8529ad9cb0a3150e523fd92ab162b34e4373a27395172893a334f1182ca86",
+            "outputSha256": "0af0e825c11637ff17b79bf5733ae216326557e9fae6627cb0f863c8414184d1"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "37afc58bb365c5de35e1d075c517996ea912c23380ec97fd85c8e5d0182fe824",
+            "outputSha256": "a94d6222bde8af22c953125c20b90e8dfa06271d060b085bd1a480e43896fcae"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "370d4612332bb94b253c8e14a7ed68b43a6ee142660d4070932a900ed631ee57",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "afe0ec4642bc0a14d3faf85fee6884cc93789a6f36882242c19b8774e0af60ef",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "bee6915d7c1c18d7df4938cd25ec8e45e92be99c40a23c5c309cca5aa64829d5",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "5e9b704af3107ec5e37f526467d3a3841deeae0d6049a1279a0f87750a8cbcbf",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "dabab3b46983b7b0689702a7bc646afce8a442fc5c094d223f767a8571bfd24a",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "broaden_query",
+            "inputSha256": "2eb3c8423c06cb5104e70153cf07870f9b28a4abf9347880cb8a5c1b40f898d7",
+            "outputSha256": "2a3859c4c07563ac607df11e197655ae8e1290fc5ae4c134ab0dc88ad3787fa9"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "7b6f68b37250baee42ee6310f5ca7cc06fb9b710434238c9298c98d824dd8f9d",
+            "outputSha256": "85a99ea94203485118046d269ccffabaa1c4f3c6afa37d437e14bc5221763b7f"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "370d4612332bb94b253c8e14a7ed68b43a6ee142660d4070932a900ed631ee57",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "5e9b704af3107ec5e37f526467d3a3841deeae0d6049a1279a0f87750a8cbcbf",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "bee6915d7c1c18d7df4938cd25ec8e45e92be99c40a23c5c309cca5aa64829d5",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "07403fdccd21397f98edcbcb0736552dc90bc902eabc6748fc7440b49ac0e5fb",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "dabab3b46983b7b0689702a7bc646afce8a442fc5c094d223f767a8571bfd24a",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "broaden_query",
+            "inputSha256": "962cef76bd6e7fb3e5035bd29bdcbd6c0172f7844c0bf97953d0523ba596961b",
+            "outputSha256": "2a3859c4c07563ac607df11e197655ae8e1290fc5ae4c134ab0dc88ad3787fa9"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "7b6f68b37250baee42ee6310f5ca7cc06fb9b710434238c9298c98d824dd8f9d",
+            "outputSha256": "85a99ea94203485118046d269ccffabaa1c4f3c6afa37d437e14bc5221763b7f"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "370d4612332bb94b253c8e14a7ed68b43a6ee142660d4070932a900ed631ee57",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "5e9b704af3107ec5e37f526467d3a3841deeae0d6049a1279a0f87750a8cbcbf",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "bee6915d7c1c18d7df4938cd25ec8e45e92be99c40a23c5c309cca5aa64829d5",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "07403fdccd21397f98edcbcb0736552dc90bc902eabc6748fc7440b49ac0e5fb",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "dabab3b46983b7b0689702a7bc646afce8a442fc5c094d223f767a8571bfd24a",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "8ffff7fc91bdd7b1aaeb18028be852801c12e0338998589fc6233d0b9afca654",
+            "outputSha256": "36b1b1c2620db20bc73227b336d3258ed2fc71dca2d5fce89771db05d48a93d1"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.99
+    },
+    {
+      "id": "russian-01",
+      "category": "paraphrase",
+      "question": "Через сколько дней в записи Cedar рекомендован повторный визит?",
+      "expected": "17",
+      "rawExpectedTextPresent": true,
+      "rawExpectedSourcesCited": true,
+      "rawAbstentionCorrect": true,
+      "privacyPassed": true,
+      "expectedTextPresent": true,
+      "expectedSourcesCited": true,
+      "abstentionCorrect": true,
+      "public": {
+        "responseRef": "R089f5d2399c16fad22cb882023ed2daf",
+        "privacy": {
+          "status": "checked",
+          "warnings": [
+            "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+          ]
+        },
+        "answer": "По источникам архива:\n\nThe recommended review interval is 17 days. [S1]\n\nThe Cedar visit recommends a follow-up after 17 days. [S2]",
+        "sources": [
+          {
+            "reference": "S1",
+            "text": "SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\nThe privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.\nThese statements describe synthetic test data and are not medical advice."
+          },
+          {
+            "reference": "S2",
+            "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+          }
+        ],
+        "insufficientContext": false
+      },
+      "diagnostics": {
+        "stages": {
+          "rewrite_query": [
+            "f48c9e5de8b739e8ed3aaf887df804283ee18b419e38ef140490843b27c5ae3e"
+          ],
+          "retrieve": [
+            "11f7c1a7d0c2176d0fb19ec0530fb575294505cafc7fa303b38436215c3c0da8"
+          ],
+          "grade_chunks": [
+            "d7b702c7c46d06a6b28fe1b986f9d54dcf116fdea5d5b62564a8551390f4d4c2"
+          ],
+          "generate_answer": [
+            "f8b7d9b892bffdb33a9164db9b68d170aa4cf5ca95d26e7a81b8b71e8425651e"
+          ],
+          "selectedSources": [
+            "5386a770661ec9993737af750d45fd23286a1e4679b5f8df5dd5bd81bb4686e2"
+          ],
+          "rawAnswer": [
+            "a76053beeef1a422cac1b566584b64c91eb06f8b4aec7c9baa50c5f58f53949d"
+          ],
+          "publicAnswer": [
+            "9a6030578b90490eebf6bab08ef60a461b36a9378bd13a381fcba930327291e6"
+          ]
+        },
+        "calls": [
+          {
+            "task": "rewrite_query",
+            "inputSha256": "b3bcf16b146762c6b1413c7e5b65b61db4de6ed9e0c9b3e8ea80613b2a530286",
+            "outputSha256": "26a968423d2e946acae11923c5e5db1e794ce01f374f403ff8168d5a2f464817"
+          },
+          {
+            "task": "embed",
+            "inputSha256": "344ce309b78d8c36f5e41e70fbfd8826e8e1d1a64755b5974a18a2137cf37736",
+            "outputSha256": "9d06711061398bf833d3217740b52d3036c1fde65446a272b614a82a31ff9d1b"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "e0d983c7d91f187509693d2146e3e3a0b0c2a2230e81abda6fd52610a0a4f3de",
+            "outputSha256": "41a2b5d9703baf930280b9c4c425e1d1d3b5001582659277aaef22564d0a7ea8"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "04df46ea3e5decdb6c9bf8b49c44ce300a210e8728b6f11a707c7e907e9d883b",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "d54179e0e67a9b6e0eec1fe69b13b3516d9441a27ae8f60ef18256783a92006e",
+            "outputSha256": "cd2bd1ee01ab61e442e44754a60c2f764a520bc7919dd4b60fb6ab5077c1a009"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "c43512bc42d8f79ce8c23766501b2ca070bd7d42c9d3249a706e745d8af16bcd",
+            "outputSha256": "787268f20066aa4b7ddc9e118fa9929d91038ef7c267530ba7bc64163c8aabf4"
+          },
+          {
+            "task": "grade_chunks",
+            "inputSha256": "802d2f11310fd5a64e48967725e3b0c1cbcd091714d18cc67cfe366c045c47b7",
+            "outputSha256": "107652c4d28caa2780573af97c26f4c69aa7287fc314f01279fb53d485933b54"
+          },
+          {
+            "task": "generate_answer",
+            "inputSha256": "8ddab036b4719849ab8b83354bced5e7daf76c6ea8522a092b388a76ebc1b769",
+            "outputSha256": "678081c84c1f8ccf862c500aef3107a1812df202f4454fac44219ab3b8af8594"
+          },
+          {
+            "task": "privacy_pass",
+            "inputSha256": "ad986e33075d29fabddfa003d3c8f195303d405a683e0733f81c14d6d8de3138",
+            "outputSha256": "89bd070222837893080b3a1981712a038c839600a5f1e9a31ada7dd4e1d61bab"
+          }
+        ]
+      },
+      "passed": true,
+      "seconds": 6.724
+    }
+  ],
+  "summary": {
+    "passed": 18,
+    "total": 21,
+    "privacyPassed": 21
+  }
+}

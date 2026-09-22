@@ -1,0 +1,57 @@
+name: medical-stability
+services:
+  model-init:
+    image: ollama/ollama:0.34.1@sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65
+    entrypoint: [/bin/sh, /provision-models.sh]
+    environment:
+      LLM_MODEL: ${LLM_MODEL:-qwen3.5:2b}
+      EMBEDDING_MODEL: nomic-embed-text
+    volumes:
+      - models:/root/.ollama
+      - ./infra/provision-models.sh:/provision-models.sh:ro
+    networks: [provisioning]
+  ollama:
+    image: ollama/ollama:0.34.1@sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_NO_CLOUD: "1"
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_LOADED_MODELS: "2"
+    volumes: [models:/root/.ollama]
+    networks: [evaluation]
+    depends_on:
+      model-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, ollama, list]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  evaluator:
+    build: ./ai-service
+    working_dir: /workspace
+    entrypoint: [python, scripts/evaluate_stability.py]
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      LLM_MODEL: ${LLM_MODEL:-qwen3.5:2b}
+      LLM_SEED: "42"
+      EMBEDDING_MODEL: nomic-embed-text
+      PYTHONHASHSEED: "0"
+      ANONYMIZED_TELEMETRY: "False"
+    volumes:
+      - ./scripts:/workspace/scripts:ro
+      - ./evaluation:/workspace/evaluation:ro
+      - ./sample_docs:/workspace/sample_docs:ro
+      - ./ai-service/medical_ai:/workspace/ai-service/medical_ai:ro
+      - ./ai-service/uv.lock:/workspace/ai-service/uv.lock:ro
+      - ./.local-evaluation:/results
+    networks: [evaluation]
+    depends_on:
+      ollama:
+        condition: service_healthy
+volumes:
+  models: {}
+networks:
+  evaluation:
+    internal: true
+  provisioning: {}

@@ -1,0 +1,1153 @@
+{
+  "version": 1,
+  "startedAt": "2026-09-22T06:46:50.478129+00:00",
+  "completed": false,
+  "plan": [
+    {
+      "id": "same-01",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-02",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-03",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-04",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-05",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "fresh-01",
+      "group": "fresh-index",
+      "index": "fresh-01"
+    },
+    {
+      "id": "fresh-02",
+      "group": "fresh-index",
+      "index": "fresh-02"
+    },
+    {
+      "id": "fresh-03",
+      "group": "fresh-index",
+      "index": "fresh-03"
+    }
+  ],
+  "caseIds": [
+    "fact-01",
+    "fact-02",
+    "fact-03",
+    "fact-04",
+    "fact-05",
+    "fact-06",
+    "fact-07",
+    "fact-08",
+    "fact-09",
+    "fact-10",
+    "fact-11",
+    "fact-12",
+    "paraphrase-01",
+    "paraphrase-02",
+    "overview-01",
+    "multi-01",
+    "negation-01",
+    "conflict-01",
+    "missing-01",
+    "unrelated-01",
+    "russian-01"
+  ],
+  "timeoutSeconds": 3600,
+  "requestedExecution": "gpu",
+  "attempts": [
+    {
+      "id": "same-01",
+      "status": "completed",
+      "startedAt": "2026-09-22T06:47:38.652966+00:00",
+      "exitCode": 0,
+      "seconds": 206.977
+    },
+    {
+      "id": "same-02",
+      "status": "interrupted",
+      "startedAt": "2026-09-22T06:51:18.055300+00:00"
+    }
+  ],
+  "summary": {
+    "plannedRuns": 8,
+    "questionsPerRun": 21,
+    "groups": {
+      "same-index": {
+        "scheduledRuns": 5,
+        "completedRuns": 1,
+        "scores": [
+          18,
+          11,
+          0,
+          0,
+          0
+        ],
+        "min": 0,
+        "median": 0,
+        "max": 18,
+        "firstTenScores": [
+          10,
+          10,
+          0,
+          0,
+          0
+        ],
+        "firstTenPassedEveryRun": false,
+        "allQuestionsPassedEveryRun": false,
+        "cases": [
+          {
+            "id": "fact-01",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-02",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-03",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-04",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-05",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 2,
+              "rawAnswer": 2,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 2
+            }
+          },
+          {
+            "id": "fact-06",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-07",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-08",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-09",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-10",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-11",
+            "passed": 2,
+            "scheduled": 5,
+            "observed": 2,
+            "passRate": 0.4,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 2,
+              "expectedSourcesCited": 2,
+              "abstentionCorrect": 2,
+              "privacyPassed": 2
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-12",
+            "passed": 1,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.2,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 1,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "paraphrase-01",
+            "passed": 1,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.2,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 1,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "paraphrase-02",
+            "passed": 1,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.2,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 1,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "overview-01",
+            "passed": 0,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "multi-01",
+            "passed": 1,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.2,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 1,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "negation-01",
+            "passed": 0,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "conflict-01",
+            "passed": 0,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "missing-01",
+            "passed": 1,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.2,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 1,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "unrelated-01",
+            "passed": 1,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.2,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 1,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "russian-01",
+            "passed": 1,
+            "scheduled": 5,
+            "observed": 1,
+            "passRate": 0.2,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 1,
+              "expectedSourcesCited": 1,
+              "abstentionCorrect": 1,
+              "privacyPassed": 1
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 4
+            },
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          }
+        ]
+      },
+      "fresh-index": {
+        "scheduledRuns": 3,
+        "completedRuns": 0,
+        "scores": [
+          0,
+          0,
+          0
+        ],
+        "min": 0,
+        "median": 0,
+        "max": 0,
+        "firstTenScores": [
+          0,
+          0,
+          0
+        ],
+        "firstTenPassedEveryRun": false,
+        "allQuestionsPassedEveryRun": false,
+        "cases": [
+          {
+            "id": "fact-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-02",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-03",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-04",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-05",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-06",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-07",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-08",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-09",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-10",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-11",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "fact-12",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "paraphrase-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "paraphrase-02",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "overview-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "multi-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "negation-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "conflict-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "missing-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "unrelated-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          },
+          {
+            "id": "russian-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 0,
+            "passRate": 0.0,
+            "status": "missing",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 0
+            },
+            "errorTypes": {
+              "MISSING_RESULT": 3
+            },
+            "stageVariants": {}
+          }
+        ]
+      }
+    }
+  },
+  "manifest": {
+    "ollamaVersion": "0.34.1",
+    "models": {
+      "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "qwen3.5:2b": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df"
+    },
+    "llmModel": "qwen3.5:2b",
+    "embeddingModel": "nomic-embed-text",
+    "thinking": false,
+    "generation": {
+      "rewrite_query": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 128
+      },
+      "broaden_query": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 128
+      },
+      "grade_chunks": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 256
+      },
+      "generate_answer": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 1024
+      },
+      "extraction": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 2048
+      },
+      "privacy_pass": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 1024
+      }
+    },
+    "retrieval": {
+      "chunk_size": 900,
+      "chunk_overlap": 120,
+      "retrieval_k": 5,
+      "min_relevant_chunks": 1,
+      "rag_max_corrective_retries": 2,
+      "llm_timeout": 180.0,
+      "max_file_bytes": 20971520,
+      "extraction_max_facts_per_batch": 8
+    },
+    "corpusSha256": "f9eeee0dc679e48bcd4d80223c6b7c2d2582c1810eff831b8aed4eaa52dd93f0",
+    "questionsSha256": "3b76b4edfd7521d521c07c82c3d1cbb12935e601ac3e7697d1d3b931a50ba9d2",
+    "codeSha256": "e788564e339a1ecf164698ed13821acc36f563d10a0219004eb4b377558601a7",
+    "dependenciesSha256": "d59cd0d6e46c59a77ae1ab6b2a107e574c2cdd0d2250a33ffb089a2706e15a80",
+    "runtime": {
+      "python": "3.12.14",
+      "system": "Linux",
+      "machine": "x86_64",
+      "packages": {
+        "chromadb": "1.4.0",
+        "rank-bm25": "0.2.2",
+        "langgraph": "1.0.5",
+        "pypdf": "6.5.0",
+        "httpx": "0.28.1"
+      }
+    }
+  },
+  "execution": [
+    {
+      "name": "nomic-embed-text:latest",
+      "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "size": 323150151,
+      "size_vram": 323150151
+    },
+    {
+      "name": "qwen3.5:2b",
+      "digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+      "size": 2465296545,
+      "size_vram": 2465296545
+    }
+  ]
+}

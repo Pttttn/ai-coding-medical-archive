@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", populate_by_name=True)
     ollama_base_url: str = Field(default="http://ollama:11434", validation_alias=AliasChoices("OLLAMA_BASE_URL", "LLM_BASE_URL"))
-    llm_model: str = "qwen2.5:3b"
+    llm_model: str = "qwen3.5:2b"
     embedding_model: str = "nomic-embed-text"
     internal_token: str = Field(default="local-development-token-change-me", validation_alias=AliasChoices("INTERNAL_TOKEN", "INTERNAL_API_TOKEN"))
     data_dir: Path = Field(default=Path("./data"), validation_alias=AliasChoices("DATA_DIR", "AI_DATA_DIR"))
@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     retrieval_k: int = Field(default=5, ge=1, le=12)
     min_relevant_chunks: int = Field(default=1, ge=1, le=12)
     rag_max_corrective_retries: int = Field(default=2, ge=0, le=2)
+    llm_seed: int = Field(default=42, ge=0, le=2147483647)
     llm_timeout: float = 180.0
     llm_query_max_tokens: int = Field(default=128, ge=32, le=512)
     llm_grade_max_tokens: int = Field(default=256, ge=64, le=768)

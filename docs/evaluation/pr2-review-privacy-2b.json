@@ -1,0 +1,211 @@
+{
+  "timestamp": "2026-09-22T06:06:47.221563+00:00",
+  "provider": "real-local-ollama",
+  "transport": "Streamable HTTP",
+  "cases": [
+    {
+      "id": "unlabelled-participant",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"Rdd3b055808a68432cfec5f5c706e3a93\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\"]},\"chunks\":[{\"reference\":\"S1\",\"text\":\"# Archive guide\\n\\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and de-identification test records. All records concern a fictional participant [PERSON_A]. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The Cedar and Amber encounters are separate; their facts must not be merged. Medical documents use Markdown, plain text and PDF with a text layer. Fictional names and contacts are included to test outbound privacy. Tree names such as Cedar and Amber label fictional encounters, not people.\"}]}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "Rdd3b055808a68432cfec5f5c706e3a93",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+            ]
+          },
+          "chunks": [
+            {
+              "reference": "S1",
+              "text": "# Archive guide\n\nThis is a synthetic medical archive for retrieval testing. It contains fictional visits, laboratory observations, prescriptions with unknown intake, a two-year daily wellness diary, and de-identification test records. All records concern a fictional participant [PERSON_A]. Monthly diaries cover January 2024 through December 2025. They record self-reported sleep, walking, observation counts, energy and the status of notes. Entries are not diagnoses. A missing measurement is unknown, and an explicit denial must stay negative. The Cedar and Amber encounters are separate; their facts must not be merged. Medical documents use Markdown, plain text and PDF with a text layer. Fictional names and contacts are included to test outbound privacy. Tree names such as Cedar and Amber label fictional encounters, not people."
+            }
+          ]
+        },
+        "isError": false
+      },
+      "seconds": 2.406
+    },
+    {
+      "id": "clinical-fragment",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"Rdf20c38ab34e598247346908ca3e10cb\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\"]},\"chunks\":[{\"reference\":\"S1\",\"text\":\"SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.\\nPatient: [PERSON_A]\\nDoctor: [DOCTOR_B]\\nPhone: [PHONE]\\nEmail: [EMAIL]\\n[IDENTIFIER]\\n[LOCATION]\\n\\nThe privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.\\nThese statements describe synthetic test data and are not medical advice.\"}]}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "Rdf20c38ab34e598247346908ca3e10cb",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+            ]
+          },
+          "chunks": [
+            {
+              "reference": "S1",
+              "text": "SYNTHETIC PRIVACY FIXTURE. All people and identifiers below are fictional.\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\nThe privacy demonstration records LDL 4.73 mmol/L. A fictional prescription states 2.5 mg once daily; actual intake is unknown. The source records no dizziness. The recommended review interval is 17 days.\nThese statements describe synthetic test data and are not medical advice."
+            }
+          ]
+        },
+        "isError": false
+      },
+      "seconds": 8.5
+    },
+    {
+      "id": "direct-name",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"Rb7f1c5724a8a2a65ce220c501bca1159\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\"]},\"answer\":\"Archive evidence:\\n\\nPatient: [PERSON_A] [S1]\",\"sources\":[{\"reference\":\"S1\",\"text\":\"# Cedar visit\\n\\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\\n\\n## Recorded observation\\nThe Cedar visit recommends a follow-up after 17 days.\\n\\n## Fictional identifiers for privacy testing\\nPatient: [PERSON_A]\\nDoctor: [DOCTOR_B]\\nPhone: [PHONE]\\nEmail: [EMAIL]\\n[IDENTIFIER]\\n[LOCATION]\\n\\n## Source scope\\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.\"}],\"insufficientContext\":false}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "Rb7f1c5724a8a2a65ce220c501bca1159",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+            ]
+          },
+          "answer": "Archive evidence:\n\nPatient: [PERSON_A] [S1]",
+          "sources": [
+            {
+              "reference": "S1",
+              "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+            }
+          ],
+          "insufficientContext": false
+        },
+        "isError": false
+      },
+      "seconds": 36.219
+    },
+    {
+      "id": "direct-card",
+      "expectedError": false,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"responseRef\":\"Rcbf3246f0594312bf9055fba346593f4\",\"privacy\":{\"status\":\"checked\",\"warnings\":[\"AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE\"]},\"answer\":\"Archive evidence:\\n\\n[IDENTIFIER] [S1]\",\"sources\":[{\"reference\":\"S1\",\"text\":\"# Cedar visit\\n\\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\\n\\n## Recorded observation\\nThe Cedar visit recommends a follow-up after 17 days.\\n\\n## Fictional identifiers for privacy testing\\nPatient: [PERSON_A]\\nDoctor: [DOCTOR_B]\\nPhone: [PHONE]\\nEmail: [EMAIL]\\n[IDENTIFIER]\\n[LOCATION]\\n\\n## Source scope\\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown.\"}],\"insufficientContext\":false}",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": {
+          "responseRef": "Rcbf3246f0594312bf9055fba346593f4",
+          "privacy": {
+            "status": "checked",
+            "warnings": [
+              "AUTOMATED_CHECK_NOT_ANONYMITY_GUARANTEE"
+            ]
+          },
+          "answer": "Archive evidence:\n\n[IDENTIFIER] [S1]",
+          "sources": [
+            {
+              "reference": "S1",
+              "text": "# Cedar visit\n\nSYNTHETIC MEDICAL ARCHIVE. Fictional patient; software test data, not medical guidance.\n\n## Recorded observation\nThe Cedar visit recommends a follow-up after 17 days.\n\n## Fictional identifiers for privacy testing\nPatient: [PERSON_A]\nDoctor: [DOCTOR_B]\nPhone: [PHONE]\nEmail: [EMAIL]\n[IDENTIFIER]\n[LOCATION]\n\n## Source scope\nThis record reports only the named encounter. It does not establish a diagnosis or confirm medication use. Technical upload time is not the date of an encounter. Unstated information is unknown."
+            }
+          ],
+          "insufficientContext": false
+        },
+        "isError": false
+      },
+      "seconds": 61.656
+    },
+    {
+      "id": "invalid-path",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.157
+    },
+    {
+      "id": "invalid-type",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.0
+    },
+    {
+      "id": "unknown-argument",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.0
+    },
+    {
+      "id": "unknown-tool",
+      "expectedError": true,
+      "passed": true,
+      "response": {
+        "content": [
+          {
+            "type": "text",
+            "text": "PUBLIC_OUTPUT_UNAVAILABLE: unable to return a checked response.",
+            "annotations": null,
+            "meta": null
+          }
+        ],
+        "structuredContent": null,
+        "isError": true
+      },
+      "seconds": 0.0
+    }
+  ]
+}

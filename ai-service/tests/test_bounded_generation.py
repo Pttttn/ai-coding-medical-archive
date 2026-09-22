@@ -31,6 +31,7 @@ def test_chat_request_contains_budget_and_accepts_strict_json(settings):
     provider.client = httpx.Client(transport=httpx.MockTransport(handler), base_url="http://localhost")
     assert provider.json("TASK: rewrite_query", {"question": "original"}, QUERY_SCHEMA) == {"query": "safe query"}
     assert captured[0]["options"]["num_predict"] == 128
+    assert captured[0]["options"]["seed"] == settings.llm_seed == 42
     assert "tools" not in captured[0]
 
 
@@ -122,3 +123,16 @@ def test_unavailable_model_does_not_masquerade_as_no_archive_evidence(services, 
         services.demo_rag.ask("What code?")
     assert error.value.code == "MODEL_UNAVAILABLE"
 
+
+
+def test_native_compose_and_example_use_the_same_default(monkeypatch):
+    import re
+    from pathlib import Path
+
+    monkeypatch.delenv("LLM_MODEL", raising=False)
+    root = Path(__file__).resolve().parents[2]
+    model = Settings(_env_file=None).llm_model
+    compose_models = re.findall(r"LLM_MODEL: \$\{LLM_MODEL:-([^}]+)\}", (root / "compose.yaml").read_text())
+    assert compose_models and all(value == model for value in compose_models)
+    example = (root / ".env.example").read_text()
+    assert f"\nLLM_MODEL={model}\n" in "\n" + example

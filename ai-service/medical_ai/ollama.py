@@ -35,7 +35,7 @@ class Ollama:
             budget, context = settings.llm_privacy_max_tokens, 16384
         else:
             budget, context = settings.llm_answer_max_tokens, 8192
-        return {"temperature": 0, "num_ctx": context, "num_predict": budget}
+        return {"temperature": 0, "seed": settings.llm_seed, "num_ctx": context, "num_predict": budget}
 
     def json(self, task: str, payload: dict, schema: dict | None = None) -> dict[str, Any]:
         try:

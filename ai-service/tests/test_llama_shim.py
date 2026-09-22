@@ -134,3 +134,17 @@ def test_schema_fallback_stays_validated_and_length_is_preserved(shim, monkeypat
     response = client.post("/api/chat", json={"messages": [], "format": {"type": "object"}})
     assert response.json()["done_reason"] == "length"
     assert formats == ["json_schema", "json_object"]
+
+
+
+def test_seed_is_forwarded_to_optional_provider(shim, monkeypatch):
+    module, client = shim
+    calls = []
+
+    def remote(payload, **kwargs):
+        calls.append(payload)
+        return {"choices": [{"message": {"content": "{}"}, "finish_reason": "stop"}]}
+
+    monkeypatch.setattr(module, "remote_call", remote)
+    assert client.post("/api/chat", json={"messages": [], "options": {"seed": 42}}).status_code == 200
+    assert calls[0]["seed"] == 42

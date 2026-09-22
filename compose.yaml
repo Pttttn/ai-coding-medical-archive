@@ -21,7 +21,7 @@ services:
     image: ollama/ollama:0.34.1
     entrypoint: [/bin/sh, /provision-models.sh]
     environment:
-      LLM_MODEL: ${LLM_MODEL:-qwen2.5:3b}
+      LLM_MODEL: ${LLM_MODEL:-qwen3.5:2b}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
     volumes:
       - ollama_models:/root/.ollama
@@ -51,9 +51,10 @@ services:
     build: ./ai-service
     environment:
       LLM_BASE_URL: http://ollama:11434
-      LLM_MODEL: ${LLM_MODEL:-qwen2.5:3b}
+      LLM_MODEL: ${LLM_MODEL:-qwen3.5:2b}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
       INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:-local-internal-demo-token}
+      LLM_SEED: ${LLM_SEED:-42}
       AI_DATA_DIR: /data/ai
       MCP_DEMO_DIR: /data/mcp_demo
       SAMPLE_DOCS_DIR: /app/sample_docs

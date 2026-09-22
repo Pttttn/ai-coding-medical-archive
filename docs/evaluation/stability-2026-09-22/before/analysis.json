@@ -1,0 +1,1880 @@
+{
+  "seriesCompleted": true,
+  "summary": {
+    "plannedRuns": 8,
+    "questionsPerRun": 21,
+    "groups": {
+      "same-index": {
+        "scheduledRuns": 5,
+        "completedRuns": 5,
+        "scores": [
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "min": 18,
+        "median": 18,
+        "max": 18,
+        "firstTenScores": [
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "firstTenPassedEveryRun": true,
+        "allQuestionsPassedEveryRun": false,
+        "cases": [
+          {
+            "id": "fact-01",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 3,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 3,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-02",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-03",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-04",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-05",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 2,
+              "rawAnswer": 2,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 2
+            }
+          },
+          {
+            "id": "fact-06",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-07",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-08",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-09",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-10",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 3,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 3,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-11",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-12",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "paraphrase-01",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "paraphrase-02",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "overview-01",
+            "passed": 0,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 0.0,
+            "status": "always-fail",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "multi-01",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "negation-01",
+            "passed": 0,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 0.0,
+            "status": "always-fail",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 4,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 4,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "conflict-01",
+            "passed": 0,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 0.0,
+            "status": "always-fail",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 2,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 2,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "missing-01",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "unrelated-01",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "russian-01",
+            "passed": 5,
+            "scheduled": 5,
+            "observed": 5,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 5,
+              "expectedSourcesCited": 5,
+              "abstentionCorrect": 5,
+              "privacyPassed": 5
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          }
+        ]
+      },
+      "fresh-index": {
+        "scheduledRuns": 3,
+        "completedRuns": 3,
+        "scores": [
+          18,
+          18,
+          18
+        ],
+        "min": 18,
+        "median": 18,
+        "max": 18,
+        "firstTenScores": [
+          10,
+          10,
+          10
+        ],
+        "firstTenPassedEveryRun": true,
+        "allQuestionsPassedEveryRun": false,
+        "cases": [
+          {
+            "id": "fact-01",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-02",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-03",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-04",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-05",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-06",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-07",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-08",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-09",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-10",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-11",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "fact-12",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "paraphrase-01",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "paraphrase-02",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "overview-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 0.0,
+            "status": "always-fail",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "multi-01",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "negation-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 0.0,
+            "status": "always-fail",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 0,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 0,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 3,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 3,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "conflict-01",
+            "passed": 0,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 0.0,
+            "status": "always-fail",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 0,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "missing-01",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "unrelated-01",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "broaden_query": 1,
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          },
+          {
+            "id": "russian-01",
+            "passed": 3,
+            "scheduled": 3,
+            "observed": 3,
+            "passRate": 1.0,
+            "status": "always-pass",
+            "criteriaPassCounts": {
+              "expectedTextPresent": 3,
+              "expectedSourcesCited": 3,
+              "abstentionCorrect": 3,
+              "privacyPassed": 3
+            },
+            "errorTypes": {},
+            "stageVariants": {
+              "generate_answer": 1,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
+              "rewrite_query": 1,
+              "selectedSources": 1
+            }
+          }
+        ]
+      }
+    }
+  },
+  "changedCaseComparisons": [
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 2,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 5,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-10",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 5,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-08",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-09",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-10",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 2,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 16,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "same-index",
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "fresh-index",
+      "reference": "fresh-01",
+      "run": "fresh-02",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 2,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "group": "fresh-index",
+      "reference": "fresh-01",
+      "run": "fresh-03",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 16,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    }
+  ],
+  "allRunChangedComparisons": [
+    {
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 2,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-02",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 5,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-03",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "fact-10",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 5,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-04",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-05",
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 4,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-06",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-08",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-09",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "fact-10",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 2,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 16,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "same-05",
+      "case": "conflict-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "fresh-01",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 16,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "reference": "same-01",
+      "run": "fresh-02",
+      "case": "negation-01",
+      "changedStages": [
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 2,
+        "kind": "input",
+        "task": "grade_chunks"
+      }
+    }
+  ],
+  "indexFingerprints": {
+    "shared": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    },
+    "fresh-01": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    },
+    "fresh-02": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    },
+    "fresh-03": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    }
+  },
+  "providerConsistency": {
+    "same-index": {
+      "repeatedInputCount": 199,
+      "variableInputs": []
+    },
+    "fresh-index": {
+      "repeatedInputCount": 198,
+      "variableInputs": []
+    }
+  },
+  "limitations": "Fingerprints locate a difference; they do not alone prove its cause. Persistent same-index runs include application restart/recovery; no frozen-context replay was performed."
+}
