@@ -65,13 +65,17 @@ class Corpus:
     def _restore(self):
         """SQLite is authoritative; repair interrupted vector mutations using stored embeddings."""
         with self.lock:
-            rows = self.db.execute("SELECT * FROM chunks").fetchall()
+            rows = self.db.execute("SELECT * FROM chunks ORDER BY document_id,id").fetchall()
             current = set(self.collection.get(include=[])["ids"])
             wanted = {r["id"] for r in rows}
             if current - wanted:
                 self.collection.delete(ids=list(current - wanted))
-            for start in range(0, len(rows), 100):
-                batch = rows[start:start + 100]
+            # Content-addressed IDs change whenever source/configuration changes.
+            # Existing IDs already contain the committed vectors; re-upserting them
+            # on every restart can change the HNSW graph without changing the data.
+            missing = [row for row in rows if row["id"] not in current]
+            for start in range(0, len(missing), 100):
+                batch = missing[start:start + 100]
                 if batch:
                     self.collection.upsert(ids=[r["id"] for r in batch],
                                            documents=[r["text"] for r in batch],
@@ -173,13 +177,18 @@ class Corpus:
             # Recompute BM25 over the selected corpus so excluded documents cannot affect IDF.
             sparse_model = self.bm25 if allowed is None else BM25Okapi([tokenize(d.page_content) for d in eligible])
             scores = sparse_model.get_scores(tokenize(query))
-            sparse = [eligible[i] for i in sorted(range(len(eligible)), key=lambda i: scores[i], reverse=True)[:depth]]
-            where = {"documentId": {"$in": list(allowed)}} if allowed else None
+            sparse = [eligible[i] for i in sorted(range(len(eligible)), key=lambda i: (-scores[i], eligible[i].metadata["chunkId"]))[:depth]]
+            where = {"documentId": {"$in": sorted(allowed)}} if allowed else None
             vector_results = self.collection.query(query_embeddings=self.provider.embed([query]),
-                n_results=depth, where=where, include=["documents", "metadatas"])
-            active = {d.metadata["chunkId"] for d in eligible}
-            dense = [Document(page_content=t, metadata=m) for t, m in
-                     zip(vector_results["documents"][0], vector_results["metadatas"][0]) if m["chunkId"] in active]
+                n_results=len(eligible), where=where, include=["distances"])
+            active = {d.metadata["chunkId"]: d for d in eligible}
+            # The MVP corpus is small: rank every eligible vector before truncation.
+            # Sorting only an ANN top-k cannot resolve tied candidates already dropped
+            # at the cutoff. Fetch IDs/distances, not a second copy of all source text.
+            candidates = [(distance, identifier) for identifier, distance in
+                          zip(vector_results["ids"][0], vector_results["distances"][0]) if identifier in active]
+            candidates.sort(key=lambda item: (item[0], item[1]))
+            dense = [active[identifier] for _, identifier in candidates[:depth]]
             combined = EnsembleRetriever(retrievers=[RankedRetriever(documents=sparse), RankedRetriever(documents=dense)],
                                          weights=[0.5, 0.5], c=60, id_key="chunkId")
             return combined.invoke(query)[:top_k]
