@@ -10,7 +10,7 @@ services:
     command: [python, /app/llama-shim.py]
     environment:
       REMOTE_CHAT_URL: ${LLAMA_CPP_URL:?set LLAMA_CPP_URL in .env}
-      REMOTE_MODEL: ${LLM_MODEL:-qwen3.8-27b-q8-100k-cuda}
+      REMOTE_MODEL: ${LLM_MODEL:?set LLM_MODEL to the remote model id}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
       LOCAL_OLLAMA_URL: http://host.docker.internal:11434
       API_KEY_FILE: /keys/llama-cpp.keys
