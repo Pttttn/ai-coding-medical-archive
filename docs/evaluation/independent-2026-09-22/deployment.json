@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "544fe2fc215f4139cbb35541ac5bf7c6a118ccdb",
+  "repository": "https://github.com/ruslan-yusupov-open/ai-coding-medical-archive.git",
+  "freshClone": true,
+  "initialDockerInstalled": false,
+  "applicationNewVolumes": true,
+  "evaluationNewVolumes": true,
+  "applicationMode": "standard compose.yaml, CPU, no .env",
+  "evaluationMode": "compose.evaluation.yaml + compose.evaluation.cuda.yaml, GPU, exact previous reference profile required",
+  "setupAttempts": [
+    {
+      "step": "initial evaluation image pull",
+      "outcome": "failed",
+      "reason": "connection reset by peer while downloading Docker Hub layer; model evaluation had not started"
+    },
+    {
+      "step": "retry evaluation setup",
+      "outcome": "passed"
+    },
+    {
+      "step": "clean application build and startup",
+      "outcome": "passed"
+    }
+  ],
+  "deploymentAssertions": {
+    "modelInitExitCode": 0,
+    "allSixApplicationServicesHealthy": true,
+    "afterRestartReadyDocuments": 36,
+    "afterRestartPendingDocuments": 0,
+    "afterRestartFailedDocuments": 0
+  },
+  "changesToApplicationSource": false,
+  "notes": [
+    "No existing data or index copied from the first machine.",
+    "Both model/data volumes were provisioned independently.",
+    "Application was restarted without deleting volumes.",
+    "NVIDIA driver was not changed."
+  ]
+}

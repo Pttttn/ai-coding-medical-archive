@@ -1,0 +1,22 @@
+[
+  {
+    "check": "runtime",
+    "exitCode": 0,
+    "seconds": 2.52
+  },
+  {
+    "check": "application",
+    "exitCode": 0,
+    "seconds": 129.55
+  },
+  {
+    "check": "pdf",
+    "exitCode": 0,
+    "seconds": 46.81
+  },
+  {
+    "check": "mcp",
+    "exitCode": 0,
+    "seconds": 157.05
+  }
+]

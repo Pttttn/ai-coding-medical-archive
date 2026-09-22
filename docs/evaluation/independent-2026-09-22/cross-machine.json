@@ -1,0 +1,225 @@
+{
+  "reference": "RTX 5080 series after retrieval fix, first run same-01",
+  "actual": "Independent RTX 5060 Ti series, all eight runs",
+  "profilesEqual": true,
+  "profileDifferentFields": [],
+  "comparisons": 168,
+  "changedPassComparisons": 0,
+  "changedDiagnosticComparisons": 104,
+  "changedPublicAnswerComparisons": 8,
+  "firstRunChanges": [
+    {
+      "run": "same-01",
+      "case": "fact-02",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [
+        "grade_chunks"
+      ],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "output-or-error",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "fact-03",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 3,
+        "kind": "output-or-error",
+        "task": "grade_chunks"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "fact-04",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [
+        "grade_chunks",
+        "retrieve",
+        "rewrite_query"
+      ],
+      "firstCallDifference": {
+        "position": 0,
+        "kind": "output-or-error",
+        "task": "rewrite_query"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "fact-05",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "fact-06",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "fact-07",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "fact-09",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "fact-11",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "paraphrase-02",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "overview-01",
+      "samePass": true,
+      "samePublicAnswer": false,
+      "changedStages": [
+        "grade_chunks",
+        "publicAnswer",
+        "rawAnswer",
+        "retrieve",
+        "rewrite_query",
+        "selectedSources"
+      ],
+      "firstCallDifference": {
+        "position": 0,
+        "kind": "output-or-error",
+        "task": "rewrite_query"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "multi-01",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "negation-01",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [
+        "broaden_query",
+        "grade_chunks",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 1,
+        "kind": "output-or-error",
+        "task": "embed"
+      }
+    },
+    {
+      "run": "same-01",
+      "case": "missing-01",
+      "samePass": true,
+      "samePublicAnswer": true,
+      "changedStages": [
+        "broaden_query",
+        "retrieve"
+      ],
+      "firstCallDifference": {
+        "position": 7,
+        "kind": "output-or-error",
+        "task": "broaden_query"
+      }
+    }
+  ],
+  "referenceIndexFingerprints": {
+    "shared": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    },
+    "fresh-01": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    },
+    "fresh-02": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    },
+    "fresh-03": {
+      "chunks": 773,
+      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
+    }
+  },
+  "actualIndexFingerprints": {
+    "shared": {
+      "chunks": 773,
+      "vectorsSha256": "13ff389845d3d6ef3aec3fcc7085e4623fbcab43099b2d3f2938bc5b7f3bd3f6"
+    },
+    "fresh-01": {
+      "chunks": 773,
+      "vectorsSha256": "13ff389845d3d6ef3aec3fcc7085e4623fbcab43099b2d3f2938bc5b7f3bd3f6"
+    },
+    "fresh-02": {
+      "chunks": 773,
+      "vectorsSha256": "13ff389845d3d6ef3aec3fcc7085e4623fbcab43099b2d3f2938bc5b7f3bd3f6"
+    },
+    "fresh-03": {
+      "chunks": 773,
+      "vectorsSha256": "13ff389845d3d6ef3aec3fcc7085e4623fbcab43099b2d3f2938bc5b7f3bd3f6"
+    }
+  },
+  "limitation": "Different hardware, driver and host OS were observed together. This comparison does not isolate a cause or guarantee cross-device determinism. Random responseRef and timing are excluded."
+}
