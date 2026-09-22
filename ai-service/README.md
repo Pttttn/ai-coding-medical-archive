@@ -58,24 +58,25 @@ All tools and argument/unknown-tool failures are covered by safe error middlewar
 
 Manual consultation uses the same privacy component but remains a separate product flow: local preview → human review of the exact content hash → Copy/Markdown. An edit invalidates review. The archive does not use external AI SDKs or send consultations automatically.
 
-MCP replies automatically to the connected host over its transport. This **is a transfer of the checked synthetic data to that host**, even without an external SDK in our server. It does not authorize access to the personal archive or make the host's later actions local. Existing nginx ingress and fixed host-Ollama proxy are network controls, not a gateway to an external model provider.
+MCP replies automatically to the connected host over its transport. This **is a transfer of the checked synthetic data to that host**, even without an external SDK in our server. It does not authorize access to the personal archive or make the host's later actions local. The standard nginx ingress and fixed host-Ollama proxy are network controls. The optional `compose.llama-cpp.yaml` routes generation to an operator-configured external service through the shim; choosing that mode explicitly changes the inference trust boundary and can send archive source context to that service. See the root README; the default remains local.
 
 ## Real evaluation and evidence
 
 Deterministic pytest adapters and genuine Ollama evaluations are separate evidence. Run the latter only on synthetic data with both local models ready. From the repository root, in PowerShell:
 
 ```powershell
-$env:DATA_DIR = Join-Path $PWD '.local-evaluation/v12-public-900'
+$env:DATA_DIR = Join-Path $PWD '.local-evaluation/review-qwen35-2b'
 $env:OLLAMA_BASE_URL = 'http://127.0.0.1:11434'
+$env:LLM_MODEL = 'qwen3.5:2b'
 Remove-Item Env:MCP_DEMO_DIR -ErrorAction SilentlyContinue
-& .\ai-service\.venv\Scripts\python.exe scripts/evaluate_public.py --output docs/evaluation/v12-public-rag.json
+& .\ai-service\.venv\Scripts\python.exe scripts/evaluate_public.py --output .local-evaluation/review-qwen35-2b/result.json
 ```
 
 POSIX equivalent:
 
 ```sh
-env -u MCP_DEMO_DIR DATA_DIR="$PWD/.local-evaluation/v12-public-900" OLLAMA_BASE_URL=http://127.0.0.1:11434 \
-  ai-service/.venv/bin/python scripts/evaluate_public.py --output docs/evaluation/v12-public-rag.json
+env -u MCP_DEMO_DIR DATA_DIR="$PWD/.local-evaluation/review-qwen35-2b" LLM_MODEL=qwen3.5:2b OLLAMA_BASE_URL=http://127.0.0.1:11434 \
+  ai-service/.venv/bin/python scripts/evaluate_public.py --output .local-evaluation/review-qwen35-2b/result.json
 ```
 
 Use a different `DATA_DIR` and set `CHUNK_SIZE=1400`, `CHUNK_OVERLAP=180` for a comparison. Do not point evaluation storage at the application archive or an existing personal demo override. `--limit 10` checks the first ten cases, not the full suite. The script tests fact retention, source identity (locally), abstention and public privacy separately and stores only checked public payloads; unsuccessful cases and elapsed time remain in the report.
@@ -87,7 +88,7 @@ python scripts/mcp_smoke.py --output docs/evaluation/v12-mcp-http-smoke.json
 python scripts/host_agent_check.py --output docs/evaluation/v12-host-agent.json
 ```
 
-The reference host defaults to local Ollama `qwen3.5:4b` for tool calling; prepare it separately or choose `--model`. The main archive keeps `qwen2.5:3b`. Add `--expect-empty` to MCP smoke after resetting only demo storage. These commands are instructions, not assertions that the latest run passed. Actual status belongs in [VALIDATION](../docs/VALIDATION.md) and [evaluation README](../docs/evaluation/README.md).
+The reference host defaults to local Ollama `qwen3.5:4b` for tool calling; prepare it separately or choose `--model`. The main archive defaults to `qwen3.5:2b`. Add `--expect-empty` to MCP smoke after resetting only demo storage. These commands are instructions, not assertions that the latest run passed. Actual status belongs in [VALIDATION](../docs/VALIDATION.md) and [evaluation README](../docs/evaluation/README.md).
 
 Historical v1.1 reports (including `bounded-final-control.json`, 17/21 and first 10/10) used a different corpus/contract and do not certify v1.2 privacy or structural chunking. New evidence uses `v12-*` filenames without overwriting that history.
 

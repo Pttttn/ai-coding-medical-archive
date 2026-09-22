@@ -79,5 +79,32 @@
   "thinking": "think:false for qwen3-family; no think option for qwen2.5",
   "scoreDefinition": "all(expectedTextPresent,expectedSourcesCited,abstentionCorrect,privacyPassed)",
   "corpus": "42 synthetic files, 773 chunks, 900/120; independent fresh indexes per run",
-  "limitations": "Reviewer CPU/Mac environment was not reproduced; published 11/21 remains a separate real observation. Endpoint performance and all metrics are scoped to each recorded run."
+  "limitations": "Reviewer CPU/Mac environment was not reproduced; published 11/21 remains a separate real observation. Endpoint performance and all metrics are scoped to each recorded run.",
+  "container": {
+    "project": "lma-pr2-review",
+    "initialStorage": "five new empty named volumes including model storage; automatic model-init downloads; Docker build cache retained",
+    "dockerCpuCount": 32,
+    "dockerMemoryBytes": 33524744192,
+    "ollama": {
+      "version": {
+        "version": "0.34.1"
+      },
+      "running": [
+        {
+          "name": "nomic-embed-text:latest",
+          "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+          "size": 376449269,
+          "size_vram": 0
+        },
+        {
+          "name": "qwen3.5:2b",
+          "digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+          "size": 2474691786,
+          "size_vram": 0
+        }
+      ]
+    },
+    "evaluationStorage": "independent /tmp/pr2-eval/data and /tmp/pr2-eval/demo inside AI container",
+    "limitations": "Different CPU/RAM and Ollama version from reviewer; not an identical reproduction of the reviewer machine."
+  }
 }

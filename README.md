@@ -178,20 +178,21 @@ python scripts/host_agent_check.py --output docs/evaluation/v12-host-agent.json
 
 Для проверки пустого MCP после безопасного reset добавьте `--expect-empty` в `mcp_smoke.py`. Для reference host заранее выполните `ollama pull qwen3.5:4b` или укажите `--model` с поддержкой tool calls. Основной RAG продолжает использовать `qwen3.5:2b`. Host-agent check обращается к локальному Ollama на хосте и настоящему MCP; это воспроизводимый reference host, не доказательство проверки VSCode Copilot.
 
-Полный evaluation v1.2 вызывает настоящий Ollama и публичную privacy-границу, хранит только проверенные исходящие payloads; идентичность источника сравнивается локально. Используйте отдельный `DATA_DIR`, чтобы не изменять рабочие индексы. Пример PowerShell из корня после установки зависимостей:
+Полный evaluation v1.2 вызывает настоящий Ollama и публичную privacy-границу, хранит только проверенные исходящие payloads; идентичность источника сравнивается локально. Используйте отдельный `DATA_DIR`, чтобы не изменять рабочие индексы. Пример PowerShell из корня после установки зависимостей и `ollama pull qwen3.5:2b`, `ollama pull nomic-embed-text` на host Ollama. Вывод сохраняется отдельно от исторических доказательств; для 4b заранее выполните `ollama pull qwen3.5:4b`, замените `LLM_MODEL` и используйте новый DATA_DIR/путь отчёта:
 
 ```powershell
-$env:DATA_DIR = Join-Path $PWD '.local-evaluation/v12-public-900'
+$env:DATA_DIR = Join-Path $PWD '.local-evaluation/review-qwen35-2b'
 $env:OLLAMA_BASE_URL = 'http://127.0.0.1:11434'
+$env:LLM_MODEL = 'qwen3.5:2b'
 Remove-Item Env:MCP_DEMO_DIR -ErrorAction SilentlyContinue
-& .\ai-service\.venv\Scripts\python.exe scripts/evaluate_public.py --output docs/evaluation/v12-public-rag.json
+& .\ai-service\.venv\Scripts\python.exe scripts/evaluate_public.py --output .local-evaluation/review-qwen35-2b/result.json
 ```
 
 Для POSIX shell:
 
 ```sh
-env -u MCP_DEMO_DIR DATA_DIR="$PWD/.local-evaluation/v12-public-900" OLLAMA_BASE_URL=http://127.0.0.1:11434 \
-  ai-service/.venv/bin/python scripts/evaluate_public.py --output docs/evaluation/v12-public-rag.json
+env -u MCP_DEMO_DIR DATA_DIR="$PWD/.local-evaluation/review-qwen35-2b" LLM_MODEL=qwen3.5:2b OLLAMA_BASE_URL=http://127.0.0.1:11434 \
+  ai-service/.venv/bin/python scripts/evaluate_public.py --output .local-evaluation/review-qwen35-2b/result.json
 ```
 
 Если в среде был задан `MCP_DEMO_DIR`, удалите эту переменную перед evaluation, чтобы использовать отдельный demo внутри нового DATA_DIR. Для сравнения задайте другой каталог и `CHUNK_SIZE=1400`, `CHUNK_OVERLAP=180`; defaults — 900/120. `--limit 10` позволяет отдельно проверить первые десять случаев, но не заменяет полный прогон. Команда фиксирует факт, источник, отказ и privacy раздельно, сохраняет неудачи и время. Запуск и наличие скрипта не означают успешную приёмку: текущие результаты и ограничения находятся в [VALIDATION](docs/VALIDATION.md) и [evaluation README](docs/evaluation/README.md).
@@ -202,7 +203,7 @@ Browser smoke (`scripts/browser_smoke.cjs`) требует Playwright и Chromiu
 
 Нет публичного хостинга, авторизации, OCR, изображений/DICOM и автоматической медицинской диагностики. Приложение предназначено для доверенного локального устройства. AI-факты требуют проверки; confidence не является вероятностью правильности. Редкие сведения могут идентифицировать человека даже после удаления имён.
 
-Личный архив готовит пакет по цепочке правила → локальная LLM → preview → точный review hash → ручной Copy/Markdown. Внешних SDK/AI API, ключей провайдеров и автоматической отправки консультации нет. MCP отдельно отвечает подключённому host-агенту по синтетике: **такая выдача передаёт данные хосту**, даже без внешнего SDK на сервере. Дальнейшее использование хостом не становится локальным лишь потому, что наш Ollama локальный.
+Личный архив готовит пакет по цепочке правила → локальная LLM → preview → точный review hash → ручной Copy/Markdown. В стандартном режиме внешних AI API и ключей провайдеров нет; опциональный `compose.llama-cpp.yaml` меняет границу выполнения модели, как описано выше. Автоматической отправки подготовленного пакета консультации нет. MCP отдельно отвечает подключённому host-агенту по синтетике: **такая выдача передаёт данные хосту**, даже без внешнего SDK на сервере. Дальнейшее использование хостом не становится локальным лишь потому, что наш Ollama локальный.
 
 Для личного архива запускайте отдельный проект и volumes без seed:
 

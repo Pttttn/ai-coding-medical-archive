@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-09-22T06:14:25.195698+00:00",
+  "environment": "host Ollama 0.34.2",
+  "fixture": "synthetic seed/originals/lab-01.pdf",
+  "promptVersion": "medical-extract-v4",
+  "results": [
+    {
+      "model": "qwen3.5:2b",
+      "passed": true,
+      "facts": 2,
+      "allSourceQuotesValidated": true,
+      "allPagesCorrect": true,
+      "warnings": [],
+      "seconds": 1.547
+    },
+    {
+      "model": "qwen3.5:4b",
+      "passed": true,
+      "facts": 6,
+      "allSourceQuotesValidated": true,
+      "allPagesCorrect": true,
+      "warnings": [],
+      "seconds": 12.532
+    }
+  ]
+}
