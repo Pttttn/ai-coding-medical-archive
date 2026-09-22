@@ -1,7 +1,7 @@
 {
   "timestamp": "2026-09-21",
   "note": "Extra validation of alternative LLM backends on the canonical evaluation/questions.json set (21 items). Not part of the v1.2 acceptance matrix; backend is otherwise unchanged (nomic-embed-text, chunking 900/120, MCP demo corpus 42 files/773 chunks). 2026-09-22: five popular edge models tested sequentially on the same CPU container stack; qwen3.5:2b achieved 21/21 at the lowest latency and replaced qwen2.5:3b as the default LLM (see feat/default-llm PR).",
-  "scoring": "PASS = expected value present in answer or (allowAbstain) correct abstention; FAIL otherwise. Same harness as repository v1.2 semantics, run by an external reviewer.",
+  "scoring": "Reviewer-reported text/abstention checks on evaluation/questions.json. These are genuine independent observations, but not the joint v1.2 score: expected source identity and per-answer privacy were not recorded by this harness.",
   "chain": "ai -> host-ollama nginx proxy (fixed paths) -> llama-shim (Ollama->OpenAI translation, schema normalization, Bearer from key file outside repo) -> llama.cpp /v1/chat/completions; embeddings stay on local host Ollama",
   "dependencies": [
     "qwen3-family models require think:false (patched ai-service/medical_ai/ollama.py, conditional on model prefix)",
@@ -1450,5 +1450,10 @@
         }
       ]
     }
-  ]
+  ],
+  "scoringLimitations": {
+    "preservedReviewerResults": true,
+    "jointScoreComparable": false,
+    "requiredRerun": "scripts/evaluate_public.py checks expected text, all expected sources, abstention and public privacy; historical scores are preserved."
+  }
 }
