@@ -1,5 +1,25 @@
 {
   "status": 200,
   "contentType": "text/html",
-  "bytes": 713
+  "bytes": 713,
+  "assets": [
+    {
+      "path": "/favicon.svg",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "bytes": 185
+    },
+    {
+      "path": "/assets/index-CsItDTby.js",
+      "status": 200,
+      "contentType": "application/javascript",
+      "bytes": 351735
+    },
+    {
+      "path": "/assets/index-DmaZWXeB.css",
+      "status": 200,
+      "contentType": "text/css",
+      "bytes": 40298
+    }
+  ]
 }

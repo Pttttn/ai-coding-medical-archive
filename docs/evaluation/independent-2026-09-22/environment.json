@@ -199,5 +199,19 @@
   "compose": "2.40.3+ds1-0ubuntu1",
   "nvidiaToolkit": "NVIDIA Container Toolkit CLI version 1.20.1\ncommit: dffc40b4f820ce5c512633bac9e0418d0e05a2ee",
   "installation": "Ubuntu packages docker.io docker-compose-v2 docker-buildx git curl; NVIDIA official stable repository; no driver change",
-  "scope": "Application standard CPU Compose and independent CUDA evaluation use separate new model/data volumes."
+  "scope": "Application standard CPU Compose and independent CUDA evaluation use separate new model/data volumes.",
+  "pulledImageIdentities": {
+    "ollama/ollama:0.34.1": {
+      "id": "sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65",
+      "repoDigests": [
+        "ollama/ollama@sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65"
+      ]
+    },
+    "postgres:17-alpine": {
+      "id": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "repoDigests": [
+        "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+      ]
+    }
+  }
 }
