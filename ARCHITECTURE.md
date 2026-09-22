@@ -32,7 +32,7 @@ MCP Streamable HTTP /mcp на 8002: index_folder(path,glob), index_status(), fin
 
 ## Запуск и проверка
 
-Docker Compose: frontend/nginx 8080, backend 3000, AI 8001 внутренний, MCP 8002, PostgreSQL, Ollama и init моделей. Рабочая сеть internal; загрузчик моделей отделён от архивных данных. Дополнительный compose.host-ollama.yml использует явно настроенный локальный Ollama. Модель по умолчанию qwen2.5:3b, embedding nomic-embed-text; окончательные теги/результаты проверяются и записываются в docs/VALIDATION.md.
+Docker Compose: frontend/nginx 8080, backend 3000, AI 8001 внутренний, MCP 8002, PostgreSQL, Ollama и init моделей. Рабочая сеть internal; загрузчик моделей отделён от архивных данных. Дополнительный compose.host-ollama.yml использует явно настроенный локальный Ollama. Модель по умолчанию qwen3.5:2b, embedding nomic-embed-text; окончательные теги/результаты проверяются и записываются в docs/VALIDATION.md.
 
 План: (1) документация и контракт; (2) параллельно backend, AI/RAG, UI; (3) готовая синтетика (30+ записей, 15+ тегов, 5 исправлений, два года, PDF) и sample_docs 512000+ байт; (4) интеграция/Compose; (5) unit/integration/MCP и реальная модель; (6) проверка UI, документация, матрица приёмки. Тесты и журнал добавляются в ходе работы. Личный REPORT пишет пользователь; AI ведёт явно помеченный технический журнал.
 

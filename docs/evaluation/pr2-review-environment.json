@@ -1,0 +1,110 @@
+{
+  "timestamp": "2026-09-22",
+  "environment": "Windows host Ollama at loopback; same host and sequential canonical runs; not a CPU-only benchmark",
+  "platform": "Windows",
+  "machine": "AMD64",
+  "ollama": {
+    "version": "0.34.2"
+  },
+  "models": [
+    {
+      "name": "qwen3.5:2b",
+      "digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+      "size": 2741192820,
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "2.3B",
+        "quantization_level": "Q8_0",
+        "context_length": 262144,
+        "embedding_length": 2048
+      }
+    },
+    {
+      "name": "qwen2.5:3b",
+      "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+      "size": 1929912432,
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen2",
+        "families": [
+          "qwen2"
+        ],
+        "parameter_size": "3.1B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 32768,
+        "embedding_length": 2048
+      }
+    },
+    {
+      "name": "nomic-embed-text:latest",
+      "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "size": 274302450,
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "nomic-bert",
+        "families": [
+          "nomic-bert"
+        ],
+        "parameter_size": "137M",
+        "quantization_level": "F16",
+        "context_length": 2048,
+        "embedding_length": 768
+      }
+    },
+    {
+      "name": "qwen3.5:4b",
+      "digest": "2a654d98e6fba55d452b7043684e9b57a947e393bbffa62485a7aac05ee4eefd",
+      "size": 3389983735,
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "4.7B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 262144,
+        "embedding_length": 2560
+      }
+    }
+  ],
+  "thinking": "think:false for qwen3-family; no think option for qwen2.5",
+  "scoreDefinition": "all(expectedTextPresent,expectedSourcesCited,abstentionCorrect,privacyPassed)",
+  "corpus": "42 synthetic files, 773 chunks, 900/120; independent fresh indexes per run",
+  "limitations": "Reviewer CPU/Mac environment was not reproduced; published 11/21 remains a separate real observation. Endpoint performance and all metrics are scoped to each recorded run.",
+  "container": {
+    "project": "lma-pr2-review",
+    "initialStorage": "five new empty named volumes including model storage; automatic model-init downloads; Docker build cache retained",
+    "dockerCpuCount": 32,
+    "dockerMemoryBytes": 33524744192,
+    "ollama": {
+      "version": {
+        "version": "0.34.1"
+      },
+      "running": [
+        {
+          "name": "nomic-embed-text:latest",
+          "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+          "size": 376449269,
+          "size_vram": 0
+        },
+        {
+          "name": "qwen3.5:2b",
+          "digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+          "size": 2474691786,
+          "size_vram": 0
+        }
+      ]
+    },
+    "evaluationStorage": "independent /tmp/pr2-eval/data and /tmp/pr2-eval/demo inside AI container",
+    "limitations": "Different CPU/RAM and Ollama version from reviewer; not an identical reproduction of the reviewer machine."
+  }
+}
