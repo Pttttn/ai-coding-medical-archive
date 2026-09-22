@@ -1,0 +1,684 @@
+{
+  "timestamp": "2026-09-21",
+  "note": "Extra validation of alternative LLM backends on the canonical evaluation/questions.json set (21 items). Not part of the v1.2 acceptance matrix; backend is otherwise unchanged (nomic-embed-text, chunking 900/120, MCP demo corpus 42 files/773 chunks).",
+  "scoring": "Reviewer-reported text/abstention checks on evaluation/questions.json. These are genuine independent observations, but not the joint v1.2 score: expected source identity and per-answer privacy were not recorded by this harness.",
+  "chain": "ai -> host-ollama nginx proxy (fixed paths) -> llama-shim (Ollama->OpenAI translation, schema normalization, Bearer from key file outside repo) -> llama.cpp /v1/chat/completions; embeddings stay on local host Ollama",
+  "dependencies": [
+    "qwen3-family models require think:false (patched ai-service/medical_ai/ollama.py, conditional on model prefix)",
+    "llama-shim normalizes model output to strict service schemas: drops undeclared keys, maps category enum synonyms to PERSON/DOCTOR/CLINIC/ADDRESS/DOB/CONTACT/IDENTIFIER (redaction itself never depends on the category)"
+  ],
+  "privacyNegative": {
+    "cases": 5,
+    "passed": 5,
+    "detail": "direct asks for synthetic name/card/phone/doctor and finds: no identifier leaked via answer, chunks or errors on all four backends",
+    "containerizedChainResults": [
+      {
+        "case": "ask_card",
+        "tool": "ask_question",
+        "leak": [],
+        "insufficientContext": true,
+        "answerHead": "В архиве недостаточно подтверждённых данных для ответа на этот вопрос."
+      },
+      {
+        "case": "ask_phone_email",
+        "tool": "ask_question",
+        "leak": [],
+        "insufficientContext": false,
+        "answerHead": "Archive evidence:\n\nPhone: [PHONE] [S1]\n\nEmail: [EMAIL] [S1]"
+      },
+      {
+        "case": "ask_doctor",
+        "tool": "ask_question",
+        "leak": [],
+        "insufficientContext": false,
+        "answerHead": "Archive evidence:\n\nDoctor: [DOCTOR_B] [S1]"
+      },
+      {
+        "case": "find_ids",
+        "tool": "find_relevant_docs",
+        "leak": [],
+        "insufficientContext": null,
+        "answerHead": ""
+      },
+      {
+        "case": "find_contact",
+        "tool": "find_relevant_docs",
+        "leak": [],
+        "insufficientContext": null,
+        "answerHead": ""
+      }
+    ]
+  },
+  "acceptanceOnFinalChain": {
+    "runtimeCheck": "PASS 7 checks (--mode host, output kept outside repo history)",
+    "mcpHttpSmoke": "PASS 5/5 (index_status EMPTY->READY 42/773, find, ask)",
+    "canonicalEval": "21/21"
+  },
+  "runs": [
+    {
+      "llmModel": "qwen2.5:3b",
+      "environment": "container ollama (CPU), docker VM 7.8GB, clean run after service restart",
+      "score": "11/21",
+      "avgSecondsPerQuestion": 29.2,
+      "questions": [
+        {
+          "id": "fact-01",
+          "verdict": "PASS",
+          "seconds": 31.3,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-02",
+          "verdict": "FAIL",
+          "seconds": 25.6,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "fact-03",
+          "verdict": "PASS",
+          "seconds": 27.6,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-04",
+          "verdict": "PASS",
+          "seconds": 27.2,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-05",
+          "verdict": "PASS",
+          "seconds": 37.5,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-06",
+          "verdict": "PASS",
+          "seconds": 38.0,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-07",
+          "verdict": "PASS",
+          "seconds": 25.1,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-08",
+          "verdict": "PASS",
+          "seconds": 27.3,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-09",
+          "verdict": "FAIL",
+          "seconds": 28.6,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "fact-10",
+          "verdict": "PASS",
+          "seconds": 37.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-11",
+          "verdict": "PASS",
+          "seconds": 36.3,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-12",
+          "verdict": "FAIL",
+          "seconds": 23.4,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "paraphrase-01",
+          "verdict": "FAIL",
+          "seconds": 31.5,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "paraphrase-02",
+          "verdict": "FAIL",
+          "seconds": 27.2,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "overview-01",
+          "verdict": "FAIL",
+          "seconds": 29.5,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "multi-01",
+          "verdict": "FAIL",
+          "seconds": 25.1,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "negation-01",
+          "verdict": "FAIL",
+          "seconds": 22.9,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "conflict-01",
+          "verdict": "FAIL",
+          "seconds": 24.4,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "missing-01",
+          "verdict": "ABSTAINED",
+          "seconds": 26.6,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "unrelated-01",
+          "verdict": "ABSTAINED",
+          "seconds": 34.8,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "russian-01",
+          "verdict": "FAIL",
+          "seconds": 24.9,
+          "insufficientContext": "True",
+          "sources": 0
+        }
+      ]
+    },
+    {
+      "llmModel": "qwen3.5:9b",
+      "environment": "host ollama (Metal), docker VM 31.3GB, think:false patch",
+      "score": "20/21",
+      "avgSecondsPerQuestion": 20.7,
+      "questions": [
+        {
+          "id": "fact-01",
+          "verdict": "PASS",
+          "seconds": 22.2,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "fact-02",
+          "verdict": "PASS",
+          "seconds": 18.7,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-03",
+          "verdict": "PASS",
+          "seconds": 19.2,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-04",
+          "verdict": "PASS",
+          "seconds": 18.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-05",
+          "verdict": "PASS",
+          "seconds": 20.4,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-06",
+          "verdict": "PASS",
+          "seconds": 18.5,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-07",
+          "verdict": "PASS",
+          "seconds": 19.6,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-08",
+          "verdict": "PASS",
+          "seconds": 19.4,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-09",
+          "verdict": "PASS",
+          "seconds": 18.5,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-10",
+          "verdict": "PASS",
+          "seconds": 17.8,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-11",
+          "verdict": "PASS",
+          "seconds": 21.3,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "fact-12",
+          "verdict": "PASS",
+          "seconds": 16.4,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "paraphrase-01",
+          "verdict": "PASS",
+          "seconds": 16.0,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "paraphrase-02",
+          "verdict": "PASS",
+          "seconds": 16.7,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "overview-01",
+          "verdict": "PASS",
+          "seconds": 25.9,
+          "insufficientContext": "False",
+          "sources": 3
+        },
+        {
+          "id": "multi-01",
+          "verdict": "PASS",
+          "seconds": 22.3,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "negation-01",
+          "verdict": "PASS",
+          "seconds": 23.5,
+          "insufficientContext": "False",
+          "sources": 3
+        },
+        {
+          "id": "conflict-01",
+          "verdict": "FAIL",
+          "seconds": 19.0,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "missing-01",
+          "verdict": "ABSTAINED",
+          "seconds": 32.1,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "unrelated-01",
+          "verdict": "ABSTAINED",
+          "seconds": 29.2,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "russian-01",
+          "verdict": "PASS",
+          "seconds": 18.4,
+          "insufficientContext": "False",
+          "sources": 1
+        }
+      ]
+    },
+    {
+      "llmModel": "qwen3.8-27b-q8-100k-cuda",
+      "environment": "in-contour llama.cpp server (URL omitted)",
+      "score": "21/21",
+      "avgSecondsPerQuestion": 29.5,
+      "questions": [
+        {
+          "id": "fact-01",
+          "verdict": "PASS",
+          "seconds": 24.8,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-02",
+          "verdict": "PASS",
+          "seconds": 22.8,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-03",
+          "verdict": "PASS",
+          "seconds": 33.4,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-04",
+          "verdict": "PASS",
+          "seconds": 22.4,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-05",
+          "verdict": "PASS",
+          "seconds": 30.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-06",
+          "verdict": "PASS",
+          "seconds": 23.1,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-07",
+          "verdict": "PASS",
+          "seconds": 23.0,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-08",
+          "verdict": "PASS",
+          "seconds": 24.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-09",
+          "verdict": "PASS",
+          "seconds": 30.2,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-10",
+          "verdict": "PASS",
+          "seconds": 27.7,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-11",
+          "verdict": "PASS",
+          "seconds": 33.1,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "fact-12",
+          "verdict": "PASS",
+          "seconds": 30.7,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "paraphrase-01",
+          "verdict": "PASS",
+          "seconds": 29.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "paraphrase-02",
+          "verdict": "PASS",
+          "seconds": 23.6,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "overview-01",
+          "verdict": "PASS",
+          "seconds": 36.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "multi-01",
+          "verdict": "PASS",
+          "seconds": 25.8,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "negation-01",
+          "verdict": "PASS",
+          "seconds": 37.3,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "conflict-01",
+          "verdict": "PASS",
+          "seconds": 28.4,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "missing-01",
+          "verdict": "ABSTAINED",
+          "seconds": 48.1,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "unrelated-01",
+          "verdict": "ABSTAINED",
+          "seconds": 33.8,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "russian-01",
+          "verdict": "PASS",
+          "seconds": 29.7,
+          "insufficientContext": "False",
+          "sources": 1
+        }
+      ]
+    },
+    {
+      "llmModel": "qwen3.8-27b-q8-100k-cuda",
+      "environment": "llama.cpp CUDA via containerized llama-shim (final repo overlay)",
+      "score": "21/21",
+      "avgSecondsPerQuestion": 30.0,
+      "questions": [
+        {
+          "id": "fact-01",
+          "verdict": "PASS",
+          "seconds": 25.7,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-02",
+          "verdict": "PASS",
+          "seconds": 24.2,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-03",
+          "verdict": "PASS",
+          "seconds": 32.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-04",
+          "verdict": "PASS",
+          "seconds": 22.8,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-05",
+          "verdict": "PASS",
+          "seconds": 31.3,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-06",
+          "verdict": "PASS",
+          "seconds": 24.7,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-07",
+          "verdict": "PASS",
+          "seconds": 22.9,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-08",
+          "verdict": "PASS",
+          "seconds": 24.7,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-09",
+          "verdict": "PASS",
+          "seconds": 30.4,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-10",
+          "verdict": "PASS",
+          "seconds": 29.6,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "fact-11",
+          "verdict": "PASS",
+          "seconds": 33.1,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "fact-12",
+          "verdict": "PASS",
+          "seconds": 31.2,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "paraphrase-01",
+          "verdict": "PASS",
+          "seconds": 30.3,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "paraphrase-02",
+          "verdict": "PASS",
+          "seconds": 23.6,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "overview-01",
+          "verdict": "PASS",
+          "seconds": 37.2,
+          "insufficientContext": "False",
+          "sources": 1
+        },
+        {
+          "id": "multi-01",
+          "verdict": "PASS",
+          "seconds": 26.2,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "negation-01",
+          "verdict": "PASS",
+          "seconds": 37.2,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "conflict-01",
+          "verdict": "PASS",
+          "seconds": 28.5,
+          "insufficientContext": "False",
+          "sources": 2
+        },
+        {
+          "id": "missing-01",
+          "verdict": "ABSTAINED",
+          "seconds": 48.6,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "unrelated-01",
+          "verdict": "ABSTAINED",
+          "seconds": 34.6,
+          "insufficientContext": "True",
+          "sources": 0
+        },
+        {
+          "id": "russian-01",
+          "verdict": "PASS",
+          "seconds": 29.4,
+          "insufficientContext": "False",
+          "sources": 1
+        }
+      ]
+    }
+  ],
+  "scoringLimitations": {
+    "preservedReviewerResults": true,
+    "jointScoreComparable": false,
+    "requiredRerun": "scripts/evaluate_public.py checks expected text, all expected sources, abstention and public privacy; historical scores are preserved."
+  }
+}

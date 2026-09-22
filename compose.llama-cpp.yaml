@@ -1,0 +1,37 @@
+# Route the fixed host-ollama egress proxy to the containerized Ollama-protocol
+# shim (infra/llama-shim.py) instead of host Ollama. The shim translates
+# /api/chat to an in-contour llama.cpp OpenAI endpoint and keeps /api/embed and
+# /api/tags validates both providers. Endpoints are deployment-configured; the
+# API key is mounted read-only from outside the repository. External routing
+# is an explicit operator choice; the default Compose remains local.
+services:
+  llama-shim:
+    image: python:3.12-alpine
+    command: [python, /app/llama-shim.py]
+    environment:
+      REMOTE_CHAT_URL: ${LLAMA_CPP_URL:?set LLAMA_CPP_URL in .env}
+      REMOTE_MODEL: ${LLM_MODEL:?set LLM_MODEL to the remote model id}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+      LOCAL_OLLAMA_URL: http://host.docker.internal:11434
+      API_KEY_FILE: /keys/llama-cpp.keys
+    volumes:
+      - ./infra/llama-shim.py:/app/llama-shim.py:ro
+      - ${LLAMA_CPP_KEY_FILE:?set LLAMA_CPP_KEY_FILE in .env}:/keys/llama-cpp.keys:ro
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    networks: [private, host_access]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:11435/health', timeout=12)"]
+      interval: 10s
+      timeout: 15s
+      retries: 30
+  host-ollama:
+    environment:
+      EGRESS_TARGETS: llama-shim
+    volumes:
+      - ./infra/host-ollama-cpp.conf:/etc/nginx/host-ollama.conf:ro
+    depends_on:
+      llama-shim:
+        condition: service_healthy
+        restart: true
