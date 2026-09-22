@@ -6,7 +6,7 @@ from pydantic import ValidationError
 from .errors import ServiceError
 from .schemas import Extraction, Page
 
-PROMPT_VERSION = "medical-extract-v3"
+PROMPT_VERSION = "medical-extract-v4"
 SCHEMA_VERSION = "medical-facts-v1"
 
 
@@ -44,6 +44,8 @@ def extract(provider: Any, title: str, pages: list[Page]) -> tuple[Extraction, l
     output_schema["properties"]["summary"]["maxLength"] = 1200
     output_schema["properties"]["tags"]["maxItems"] = 12
     output_schema["properties"]["tags"]["items"]["maxLength"] = 80
+    # Page is nullable for plain text, but must not be silently omitted for a PDF.
+    output_schema["$defs"]["Provenance"]["required"] = ["page", "sourceText"]
     output_schema["$defs"]["Provenance"]["properties"]["sourceText"]["maxLength"] = 1000
     output_schema["$defs"]["Fact"]["properties"]["name"]["maxLength"] = 200
     for field in ("valueText", "unit"):

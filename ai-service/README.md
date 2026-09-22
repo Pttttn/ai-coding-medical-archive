@@ -15,7 +15,7 @@ uv run python -m medical_ai
 
 For native execution, point `OLLAMA_BASE_URL` to the local host Ollama and set the storage/source directories appropriately. Compose configures these paths automatically. Internal routes require `X-Internal-Token`; the internal archive listener is separate and not published by Compose.
 
-Configuration: `OLLAMA_BASE_URL` (alias `LLM_BASE_URL`), `LLM_MODEL=qwen2.5:3b`, `EMBEDDING_MODEL=nomic-embed-text`, `INTERNAL_TOKEN` (alias `INTERNAL_API_TOKEN`), `DATA_DIR` (alias `AI_DATA_DIR`), optional `MCP_DEMO_DIR`, `SAMPLE_DOCS_DIR`, `UPLOAD_DIR`. Defaults: `CHUNK_SIZE=900`, `CHUNK_OVERLAP=120`, `RETRIEVAL_K=5`, `MIN_RELEVANT_CHUNKS=1`, `RAG_MAX_CORRECTIVE_RETRIES=2` (maximum 2). Only local Ollama endpoints are accepted. Demo and archive storage must not overlap.
+Configuration: `OLLAMA_BASE_URL` (alias `LLM_BASE_URL`), `LLM_MODEL=qwen3.5:2b`, `EMBEDDING_MODEL=nomic-embed-text`, `INTERNAL_TOKEN` (alias `INTERNAL_API_TOKEN`), `DATA_DIR` (alias `AI_DATA_DIR`), optional `MCP_DEMO_DIR`, `SAMPLE_DOCS_DIR`, `UPLOAD_DIR`. Defaults: `CHUNK_SIZE=900`, `CHUNK_OVERLAP=120`, `RETRIEVAL_K=5`, `MIN_RELEVANT_CHUNKS=1`, `RAG_MAX_CORRECTIVE_RETRIES=2` (maximum 2). Only local Ollama endpoints are accepted. Demo and archive storage must not overlap.
 
 ## Parsing, persistence and chunking
 
