@@ -6,7 +6,7 @@
 
 ## Запуск с нуля в Docker
 
-Установите Git и работающий Docker Engine/Desktop с Compose **2.24.4+**. На Windows включите **Linux containers / WSL 2**. Для ориентира выделите Docker 16 ГБ RAM и 20 ГБ свободного диска; точный минимальный объём не измерялся. GPU не требуется: стандартный режим использует CPU. Для первой сборки и загрузки примерно 2.2 ГБ весов нужен интернет. Node.js, Python, Ollama на компьютере, `.env` и API-ключи для этого режима не нужны.
+Установите Git и работающий Docker Engine/Desktop с Compose **2.24.4+**. На Windows включите **Linux containers / WSL 2**. Для ориентира выделите Docker 16 ГБ RAM и 20 ГБ свободного диска; точный минимальный объём не измерялся. GPU не требуется: стандартный режим использует CPU. Для первой сборки и загрузки около 3 ГБ весов нужен интернет. Node.js, Python, Ollama на компьютере, `.env` и API-ключи для этого режима не нужны.
 
 В терминале выполните:
 
@@ -16,7 +16,7 @@ cd ai-coding-medical-archive
 docker compose up
 ```
 
-Compose сам собирает образы, создаёт базу, скачивает `qwen2.5:3b` и `nomic-embed-text`, применяет миграции и добавляет синтетический seed. Первая подготовка занимает несколько минут или больше в зависимости от сети и CPU. Пока `model-init` скачивает веса, остальные сервисы ожидают — это нормально. **`model-init exited with code 0` означает успешную подготовку**, этот одноразовый контейнер не должен оставаться запущенным.
+Compose сам собирает образы, создаёт базу, скачивает `qwen3.5:2b` и `nomic-embed-text`, применяет миграции и добавляет синтетический seed. Первая подготовка занимает несколько минут или больше в зависимости от сети и CPU. Пока `model-init` скачивает веса, остальные сервисы ожидают — это нормально. **`model-init exited with code 0` означает успешную подготовку**, этот одноразовый контейнер не должен оставаться запущенным.
 
 ### Как понять, что всё готово
 
@@ -59,7 +59,7 @@ docker compose up -d --wait --wait-timeout 1800
 Заранее установите Ollama и подготовьте модели:
 
 ```sh
-ollama pull qwen2.5:3b
+ollama pull qwen3.5:2b
 ollama pull nomic-embed-text
 docker compose -f compose.yaml -f compose.host-ollama.yaml up --build
 ```
@@ -68,7 +68,7 @@ docker compose -f compose.yaml -f compose.host-ollama.yaml up --build
 
 ### Необязательный режим с llama.cpp (OpenAI-совместимый) сервером в контуре
 
-Генерация может выполняться внешним для машины, но внутренним для контура сервером llama.cpp с OpenAI-совместимым Chat Completions API; эмбеддинги остаются на локальной host Ollama. Протокол Ollama транслируется контейнерным `llama-shim` (схема-нормализация ответов под строгие JSON-схемы сервиса, Bearer-ключ читается из файла вне репозитория); фиксированный host-ollama proxy продолжает разрешать только нужные пути. Три модели, проверенные на каноничном наборе `evaluation/questions.json`: контейнерная `qwen2.5:3b` — 11/21, host `qwen3.5:9b` — 20/21, контурная `qwen3.8-27b` (q8, llama.cpp CUDA) — 21/21.
+Генерация может выполняться внешним для машины, но внутренним для контура сервером llama.cpp с OpenAI-совместимым Chat Completions API; эмбеддинги остаются на локальной host Ollama. Протокол Ollama транслируется контейнерным `llama-shim` (схема-нормализация ответов под строгие JSON-схемы сервиса, Bearer-ключ читается из файла вне репозитория); фиксированный host-ollama proxy продолжает разрешать только нужные пути. Модели, проверенные на каноничном наборе `evaluation/questions.json`: прежний контейнерный дефолт `qwen2.5:3b` — 11/21, новый контейнерный дефолт `qwen3.5:2b` — 21/21, host `qwen3.5:9b` — 20/21, контурная `qwen3.8-27b` (q8, llama.cpp CUDA) — 21/21.
 
 ```sh
 ollama pull nomic-embed-text
@@ -176,7 +176,7 @@ python scripts/mcp_smoke.py --output docs/evaluation/v12-mcp-http-smoke.json
 python scripts/host_agent_check.py --output docs/evaluation/v12-host-agent.json
 ```
 
-Для проверки пустого MCP после безопасного reset добавьте `--expect-empty` в `mcp_smoke.py`. Для reference host заранее выполните `ollama pull qwen3.5:4b` или укажите `--model` с поддержкой tool calls. Основной RAG продолжает использовать `qwen2.5:3b`. Host-agent check обращается к локальному Ollama на хосте и настоящему MCP; это воспроизводимый reference host, не доказательство проверки VSCode Copilot.
+Для проверки пустого MCP после безопасного reset добавьте `--expect-empty` в `mcp_smoke.py`. Для reference host заранее выполните `ollama pull qwen3.5:4b` или укажите `--model` с поддержкой tool calls. Основной RAG продолжает использовать `qwen3.5:2b`. Host-agent check обращается к локальному Ollama на хосте и настоящему MCP; это воспроизводимый reference host, не доказательство проверки VSCode Copilot.
 
 Полный evaluation v1.2 вызывает настоящий Ollama и публичную privacy-границу, хранит только проверенные исходящие payloads; идентичность источника сравнивается локально. Используйте отдельный `DATA_DIR`, чтобы не изменять рабочие индексы. Пример PowerShell из корня после установки зависимостей:
 
