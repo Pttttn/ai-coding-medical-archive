@@ -51,14 +51,15 @@ def test_incomplete_or_invalid_json_is_not_reported_as_provider_outage(settings,
     assert error.value.code == code and error.value.status == 502
 
 
-def test_thinking_model_disables_thinking_others_unchanged():
+@pytest.mark.parametrize("model", ["qwen3.5:2b", "qwen3.5:4b", "qwen3.5:9b", "qwen3:8b", "qwen3.8-27b-q8-100k-cuda"])
+def test_thinking_model_disables_thinking_others_unchanged(model):
     captured = []
 
     def handler(request):
         captured.append(json.loads(request.content))
         return httpx.Response(200, json={"done_reason": "stop", "message": {"content": '{"relevant":true,"evidence":"quote"}'}})
 
-    thinking = Ollama(Settings(llm_model="qwen3.8-27b-q8-100k-cuda"))
+    thinking = Ollama(Settings(llm_model=model))
     thinking.client = httpx.Client(transport=httpx.MockTransport(handler), base_url="http://localhost")
     thinking.json("TASK: grade_chunks", {"question": "q", "chunk": "c"}, GRADE_SCHEMA)
 

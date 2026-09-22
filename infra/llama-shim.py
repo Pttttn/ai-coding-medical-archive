@@ -1,22 +1,70 @@
 #!/usr/bin/env python3
-"""Ollama-protocol shim for the remote llama.cpp (OpenAI-compatible) server.
+"""Explicit opt-in Ollama adapter for an operator-configured llama.cpp endpoint.
 
-POST /api/chat        -> translated to remote /v1/chat/completions (Bearer auth)
-POST /api/embed       -> forwarded to the local host Ollama (nomic-embed-text)
-GET  /api/tags        -> local models + the remote model (for the ai health check)
-anything else         -> 403 (mirrors the repo's fixed egress proxy stance)
+No prompts, generated content, credentials, URLs or provider errors are logged.
+Readiness checks both local embeddings and an authenticated synthetic generation.
 """
 import json
 import os
+import threading
+import time
 import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-REMOTE_CHAT = os.environ["REMOTE_CHAT_URL"]  # no default: endpoints are deployment-specific
+REMOTE_CHAT = os.environ["REMOTE_CHAT_URL"]
 REMOTE_MODEL = os.environ.get("REMOTE_MODEL", "qwen3.8-27b-q8-100k-cuda")
 LOCAL_OLLAMA = os.environ.get("LOCAL_OLLAMA_URL", "http://host.docker.internal:11434")
+EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "nomic-embed-text")
 PORT = int(os.environ.get("SHIM_PORT", "11435"))
-API_KEY = open(os.environ.get("API_KEY_FILE", "/keys/llama-cpp.keys")).read().strip().splitlines()[0]
+try:
+    with open(os.environ.get("API_KEY_FILE", "/keys/llama-cpp.keys")) as key_file:
+        API_KEY = key_file.read().strip().splitlines()[0]
+except (OSError, IndexError):
+    raise SystemExit("SHIM_KEY_UNAVAILABLE") from None
+
+_ready_lock = threading.Lock()
+_ready_until = 0.0
+_ready_tags = None
+
+
+def remote_call(payload, timeout=180):
+    request = urllib.request.Request(
+        REMOTE_CHAT, data=json.dumps(payload).encode(),
+        headers={"Authorization": "Bearer " + API_KEY, "Content-Type": "application/json"},
+        method="POST")
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        return json.loads(response.read())
+
+
+def invalidate_readiness():
+    global _ready_until, _ready_tags
+    with _ready_lock:
+        _ready_until, _ready_tags = 0.0, None
+
+
+def ready_tags():
+    """Cache a successful synthetic probe for at most five seconds; never invent availability."""
+    global _ready_until, _ready_tags
+    with _ready_lock:
+        if _ready_tags is not None and time.monotonic() < _ready_until:
+            return _ready_tags
+        _ready_until, _ready_tags = 0.0, None
+        with urllib.request.urlopen(LOCAL_OLLAMA + "/api/tags", timeout=3) as response:
+            local = json.loads(response.read())
+        embedding = next(model for model in local["models"]
+                         if model.get("name") in {EMBEDDING_MODEL, EMBEDDING_MODEL + ":latest"})
+        result = remote_call({"model": REMOTE_MODEL, "messages": [
+            {"role": "user", "content": "Synthetic readiness check. Reply OK."}],
+            "stream": False, "temperature": 0, "max_tokens": 1}, timeout=5)
+        # An API/version page, auth error, or error envelope is not working generation.
+        choice = result["choices"][0]
+        if not isinstance(choice.get("message"), dict) or choice.get("finish_reason") not in {"stop", "length"}:
+            raise ValueError("Invalid readiness response")
+        _ready_tags = {"models": [embedding, {"name": REMOTE_MODEL, "model": REMOTE_MODEL,
+                                              "size": 0, "digest": "remote-llama-cpp"}]}
+        _ready_until = time.monotonic() + 5
+        return _ready_tags
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -27,60 +75,72 @@ class Handler(BaseHTTPRequestHandler):
 
     def _send(self, code, obj):
         body = json.dumps(obj).encode()
-        self.send_response(code)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            if self.close_connection:
+                self.send_header("Connection", "close")
+            self.end_headers()
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
 
-    def _read_body(self):
-        length = int(self.headers.get("Content-Length", 0) or 0)
-        return self.rfile.read(length) if length else b"{}"
+    def send_error(self, code, message=None, explain=None):
+        self.close_connection = True
+        self._error(code, "INVALID_HTTP_REQUEST")
+
+    def _error(self, code, name):
+        self._send(code, {"error": {"code": name, "message": name}})
 
     def do_GET(self):
         path = self.path.split("?")[0]
-        if path == "/api/tags":
+        if path in ("/api/tags", "/health"):
             try:
-                with urllib.request.urlopen(LOCAL_OLLAMA + "/api/tags", timeout=10) as r:
-                    tags = json.loads(r.read())
+                tags = ready_tags()
             except Exception:
-                tags = {"models": []}
-            names = {m.get("name", "") for m in tags.get("models", [])}
-            if REMOTE_MODEL not in names and REMOTE_MODEL + ":latest" not in names:
-                tags.setdefault("models", []).append(
-                    {"name": REMOTE_MODEL, "model": REMOTE_MODEL, "size": 0, "digest": "remote-llama-cpp"})
-            self._send(200, tags)
+                self._error(503, "PROVIDER_NOT_READY")
+                return
+            self._send(200, tags if path == "/api/tags" else {"ready": True})
         elif path == "/api/version":
-            self._send(200, {"version": "shim-1.0"})
+            self._send(200, {"version": "shim-1.1"})
         elif path == "/api/ps":
             self._send(200, {"models": []})
         else:
-            self._send(403, {"error": {"code": "403", "message": "path not allowed by shim"}})
+            self._error(403, "PATH_NOT_ALLOWED")
 
     def do_POST(self):
         path = self.path.split("?")[0]
-        raw = self._read_body()
+        if path not in ("/api/chat", "/api/embed", "/api/embeddings"):
+            self.close_connection = True
+            self._error(403, "PATH_NOT_ALLOWED")
+            return
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+            if not 0 < length <= 20 * 1024 * 1024:
+                raise ValueError("Invalid request length")
+            raw = self.rfile.read(length)
+            body = json.loads(raw)
+            if not isinstance(body, dict):
+                raise ValueError("Expected object")
+        except (ValueError, UnicodeError):
+            self.close_connection = True
+            self._error(400, "INVALID_REQUEST")
+            return
         if path == "/api/chat":
-            self._chat(json.loads(raw))
+            self._chat(body)
             return
-        if path in ("/api/embed", "/api/embeddings"):
-            req = urllib.request.Request(LOCAL_OLLAMA + path, data=raw,
-                                         headers={"Content-Type": "application/json"}, method="POST")
-            try:
-                with urllib.request.urlopen(req, timeout=300) as r:
-                    self._send(200, json.loads(r.read()))
-            except urllib.error.HTTPError as e:
-                self._send(e.code, json.loads(e.read() or b"{}"))
-            return
-        self._send(403, {"error": {"code": "403", "message": "path not allowed by shim"}})
+        try:
+            request = urllib.request.Request(LOCAL_OLLAMA + path, data=raw,
+                                             headers={"Content-Type": "application/json"}, method="POST")
+            with urllib.request.urlopen(request, timeout=180) as response:
+                self._send(200, json.loads(response.read()))
+        except Exception:
+            invalidate_readiness()
+            self._error(503, "EMBEDDING_UNAVAILABLE")
 
     def _remote_call(self, payload):
-        req = urllib.request.Request(
-            REMOTE_CHAT, data=json.dumps(payload).encode(),
-            headers={"Authorization": "Bearer " + API_KEY, "Content-Type": "application/json"},
-            method="POST")
-        with urllib.request.urlopen(req, timeout=900) as r:
-            return json.loads(r.read())
+        return remote_call(payload)
 
     CATEGORY_ALIASES = {
         "clinic_name": "CLINIC", "clinic": "CLINIC", "facility": "CLINIC",
@@ -149,14 +209,13 @@ class Handler(BaseHTTPRequestHandler):
     def _chat(self, body):
         fmt = body.get("format")
         options = body.get("options", {})
-        task = next((m.get("content", "")[:44] for m in body.get("messages", [])
-                     if m.get("role") == "system"), "?")
+        if not isinstance(options, dict) or not isinstance(body.get("messages"), list):
+            self._error(400, "INVALID_REQUEST")
+            return
         payload = {
-            "model": REMOTE_MODEL,
-            "messages": body.get("messages", []),
+            "model": REMOTE_MODEL, "messages": body["messages"],
             "temperature": options.get("temperature", 0),
-            "max_tokens": options.get("num_predict", 1024),
-            "stream": False,
+            "max_tokens": options.get("num_predict", 1024), "stream": False,
         }
         if isinstance(fmt, dict):
             payload["response_format"] = {"type": "json_schema", "json_schema": {"name": "out", "schema": fmt}}
@@ -165,46 +224,41 @@ class Handler(BaseHTTPRequestHandler):
         try:
             try:
                 data = self._remote_call(payload)
-            except urllib.error.HTTPError as e:
-                detail = e.read().decode("utf-8", "replace")[:300]
-                # Some builds reject json_schema; retry unconstrained, the service validates itself.
-                if e.code == 400 and isinstance(fmt, dict):
-                    payload["response_format"] = {"type": "json_object"}
-                    data = self._remote_call(payload)
-                else:
-                    print(f"CHAT remote {e.code}: {detail[:120]} | task={task}", flush=True)
-                    self._send(503, {"error": {"code": str(e.code), "message": detail}})
-                    return
-        except Exception as exc:  # network / timeout -> provider-unavailable for the caller
-            print(f"CHAT unavailable: {str(exc)[:120]} | task={task}", flush=True)
-            self._send(503, {"error": {"code": "REMOTE_UNAVAILABLE", "message": str(exc)[:300]}})
+            except urllib.error.HTTPError as error:
+                if error.code != 400 or not isinstance(fmt, dict):
+                    raise
+                # Some builds reject json_schema; the caller still validates the result.
+                payload["response_format"] = {"type": "json_object"}
+                data = self._remote_call(payload)
+            choice = data["choices"][0]
+            content = choice["message"].get("content") or ""
+            if not isinstance(content, str) or choice.get("finish_reason") not in {"stop", "length"}:
+                raise ValueError("Invalid generation response")
+            if "<think>" in content:
+                start, end = content.find("<think>"), content.find("</think>")
+                content = content[:start] + (content[end + 8:] if end != -1 else "")
+            if isinstance(fmt, dict):
+                try:
+                    parsed = json.loads(content)
+                    if isinstance(parsed, dict):
+                        content = json.dumps(self._constrain(parsed, fmt), ensure_ascii=False)
+                except json.JSONDecodeError:
+                    pass  # The caller rejects invalid JSON without a raw public fallback.
+        except Exception:
+            invalidate_readiness()
+            self._error(503, "REMOTE_UNAVAILABLE")
             return
-        choice = (data.get("choices") or [{}])[0]
-        message = choice.get("message") or {}
-        content = message.get("content") or ""
-        # Defense in depth: never let reasoning leak into the JSON contract.
-        if "<think>" in content:
-            start = content.find("<think>")
-            end = content.find("</think>")
-            content = content[:start] + (content[end + 8:] if end != -1 else "")
-        dropped = ""
-        if isinstance(fmt, dict):
-            try:
-                parsed = json.loads(content)
-                if isinstance(parsed, dict):
-                    constrained = self._constrain(parsed, fmt)
-                    if constrained != parsed:
-                        dropped = f" | dropped keys={sorted(set(parsed) - set(constrained))}"
-                        content = json.dumps(constrained, ensure_ascii=False)
-            except json.JSONDecodeError:
-                pass
-        done_reason = "length" if choice.get("finish_reason") == "length" else "stop"
-        print(f"CHAT ok task={task!r} done={done_reason}{dropped} | {content[:70]!r}", flush=True)
         self._send(200, {"message": {"role": "assistant", "content": content},
-                         "done_reason": done_reason, "done": True})
+                         "done_reason": choice["finish_reason"], "done": True})
+
+
+class SafeHTTPServer(ThreadingHTTPServer):
+    def handle_error(self, request, client_address):
+        # BaseServer prints tracebacks for otherwise unhandled request errors.
+        print("SHIM_REQUEST_FAILED", flush=True)
 
 
 if __name__ == "__main__":
-    server = ThreadingHTTPServer(("0.0.0.0", PORT), Handler)
-    print(f"shim listening on 0.0.0.0:{PORT} -> {REMOTE_CHAT} (model {REMOTE_MODEL})", flush=True)
+    server = SafeHTTPServer(("0.0.0.0", PORT), Handler)
+    print("SHIM_STARTED", flush=True)
     server.serve_forever()
