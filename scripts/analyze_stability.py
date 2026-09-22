@@ -50,6 +50,22 @@ def analyze(root):
                 if stages or difference:
                     comparisons.append({"group": group, "reference": reference, "run": entry["id"],
                                         "case": row["id"], "changedStages": stages, "firstCallDifference": difference})
+    repeated_inputs = {}
+    for entry in state["plan"]:
+        for row in reports.get(entry["id"], {}).get("results", []):
+            for call in row.get("diagnostics", {}).get("calls", []):
+                key = (entry["group"], call["task"], call["inputSha256"])
+                item = repeated_inputs.setdefault(key, {"count": 0, "outcomes": set()})
+                item["count"] += 1
+                item["outcomes"].add(fingerprint({k: call.get(k) for k in ("outputSha256", "errorType")}))
+    provider_consistency = {}
+    for group in summary["groups"]:
+        repeated = [(key, value) for key, value in repeated_inputs.items() if key[0] == group and value["count"] > 1]
+        provider_consistency[group] = {
+            "repeatedInputCount": len(repeated),
+            "variableInputs": [{"task": key[1], "inputSha256": key[2], "observations": value["count"],
+                                "outcomeVariants": len(value["outcomes"])}
+                               for key, value in repeated if len(value["outcomes"]) > 1]}
     indexes = {}
     if state.get("completed"):
         for name in dict.fromkeys(p["index"] for p in state["plan"]):
@@ -64,7 +80,7 @@ def analyze(root):
                 indexes[name] = {"chunks": len(rows), "vectorsSha256": fingerprint(
                     [(identifier, json.loads(vector)) for identifier, vector in rows])}
     result = {"seriesCompleted": state.get("completed", False), "summary": summary,
-              "changedCaseComparisons": comparisons, "indexFingerprints": indexes,
+              "changedCaseComparisons": comparisons, "indexFingerprints": indexes, "providerConsistency": provider_consistency,
               "limitations": "Fingerprints locate a difference; they do not alone prove its cause. "
               "Persistent same-index runs include application restart/recovery; no frozen-context replay was performed."}
     write_json(root / "analysis.json", result)

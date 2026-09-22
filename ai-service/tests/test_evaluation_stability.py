@@ -179,3 +179,6 @@ def test_analysis_locates_first_changed_output_without_copying_text(tmp_path):
     assert "SYNTHETIC-CONTENT" not in (tmp_path / "summary.md").read_text()
     assert "SYNTHETIC-CONTENT" not in (tmp_path / "analysis.json").read_text()
     assert "INCOMPLETE" in (tmp_path / "summary.md").read_text()
+    consistency = result["providerConsistency"]["same-index"]
+    assert consistency["repeatedInputCount"] == 1
+    assert consistency["variableInputs"][0]["outcomeVariants"] == 2
