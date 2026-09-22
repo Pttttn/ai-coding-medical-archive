@@ -1,0 +1,74 @@
+{
+  "ollamaVersion": "0.34.1",
+  "models": {
+    "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+    "qwen3.5:2b": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df"
+  },
+  "llmModel": "qwen3.5:2b",
+  "embeddingModel": "nomic-embed-text",
+  "thinking": false,
+  "generation": {
+    "rewrite_query": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 8192,
+      "num_predict": 128
+    },
+    "broaden_query": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 8192,
+      "num_predict": 128
+    },
+    "grade_chunks": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 8192,
+      "num_predict": 256
+    },
+    "generate_answer": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 8192,
+      "num_predict": 1024
+    },
+    "extraction": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 2048
+    },
+    "privacy_pass": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    }
+  },
+  "retrieval": {
+    "chunk_size": 900,
+    "chunk_overlap": 120,
+    "retrieval_k": 5,
+    "min_relevant_chunks": 1,
+    "rag_max_corrective_retries": 2,
+    "llm_timeout": 180.0,
+    "max_file_bytes": 20971520,
+    "extraction_max_facts_per_batch": 8
+  },
+  "corpusSha256": "f9eeee0dc679e48bcd4d80223c6b7c2d2582c1810eff831b8aed4eaa52dd93f0",
+  "questionsSha256": "3b76b4edfd7521d521c07c82c3d1cbb12935e601ac3e7697d1d3b931a50ba9d2",
+  "codeSha256": "8f74f5eaa4bff96ff8de3b88fdc9d4ec847e16488abc0f3991ba213124bc909b",
+  "dependenciesSha256": "d59cd0d6e46c59a77ae1ab6b2a107e574c2cdd0d2250a33ffb089a2706e15a80",
+  "runtime": {
+    "python": "3.12.14",
+    "system": "Linux",
+    "machine": "x86_64",
+    "packages": {
+      "chromadb": "1.4.0",
+      "rank-bm25": "0.2.2",
+      "langgraph": "1.0.5",
+      "pypdf": "6.5.0",
+      "httpx": "0.28.1"
+    }
+  }
+}

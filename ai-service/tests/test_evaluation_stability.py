@@ -182,3 +182,5 @@ def test_analysis_locates_first_changed_output_without_copying_text(tmp_path):
     consistency = result["providerConsistency"]["same-index"]
     assert consistency["repeatedInputCount"] == 1
     assert consistency["variableInputs"][0]["outcomeVariants"] == 2
+    assert len(result["changedCaseComparisons"]) == 1
+    assert len(result["allRunChangedComparisons"]) == 2

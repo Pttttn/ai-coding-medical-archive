@@ -50,6 +50,23 @@ def analyze(root):
                 if stages or difference:
                     comparisons.append({"group": group, "reference": reference, "run": entry["id"],
                                         "case": row["id"], "changedStages": stages, "firstCallDifference": difference})
+    # Also compare fresh indexes with the first shared-index run. Within-group
+    # agreement alone could hide a systematic difference between the two modes.
+    all_comparisons = []
+    reference = state["plan"][0]["id"]
+    baseline = {r["id"]: r for r in reports.get(reference, {}).get("results", [])}
+    for entry in state["plan"][1:]:
+        for row in reports.get(entry["id"], {}).get("results", []):
+            if row["id"] not in baseline:
+                continue
+            a = baseline[row["id"]].get("diagnostics", {})
+            b = row.get("diagnostics", {})
+            stages = sorted(k for k in set(a.get("stages", {})) | set(b.get("stages", {}))
+                            if a.get("stages", {}).get(k) != b.get("stages", {}).get(k))
+            difference = first_call_difference(a.get("calls", []), b.get("calls", []))
+            if stages or difference:
+                all_comparisons.append({"reference": reference, "run": entry["id"], "case": row["id"],
+                                        "changedStages": stages, "firstCallDifference": difference})
     repeated_inputs = {}
     for entry in state["plan"]:
         for row in reports.get(entry["id"], {}).get("results", []):
@@ -80,7 +97,8 @@ def analyze(root):
                 indexes[name] = {"chunks": len(rows), "vectorsSha256": fingerprint(
                     [(identifier, json.loads(vector)) for identifier, vector in rows])}
     result = {"seriesCompleted": state.get("completed", False), "summary": summary,
-              "changedCaseComparisons": comparisons, "indexFingerprints": indexes, "providerConsistency": provider_consistency,
+              "changedCaseComparisons": comparisons, "allRunChangedComparisons": all_comparisons,
+              "indexFingerprints": indexes, "providerConsistency": provider_consistency,
               "limitations": "Fingerprints locate a difference; they do not alone prove its cause. "
               "Persistent same-index runs include application restart/recovery; no frozen-context replay was performed."}
     write_json(root / "analysis.json", result)

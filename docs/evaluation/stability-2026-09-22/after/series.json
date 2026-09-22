@@ -1,5 +1,132 @@
 {
-  "seriesCompleted": true,
+  "version": 1,
+  "startedAt": "2026-09-22T07:19:41.064199+00:00",
+  "completed": true,
+  "plan": [
+    {
+      "id": "same-01",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-02",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-03",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-04",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "same-05",
+      "group": "same-index",
+      "index": "shared"
+    },
+    {
+      "id": "fresh-01",
+      "group": "fresh-index",
+      "index": "fresh-01"
+    },
+    {
+      "id": "fresh-02",
+      "group": "fresh-index",
+      "index": "fresh-02"
+    },
+    {
+      "id": "fresh-03",
+      "group": "fresh-index",
+      "index": "fresh-03"
+    }
+  ],
+  "caseIds": [
+    "fact-01",
+    "fact-02",
+    "fact-03",
+    "fact-04",
+    "fact-05",
+    "fact-06",
+    "fact-07",
+    "fact-08",
+    "fact-09",
+    "fact-10",
+    "fact-11",
+    "fact-12",
+    "paraphrase-01",
+    "paraphrase-02",
+    "overview-01",
+    "multi-01",
+    "negation-01",
+    "conflict-01",
+    "missing-01",
+    "unrelated-01",
+    "russian-01"
+  ],
+  "timeoutSeconds": 3600,
+  "requestedExecution": "gpu",
+  "attempts": [
+    {
+      "id": "same-01",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:19:43.478768+00:00",
+      "exitCode": 0,
+      "seconds": 228.666
+    },
+    {
+      "id": "same-02",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:23:45.467247+00:00",
+      "exitCode": 0,
+      "seconds": 170.084
+    },
+    {
+      "id": "same-03",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:26:47.059702+00:00",
+      "exitCode": 0,
+      "seconds": 149.527
+    },
+    {
+      "id": "same-04",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:29:26.206033+00:00",
+      "exitCode": 0,
+      "seconds": 153.942
+    },
+    {
+      "id": "same-05",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:32:09.784345+00:00",
+      "exitCode": 0,
+      "seconds": 171.941
+    },
+    {
+      "id": "fresh-01",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:35:13.384625+00:00",
+      "exitCode": 0,
+      "seconds": 195.603
+    },
+    {
+      "id": "fresh-02",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:38:42.607926+00:00",
+      "exitCode": 0,
+      "seconds": 201.037
+    },
+    {
+      "id": "fresh-03",
+      "status": "completed",
+      "startedAt": "2026-09-22T07:42:15.444999+00:00",
+      "exitCode": 0,
+      "seconds": 180.138
+    }
+  ],
   "summary": {
     "plannedRuns": 8,
     "questionsPerRun": 21,
@@ -43,10 +170,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 3,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 3,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -139,12 +266,12 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
-              "publicAnswer": 2,
-              "rawAnswer": 2,
-              "retrieve": 2,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
               "rewrite_query": 1,
-              "selectedSources": 2
+              "selectedSources": 1
             }
           },
           {
@@ -163,10 +290,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -211,10 +338,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -235,10 +362,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -259,10 +386,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 3,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 3,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -428,10 +555,10 @@
             "stageVariants": {
               "broaden_query": 1,
               "generate_answer": 1,
-              "grade_chunks": 4,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 4,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -452,10 +579,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -956,10 +1083,10 @@
             "stageVariants": {
               "broaden_query": 1,
               "generate_answer": 1,
-              "grade_chunks": 3,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 3,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -1066,815 +1193,93 @@
       }
     }
   },
-  "changedCaseComparisons": [
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
+  "manifest": {
+    "ollamaVersion": "0.34.1",
+    "models": {
+      "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "qwen3.5:2b": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df"
+    },
+    "llmModel": "qwen3.5:2b",
+    "embeddingModel": "nomic-embed-text",
+    "thinking": false,
+    "generation": {
+      "rewrite_query": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 128
+      },
+      "broaden_query": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 128
+      },
+      "grade_chunks": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 256
+      },
+      "generate_answer": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 1024
+      },
+      "extraction": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 2048
+      },
+      "privacy_pass": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 1024
       }
     },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
+    "retrieval": {
+      "chunk_size": 900,
+      "chunk_overlap": 120,
+      "retrieval_k": 5,
+      "min_relevant_chunks": 1,
+      "rag_max_corrective_retries": 2,
+      "llm_timeout": 180.0,
+      "max_file_bytes": 20971520,
+      "extraction_max_facts_per_batch": 8
+    },
+    "corpusSha256": "f9eeee0dc679e48bcd4d80223c6b7c2d2582c1810eff831b8aed4eaa52dd93f0",
+    "questionsSha256": "3b76b4edfd7521d521c07c82c3d1cbb12935e601ac3e7697d1d3b931a50ba9d2",
+    "codeSha256": "8f74f5eaa4bff96ff8de3b88fdc9d4ec847e16488abc0f3991ba213124bc909b",
+    "dependenciesSha256": "d59cd0d6e46c59a77ae1ab6b2a107e574c2cdd0d2250a33ffb089a2706e15a80",
+    "runtime": {
+      "python": "3.12.14",
+      "system": "Linux",
+      "machine": "x86_64",
+      "packages": {
+        "chromadb": "1.4.0",
+        "rank-bm25": "0.2.2",
+        "langgraph": "1.0.5",
+        "pypdf": "6.5.0",
+        "httpx": "0.28.1"
       }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-08",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-09",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "fresh-index",
-      "reference": "fresh-01",
-      "run": "fresh-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "fresh-index",
-      "reference": "fresh-01",
-      "run": "fresh-03",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    }
-  ],
-  "allRunChangedComparisons": [
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-08",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-09",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "fresh-01",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "fresh-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    }
-  ],
-  "indexFingerprints": {
-    "shared": {
-      "chunks": 773,
-      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
-    },
-    "fresh-01": {
-      "chunks": 773,
-      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
-    },
-    "fresh-02": {
-      "chunks": 773,
-      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
-    },
-    "fresh-03": {
-      "chunks": 773,
-      "vectorsSha256": "d83cfdd0317a5ab5e35be0203bff27fe40d031e896ebcef1e646c1464fce5445"
     }
   },
-  "providerConsistency": {
-    "same-index": {
-      "repeatedInputCount": 199,
-      "variableInputs": []
+  "execution": [
+    {
+      "name": "qwen3.5:2b",
+      "digest": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+      "size": 2465296545,
+      "size_vram": 2465296545
     },
-    "fresh-index": {
-      "repeatedInputCount": 198,
-      "variableInputs": []
+    {
+      "name": "nomic-embed-text:latest",
+      "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+      "size": 323150151,
+      "size_vram": 323150151
     }
-  },
-  "limitations": "Fingerprints locate a difference; they do not alone prove its cause. Persistent same-index runs include application restart/recovery; no frozen-context replay was performed."
+  ],
+  "finishedAt": "2026-09-22T07:45:27.323555+00:00"
 }

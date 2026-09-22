@@ -43,10 +43,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 3,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 3,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -139,12 +139,12 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
-              "publicAnswer": 2,
-              "rawAnswer": 2,
-              "retrieve": 2,
+              "grade_chunks": 1,
+              "publicAnswer": 1,
+              "rawAnswer": 1,
+              "retrieve": 1,
               "rewrite_query": 1,
-              "selectedSources": 2
+              "selectedSources": 1
             }
           },
           {
@@ -163,10 +163,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -211,10 +211,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -235,10 +235,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -259,10 +259,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 3,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 3,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -428,10 +428,10 @@
             "stageVariants": {
               "broaden_query": 1,
               "generate_answer": 1,
-              "grade_chunks": 4,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 4,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -452,10 +452,10 @@
             "errorTypes": {},
             "stageVariants": {
               "generate_answer": 1,
-              "grade_chunks": 2,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 2,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -956,10 +956,10 @@
             "stageVariants": {
               "broaden_query": 1,
               "generate_answer": 1,
-              "grade_chunks": 3,
+              "grade_chunks": 1,
               "publicAnswer": 1,
               "rawAnswer": 1,
-              "retrieve": 3,
+              "retrieve": 1,
               "rewrite_query": 1,
               "selectedSources": 1
             }
@@ -1066,788 +1066,8 @@
       }
     }
   },
-  "changedCaseComparisons": [
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-08",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-09",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "same-index",
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "fresh-index",
-      "reference": "fresh-01",
-      "run": "fresh-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "group": "fresh-index",
-      "reference": "fresh-01",
-      "run": "fresh-03",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    }
-  ],
-  "allRunChangedComparisons": [
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-02",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-03",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 5,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-04",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-05",
-      "changedStages": [
-        "grade_chunks",
-        "publicAnswer",
-        "rawAnswer",
-        "retrieve",
-        "selectedSources"
-      ],
-      "firstCallDifference": {
-        "position": 4,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-06",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-08",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-09",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "fact-10",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "same-05",
-      "case": "conflict-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 3,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "fresh-01",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 16,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    },
-    {
-      "reference": "same-01",
-      "run": "fresh-02",
-      "case": "negation-01",
-      "changedStages": [
-        "grade_chunks",
-        "retrieve"
-      ],
-      "firstCallDifference": {
-        "position": 2,
-        "kind": "input",
-        "task": "grade_chunks"
-      }
-    }
-  ],
+  "changedCaseComparisons": [],
+  "allRunChangedComparisons": [],
   "indexFingerprints": {
     "shared": {
       "chunks": 773,
@@ -1868,11 +1088,11 @@
   },
   "providerConsistency": {
     "same-index": {
-      "repeatedInputCount": 199,
+      "repeatedInputCount": 196,
       "variableInputs": []
     },
     "fresh-index": {
-      "repeatedInputCount": 198,
+      "repeatedInputCount": 196,
       "variableInputs": []
     }
   },
