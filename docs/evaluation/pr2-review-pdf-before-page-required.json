@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-09-22",
+  "environment": "fresh Docker Compose, container Ollama 0.34.1 CPU, qwen3.5:2b",
+  "check": "scripts/pdf_smoke.py text PDF",
+  "passed": false,
+  "observedStatus": "READY",
+  "facts": 0,
+  "rejectedQuoteCount": 2,
+  "cause": "JSON Schema allowed omission of provenance.page; the model omitted it and unchanged source-page validation rejected both facts.",
+  "fix": "Require page explicitly in generation schema, nullable for plain text; provenance validation remains strict.",
+  "scope": "Synthetic seed/originals/lab-01.pdf; no runtime document ids or content saved."
+}

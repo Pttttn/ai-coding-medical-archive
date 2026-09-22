@@ -85,3 +85,26 @@ def test_privacy_clinic_same_line_keeps_lab_and_dose(provider):
     result = consultation(provider, "Что значит LDL?", ["Клиника: Тест. LDL 4.73 mmol/L; 5 мг, не 10 мг."])
     assert "4.73 mmol/L" in result["content"] and "не 10 мг" in result["content"]
     assert "Клиника: Тест" not in result["content"]
+
+
+@pytest.mark.parametrize("page", [None, 1])
+def test_generation_schema_requires_explicit_page_even_when_nullable(provider, page):
+    from jsonschema import Draft202012Validator
+    from jsonschema.exceptions import ValidationError
+
+    original = provider.json
+
+    def checked(task, payload, schema=None):
+        result = original(task, payload, schema)
+        validator = Draft202012Validator(schema)
+        validator.validate(result)
+        del result["facts"][0]["provenance"]["page"]
+        with pytest.raises(ValidationError):
+            validator.validate(result)
+        result["facts"][0]["provenance"]["page"] = page
+        return result
+
+    provider.json = checked
+    result, warnings = extract(provider, "synthetic lab", [Page(pageNumber=page, text="LDL 4.1 mmol/L")])
+    assert len(result.facts) == 1 and not warnings
+    assert result.facts[0].provenance.page == page

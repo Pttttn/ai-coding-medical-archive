@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", populate_by_name=True)
     ollama_base_url: str = Field(default="http://ollama:11434", validation_alias=AliasChoices("OLLAMA_BASE_URL", "LLM_BASE_URL"))
-    llm_model: str = "qwen2.5:3b"
+    llm_model: str = "qwen3.5:2b"
     embedding_model: str = "nomic-embed-text"
     internal_token: str = Field(default="local-development-token-change-me", validation_alias=AliasChoices("INTERNAL_TOKEN", "INTERNAL_API_TOKEN"))
     data_dir: Path = Field(default=Path("./data"), validation_alias=AliasChoices("DATA_DIR", "AI_DATA_DIR"))
