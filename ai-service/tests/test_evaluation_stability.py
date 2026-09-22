@@ -159,3 +159,23 @@ def test_runner_isolates_indexes_removes_external_override_and_checks_profile(tm
     # Never reuse/overwrite a previous series, including a failed one.
     with pytest.raises(FileExistsError):
         runner.main()
+
+
+
+def test_analysis_locates_first_changed_output_without_copying_text(tmp_path):
+    from analyze_stability import analyze
+
+    plan = build_plan(2, 1)
+    write_json(tmp_path / "series.json", {"plan": plan, "caseIds": ["q"], "completed": False})
+    for entry in plan:
+        row = report(["q"], ["q"])
+        row["results"][0]["diagnostics"] = {"calls": [
+            {"task": "rewrite_query", "inputSha256": "same-input", "outputSha256": entry["id"]}], "stages": {}}
+        row["results"][0]["public"] = {"answer": "SYNTHETIC-CONTENT-NOT-FOR-SUMMARY"}
+        write_json(tmp_path / "runs" / (entry["id"] + ".json"), row)
+    result = analyze(tmp_path)
+    assert result["changedCaseComparisons"][0]["firstCallDifference"] == {
+        "position": 0, "kind": "output-or-error", "task": "rewrite_query"}
+    assert "SYNTHETIC-CONTENT" not in (tmp_path / "summary.md").read_text()
+    assert "SYNTHETIC-CONTENT" not in (tmp_path / "analysis.json").read_text()
+    assert "INCOMPLETE" in (tmp_path / "summary.md").read_text()
