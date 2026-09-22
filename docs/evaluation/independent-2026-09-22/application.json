@@ -1,0 +1,109 @@
+{
+  "timestamp": "2026-09-22T08:08:35.241319+00:00",
+  "base": "http://127.0.0.1:3000",
+  "mode": "real Ollama on synthetic demo",
+  "resumedDocumentId": null,
+  "checks": [
+    {
+      "name": "dashboard seed",
+      "passed": true,
+      "elapsedSeconds": 0.01
+    },
+    {
+      "name": "server pagination",
+      "passed": true,
+      "elapsedSeconds": 0.02
+    },
+    {
+      "name": "swagger local",
+      "passed": true,
+      "elapsedSeconds": 0.02
+    },
+    {
+      "name": "backend validation",
+      "passed": true,
+      "elapsedSeconds": 0.02
+    },
+    {
+      "name": "real note extraction and indexing",
+      "passed": true,
+      "elapsedSeconds": 18.15
+    },
+    {
+      "name": "full text search",
+      "passed": true,
+      "elapsedSeconds": 18.16
+    },
+    {
+      "name": "real archive RAG citations",
+      "passed": true,
+      "elapsedSeconds": 44.35
+    },
+    {
+      "name": "fact correction audit",
+      "passed": true,
+      "elapsedSeconds": 46.45
+    },
+    {
+      "name": "real reprocess preserves correction",
+      "passed": true,
+      "elapsedSeconds": 64.58
+    },
+    {
+      "name": "source quotation immutable",
+      "passed": true,
+      "elapsedSeconds": 64.58
+    },
+    {
+      "name": "metadata update",
+      "passed": true,
+      "elapsedSeconds": 66.61
+    },
+    {
+      "name": "privacy pass",
+      "passed": true,
+      "elapsedSeconds": 73.05
+    },
+    {
+      "name": "unreviewed export blocked",
+      "passed": true,
+      "elapsedSeconds": 73.06
+    },
+    {
+      "name": "reviewed exact export",
+      "passed": true,
+      "elapsedSeconds": 73.07
+    },
+    {
+      "name": "edit clears review",
+      "passed": true,
+      "elapsedSeconds": 73.07
+    },
+    {
+      "name": "stale review cannot export",
+      "passed": true,
+      "elapsedSeconds": 73.08
+    },
+    {
+      "name": "soft delete excludes search",
+      "passed": true,
+      "elapsedSeconds": 73.08
+    },
+    {
+      "name": "soft delete excludes RAG",
+      "passed": true,
+      "elapsedSeconds": 127.4
+    },
+    {
+      "name": "restore and reindex",
+      "passed": true,
+      "elapsedSeconds": 129.49
+    },
+    {
+      "name": "persistent audit",
+      "passed": true,
+      "elapsedSeconds": 129.49
+    }
+  ],
+  "seconds": 129.51
+}

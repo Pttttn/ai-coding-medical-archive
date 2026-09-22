@@ -1,0 +1,49 @@
+{
+  "tableCountsBefore": {
+    "audit_events": 109,
+    "consultations": 1,
+    "documents": 41,
+    "extraction_runs": 42,
+    "fact_provenance": 43,
+    "fact_revisions": 6,
+    "medical_facts": 43,
+    "migrations": 1,
+    "processing_jobs": 51,
+    "tags": 22,
+    "text_revisions": 39,
+    "timeline_events": 81
+  },
+  "tableCountsAfter": {
+    "audit_events": 109,
+    "consultations": 1,
+    "documents": 41,
+    "extraction_runs": 42,
+    "fact_provenance": 43,
+    "fact_revisions": 6,
+    "medical_facts": 43,
+    "migrations": 1,
+    "processing_jobs": 51,
+    "tags": 22,
+    "text_revisions": 39,
+    "timeline_events": 81
+  },
+  "dashboardBefore": {
+    "totalDocuments": 36,
+    "processedDocuments": 36,
+    "failedDocuments": 0,
+    "pendingDocuments": 0,
+    "medicalFacts": 36,
+    "timelineEvents": 72
+  },
+  "dashboardAfter": {
+    "totalDocuments": 36,
+    "processedDocuments": 36,
+    "failedDocuments": 0,
+    "pendingDocuments": 0,
+    "medicalFacts": 36,
+    "timelineEvents": 72
+  },
+  "sameCounts": true,
+  "sameDashboard": true,
+  "seconds": 66.64
+}
