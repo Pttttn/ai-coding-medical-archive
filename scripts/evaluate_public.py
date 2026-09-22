@@ -19,6 +19,7 @@ from medical_ai.external_output import PublicOutput  # noqa: E402
 from medical_ai.indexer import Corpus  # noqa: E402
 from medical_ai.ollama import Ollama  # noqa: E402
 from medical_ai.rag import CorrectiveRAG  # noqa: E402
+from evaluation_support import ObservedProvider, diagnostics, manifest, write_json  # noqa: E402
 
 FORBIDDEN = ("elena testova", "ivan primerov", "testova", "primerov", "cedar clinic", "alex example", "elena.testova@example.test",
              "mc-demo-00421", "202-555-0147", "fictional cedar clinic", "elena_testova",
@@ -34,9 +35,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default=str(ROOT / "docs/evaluation/v12-public-rag.json"))
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--profile", help="Reject a different environment before evaluating")
+    parser.add_argument("--diagnostics", action="store_true", help="Store hashes only, never raw traces")
     args = parser.parse_args()
     settings = Settings(sample_docs_dir=ROOT / "sample_docs")
     provider = Ollama(settings)
+    run_manifest = manifest(ROOT, settings, provider)
+    if args.profile and run_manifest != json.loads(Path(args.profile).read_text(encoding="utf-8")):
+        write_json(Path(args.output), {"completed": False, "setupError": "EVALUATION_PROFILE_MISMATCH",
+                                      "manifest": run_manifest, "results": []})
+        raise SystemExit("EVALUATION_PROFILE_MISMATCH")
+    if args.diagnostics:
+        provider = ObservedProvider(provider)
     health = provider.health()
     if not health["ready"]:
         raise SystemExit("Both local Ollama models must be ready")
@@ -55,11 +65,14 @@ def main():
                              for name in ("chunking.py", "indexer.py", "rag.py", "privacy.py", "external_output.py")},
               "config": {"chunkSize": settings.chunk_size, "chunkOverlap": settings.chunk_overlap,
                          "retrievalK": settings.retrieval_k},
-              "indexing": boundary.indexing(indexing), "results": []}
+              "indexing": boundary.indexing(indexing), "manifest": run_manifest, "completed": False, "results": []}
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     for case in questions:
         started = time.monotonic()
+        raw, checked = None, None
+        if args.diagnostics:
+            provider.calls.clear()
         result = {key: case[key] for key in ("id", "category", "question", "expected") if key in case}
         try:
             expected = case.get("expected") or []
@@ -87,6 +100,8 @@ def main():
             result["privacyPassed"] = False
             result["errorType"] = type(exc).__name__
             result["errorCode"] = getattr(exc, "code", "EVALUATION_FAILED")
+        if args.diagnostics:
+            result["diagnostics"] = diagnostics(raw, provider.calls, checked)
         result["passed"] = all(result.get(key, False) for key in
                                ("privacyPassed", "expectedTextPresent", "expectedSourcesCited", "abstentionCorrect"))
         result["seconds"] = round(time.monotonic() - started, 3)
@@ -94,8 +109,12 @@ def main():
         report["summary"] = {"passed": sum(row["passed"] for row in report["results"]),
                              "total": len(report["results"]),
                              "privacyPassed": sum(row["privacyPassed"] for row in report["results"])}
-        output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+        write_json(output, report)
         print(json.dumps({key: value for key, value in result.items() if key != "public"}, ensure_ascii=False), flush=True)
+    report["completed"] = True
+    write_json(output, report)
+    provider.client.close()
+    corpus.db.close()
     print(json.dumps(report["summary"]), flush=True)
 
 

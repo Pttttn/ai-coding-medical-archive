@@ -31,6 +31,7 @@ def test_chat_request_contains_budget_and_accepts_strict_json(settings):
     provider.client = httpx.Client(transport=httpx.MockTransport(handler), base_url="http://localhost")
     assert provider.json("TASK: rewrite_query", {"question": "original"}, QUERY_SCHEMA) == {"query": "safe query"}
     assert captured[0]["options"]["num_predict"] == 128
+    assert captured[0]["options"]["seed"] == settings.llm_seed == 42
     assert "tools" not in captured[0]
 
 

@@ -203,6 +203,17 @@ env -u MCP_DEMO_DIR DATA_DIR="$PWD/.local-evaluation/review-qwen35-2b" LLM_MODEL
 
 Browser smoke (`scripts/browser_smoke.cjs`) требует Playwright и Chromium/Edge; `PLAYWRIGHT_MODULE` и `BROWSER_CHANNEL` выбирают установленный runtime.
 
+## Серийная проверка устойчивости
+
+[Инструкция](docs/evaluation/STABILITY.md): один запуск выполняет **5 полных прогонов на одном индексе и 3 с новыми индексами**, сохраняет все попытки, минимум/медиану/максимум и частоту успеха каждого вопроса. Отдельный Compose-стенд не использует личные документы и рабочие индексы; доступны CPU и NVIDIA GPU. Одиночные прежние оценки не считаются доказательством устойчивости.
+
+```sh
+docker compose -f compose.evaluation.yaml up -d --wait --wait-timeout 1800 ollama
+docker compose -f compose.evaluation.yaml run --rm --build evaluator --execution cpu --output-dir /results/cpu-01
+```
+
+Результаты появятся в `.local-evaluation/cpu-01`. При новом запуске задавайте новое имя каталога. Полная серия на CPU может занять значительно больше часа. Правила exit code, сверка профиля и команды CUDA описаны в инструкции.
+
 ## Приватность и границы
 
 Нет публичного хостинга, авторизации, OCR, изображений/DICOM и автоматической медицинской диагностики. Приложение предназначено для доверенного локального устройства. AI-факты требуют проверки; confidence не является вероятностью правильности. Редкие сведения могут идентифицировать человека даже после удаления имён.

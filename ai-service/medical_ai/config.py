@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     retrieval_k: int = Field(default=5, ge=1, le=12)
     min_relevant_chunks: int = Field(default=1, ge=1, le=12)
     rag_max_corrective_retries: int = Field(default=2, ge=0, le=2)
+    llm_seed: int = Field(default=42, ge=0, le=2147483647)
     llm_timeout: float = 180.0
     llm_query_max_tokens: int = Field(default=128, ge=32, le=512)
     llm_grade_max_tokens: int = Field(default=256, ge=64, le=768)

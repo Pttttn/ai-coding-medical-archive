@@ -24,6 +24,9 @@ Remove-Item Env:MCP_DEMO_DIR -ErrorAction SilentlyContinue
 $evalRoot = (docker compose exec -T ai python -c "import tempfile; print(tempfile.mkdtemp(prefix='public-eval-'))").Trim()
 docker compose exec -T ai python -c "from pathlib import Path; p=Path('$evalRoot'); (p/'scripts').mkdir(); (p/'evaluation').mkdir(); (p/'ai-service').mkdir(); (p/'sample_docs').symlink_to('/app/sample_docs'); (p/'ai-service/medical_ai').symlink_to('/app/medical_ai')"
 docker compose cp scripts/evaluate_public.py "ai:$evalRoot/scripts/evaluate_public.py"
+docker compose cp scripts/evaluation_support.py "ai:$evalRoot/scripts/evaluation_support.py"
+docker compose cp scripts/evaluate_stability.py "ai:$evalRoot/scripts/evaluate_stability.py"
+docker compose cp ai-service/uv.lock "ai:$evalRoot/ai-service/uv.lock"
 docker compose cp evaluation/questions.json "ai:$evalRoot/evaluation/questions.json"
 docker compose exec -T -e PYTHONPATH=/app -e "DATA_DIR=$evalRoot/data" -e "MCP_DEMO_DIR=$evalRoot/demo" ai python "$evalRoot/scripts/evaluate_public.py" --output "$evalRoot/result.json"
 New-Item -ItemType Directory -Force .local-evaluation | Out-Null

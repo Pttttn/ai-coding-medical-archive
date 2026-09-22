@@ -217,6 +217,8 @@ class Handler(BaseHTTPRequestHandler):
             "temperature": options.get("temperature", 0),
             "max_tokens": options.get("num_predict", 1024), "stream": False,
         }
+        if "seed" in options:
+            payload["seed"] = options["seed"]
         if isinstance(fmt, dict):
             payload["response_format"] = {"type": "json_schema", "json_schema": {"name": "out", "schema": fmt}}
         elif fmt == "json":
