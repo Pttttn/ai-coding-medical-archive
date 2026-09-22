@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-22",
+  "execution": "isolated Docker Ollama CUDA, sequential runs, no published model endpoint",
+  "gpu": "NVIDIA GeForce RTX 5080, 616.64, 16303",
+  "dockerVersion": "29.7.2",
+  "dockerCpus": 32,
+  "dockerMemoryBytes": 33524744192,
+  "ollamaImage": "ollama/ollama:0.34.1@sha256:0c0a83210471fb50226bcdc2d6611d20ab13ae87e024cc304c94a6a5765c5e65",
+  "corpus": "42 synthetic PDF/TXT/MD files; 773 chunks, 900/120",
+  "limits": "A finite within-host CUDA experiment; no claim of CPU/Mac equivalence or isolated latency benchmark. Runtime model placement and full fingerprints are recorded per series."
+}
