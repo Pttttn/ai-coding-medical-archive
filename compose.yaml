@@ -55,7 +55,6 @@ services:
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
       INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:-local-internal-demo-token}
       LLM_SEED: ${LLM_SEED:-42}
-      LLM_SEED: ${LLM_SEED:-42}
       AI_DATA_DIR: /data/ai
       MCP_DEMO_DIR: /data/mcp_demo
       SAMPLE_DOCS_DIR: /app/sample_docs
