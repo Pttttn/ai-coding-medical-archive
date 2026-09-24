@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from fastmcp import FastMCP
 
 from .config import Settings
+from .archive_qa import ArchiveRAG, PROMPT_VERSION as ARCHIVE_PROMPT_VERSION
 from .errors import ServiceError
 from .extraction import PROMPT_VERSION, SCHEMA_VERSION, extract
 from .external_output import PublicOutput, PublicToolErrors
@@ -24,7 +25,7 @@ class Services:
         self.provider = provider or Ollama(settings)
         self.archive = Corpus("archive", settings, self.provider)
         self.demo = Corpus("mcp_demo", settings, self.provider)
-        self.archive_rag = CorrectiveRAG(self.archive, self.provider, settings)
+        self.archive_rag = ArchiveRAG(self.archive, self.provider, settings)
         self.demo_rag = CorrectiveRAG(self.demo, self.provider, settings)
         self.public_output = PublicOutput(self.demo, self.provider)
 
@@ -49,7 +50,7 @@ def create_app(services: Services | None = None) -> FastAPI:
     @app.get("/health")
     def health():
         return {"status": "running", **services.provider.health(), "promptVersion": PROMPT_VERSION,
-                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION}
+                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/process", dependencies=[Depends(authorize)])
     def process(body: ProcessRequest):
@@ -70,7 +71,7 @@ def create_app(services: Services | None = None) -> FastAPI:
         return {"modelDigest": model_digest, "text": text, "pages": [p.model_dump() for p in pages],
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
                 "model": services.settings.llm_model, "promptVersion": PROMPT_VERSION,
-                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION}
+                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/index", dependencies=[Depends(authorize)])
     def index(body: IndexRequest):
@@ -83,7 +84,10 @@ def create_app(services: Services | None = None) -> FastAPI:
 
     @app.post("/internal/ask", dependencies=[Depends(authorize)])
     def ask(body: AskRequest):
-        return services.archive_rag.ask(body.question, body.documentIds)
+        return services.archive_rag.ask(body.question, body.documentIds,
+            [d.model_dump(mode="json") for d in body.documents],
+            body.dateFrom.isoformat() if body.dateFrom else None,
+            body.dateTo.isoformat() if body.dateTo else None)
 
     @app.post("/internal/consultation", dependencies=[Depends(authorize)])
     def prepare(body: ConsultationRequest):

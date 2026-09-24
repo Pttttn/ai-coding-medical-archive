@@ -62,7 +62,7 @@ export class AppController {
   @Get('search') @ApiOperation({summary:'PostgreSQL full-text document search'})
   search(@Query()q:DocumentQueryDto){return this.archive.list(q);}
   @Post('ask') @ApiOperation({summary:'Local Corrective RAG with sources restricted to current active documents'})
-  ask(@Body()dto:AskDto){return this.archive.ask(dto.question,dto.documentIds);}
+  ask(@Body()dto:AskDto){return this.archive.ask(dto.question,dto.documentIds,dto.dateFrom,dto.dateTo);}
   @Get('dashboard') @ApiOperation({summary:'Counts, monthly distribution, document types, recent uploads and changes'})
   dashboard(){return this.archive.dashboard();}
   @Get('history') @ApiOperation({summary:'Paginated local audit trail'})

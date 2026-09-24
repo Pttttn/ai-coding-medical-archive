@@ -253,13 +253,14 @@ export class ArchiveService {
       await m.delete(Tag,id);await audit(m,null,'TAG',id,'TAG_DELETED',{name:tag.name});return {ok:true};
     });
   }
-  async ask(question:string,documentIds?:string[]) {
-    const qb=this.db.getRepository(Document).createQueryBuilder('d').select(['d.id','d.generation','d.textVersion']).where('d."deletedAt" IS NULL AND d.status = :status',{status:'READY'});
+  async ask(question:string,documentIds?:string[],dateFrom?:string,dateTo?:string) {
+    if(dateFrom&&dateTo&&dateFrom>dateTo)throw new BadRequestException({code:'INVALID_PERIOD',message:'Начало периода должно быть не позже конца'});
+    const qb=this.db.getRepository(Document).createQueryBuilder('d').select(['d.id','d.generation','d.textVersion','d.documentDate']).where('d."deletedAt" IS NULL AND d.status = :status',{status:'READY'});
     if(documentIds!==undefined){if(!documentIds.length)return {answer:'В выбранном контексте нет доступных документов.',sources:[],insufficientContext:true};qb.andWhere('d.id IN (:...ids)',{ids:documentIds});}
     const snapshots=await qb.getMany();
     const allowed=snapshots.map(d=>d.id);
     if(!allowed.length) return {answer:'В архиве пока нет готовых документов для ответа.',sources:[],insufficientContext:true};
-    const result=await this.ai.call('ask',{question,documentIds:allowed});
+    const result=await this.ai.call('ask',{question,documentIds:allowed,documents:snapshots.map(d=>({documentId:d.id,documentDate:d.documentDate})),dateFrom,dateTo});
     const current=await this.db.getRepository(Document).find({where:{id:In(allowed),deletedAt:IsNull(),status:'READY'},select:['id','generation','textVersion']});
     const stillAllowed=new Set(current.filter(d=>snapshots.some(s=>s.id===d.id&&s.generation===d.generation&&s.textVersion===d.textVersion)).map(d=>d.id));
     // Never return an answer derived from a document deleted/edited while generation was running.

@@ -58,6 +58,8 @@ export class TimelineQueryDto extends PaginationDto {
   @ApiPropertyOptional({format:'date'}) @IsOptional() @IsDateString({strict:true}) to?:string;
 }
 export class AskDto {
+  @ApiPropertyOptional({format:'date'}) @IsOptional() @Matches(/^\d{4}-\d{2}-\d{2}$/) @IsDateString({strict:true}) dateFrom?:string;
+  @ApiPropertyOptional({format:'date'}) @IsOptional() @Matches(/^\d{4}-\d{2}-\d{2}$/) @IsDateString({strict:true}) dateTo?:string;
   @ApiProperty() @IsString() @Length(3,4000) @Matches(/\S/) question:string;
   @ApiPropertyOptional({type:[String]}) @IsOptional() @IsArray() @ArrayMaxSize(100) @IsUUID('all',{each:true}) documentIds?:string[];
 }

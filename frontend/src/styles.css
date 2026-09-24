@@ -309,3 +309,10 @@
   .table-scroll { position: relative; width: 100%; max-width: 100%; }
 }
 
+
+.ask-period { border: 0; padding: 16px 0; display: flex; gap: 16px; flex-wrap: wrap; }
+.ask-period legend, .ask-period p, .coverage-summary { color: var(--muted); font-size: 13px; }
+.ask-period label { display: grid; gap: 6px; }
+.ask-period input { padding: 8px; border: 1px solid #dbe3df; border-radius: 8px; }
+.ask-period p { flex-basis: 100%; margin: 0; }
+.coverage-summary { margin-bottom: 20px; line-height: 1.6; }

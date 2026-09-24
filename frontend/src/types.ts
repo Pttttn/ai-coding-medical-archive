@@ -18,8 +18,8 @@ export interface FactSource { factId: string; documentId: string; textVersion: n
 export interface FactRevision { id: string; factId: string; oldValue: unknown; newValue: unknown; changeType: string; createdAt: string }
 export interface HistoryEvent { id: string; action: string; entityType: string; entityId: string; documentId?: string; createdAt: string; payloadBefore?: unknown; payloadAfter?: unknown; before?: unknown; after?: unknown }
 export interface TimelineEvent { id: string; documentId: string; eventType: string; eventDate: string | null; title: string; description: string; category?: string; documentTitle?: string }
-export interface AskSource { documentId?: string; source: string; chunkId: string; position: number; pageNumber?: number; text?: string }
-export interface AskAnswer { answer: string; sources: AskSource[]; insufficientContext?: boolean; trace?: unknown }
+export interface AskSource { documentDate?: string | null; documentId?: string; source: string; chunkId: string; position: number; pageNumber?: number; text?: string }
+export interface AskAnswer { answer: string; sources: AskSource[]; insufficientContext?: boolean; trace?: unknown; reasonCode?: string; warnings?: string[]; coverage?: { eligibleDocuments: number; scannedDocuments: number; complete: boolean; period: { from: string | null; to: string | null; asOf: string } } }
 export interface Consultation { id: string; question: string; content: string; contentHash: string; reviewedHash?: string | null; status: string; warnings: string[]; sourceRefs: {documentId: string; title: string; textVersion: number}[]; contexts?: { text: string }[]; createdAt: string }
 export interface DashboardData {
   totalDocuments: number; processedDocuments: number; failedDocuments: number; pendingDocuments: number;

@@ -30,6 +30,16 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   };
   const note=async(text='LDL 4.7 mmol/L.')=>(await request(app.getHttpServer()).post('/api/documents/note').send({title:'Лабораторная заметка',text,tags:['lipid']}).expect(201)).body;
   const ready=async(text?:string)=>{const d=await note(text);await worker.tick();return (await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;};
+  it('passes document dates and explicit period to archive AI and rejects inverted periods',async()=>{
+    const d=await ready();
+    await db.getRepository(Document).update(d.id,{documentDate:'2026-01-15'});
+    ai.call.mockClear();
+    await request(app.getHttpServer()).post('/api/ask').send({question:'Какие отклонения?',dateFrom:'2025-09-24',dateTo:'2026-09-24'}).expect(201);
+    expect(ai.call).toHaveBeenCalledWith('ask',expect.objectContaining({dateFrom:'2025-09-24',dateTo:'2026-09-24',documents:[{documentId:d.id,documentDate:'2026-01-15'}]}));
+    ai.call.mockClear();
+    await request(app.getHttpServer()).post('/api/ask').send({question:'Какие отклонения?',dateFrom:'2026-09-24',dateTo:'2025-09-24'}).expect(400);
+    expect(ai.call).not.toHaveBeenCalled();
+  });
   beforeAll(async()=>{
     const url=process.env.TEST_DATABASE_URL!;
     if(!new URL(url).pathname.includes('test'))throw new Error('Integration tests require a dedicated test database');
@@ -112,6 +122,20 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   it('never exports local source IDs, filenames or paths',async()=>{const d=await ready();const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context'}).expect(201)).body;const updated=(await request(app.getHttpServer()).patch('/api/consultations/'+c.id).send({content:'Dose 20 mg. '+d.id+' C:\\private\\patient.pdf'}).expect(200)).body;expect(updated.content).not.toContain(d.id);await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:updated.contentHash}).expect(201);expect((await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(200)).text).toBe(updated.content);});
   it('suppresses stale RAG answers when document generation changes even if status is READY',async()=>{const d=await ready();ai.call.mockImplementation(async(route,body)=>{if(route==='ask'){await db.getRepository(Document).increment({id:d.id},'generation',1);}return mock(route,body);});const r=await request(app.getHttpServer()).post('/api/ask').send({question:'What is LDL?'}).expect(201);expect(r.body.insufficientContext).toBe(true);expect(r.body.sources).toHaveLength(0);});
   it('rejects consultation generation if a source changes during privacy pass',async()=>{const d=await ready();ai.call.mockImplementation(async(route,body)=>{if(route==='consultation')await db.getRepository(Document).increment({id:d.id},'generation',1);return mock(route,body);});await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context'}).expect(409);expect(await db.getRepository(Consultation).count()).toBe(0);});
+  it('imports clinical seed idempotently and refuses to mix a different synthetic patient',async()=>{
+    process.env.SEED_ENABLED='true';process.env.SEED_DIR=resolve(__dirname,'../../seed/clinical');
+    try {
+      const seed=new SeedService(db);await seed.onModuleInit();await seed.onModuleInit();
+      expect(await db.getRepository(Document).count()).toBe(32);
+      process.env.SEED_DIR=resolve(__dirname,'../../seed');await seed.onModuleInit();
+      expect(await db.getRepository(Document).count()).toBe(32);
+    }finally{process.env.SEED_ENABLED='false';}
+  },30000);
+  it('never adds synthetic data to a pre-existing personal archive',async()=>{
+    await ready();process.env.SEED_ENABLED='true';process.env.SEED_DIR=resolve(__dirname,'../../seed/clinical');
+    try{await new SeedService(db).onModuleInit();expect(await db.getRepository(Document).count()).toBe(1);}
+    finally{process.env.SEED_ENABLED='false';}
+  });
   it('imports complete synthetic seed idempotently with original TXT and PDF files',async()=>{process.env.SEED_ENABLED='true';process.env.SEED_DIR=resolve(__dirname,'../../seed');try{const seed=new SeedService(db);await seed.onModuleInit();await seed.onModuleInit();const docs=await db.getRepository(Document).find();expect(docs).toHaveLength(36);const original=await app.get(ArchiveServiceForTest()).original(docs.find(d=>d.sourceType==='PDF')!.id);expect((await readFile(original.path)).subarray(0,5).toString()).toBe('%PDF-');const textDoc=docs.find(d=>d.sourceType==='TEXT')!;expect((await app.get(ArchiveServiceForTest()).original(textDoc.id)).mimeType).toContain('text/plain');expect((await request(app.getHttpServer()).get('/api/history?pageSize=100').expect(200)).body.total).toBeGreaterThanOrEqual(41);}finally{process.env.SEED_ENABLED='false';}},30000);
   it('recovers persisted RUNNING jobs after worker restart',async()=>{const d=await note();await db.getRepository(ProcessingJob).update(d.jobId,{status:'RUNNING'});const restarted=new ProcessingService(db,ai as any);process.env.WORKER_ENABLED='true';try{await restarted.onApplicationBootstrap();for(let n=0;n<30;n++){const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});if(job.status==='READY')break;await new Promise(r=>setTimeout(r,30));}expect((await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId})).status).toBe('READY');}finally{await restarted.onApplicationShutdown();process.env.WORKER_ENABLED='false';}});
 });
