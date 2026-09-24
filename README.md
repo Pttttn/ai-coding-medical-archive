@@ -103,6 +103,8 @@ ollama pull nomic-embed-text
 docker compose -f compose.yaml -f compose.host-ollama.yaml up --build
 ```
 
+Для проверенного клинического GPU-профиля установите `qwen3.5:9b` (`ollama pull qwen3.5:9b`) и задайте `LLM_MODEL=qwen3.5:9b` в `.env` перед той же командой Compose. Текущая серия на 9b проверяет вопросы кабинета, тогда как ниже приведены исторические MCP-метрики. Штатный 2b остаётся компактным стартовым профилем; его качество по новым клиническим вопросам следует оценивать отдельно. Большие модели и методы поиска сравниваются в [матрице](docs/evaluation/CLINICAL_ARCHIVE.md).
+
 На Docker Desktop Ollama должен принимать соединения через `host.docker.internal:11434`; при необходимости задайте `OLLAMA_HOST=0.0.0.0:11434` для процесса Ollama и перезапустите его. Не открывайте порт в публичную сеть. На Linux используется `host-gateway`; host firewall должен разрешать только Docker-подсеть. Фиксированный локальный Ollama proxy разрешает inference/metadata, запрещает произвольные URL и загрузку моделей. Реально проверенные среды и режимы перечислены в [VALIDATION](docs/VALIDATION.md).
 
 ### Необязательный режим с llama.cpp (OpenAI-совместимый) сервером в контуре
