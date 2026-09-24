@@ -1,4 +1,4 @@
-import {Injectable,OnModuleInit} from '@nestjs/common';
+import {Injectable,Logger,OnModuleInit} from '@nestjs/common';
 import {DataSource} from 'typeorm';
 import {copyFile,mkdir,readFile} from 'node:fs/promises';
 import {basename,resolve,extname} from 'node:path';
@@ -12,9 +12,16 @@ export class SeedService implements OnModuleInit {
   constructor(private readonly db:DataSource){}
   async onModuleInit() {
     if(process.env.SEED_ENABLED!=='true')return;
-    const root=resolve(process.env.SEED_DIR??'../seed');
+    const root=resolve(process.env.SEED_DIR??'../seed/clinical');
     const records=JSON.parse(await readFile(safeStoragePath(root,'records.json'),'utf8')) as any[];
     if(!Array.isArray(records))throw new Error('Invalid synthetic seed manifest');
+    const existing=await this.db.getRepository(Document).find({select:['id','isSeed'],withDeleted:true});
+    const incomingIds=new Set(records.map(r=>r.id));
+    if(existing.some(d=>d.isSeed&&!incomingIds.has(d.id)) ||
+       (existing.length>0&&!existing.some(d=>d.isSeed&&incomingIds.has(d.id)))) {
+      Logger.warn('Synthetic seed skipped: existing archive belongs to another dataset. Use a separate Compose project.','SeedService');
+      return;
+    }
     const uploads=resolve(process.env.UPLOAD_DIR??'data/uploads');await mkdir(uploads,{recursive:true});
     for(const r of records) {
       if(await this.db.getRepository(Document).existsBy({id:r.id}))continue;
