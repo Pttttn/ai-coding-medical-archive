@@ -1,0 +1,827 @@
+{
+  "kind": "aggregate-only real API results",
+  "model": "qwen3.5:9b",
+  "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+  "embeddingDigest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+  "environment": "Windows host Ollama, RTX 5080, Docker Linux application, shared GPU",
+  "phases": [
+    {
+      "phase": "initial",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "bfb86c85bed12ac4c1b56f1c4a8b058ffdabbac204c5d0ddb7085cf14c576a2c",
+      "runs": [
+        {
+          "run": 1,
+          "passed": 7,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 26.12,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "3749a8f97b234fa3125346de3bd6ade15b623bf12ba6145eda1a01903cf5842c"
+            },
+            {
+              "id": "diabetes",
+              "passed": false,
+              "seconds": 15.16,
+              "sourceCount": 16,
+              "complete": false,
+              "failedBatches": 1,
+              "answerSha256": "1e944ae77910381fcb4560337dd21f27c316f53c8d640e270e92e84a9b03a6fc"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 14.69,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "47979e298ae7d274ba15add537f5667df2744e689b17f0f046f56c7243f89624"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 14.33,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b2de887023ee369e1bfe3d7ff1a0720f716da66889ca1553704576e704ca2821"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.91,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "659a23c1d70bbeed78f9ac9ecaa6bc8774783e9240583f68b86122cdc00d02e4"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 5.83,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 4.28,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.67,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "passed": 7,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 29.45,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "3749a8f97b234fa3125346de3bd6ade15b623bf12ba6145eda1a01903cf5842c"
+            },
+            {
+              "id": "diabetes",
+              "passed": false,
+              "seconds": 14.83,
+              "sourceCount": 16,
+              "complete": false,
+              "failedBatches": 1,
+              "answerSha256": "1e944ae77910381fcb4560337dd21f27c316f53c8d640e270e92e84a9b03a6fc"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 18.78,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "47979e298ae7d274ba15add537f5667df2744e689b17f0f046f56c7243f89624"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 22.25,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b2de887023ee369e1bfe3d7ff1a0720f716da66889ca1553704576e704ca2821"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.91,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "659a23c1d70bbeed78f9ac9ecaa6bc8774783e9240583f68b86122cdc00d02e4"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 5.61,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 4.06,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.62,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        },
+        {
+          "run": 3,
+          "passed": 7,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 18.05,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "3749a8f97b234fa3125346de3bd6ade15b623bf12ba6145eda1a01903cf5842c"
+            },
+            {
+              "id": "diabetes",
+              "passed": false,
+              "seconds": 14.61,
+              "sourceCount": 16,
+              "complete": false,
+              "failedBatches": 1,
+              "answerSha256": "1e944ae77910381fcb4560337dd21f27c316f53c8d640e270e92e84a9b03a6fc"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 14.24,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "47979e298ae7d274ba15add537f5667df2744e689b17f0f046f56c7243f89624"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 13.86,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b2de887023ee369e1bfe3d7ff1a0720f716da66889ca1553704576e704ca2821"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.58,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "659a23c1d70bbeed78f9ac9ecaa6bc8774783e9240583f68b86122cdc00d02e4"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 5.58,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 4.0,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.47,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        }
+      ],
+      "stableAnswerCount": 8
+    },
+    {
+      "phase": "split-retry",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "bfb86c85bed12ac4c1b56f1c4a8b058ffdabbac204c5d0ddb7085cf14c576a2c",
+      "runs": [
+        {
+          "run": 1,
+          "passed": 7,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 18.66,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "324ce04b730171350072f5d5c2392f1f37515a1256ef4199d6022f0e07412cde"
+            },
+            {
+              "id": "diabetes",
+              "passed": false,
+              "seconds": 14.38,
+              "sourceCount": 16,
+              "complete": false,
+              "failedBatches": 1,
+              "answerSha256": "e0e28d13a9d3396770224336689ebac0c6642b6fbb7ac21ba33d8422b72f309d"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 14.02,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "8eed3feddfb692622e92cc270c6bfe5465b9976d7344fac7faa28aa799d8fd7c"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 13.69,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b14de04f149581ff1448acc7d2e42372e52129006d72b6c6f14705ce33f985a9"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 10.03,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "0666b8cc9e423ead5c551ba8c67df95c7170d1900a298bfdcb85e43564016a0d"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 9.61,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 3.97,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.52,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "passed": 7,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 17.76,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "324ce04b730171350072f5d5c2392f1f37515a1256ef4199d6022f0e07412cde"
+            },
+            {
+              "id": "diabetes",
+              "passed": false,
+              "seconds": 14.3,
+              "sourceCount": 16,
+              "complete": false,
+              "failedBatches": 1,
+              "answerSha256": "e0e28d13a9d3396770224336689ebac0c6642b6fbb7ac21ba33d8422b72f309d"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 13.99,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "8eed3feddfb692622e92cc270c6bfe5465b9976d7344fac7faa28aa799d8fd7c"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 13.88,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b14de04f149581ff1448acc7d2e42372e52129006d72b6c6f14705ce33f985a9"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.61,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "0666b8cc9e423ead5c551ba8c67df95c7170d1900a298bfdcb85e43564016a0d"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 16.33,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 5.36,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.47,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        },
+        {
+          "run": 3,
+          "passed": 7,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 22.47,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "324ce04b730171350072f5d5c2392f1f37515a1256ef4199d6022f0e07412cde"
+            },
+            {
+              "id": "diabetes",
+              "passed": false,
+              "seconds": 13.03,
+              "sourceCount": 16,
+              "complete": false,
+              "failedBatches": 1,
+              "answerSha256": "e0e28d13a9d3396770224336689ebac0c6642b6fbb7ac21ba33d8422b72f309d"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 17.12,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "8eed3feddfb692622e92cc270c6bfe5465b9976d7344fac7faa28aa799d8fd7c"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 17.95,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b14de04f149581ff1448acc7d2e42372e52129006d72b6c6f14705ce33f985a9"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.69,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "0666b8cc9e423ead5c551ba8c67df95c7170d1900a298bfdcb85e43564016a0d"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 5.42,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 4.02,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.48,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        }
+      ],
+      "stableAnswerCount": 8
+    },
+    {
+      "phase": "fixed-quoting-8-cases",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "787b59e2d71d74aebdbfc3f27f60476cc09141b41b8518839fa16bda27708112",
+      "runs": [
+        {
+          "run": 1,
+          "passed": 8,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 22.51,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "324ce04b730171350072f5d5c2392f1f37515a1256ef4199d6022f0e07412cde"
+            },
+            {
+              "id": "diabetes",
+              "passed": true,
+              "seconds": 20.69,
+              "sourceCount": 17,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "561bf06bb108fd53652b052dd39745f24bb25ccf6872581cee1bf181a553e246"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 14.17,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "8eed3feddfb692622e92cc270c6bfe5465b9976d7344fac7faa28aa799d8fd7c"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 13.83,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b14de04f149581ff1448acc7d2e42372e52129006d72b6c6f14705ce33f985a9"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.55,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "0666b8cc9e423ead5c551ba8c67df95c7170d1900a298bfdcb85e43564016a0d"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 5.55,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 3.94,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.45,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "passed": 8,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 17.77,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "324ce04b730171350072f5d5c2392f1f37515a1256ef4199d6022f0e07412cde"
+            },
+            {
+              "id": "diabetes",
+              "passed": true,
+              "seconds": 18.06,
+              "sourceCount": 17,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "561bf06bb108fd53652b052dd39745f24bb25ccf6872581cee1bf181a553e246"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 24.91,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "8eed3feddfb692622e92cc270c6bfe5465b9976d7344fac7faa28aa799d8fd7c"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 18.48,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b14de04f149581ff1448acc7d2e42372e52129006d72b6c6f14705ce33f985a9"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.53,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "0666b8cc9e423ead5c551ba8c67df95c7170d1900a298bfdcb85e43564016a0d"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 5.51,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 4.02,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.53,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        },
+        {
+          "run": 3,
+          "passed": 8,
+          "total": 8,
+          "results": [
+            {
+              "id": "chronic",
+              "passed": true,
+              "seconds": 22.02,
+              "sourceCount": 22,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "324ce04b730171350072f5d5c2392f1f37515a1256ef4199d6022f0e07412cde"
+            },
+            {
+              "id": "diabetes",
+              "passed": true,
+              "seconds": 13.67,
+              "sourceCount": 17,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "561bf06bb108fd53652b052dd39745f24bb25ccf6872581cee1bf181a553e246"
+            },
+            {
+              "id": "cholesterol",
+              "passed": true,
+              "seconds": 14.08,
+              "sourceCount": 14,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "8eed3feddfb692622e92cc270c6bfe5465b9976d7344fac7faa28aa799d8fd7c"
+            },
+            {
+              "id": "abnormal-year",
+              "passed": true,
+              "seconds": 13.78,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b14de04f149581ff1448acc7d2e42372e52129006d72b6c6f14705ce33f985a9"
+            },
+            {
+              "id": "head-injury",
+              "passed": true,
+              "seconds": 8.48,
+              "sourceCount": 8,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "0666b8cc9e423ead5c551ba8c67df95c7170d1900a298bfdcb85e43564016a0d"
+            },
+            {
+              "id": "metformin",
+              "passed": true,
+              "seconds": 5.48,
+              "sourceCount": 5,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+            },
+            {
+              "id": "allergy",
+              "passed": true,
+              "seconds": 3.94,
+              "sourceCount": 1,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+            },
+            {
+              "id": "missing",
+              "passed": true,
+              "seconds": 3.45,
+              "sourceCount": 0,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+            }
+          ]
+        }
+      ],
+      "stableAnswerCount": 8
+    },
+    {
+      "phase": "original-wording-2-cases",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "538c4a30fcd7a5250be5a7a1f5f28f4298473d3967947535958ec79c079c23a9",
+      "runs": [
+        {
+          "run": 1,
+          "passed": 2,
+          "total": 2,
+          "results": [
+            {
+              "id": "illnesses-plain",
+              "passed": true,
+              "seconds": 19.48,
+              "sourceCount": 23,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "a88badb6e6a05d7b6702562481ad06c31d8e189ad8b3052f457ebe4529714159"
+            },
+            {
+              "id": "abnormal-plain",
+              "passed": true,
+              "seconds": 15.2,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b8d3afd64f9a0983353380208dee3e25402b282e735ddeaab822ca2a7b5fa81b"
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "passed": 2,
+          "total": 2,
+          "results": [
+            {
+              "id": "illnesses-plain",
+              "passed": true,
+              "seconds": 23.45,
+              "sourceCount": 23,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "a88badb6e6a05d7b6702562481ad06c31d8e189ad8b3052f457ebe4529714159"
+            },
+            {
+              "id": "abnormal-plain",
+              "passed": true,
+              "seconds": 20.16,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b8d3afd64f9a0983353380208dee3e25402b282e735ddeaab822ca2a7b5fa81b"
+            }
+          ]
+        },
+        {
+          "run": 3,
+          "passed": 2,
+          "total": 2,
+          "results": [
+            {
+              "id": "illnesses-plain",
+              "passed": true,
+              "seconds": 24.55,
+              "sourceCount": 23,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "a88badb6e6a05d7b6702562481ad06c31d8e189ad8b3052f457ebe4529714159"
+            },
+            {
+              "id": "abnormal-plain",
+              "passed": true,
+              "seconds": 15.77,
+              "sourceCount": 11,
+              "complete": true,
+              "failedBatches": 0,
+              "answerSha256": "b8d3afd64f9a0983353380208dee3e25402b282e735ddeaab822ca2a7b5fa81b"
+            }
+          ]
+        }
+      ],
+      "stableAnswerCount": 2
+    }
+  ]
+}
