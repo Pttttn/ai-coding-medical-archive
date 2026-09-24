@@ -63,3 +63,16 @@
 - [x] Десять клинических API-вопросов проверены по три раза на 9b, неудачные предварительные серии сохранены.
 - [x] Стенд сравнения моделей и BM25/dense/RRF/обзора/инструментов; метрики содержания отделены от охвата.
 - [x] Первичный отсев 2B/4B/9B/Gemma 12B, сравнение пяти методов; 4B и серверная Q8 27B — 10/10 × 3 на новых индексах. Агрегаты опубликованы, остановленные CPU-offload 27B и thinking Gemma явно отмечены неполными.
+
+
+## План следующего этапа — ingestion прежде tools/agent, 25 сентября 2026
+
+- [x] Сверить предложение с текущим кодом и оформить [план pipeline](docs/MEDICAL_DOCUMENT_PIPELINE_PLAN.md) и [следующих слоёв](docs/MEDICAL_KNOWLEDGE_PLAN.md). Это завершение проектирования, не реализации.
+- [ ] P0: original-upload synthetic fixtures + отдельный gold/held-out; baseline реального ingestion без предвычисленных фактов.
+- [ ] P1: IR schema/spans/normalization map, processing revision и явная совместимая миграция.
+- [ ] P2a: LAB_REPORT — строки/единицы/референсы/даты, валидация и измерение полноты.
+- [ ] P2b: VISIT — секции, subject/assertion/medication events, отрицания и временные роли.
+- [ ] P3: facts/provenance/chunks из одной IR; staging/activation, crash/retry/reprocess, UI качества/источника.
+- [ ] P4: три полные реальные серии ingestion→QA, тесты существующей/пустой БД и чистый Docker; default только после gates.
+- [ ] P5: предметные read-only tools и router, общий snapshot и coverage, полная пагинация.
+- [ ] P6: ограниченный агент и отдельный reference corpus (2–5 разделов), manifest лицензий/версий, раздельные источники в ответе; сравнительная оценка пользы.
