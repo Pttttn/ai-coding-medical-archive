@@ -44,6 +44,8 @@ def main():
     args = parser.parse_args()
     if args.runs < 1:
         parser.error('--runs must be positive')
+    if args.output.exists():
+        parser.error('Use a new output path to retain every attempt.')
     seed_bytes = (ROOT / 'seed/clinical/records.json').read_text(encoding='utf-8').encode()
     seed_ids = {r['id'] for r in json.loads(seed_bytes)}
     docs = request(args.base, '/documents?pageSize=100')['items']
@@ -57,7 +59,7 @@ def main():
         cases = [c for c in cases if c['id'] in args.cases]
     report = {'createdAt': datetime.now(timezone.utc).isoformat(), 'seedSha256': hashlib.sha256(seed_bytes).hexdigest(),
               'questionsSha256': hashlib.sha256(cases_bytes).hexdigest(), 'health': request(args.base, '/health'),
-              'kind': 'real-private-archive-api', 'selectedCases': [c['id'] for c in cases], 'runs': []}
+              'plannedRuns': args.runs, 'kind': 'real-private-archive-api', 'selectedCases': [c['id'] for c in cases], 'runs': []}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     for run in range(1, args.runs + 1):
         rows = []

@@ -24,6 +24,14 @@ TOOLS = [
 ]
 
 
+class BenchmarkProvider(Ollama):
+    generation_calls = 0
+
+    def json(self, task, payload, schema=None):
+        self.generation_calls += 1
+        return super().json(task, payload, schema)
+
+
 class ExperimentalCorpus:
     def __init__(self, corpus, provider, strategy, records):
         self.corpus, self.provider, self.strategy = corpus, provider, strategy
@@ -58,6 +66,7 @@ class ExperimentalCorpus:
                        'options': {'temperature': 0, 'seed': 42, 'num_ctx': 16384, 'num_predict': 768}}
             if request['model'].startswith('qwen3'):
                 request['think'] = False
+            self.provider.generation_calls += 1
             response = self.provider.client.post('/api/chat', json=request)
             response.raise_for_status()
             envelope = response.json()
@@ -89,11 +98,23 @@ class ExperimentalCorpus:
         return list(selected.values())
 
 
+def build_synthetic_index(settings, provider, records):
+    corpus = Corpus('archive', settings, provider)
+    seed_ids = {r['id'] for r in records}
+    if any(d.metadata['documentId'] not in seed_ids for d in corpus.documents):
+        raise SystemExit('Unexpected non-synthetic document in evaluation index.')
+    for r in records:
+        corrections = [{**f, **f['correction'], 'id': r['id'] + ':' + str(i), 'reviewStatus': 'CORRECTED'} for i, f in enumerate(r['facts']) if 'correction' in f]
+        corpus.index_document(r['id'], r['title'], 1, r['text'], [Page(**p) for p in r['pages']], corrections)
+    return corpus
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--models', nargs='+', default=['qwen3.5:2b', 'qwen3.5:4b', 'qwen3.5:9b', 'qwen3.5:27b'])
     parser.add_argument('--strategies', nargs='+', choices=['scan', 'hybrid12', 'bm2512', 'dense12', 'tools'], default=['scan', 'hybrid12'])
     parser.add_argument('--runs', type=int, default=1)
+    parser.add_argument('--fresh-index-per-run', action='store_true')
     parser.add_argument('--ollama', default='http://127.0.0.1:11434')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -106,25 +127,24 @@ def main():
     records, cases = json.loads(seed_bytes), json.loads(cases_bytes)['cases']
     settings = Settings(_env_file=None, ollama_base_url=args.ollama, llm_model=args.models[0], llm_timeout=300,
                         data_dir=ROOT / '.local-evaluation/clinical-matrix-index')
-    provider = Ollama(settings)
+    provider = BenchmarkProvider(settings)
     available = provider.client.get('/api/tags').json()['models']
     names = {m['name'] for m in available}
     if any(m not in names for m in args.models):
         raise SystemExit('Requested model unavailable; pull it explicitly first.')
-    corpus = Corpus('archive', settings, provider)
     seed_ids = {r['id'] for r in records}
-    if any(d.metadata['documentId'] not in seed_ids for d in corpus.documents):
-        raise SystemExit('Unexpected non-synthetic document in evaluation index.')
-    for r in records:
-        corrections = [{**f, **f['correction'], 'id': r['id'] + ':' + str(i), 'reviewStatus': 'CORRECTED'} for i, f in enumerate(r['facts']) if 'correction' in f]
-        corpus.index_document(r['id'], r['title'], 1, r['text'], [Page(**p) for p in r['pages']], corrections)
+    corpus = None if args.fresh_index_per_run else build_synthetic_index(settings, provider, records)
     report = {'createdAt': datetime.now(timezone.utc).isoformat(), 'kind': 'synthetic-direct-engine-matrix-not-API',
               'seedSha256': hashlib.sha256(seed_bytes).hexdigest(), 'questionsSha256': hashlib.sha256(cases_bytes).hexdigest(),
               'modelDigests': {m['name']: m['digest'] for m in available if m['name'] in args.models or m['name'].startswith('nomic-embed-text')},
+              'plannedRuns': args.runs, 'selectedCases': [c['id'] for c in cases],
+              'plannedProfiles': [{'model': m, 'strategy': s} for m in args.models for s in args.strategies],
               'referenceDate': '2026-09-24', 'environment': {'platform': platform.platform(), 'python': platform.python_version()},
-              'parameters': {'temperature': 0, 'seed': settings.llm_seed, 'num_ctx': 16384, 'num_predict': settings.archive_evidence_max_tokens, 'batchChunks': settings.archive_batch_chunks, 'scanLimit': settings.archive_scan_chunks},
+              'parameters': {'temperature': 0, 'seed': settings.llm_seed, 'num_ctx': 16384, 'num_predict': settings.archive_evidence_max_tokens, 'batchChunks': settings.archive_batch_chunks, 'scanLimit': settings.archive_scan_chunks, 'requestTimeoutSeconds': settings.llm_timeout},
               'engineSha256': hashlib.sha256((ROOT / 'ai-service/medical_ai/archive_qa.py').read_text(encoding='utf-8').encode()).hexdigest(),
-              'index': corpus.status(), 'profiles': []}
+              'providerMetadata': getattr(provider, 'benchmark_metadata', None),
+              'indexMode': 'fresh-per-run' if args.fresh_index_per_run else 'reused',
+              'index': corpus.status() if corpus else None, 'profiles': []}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     for model in args.models:
         settings.llm_model = model
@@ -133,16 +153,26 @@ def main():
             report['profiles'].append(profile)
             for run in range(1, args.runs + 1):
                 rows = []
-                profile['runs'].append({'run': run, 'results': rows})
+                if args.fresh_index_per_run:
+                    identity = hashlib.sha256(f'{args.output.resolve()}:{model}:{strategy}:{run}'.encode()).hexdigest()[:16]
+                    directory = ROOT / '.local-evaluation' / ('clinical-fresh-' + identity)
+                    if directory.exists():
+                        raise SystemExit('Fresh index already exists; choose a new output path.')
+                    run_settings = settings.model_copy(update={'data_dir': directory})
+                    run_corpus = build_synthetic_index(run_settings, provider, records)
+                else:
+                    run_corpus = corpus
+                profile['runs'].append({'run': run, 'results': rows, 'index': run_corpus.status()})
                 for case in cases:
                     started = time.monotonic()
-                    experimental = ExperimentalCorpus(corpus, provider, strategy, records)
+                    provider.generation_calls = 0
+                    experimental = ExperimentalCorpus(run_corpus, provider, strategy, records)
                     try:
                         answer = ArchiveRAG(experimental, provider, settings).ask(case['question'], documents=[{'documentId': r['id'], 'documentDate': r['documentDate']} for r in records], date_from=case.get('dateFrom'), date_to=case.get('dateTo'), today=date(2026, 9, 24))
                         row = assess(case, answer, seed_ids)
                     except Exception as exc:
                         row = {'id': case['id'], 'passed': False, 'evidencePass': False, 'error': type(exc).__name__}
-                    row.update(seconds=round(time.monotonic() - started, 2), tools=experimental.tool_calls)
+                    row.update(seconds=round(time.monotonic() - started, 2), tools=experimental.tool_calls, generationCalls=provider.generation_calls)
                     rows.append(row)
                     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
                     print(f"{model} {strategy} run={run} {case['id']} evidence={row['evidencePass']} complete={row.get('coverageComplete')} seconds={row['seconds']}", flush=True)
