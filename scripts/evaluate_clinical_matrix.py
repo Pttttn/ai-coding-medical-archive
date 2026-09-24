@@ -24,6 +24,18 @@ TOOLS = [
 ]
 
 
+class NoThinkingClient:
+    """Explicit evaluation override; use only with models supporting think=false."""
+    def __init__(self, client):
+        self.client = client
+    def __getattr__(self, name):
+        return getattr(self.client, name)
+    def post(self, url, **kwargs):
+        if url == '/api/chat' and 'json' in kwargs:
+            kwargs['json'] = {**kwargs['json'], 'think': False}
+        return self.client.post(url, **kwargs)
+
+
 class BenchmarkProvider(Ollama):
     generation_calls = 0
 
@@ -115,6 +127,7 @@ def main():
     parser.add_argument('--strategies', nargs='+', choices=['scan', 'hybrid12', 'bm2512', 'dense12', 'tools'], default=['scan', 'hybrid12'])
     parser.add_argument('--runs', type=int, default=1)
     parser.add_argument('--fresh-index-per-run', action='store_true')
+    parser.add_argument('--no-thinking', action='store_true', help='Explicit think=false for models supporting it')
     parser.add_argument('--ollama', default='http://127.0.0.1:11434')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -128,6 +141,8 @@ def main():
     settings = Settings(_env_file=None, ollama_base_url=args.ollama, llm_model=args.models[0], llm_timeout=300,
                         data_dir=ROOT / '.local-evaluation/clinical-matrix-index')
     provider = BenchmarkProvider(settings)
+    if args.no_thinking:
+        provider.client = NoThinkingClient(provider.client)
     available = provider.client.get('/api/tags').json()['models']
     names = {m['name'] for m in available}
     if any(m not in names for m in args.models):
@@ -140,7 +155,7 @@ def main():
               'plannedRuns': args.runs, 'selectedCases': [c['id'] for c in cases],
               'plannedProfiles': [{'model': m, 'strategy': s} for m in args.models for s in args.strategies],
               'referenceDate': '2026-09-24', 'environment': {'platform': platform.platform(), 'python': platform.python_version()},
-              'parameters': {'temperature': 0, 'seed': settings.llm_seed, 'num_ctx': 16384, 'num_predict': settings.archive_evidence_max_tokens, 'batchChunks': settings.archive_batch_chunks, 'scanLimit': settings.archive_scan_chunks, 'requestTimeoutSeconds': settings.llm_timeout},
+              'parameters': {'thinkingOverride': False if args.no_thinking else 'provider-default (Qwen disabled)', 'temperature': 0, 'seed': settings.llm_seed, 'num_ctx': 16384, 'num_predict': settings.archive_evidence_max_tokens, 'batchChunks': settings.archive_batch_chunks, 'scanLimit': settings.archive_scan_chunks, 'requestTimeoutSeconds': settings.llm_timeout},
               'engineSha256': hashlib.sha256((ROOT / 'ai-service/medical_ai/archive_qa.py').read_text(encoding='utf-8').encode()).hexdigest(),
               'providerMetadata': getattr(provider, 'benchmark_metadata', None),
               'indexMode': 'fresh-per-run' if args.fresh_index_per_run else 'reused',

@@ -26,7 +26,9 @@ def aggregate(profile):
             by_case.setdefault(row['id'], []).append(row)
         runs.append({'run': run['run'], 'total': len(rows), 'passed': sum(r['passed'] for r in rows),
                      'evidencePass': sum(r['evidencePass'] for r in rows),
-                     'seconds': round(sum(r['seconds'] for r in rows), 2), 'results': rows})
+                     'seconds': round(sum(r['seconds'] for r in rows), 2),
+                     'index': {k: run['index'][k] for k in ('files', 'chunks', 'embeddingModel', 'chunkSize', 'chunkOverlap') if k in run.get('index', {})},
+                     'results': rows})
     return {'model': profile.get('model'), 'strategy': profile.get('strategy'), 'runs': runs,
             'stableEvidenceResults': sum(len({r['evidencePass'] for r in rows}) == 1 and len(rows) == len(runs) for rows in by_case.values()),
             'stableAnswers': sum(len({r['answerSha256'] for r in rows}) == 1 and len(rows) == len(runs) and all('error' not in r for r in rows) for rows in by_case.values()),

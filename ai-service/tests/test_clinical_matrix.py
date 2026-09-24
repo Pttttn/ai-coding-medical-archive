@@ -69,3 +69,14 @@ def test_ssh_transport_keeps_key_remote_and_preserves_output_limits(monkeypatch)
     assert payload['messages'][0]['content'] == 'synthetic KEY_PATH MODEL_PORT PAYLOAD'
     assert payload['max_tokens'] == 4096
     assert payload['response_format']['type'] == 'json_schema'
+
+def test_thinking_override_applies_to_generation_and_tools_only():
+    from evaluate_clinical_matrix import NoThinkingClient
+    sent = []
+    client = NoThinkingClient(SimpleNamespace(post=lambda url, **kwargs: sent.append((url, kwargs['json']))))
+    original = {'model': 'gemma', 'messages': [], 'think': True}
+    client.post('/api/chat', json=original)
+    client.post('/api/embed', json={'input': ['synthetic']})
+    assert sent[0][1]['think'] is False
+    assert original['think'] is True
+    assert 'think' not in sent[1][1]
