@@ -192,3 +192,6 @@ P0 → P1 → P2a → P2b → P3 → P4; затем P5 → P6. Выписка/с
 [Source IR и original-upload baseline](evaluation/INGESTION_BASELINE.md): реализована сохраняемая стадия SOURCE_ONLY с UTF-8 mappings, JSON Schema, приватным API и миграцией. P0/P1 целиком не закрыты: нужны held-out corpus, полный recipe и независимое сохранение промежуточных стадий. Медицинские аннотации и facts/chunks из IR относятся к следующим шагам.
 
 [Следующий срез LAB](evaluation/lab-rows-v1/README.md): source-backed annotation и fact projection, UI, 120/120 × 3 на замороженном наборе. Это только поддержанные лабораторные грамматики; VISIT, полный P0/P1 и единые чанки/activation остаются открытыми.
+
+
+[Первый срез VISIT](evaluation/visit-assertions-v1/README.md): opt-in clinical-v1, модельная разметка субъектов/статусов/лекарственных событий/временных ролей, source/context spans и консервативная проекция в старые факты. Полная clinical activity, нормализация календарных ролей, единые chunks/processing revision/activation и gates остаются открытыми; достигнутые результаты отдельно от плана.

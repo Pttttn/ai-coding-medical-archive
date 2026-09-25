@@ -100,3 +100,11 @@
 - [x] Opt-in lab-rows-v1: typed decimal/comparator/unit/referenceRaw, роли дат, source spans/hash, проверенная fact projection и UI исходных строк.
 - [x] Три настоящих обработки: development 80/80 и held-out 40/40 каждый раз, 0 FP/FN/semantic drift; baseline и неудачные попытки сохранены. [Протокол](docs/evaluation/lab-rows-v1/README.md).
 - [ ] Довести P0/P2: VISIT subject/assertion/medication events, дополнительные независимые макеты/ручная проверка gold, сложные LAB/reference/date scopes; full recipe/checkpoints и общая facts/chunks activation P3.
+
+
+## Первый рабочий срез P2b — клинические утверждения, 25 сентября 2026
+
+- [x] Зафиксировать 12 синтетических VISIT / 84 утверждения, development 8/56 и held-out 4/28; gold не поступает модели, независимой медицинской проверки пока нет.
+- [x] Opt-in clinical-v1: subject/assertion/medicationState/temporality, точные source/context spans, проверенная legacy projection и приватная вкладка источника.
+- [x] Проверить сохранность review при reprocess, скрытие старого артефакта и отказ до публикации при несогласованной проекции; общие Python/TypeScript contract tests.
+- [ ] Закрыть P2b gates и полный P0–P4: отдельная clinical activity/календарные роли, более широкие разделы/макеты, независимая проверка gold, recipe/checkpoints/activation; [текущие реальные результаты](docs/evaluation/visit-assertions-v1/README.md).
