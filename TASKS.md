@@ -91,7 +91,7 @@
 - [x] Original-upload baseline текущих 32 синтетических оригиналов без seed: 32 READY/IR, 140 source-backed facts, строгое частичное сопоставление 30/108. Не held-out, один прогон; [ограничения и результаты](docs/evaluation/INGESTION_BASELINE.md).
 - [x] SOURCE_ONLY IR: общая JSON Schema, UTF-8 spans/mappings, Python/TypeScript проверка, immutable storage migration и приватный source API.
 - [x] PostgreSQL-проверки upgrade/idempotency/immutable IR/page-version changes; AI регрессия.
-- [ ] Закрыть оставшиеся P0/P1: независимый held-out набор, полный recipe и сохранение стадий до LLM; затем P2 LAB/VISIT и единые проекции P3.
+- [ ] Закрыть оставшийся P0: независимый held-out набор (полный recipe и стадия разбора до LLM сделаны в [срезе P1](#срез-p1-стадия-разбора-до-llm-и-полный-recipe-25-сентября-2026)); затем P2 LAB/VISIT и единые проекции P3.
 
 - [ ] P4: проверить автоматическое восстановление маршрутизации/health ingress после изменения IP backend/AI; сейчас после выборочного пересоздания требуется документированный restart frontend/gateway.
 
@@ -144,6 +144,14 @@
 - [x] Read-only локальный evaluator: crop таблицы в памяти, vision-модель без текста парсера, JSON-схема, отчёт без значений/путей и без изменения фактов.
 - [x] Две локальные vision-модели, по три запуска на пяти приватных PDF и отдельной синтетике; [результаты и ограничения](docs/evaluation/lab-vision-audit-v1/README.md). Реальные файлы не добавлены в Git или архив.
 - [ ] Независимый held-out набор и ручной gold; оценить критические ошибки/ложные тревоги, затем решать вопрос о версионном audit-artifact и статусе review в ingestion.
+
+## Срез P1: стадия разбора до LLM и полный recipe, 25 сентября 2026
+
+- [x] `/internal/parse` строит source IR без модели; backend сохраняет IR, TextRevision и parse recipe до извлечения и связывает их с задачей.
+- [x] `/internal/process` извлекает из сохранённого IR, повторно проверяя целостность; ответ, не совпадающий с IR, отклоняется до записи фактов.
+- [x] Полный `processingRecipe` (путь обработки, parser, модель и digest, декодирование, версии аннотации/схемы, настройки индекса) с hash, общим для Python и TypeScript; `recipeHash` и `sourceIrRevisionId` в ExtractionRun; явная миграция.
+- [x] Повтор задачи после сбоя модели или перезапуска не разбирает оригинал снова; живая сверка Python↔NestJS на PostgreSQL: 3 попытки, 1 разбор на документ, факты не задвоены.
+- [ ] P0: независимый held-out corpus для baseline; P3: `processing_revisions`, активация facts/chunks одной ревизией, staging индекса и подтверждение настроек индекса индексатором; выбор режима reprocess в UI.
 
 ## Мультимодальная проверка и OCR, 25 сентября 2026
 

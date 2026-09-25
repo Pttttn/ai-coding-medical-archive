@@ -21,7 +21,8 @@ Document хранит метаданные, статус, SHA256 и soft delete.
 Публичный API: /api; Swagger: /docs. Имена полей JSON — camelCase. Пагинация `{items,page,pageSize,total}`. Основные маршруты соответствуют §19 спецификации. Ошибка `{message,code?,statusCode}`. ID — UUID. Даты — ISO8601 или null. Document: `{id,title,documentType,documentDate,sourceType,status,summary,tags:string[],createdAt,updatedAt,deletedAt,text?,textVersion?,facts?}`. Списки документов принимают page/pageSize/q/type/tag/status/from/to/deleted/sort/order.
 
 Внутренний Python API (порт 8001, заголовок X-Internal-Token, отдельный от MCP):
-- POST /internal/process: `{documentId,version,title,text?,filePath?}` → `{text,pages:[{pageNumber,text}],extraction:{documentType,documentDate,summary,tags,facts:[{type,name,valueText,valueNumber,unit,eventDate,assertionStatus,confidence,provenance:{page,sourceText}}]},warnings,model,promptVersion,schemaVersion,parserVersion}`.
+- POST /internal/parse: `{documentId,version,title,text?|filePath?}` → `{sourceIR,text,pages,warnings,parserVersion,parseRecipe}`; детерминированная стадия без вызова модели.
+- POST /internal/process: `{documentId,version,title,text?|filePath?|sourceIR?}` → `{text,pages:[{pageNumber,text}],extraction:{documentType,documentDate,summary,tags,facts:[{type,name,valueText,valueNumber,unit,eventDate,assertionStatus,confidence,provenance:{page,sourceText}}]},warnings,model,promptVersion,schemaVersion,parserVersion}`.
 - POST /internal/index: `{documentId,title,version,text,pages?,corrections?:[{id,name,valueText,valueNumber,unit,reviewStatus}]}` → статистика.
 - POST /internal/remove: `{documentId}` → `{ok:true}`.
 - POST /internal/ask: `{question,documentIds?:string[]}` → `{answer,sources:[{documentId?,source,chunkId,position,pageNumber?,text?}],trace?,insufficientContext?}`.
@@ -93,6 +94,14 @@ MCP передаёт очищенный результат подключённ�
 `/internal/process` дополнен опциональным `sourceIR` стадии `SOURCE_ONLY`: raw pages, UTF-8 spans, карта нормализации и два hash. Backend проверяет Python/TypeScript контракт и сохраняет неизменяемую запись `source_ir_revisions`, связанную с TextRevision. Идемпотентность по `(textRevisionId, irHash)`, UPDATE запрещён миграционным триггером; изменение страниц без изменения текста тоже создаёт новую TextRevision. Приватный `GET /api/documents/:id/source-ir` выдаёт IR текущей версии, legacy без IR возвращает 404. MCP не меняется.
 
 Это пока источник для дальнейшего pipeline: extractor/chunker продолжают текущую обработку, независимые checkpoints и медицинские аннотации ещё не реализованы. [Фактический контракт и baseline](docs/evaluation/INGESTION_BASELINE.md).
+
+## Стадия разбора до LLM и полный recipe (P1), 25 сентября 2026
+
+Worker выполняет PROCESS в две стадии. Сначала `/internal/parse` строит `SOURCE_ONLY` IR без модели; backend проверяет IR и `parseRecipe` (версия recipe, parser, source IR, normalizer и hash) и одной транзакцией сохраняет TextRevision, запись `source_ir_revisions` с recipe и ссылку `processing_jobs.sourceIrRevisionId`. Затем `/internal/process` получает сохранённый IR, заново проверяет его целостность и принадлежность документу и только после этого вызывает extractor; повторного разбора оригинала нет. Результат должен быть проекцией того же IR (текст, `sourceHash`, `irHash`), иначе `SOURCE_IR_INVALID`.
+
+`processingRecipe` описывает весь запуск: профиль и фактический путь (`lab`, `visit`, `visit-review`, `legacy`), parse recipe, модель и digest, параметры декодирования, версии аннотации/проекции/схемы фактов, лимит фактов и объявленные настройки индекса (chunker, размер, overlap, embedding и digest). Hash считается по тому же canonical JSON, что и IR; backend пересчитывает его и требует ссылку на hash сохранённой стадии разбора (`RECIPE_INVALID`). Значения recipe без float, чтобы Python и TypeScript сериализовали их одинаково. ExtractionRun хранит `sourceIrRevisionId` и `recipeHash`.
+
+Повтор той же задачи после сбоя модели или перезапуска worker берёт сохранённую стадию и не разбирает оригинал снова; новая задача reprocess разбирает заново, одинаковый IR не дублируется. Миграция `ProcessingStages1753000000000` только добавляет nullable-колонки, прежние записи не переписываются. Это ещё не processing revision P3: активация facts/chunks одной ревизией и staging индекса не реализованы, настройки индекса в recipe объявлены AI-сервисом, а не подтверждены индексатором.
 
 ## Экспериментальный LAB annotator, 25 сентября 2026
 

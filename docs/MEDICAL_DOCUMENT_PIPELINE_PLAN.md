@@ -1,6 +1,6 @@
 # Medical Document Processing Pipeline — план реализации
 
-Дата: 2026-09-25. Статус: **план в реализации: готовы основа source IR, development baseline и opt-in лабораторные строки; полный pipeline ещё не реализован**. Основание — запрос автора и три приложенных конспекта. Это развитие после учебного MVP v1.2, а не ретроактивное требование преподавателя. Нормативные дополнения перечислены в [корневой спецификации](../PROJECT_SPECIFICATION.md). Реальные результаты остаются в [VALIDATION](VALIDATION.md).
+Дата: 2026-09-25. Статус: **план в реализации: готовы основа source IR, development baseline, opt-in лабораторные строки, стадия разбора до LLM и полный recipe; полный pipeline ещё не реализован**. Основание — запрос автора и три приложенных конспекта. Это развитие после учебного MVP v1.2, а не ретроактивное требование преподавателя. Нормативные дополнения перечислены в [корневой спецификации](../PROJECT_SPECIFICATION.md). Реальные результаты остаются в [VALIDATION](VALIDATION.md).
 
 Продуктовая рамка уточнена автором: [самостоятельный real-world проект](PRODUCT_DIRECTION.md). LAB_REPORT/VISIT — первый вертикальный срез, а не окончательный предел поддерживаемых документов.
 
@@ -189,12 +189,14 @@ P0 → P1 → P2a → P2b → P3 → P4; затем P5 → P6. Выписка/с
 
 ## Первый рабочий срез
 
-[Source IR и original-upload baseline](evaluation/INGESTION_BASELINE.md): реализована сохраняемая стадия SOURCE_ONLY с UTF-8 mappings, JSON Schema, приватным API и миграцией. P0/P1 целиком не закрыты: нужны held-out corpus, полный recipe и независимое сохранение промежуточных стадий. Медицинские аннотации и facts/chunks из IR относятся к следующим шагам.
+[Source IR и original-upload baseline](evaluation/INGESTION_BASELINE.md): реализована сохраняемая стадия SOURCE_ONLY с UTF-8 mappings, JSON Schema, приватным API и миграцией. Полный recipe и сохранение стадии разбора до LLM добавлены позже (см. ниже); P0 ещё требует независимого held-out corpus. Медицинские аннотации и facts/chunks из IR относятся к следующим шагам.
 
 [Следующий срез LAB](evaluation/lab-rows-v1/README.md): source-backed annotation и fact projection, UI, 120/120 × 3 на замороженном наборе. Это только поддержанные лабораторные грамматики; VISIT, полный P0/P1 и единые чанки/activation остаются открытыми.
 
 
 [Первый срез VISIT](evaluation/visit-assertions-v1/README.md): opt-in clinical-v1, модельная разметка субъектов/статусов/лекарственных событий/временных ролей, source/context spans и консервативная проекция в старые факты. Полная clinical activity, нормализация календарных ролей, единые chunks/processing revision/activation и gates остаются открытыми; достигнутые результаты отдельно от плана.
+
+[Стадия разбора и полный recipe (P1)](../ARCHITECTURE.md#стадия-разбора-до-llm-и-полный-recipe-p1-25-сентября-2026): `/internal/parse` без модели, сохранение IR с parse recipe до извлечения, извлечение только из сохранённого IR, полный `processingRecipe` с кросс-языковым hash, повтор задачи без повторного разбора. Остаются P3: `processing_revisions`/активация, staging индекса по ревизии и выбор «текущий текст или заново разобрать оригинал» при reprocess.
 
 ## Проверка несколькими методами после LAB-пилота
 
