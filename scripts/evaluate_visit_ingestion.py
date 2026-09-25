@@ -10,6 +10,7 @@ from pathlib import Path
 from urllib.error import HTTPError
 
 from evaluate_ingestion import request
+from visit_semantic_metrics import evaluate_semantics, summarize_semantics
 
 ROOT = Path(__file__).resolve().parents[1]
 FIELDS = (
@@ -139,7 +140,7 @@ def run(args):
         raise SystemExit(
             "Requires an EMPTY dedicated SEED_ENABLED=false archive, including trash."
         )
-    manifest_path = ROOT / "evaluation/ingestion-visits-v1/manifest.json"
+    manifest_path = ROOT / "evaluation" / args.dataset / "manifest.json"
     raw_manifest = manifest_path.read_bytes()
     manifest = json.loads(raw_manifest)
     cases = [
@@ -165,7 +166,9 @@ def run(args):
             p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest()
             for p in [
                 "scripts/evaluate_visit_ingestion.py",
+                "scripts/visit_semantic_metrics.py",
                 "ai-service/medical_ai/visit.py",
+                "ai-service/medical_ai/visit_review.py",
                 "ai-service/medical_ai/ollama.py",
                 "ai-service/medical_ai/source_ir.py",
                 "backend/src/visit.ts",
@@ -183,6 +186,8 @@ def run(args):
 
     def save():
         report["summary"] = summarize(report["results"])
+        report["semanticSummary"] = summarize_semantics(report["results"])
+        report["releasedSummary"] = summarize_semantics(report["results"], "released")
         args.output.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
@@ -199,6 +204,8 @@ def run(args):
                 "repeat": repeat,
                 "expected": len(case["statements"]),
                 "score": score(case["statements"], []),
+                "semantic": evaluate_semantics(case["statements"], [], ""),
+                "released": evaluate_semantics(case["statements"], [], ""),
             }
             start = time.monotonic()
             try:
@@ -279,6 +286,32 @@ def run(args):
                             raise ValueError("WrongSourceSpan")
                 row["verifiedSources"] = len(artifact["statements"])
                 row["score"] = score(case["statements"], artifact["statements"])
+                row["semantic"] = evaluate_semantics(
+                    case["statements"], artifact["statements"], doc["text"]
+                )
+                checks = artifact.get("verifications")
+                released = (
+                    artifact["statements"]
+                    if checks is None
+                    else [
+                        artifact["statements"][v["statementIndex"]]
+                        for v in checks
+                        if v["status"] == "AGREES"
+                    ]
+                )
+                row["released"] = evaluate_semantics(
+                    case["statements"], released, doc["text"]
+                )
+                row["verificationStatuses"] = (
+                    [v["status"] for v in checks] if checks is not None else None
+                )
+                row["verificationHash"] = (
+                    hashlib.sha256(
+                        json.dumps(checks, sort_keys=True, ensure_ascii=False).encode()
+                    ).hexdigest()
+                    if checks is not None
+                    else None
+                )
                 row["issues"] = dict(Counter(i["code"] for i in artifact["issues"]))
                 # Order is immaterial; repeats compare a multiset, preserving duplicates.
                 semantics = sorted(key(s) for s in artifact["statements"])
@@ -303,6 +336,11 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", required=True)
+    parser.add_argument(
+        "--dataset",
+        choices=["ingestion-visits-v1", "ingestion-visits-v2"],
+        default="ingestion-visits-v1",
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
         "--split", choices=["development", "held-out", "all"], default="development"

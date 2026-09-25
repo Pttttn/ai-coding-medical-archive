@@ -43,6 +43,7 @@ export interface Laboratory {
 }
 
 export interface Visit {
+  verifications?: { statementIndex: number; status: string; reason: string; alternative: { subject: string; kind: string; assertion: string; medicationState: string; temporality: string; sourceText: string } | null }[];
   candidateBlocks: number; processedBlocks: string[]; issues: { code: string }[];
   statements: { name: string; kind: string; subject: string; assertion: string; medicationState: string;
     temporality: string; sourceText: string; contextText: string; source: { pageIndex: number } }[];

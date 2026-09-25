@@ -1,0 +1,10 @@
+{
+  "desktop": true,
+  "mobile": true,
+  "rows": 5,
+  "disagreementVisible": true,
+  "alternativeVisible": true,
+  "sourceAndContextOpen": true,
+  "noPageOverflow": true,
+  "pageErrors": 0
+}
