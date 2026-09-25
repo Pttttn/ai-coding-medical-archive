@@ -6,9 +6,13 @@ import helmet from 'helmet';
 import {json} from 'express';
 import {AppModule} from './app.module';
 import {SafeErrorFilter} from './error.filter';
+import {loopbackGuard,MIN_PERSONAL_SECRET_LENGTH,weakPersonalSecrets} from './security';
 
 async function bootstrap(){
+  const weak=weakPersonalSecrets();
+  if(weak.length){process.stderr.write(`Personal archive refuses to start: set unique ${weak.join(' and ')} of at least ${MIN_PERSONAL_SECRET_LENGTH} characters (demo defaults are public).\n`);process.exit(1);}
   const app=await NestFactory.create(AppModule,{logger:['warn'],bodyParser:false});
+  app.use(loopbackGuard);
   app.use(json({limit:'1mb'}));
   app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'","'unsafe-inline'"],styleSrc:["'self'","'unsafe-inline'"],imgSrc:["'self'","data:"],connectSrc:["'self'"]}},crossOriginEmbedderPolicy:false}));
   app.use((req:any,res:any,next:any)=>{res.setHeader('Cache-Control','no-store');next();});
