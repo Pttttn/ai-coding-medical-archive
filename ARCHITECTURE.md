@@ -93,3 +93,7 @@ MCP передаёт очищенный результат подключённ�
 `/internal/process` дополнен опциональным `sourceIR` стадии `SOURCE_ONLY`: raw pages, UTF-8 spans, карта нормализации и два hash. Backend проверяет Python/TypeScript контракт и сохраняет неизменяемую запись `source_ir_revisions`, связанную с TextRevision. Идемпотентность по `(textRevisionId, irHash)`, UPDATE запрещён миграционным триггером; изменение страниц без изменения текста тоже создаёт новую TextRevision. Приватный `GET /api/documents/:id/source-ir` выдаёт IR текущей версии, legacy без IR возвращает 404. MCP не меняется.
 
 Это пока источник для дальнейшего pipeline: extractor/chunker продолжают текущую обработку, независимые checkpoints и медицинские аннотации ещё не реализованы. [Фактический контракт и baseline](docs/evaluation/INGESTION_BASELINE.md).
+
+## Экспериментальный LAB annotator, 25 сентября 2026
+
+`EXTRACTION_PROFILE=lab-rows-v1` строит типизированный лабораторный артефакт из source IR и проецирует его в факты. Backend проверяет source/hash/projection, сохраняет артефакт в ExtractionRun и выдаёт только актуальный результат в приватном document API. UI показывает исходные строки отдельно от review. Генеративной LLM в поддержанной LAB-ветке нет; другие документы сохраняют прежний extractor. Default legacy, MCP не меняется. Это не полная processing revision/activation система P3. [Контракт, серия и ограничения](docs/evaluation/lab-rows-v1/README.md).

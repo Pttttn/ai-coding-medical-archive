@@ -168,3 +168,11 @@ Gemma 4 12B без thinking: 10/10 в одиночном отсеве; режи�
 Backend lint/build, 60 tests на отдельной PostgreSQL. AI ruff, финальный полный Windows-run 207 passed / 2 platform skips; предварительный loopback WinError 10053 и успешный повтор отмечены в протоколе. Контрактные tests не подменяют реальную модельную проверку. Полный Medical Document Processing Pipeline не объявляется завершённым.
 
 Linux CI реализации `fa31c6d`: **209 AI, 60 backend, 23 frontend**, lint/build/images PASS. [Run](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36107376928). После пересоздания контейнеров ingestion-стенда сохранены 32 документа, 32 IR и 140 активных фактов.
+
+## Opt-in лабораторные строки, 25 сентября 2026 — техническая запись AI
+
+[Реализация, все попытки и серия](evaluation/lab-rows-v1/README.md), commit `a2abe19`: 12 новых LAB оригиналов / 120 строк. Три полных обработки дали 120/120 typed tuples, включая held-out 40/40 каждый раз, 0 FP/FN и различий semantic hashes. На общем development scalar-критерии legacy Qwen9B 21/70 × 3, lab rows 70/70 × 3. LAB-ветка детерминированная, не LLM evaluation; VISIT и real-world качество этим не подтверждены. Gold AI-authored, не прошёл независимую медицинскую проверку. Исходная ошибка runner DUPLICATE и development-пропуск двух строк сохранены. Профиль не включён по умолчанию.
+
+Прежний original-upload корпус: 32 READY/IR, 140 подтверждённых цитат, частичное сопоставление 72/108 (раньше 30/108); лабораторные PDF 42/42, текстовая часть остаётся 30/66. Один development-прогон, не итоговая клиническая accuracy. [Агрегаты](evaluation/lab-rows-v1/clinical-originals.json). Linux CI реализации прошёл: [run](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36111349486).
+
+Финальная проекция `lab-facts-v2` (`f10bfdf`) исправляет потерю общей даты при явном STUDY: 6 PDF × 3 — даты/роли/period filter PASS. Полная LAB серия на финальном коде повторно 120/120 × 3. После down/up совпал hash снимка 32 документов / 32 IR / 140 фактов. [Финальный CI PASS](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36112212635).

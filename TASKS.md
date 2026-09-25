@@ -93,3 +93,10 @@
 - [ ] Закрыть оставшиеся P0/P1: независимый held-out набор, полный recipe и сохранение стадий до LLM; затем P2 LAB/VISIT и единые проекции P3.
 
 - [ ] P4: проверить автоматическое восстановление маршрутизации/health ingress после изменения IP backend/AI; сейчас после выборочного пересоздания требуется документированный restart frontend/gateway.
+
+## Следующий рабочий срез P0/P2a, 25 сентября 2026
+
+- [x] Заморозить 12 новых синтетических LAB originals / 120 строк, development 8 и held-out 4; AI-authored gold, без независимой медицинской проверки.
+- [x] Opt-in lab-rows-v1: typed decimal/comparator/unit/referenceRaw, роли дат, source spans/hash, проверенная fact projection и UI исходных строк.
+- [x] Три настоящих обработки: development 80/80 и held-out 40/40 каждый раз, 0 FP/FN/semantic drift; baseline и неудачные попытки сохранены. [Протокол](docs/evaluation/lab-rows-v1/README.md).
+- [ ] Довести P0/P2: VISIT subject/assertion/medication events, дополнительные независимые макеты/ручная проверка gold, сложные LAB/reference/date scopes; full recipe/checkpoints и общая facts/chunks activation P3.

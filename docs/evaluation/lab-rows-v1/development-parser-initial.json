@@ -1,0 +1,9 @@
+{
+  "kind": "development-parser-only-diagnostic",
+  "labCodeSha256": "604806ff0df6610dc5e32932177dcf579b1ee5d3a0e7ab6bd9b4300c62f0c71f",
+  "expectedRows": 80,
+  "matchedRows": 78,
+  "falsePositives": 0,
+  "missedRows": 2,
+  "cause": "Labelled scientific-count unit 10^9/l was rejected; fixed before held-out evaluation."
+}
