@@ -1,0 +1,2 @@
+# The parser challenge includes original CRLF bytes; preserve manifest hashes.
+*.txt -text
