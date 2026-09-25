@@ -1,4 +1,5 @@
 import {SourceIR,validateSourceIR} from './source-ir';
+import {Laboratory,validateLaboratory} from './laboratory';
 import {Injectable,OnApplicationBootstrap,OnApplicationShutdown} from '@nestjs/common';
 import {DataSource} from 'typeorm';
 import {AiClient,AiError,normalizeTags} from './core';
@@ -7,7 +8,7 @@ import {ASSERTION_STATUSES,Document,DOCUMENT_TYPES,ExtractionRun,FACT_TYPES,Fact
 
 type ExtractedFact={type:string;name:string;valueText:string|null;valueNumber:number|null;unit:string|null;eventDate:string|null;assertionStatus:string;confidence:number|null;provenance:{page:number|null;sourceText:string}};
 export interface ProcessResult {
-  text:string;pages:Page[];sourceIR?:SourceIR;
+  text:string;pages:Page[];sourceIR?:SourceIR;laboratory?:Laboratory|null;extractionProfile?:string;
   extraction:{documentType:string;documentDate:string|null;summary:string;tags:string[];facts:ExtractedFact[]};
   warnings?:string[];model?:string;modelDigest?:string;promptVersion?:string;schemaVersion?:string;parserVersion?:string;
 }
@@ -79,6 +80,7 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
           validateSourceIR(result.sourceIR,doc.id,result.pages);
           if(result.text!==result.pages.map(p=>p.text).join('\n\n'))throw new AiError('SOURCE_IR_INVALID');
         }
+        if(result.laboratory!=null)validateLaboratory(result.laboratory,result.sourceIR,result.extraction.facts);
         const applied=await this.db.transaction(async m=>{
           const current=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
           if(!current||current.deletedAt||current.generation!==job.generation)return false;

@@ -12,11 +12,12 @@ from .errors import ServiceError
 from .extraction import PROMPT_VERSION, SCHEMA_VERSION, extract
 from .external_output import PublicOutput, PublicToolErrors
 from .indexer import Corpus, source_of
+from .laboratory import LAB_VERSION, annotate_laboratory, project_laboratory
 from .ollama import Ollama
 from .parsing import PARSER_VERSION, confined_path, parse_file
 from .privacy import consultation
 from .rag import CorrectiveRAG
-from .source_ir import IR_VERSION, build_source_ir
+from .source_ir import IR_VERSION, SourceIR, build_source_ir
 from .schemas import AskRequest, ConsultationRequest, IndexRequest, Page, ProcessRequest, RemoveRequest
 
 
@@ -50,7 +51,7 @@ def create_app(services: Services | None = None) -> FastAPI:
 
     @app.get("/health")
     def health():
-        return {"status": "running", "sourceIRVersion": IR_VERSION, **services.provider.health(), "promptVersion": PROMPT_VERSION,
+        return {"status": "running", "sourceIRVersion": IR_VERSION, "extractionProfile": services.settings.extraction_profile, **services.provider.health(), "promptVersion": PROMPT_VERSION,
                 "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/process", dependencies=[Depends(authorize)])
@@ -65,14 +66,25 @@ def create_app(services: Services | None = None) -> FastAPI:
             text, pages, warnings = parse_file(path, services.settings.max_file_bytes)
         else:
             text, pages = body.text or "", [Page(text=body.text or "")]
-        extracted, extraction_warnings = extract(services.provider, body.title, pages)
+        source_ir = build_source_ir(body.documentId, pages, PARSER_VERSION if body.filePath else "user-text-v1")
+        laboratory = None
+        if services.settings.extraction_profile == LAB_VERSION:
+            ir = SourceIR.model_validate(source_ir)
+            laboratory = annotate_laboratory(ir)
+        if laboratory is not None:
+            extracted, extraction_warnings = project_laboratory(ir, laboratory)
+        else:
+            extracted, extraction_warnings = extract(services.provider, body.title, pages)
         model_meta = services.provider.health().get("models", [])
         model_digest = next((m.get("digest") for m in model_meta if isinstance(m, dict)
                              and m.get("name") in {services.settings.llm_model, services.settings.llm_model + ":latest"}), None)
-        return {"sourceIR": build_source_ir(body.documentId, pages, PARSER_VERSION if body.filePath else "user-text-v1"),
-                "modelDigest": model_digest, "text": text, "pages": [p.model_dump() for p in pages],
+        return {"sourceIR": source_ir,
+                "laboratory": laboratory.model_dump(mode="json") if laboratory is not None else None,
+                "extractionProfile": services.settings.extraction_profile,
+                "modelDigest": None if laboratory is not None else model_digest, "text": text, "pages": [p.model_dump() for p in pages],
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
-                "model": services.settings.llm_model, "promptVersion": PROMPT_VERSION,
+                "model": "deterministic:lab-rows-v1" if laboratory is not None else services.settings.llm_model,
+                "promptVersion": LAB_VERSION if laboratory is not None else PROMPT_VERSION,
                 "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/index", dependencies=[Depends(authorize)])

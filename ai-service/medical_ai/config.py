@@ -1,5 +1,6 @@
 import ipaddress
 from pathlib import Path
+from typing import Literal
 from urllib.parse import urlparse
 
 from pydantic import AliasChoices, Field, model_validator
@@ -32,6 +33,7 @@ class Settings(BaseSettings):
     archive_batch_chunks: int = Field(default=6, ge=1, le=8)
     archive_evidence_max_tokens: int = Field(default=4096, ge=512, le=8192)
     extraction_max_facts_per_batch: int = Field(default=8, ge=2, le=32)
+    extraction_profile: Literal['legacy', 'lab-rows-v1'] = 'legacy'
     max_file_bytes: int = 20 * 1024 * 1024
     internal_port: int = 8001
     mcp_port: int = 8002

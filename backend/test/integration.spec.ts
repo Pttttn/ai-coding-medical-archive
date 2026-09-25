@@ -64,6 +64,40 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     const content={schemaVersion:'source-ir-v1',stage:'SOURCE_ONLY',documentId:body.documentId,parserVersion:'synthetic-test',normalizerVersion:'whitespace-map-v1',sourceHash:irHash(result.pages),pages:result.pages,blocks:[{blockId:'p0:b0',kind:'paragraph',source:span,normalizedText:text,mapping:[{normalizedStartByte:0,normalizedEndByte:length,source:span,operation:'IDENTITY'}]}]};
     return {...result,sourceIR:{...content,irHash:irHash(content)} as SourceIR};
   };
+  const labMock=async(route:string,body:any)=>{
+    if(route!=='process')return mock(route,body);
+    const fixture=JSON.parse(await readFile(join(__dirname,'../../contracts/lab-rows-v1.synthetic.json'),'utf8'));
+    const sourceIR=fixture.sourceIR;sourceIR.documentId=body.documentId;
+    const {irHash:old,...irBody}=sourceIR;void old;sourceIR.irHash=irHash(irBody);
+    const laboratory=fixture.laboratory;laboratory.sourceIRHash=sourceIR.irHash;
+    const {artifactHash:previous,...labBody}=laboratory;void previous;laboratory.artifactHash=irHash(labBody);
+    return {text:sourceIR.pages[0].text,pages:sourceIR.pages,sourceIR,laboratory,extractionProfile:'lab-rows-v1',
+      extraction:{documentType:'LAB_REPORT',documentDate:'2026-06-18',summary:'Synthetic lab',tags:[],facts:fixture.facts},
+      model:'deterministic:lab-rows-v1',promptVersion:'lab-rows-v1',schemaVersion:'medical-facts-v1'};
+  };
+  it('persists typed lab annotation, preserves reviewed overlay and hides artifact during pending/edit/delete',async()=>{
+    ai.call.mockImplementation(labMock);const d=await ready();
+    expect(d.laboratory.rows).toHaveLength(2);expect(d.facts[0].type).toBe('LAB_RESULT');
+    const scalar=d.facts.find((f:any)=>f.name==='MCV');
+    await request(app.getHttpServer()).patch('/api/facts/'+scalar.id).send({valueNumber:75,reviewStatus:'CORRECTED'}).expect(200);
+    await worker.tick();
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.laboratory).toBeNull();
+    await worker.tick();
+    const repeated=(await request(app.getHttpServer()).get('/api/documents/'+d.id)).body;
+    expect(repeated.facts.find((f:any)=>f.name==='MCV').valueNumber).toBe(75);
+    expect(repeated.laboratory.rows[1].result.numericValue).toBe('74.20');
+    expect(repeated.facts).toHaveLength(2);
+    await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({text:'Updated source text, no longer the same lab.'}).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.laboratory).toBeNull();
+    await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.laboratory).toBeNull();
+  });
+  it('fails inconsistent lab projection before publishing facts or annotation',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await labMock(route,body);if(route==='process')r.extraction.facts[0].valueNumber=5;return r;});
+    const d=await ready();expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('LAB_ARTIFACT_INVALID');
+    expect(d.facts).toHaveLength(0);expect(d.laboratory).toBeNull();
+  });
   it('stores immutable source IR and reuses identical revision after reprocessing',async()=>{
     ai.call.mockImplementation(withIR);
     const d=await ready();

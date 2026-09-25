@@ -5,6 +5,7 @@ import {mkdir,realpath,unlink,writeFile} from 'node:fs/promises';
 import {basename,resolve,relative,isAbsolute} from 'node:path';
 import {AuditEvent,Document,ExtractionRun,FactProvenance,FactRevision,MedicalFact,ProcessingJob,Tag,TextRevision,TimelineEvent} from './entities';
 import {CreateNoteDto,DocumentQueryDto,PaginationDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
+import {Laboratory} from './laboratory';
 import {AiClient,contentHash,normalizeTags,paginate,safeStoragePath,validatePdf} from './core';
 
 export async function audit(m:EntityManager,documentId:string|null,entityType:string,entityId:string,action:string,before:unknown=null,after:unknown=null) {
@@ -99,7 +100,10 @@ export class ArchiveService {
     const rawWarnings=(extractionRun?.rawJson as {warnings?:unknown}|null)?.warnings;
     const processingWarnings=Array.isArray(rawWarnings)?rawWarnings.filter((warning):warning is string=>typeof warning==='string'):[];
     const extraction=extractionRun?{id:extractionRun.id,textVersion:extractionRun.textVersion,model:extractionRun.model,modelDigest:extractionRun.modelDigest,promptVersion:extractionRun.promptVersion,schemaVersion:extractionRun.schemaVersion,parserVersion:extractionRun.parserVersion,status:extractionRun.status,validationErrors:extractionRun.validationErrors,createdAt:extractionRun.createdAt,completedAt:extractionRun.completedAt}:null;
-    return {...doc,text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction};
+    // Never expose a failed, deleted, superseded or earlier-text lab artifact as current.
+    const raw=extractionRun?.rawJson as {laboratory?:Laboratory;extractionProfile?:string}|null;
+    const laboratory=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.laboratory??null:null;
+    return {...doc,text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,extractionProfile:raw?.extractionProfile??'legacy'};
   }
   async revision(id:string,version:number) {
     await this.document(id,true);

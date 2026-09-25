@@ -3,6 +3,7 @@ export interface Document {
   id: string; title: string; documentType: string; documentDate: string | null;
   sourceType: string; status: string; summary: string | null; tags: string[];
   createdAt: string; updatedAt: string; deletedAt: string | null;
+  laboratory?: Laboratory | null; pages?: { pageNumber: number | null; text: string }[];
   text?: string; textVersion?: number; originalFilename?: string; facts?: Fact[];
   textRevisions?: TextRevision[]; latestJob?: { id: string; status: string; error?: string; errorCode?: string; attempts?: number }; processingError?: string; processingWarnings?: string[]; isSeed?: boolean;
 }
@@ -32,3 +33,11 @@ export interface DashboardData {
 
 
 
+
+export interface Laboratory {
+  rows: { name: string; result: { raw: string }; unit: string | null; referenceRaw: string | null; subject: string;
+    sourceText: string; source: { pageIndex: number } }[];
+  dates: { role: string; raw: string }[];
+  issues: { code: string }[];
+  candidateRows: number;
+}
