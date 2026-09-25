@@ -160,3 +160,11 @@ Shim теперь не печатает prompts/ответы/названия л
 Матрица нового архива: Qwen 3.5 2B scan 8/10; 4B scan 10/10 × 3 на новых индексах, 9B scan 10/10 (плюс API-серии выше). Серверная Q8 27B на mpc1: 10/10 × 3 на новых индексах. Тексты всех десяти ответов стабильны внутри серий 4B и Q8. Top-12 RRF дал 8/10 даже на серверной 27B; на 9B BM25 8/10, dense 7/10, tools 8/10. Эти метрики содержания не означают полного охвата. Локальный CPU-offload 27B остановлен после 5/5 завершённых вопросов из-за задержек до 425 секунд. Точные ограничения и незавершённые режимы — в протоколе.
 
 Gemma 4 12B без thinking: 10/10 в одиночном отсеве; режим по умолчанию остановлен до завершённого вопроса. Linux CI `0252f98`: AI 196, backend 51, frontend 23; lint/images PASS. [Агрегаты матрицы](evaluation/clinical-matrix-summary.json) включают неполные прогоны.
+
+## Source IR / ingestion, 25 сентября 2026 — техническая запись AI
+
+Первый срез P0/P1: [протокол](evaluation/INGESTION_BASELINE.md), [агрегаты](evaluation/ingestion-baseline-summary.json). Отдельный Compose без seed, обычная загрузка шести PDF и 26 текстовых оригиналов: 32 READY, 32 IR, 140/140 цитат в тексте; строгое сопоставление с частичным development gold 30/108. Это не held-out качество и не precision/recall медицинских tuples. Сохранена диагностика ошибочных типов/пустых numeric fields. Рабочий QA-архив и эти результаты различаются.
+
+Backend lint/build, 60 tests на отдельной PostgreSQL. AI ruff, финальный полный Windows-run 207 passed / 2 platform skips; предварительный loopback WinError 10053 и успешный повтор отмечены в протоколе. Контрактные tests не подменяют реальную модельную проверку. Полный Medical Document Processing Pipeline не объявляется завершённым.
+
+Linux CI реализации `fa31c6d`: **209 AI, 60 backend, 23 frontend**, lint/build/images PASS. [Run](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36107376928). После пересоздания контейнеров ingestion-стенда сохранены 32 документа, 32 IR и 140 активных фактов.

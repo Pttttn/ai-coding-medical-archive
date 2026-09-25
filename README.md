@@ -4,7 +4,7 @@
 
 Проект развивается как самостоятельный продукт: [направление и первый релиз](docs/PRODUCT_DIRECTION.md), [текущая спецификация и дополнения](PROJECT_SPECIFICATION.md). [v1.2](PROJECT_SPECIFICATION_Local_Medical_Archive_v1.2.md) сохраняет учебную базовую версию. [Изменения по конспекту консультации](docs/CONSULTATION_CHANGES.md) отделяют пояснения преподавателя от принятых решений проекта. Приватность публичного MCP и ручная консультация используют общие правила и локальную LLM; это разные способы передачи данных.
 
-Следующий этап развития (**план, ещё не реализован**): [Medical Document Processing Pipeline](docs/MEDICAL_DOCUMENT_PIPELINE_PLAN.md), затем [structured tools и отдельная справочная библиотека](docs/MEDICAL_KNOWLEDGE_PLAN.md).
+Следующий этап развития (**реализована основа source IR и initial ingestion baseline; полный pipeline ещё в работе**): [Medical Document Processing Pipeline](docs/MEDICAL_DOCUMENT_PIPELINE_PLAN.md), затем [structured tools и отдельная справочная библиотека](docs/MEDICAL_KNOWLEDGE_PLAN.md).
 
 ## Клиническая история и вопросы к архиву
 
@@ -316,3 +316,5 @@ docker compose up -d ai gateway
 
 
 [Независимый компьютер, 22 сентября](docs/evaluation/independent-2026-09-22/README.md): чистая Ubuntu, установка Docker с нуля, стандартное CPU-приложение прошло API/PDF/MCP и перезапуск с сохранением данных. На RTX 5060 Ti повторена серия 5+3 с тем же профилем: все восемь раз 18/21 и 10/10, без расхождений внутри стенда. PASS/FAIL совпал с RTX 5080; побитовое межмашинное совпадение не гарантируется, отдельная CPU-серия не выполнялась.
+
+Текущий первый срез P0/P1: [исходный IR, миграция и реальная загрузка без seed](docs/evaluation/INGESTION_BASELINE.md). Это не завершённый типизированный медицинский pipeline.

@@ -87,3 +87,9 @@ MCP передаёт очищенный результат подключённ�
 Активация фактов и индекса использует подготовку новой версии и проверку manifests: распределённая транзакция PostgreSQL/Chroma не предполагается. Снимок чтения фиксирует processing и review revisions, исключая смешение версий. Старые parser/chunker и данные сохраняются до прохождения контрактных, crash/restart и реальных ingestion-проверок. Первый охват — LAB_REPORT и VISIT; parser-quality и extraction-quality проверяются отдельно от QA на предвычисленном seed.
 
 [Следующие слои](docs/MEDICAL_KNOWLEDGE_PLAN.md): предметные structured tools, deterministic router, затем ограниченный локальный агент и отдельный справочный индекс. Личный архив, справочник и публичный синтетический MCP остаются разными пространствами; справочное утверждение не становится фактом пациента.
+
+## Реализованная основа source IR, 25 сентября 2026
+
+`/internal/process` дополнен опциональным `sourceIR` стадии `SOURCE_ONLY`: raw pages, UTF-8 spans, карта нормализации и два hash. Backend проверяет Python/TypeScript контракт и сохраняет неизменяемую запись `source_ir_revisions`, связанную с TextRevision. Идемпотентность по `(textRevisionId, irHash)`, UPDATE запрещён миграционным триггером; изменение страниц без изменения текста тоже создаёт новую TextRevision. Приватный `GET /api/documents/:id/source-ir` выдаёт IR текущей версии, legacy без IR возвращает 404. MCP не меняется.
+
+Это пока источник для дальнейшего pipeline: extractor/chunker продолжают текущую обработку, независимые checkpoints и медицинские аннотации ещё не реализованы. [Фактический контракт и baseline](docs/evaluation/INGESTION_BASELINE.md).

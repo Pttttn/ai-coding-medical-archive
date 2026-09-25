@@ -84,3 +84,10 @@
 - [ ] P4: согласованный backup оригиналов/БД/IR/review, восстановление на чистом Compose и проверка полноты.
 - [ ] P4: обновление существующей установки, восстановление после неудачной миграции, отмена/сбои worker и нехватка места.
 - [ ] После P0 установить и измерить бюджеты времени/памяти; после gates организовать ограниченную локальную проверку владельцем с ручной сверкой оригиналов.
+
+## Выполненный первый срез P0/P1, 25 сентября 2026
+
+- [x] Original-upload baseline текущих 32 синтетических оригиналов без seed: 32 READY/IR, 140 source-backed facts, строгое частичное сопоставление 30/108. Не held-out, один прогон; [ограничения и результаты](docs/evaluation/INGESTION_BASELINE.md).
+- [x] SOURCE_ONLY IR: общая JSON Schema, UTF-8 spans/mappings, Python/TypeScript проверка, immutable storage migration и приватный source API.
+- [x] PostgreSQL-проверки upgrade/idempotency/immutable IR/page-version changes; AI регрессия.
+- [ ] Закрыть оставшиеся P0/P1: независимый held-out набор, полный recipe и сохранение стадий до LLM; затем P2 LAB/VISIT и единые проекции P3.
