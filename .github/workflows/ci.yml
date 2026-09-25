@@ -66,7 +66,7 @@ jobs:
           version: '0.10.7'
           enable-cache: true
       - run: uv sync --frozen --group dev --python 3.12
-      - run: uv run ruff check . ../infra/llama-shim.py ../scripts/evaluate_public.py ../scripts/evaluate_stability.py ../scripts/evaluation_support.py ../scripts/analyze_stability.py ../scripts/evaluate_clinical.py ../scripts/evaluate_ingestion.py ../scripts/evaluate_lab_ingestion.py ../scripts/evaluate_visit_ingestion.py ../scripts/evaluate_visit_ssh.py ../scripts/visit_semantic_metrics.py ../scripts/generate_visit_challenge.py ../scripts/generate_ingestion_visits.py ../scripts/generate_ingestion_labs.py ../scripts/evaluate_clinical_matrix.py ../scripts/analyze_clinical.py ../scripts/evaluate_clinical_ssh.py ../scripts/generate_clinical_demo.py ../scripts/verify_seed.py ../scripts/check_gateway.py
+      - run: uv run ruff check . ../infra/llama-shim.py ../scripts/evaluate_public.py ../scripts/evaluate_stability.py ../scripts/evaluation_support.py ../scripts/analyze_stability.py ../scripts/evaluate_clinical.py ../scripts/evaluate_ingestion.py ../scripts/evaluate_lab_ingestion.py ../scripts/evaluate_visit_ingestion.py ../scripts/evaluate_visit_ssh.py ../scripts/visit_semantic_metrics.py ../scripts/generate_visit_challenge.py ../scripts/generate_ingestion_visits.py ../scripts/generate_ingestion_labs.py ../scripts/evaluate_clinical_matrix.py ../scripts/analyze_clinical.py ../scripts/evaluate_clinical_ssh.py ../scripts/generate_clinical_demo.py ../scripts/verify_seed.py ../scripts/check_gateway.py ../scripts/archive_backup.py
       - run: uv run pytest
       - run: uv run python ../scripts/check_corpus.py
       - run: uv run python ../scripts/verify_seed.py
@@ -96,3 +96,5 @@ jobs:
       - run: docker compose -f compose.evaluation.yaml config --quiet
       - run: docker compose -f compose.evaluation.yaml -f compose.evaluation.cuda.yaml config --quiet
       - run: docker compose build
+      - name: Real backup and restore of the synthetic archive
+        run: bash scripts/backup_restore_check.sh
