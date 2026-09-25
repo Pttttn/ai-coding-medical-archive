@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import {irHash,SourceIR} from '../src/source-ir';
 import {Test} from '@nestjs/testing';
 import {INestApplication,ValidationPipe} from '@nestjs/common';
 import request from 'supertest';
@@ -55,7 +56,57 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     ai.call.mockReset();ai.call.mockImplementation(mock);
   });
   afterAll(async()=>{if(app)await app.close();if(db?.isInitialized)await db.destroy();if(uploads)await rm(uploads,{recursive:true,force:true});});
-  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(1);});
+  const withIR=async(route:string,body:any)=>{
+    const result=await mock(route,body);
+    if(route!=='process')return result;
+    const text=result.pages[0].text,length=Buffer.byteLength(text);
+    const span={pageIndex:0,startByte:0,endByte:length};
+    const content={schemaVersion:'source-ir-v1',stage:'SOURCE_ONLY',documentId:body.documentId,parserVersion:'synthetic-test',normalizerVersion:'whitespace-map-v1',sourceHash:irHash(result.pages),pages:result.pages,blocks:[{blockId:'p0:b0',kind:'paragraph',source:span,normalizedText:text,mapping:[{normalizedStartByte:0,normalizedEndByte:length,source:span,operation:'IDENTITY'}]}]};
+    return {...result,sourceIR:{...content,irHash:irHash(content)} as SourceIR};
+  };
+  it('stores immutable source IR and reuses identical revision after reprocessing',async()=>{
+    ai.call.mockImplementation(withIR);
+    const d=await ready();
+    const ir=(await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200)).body;
+    expect(ir.content.pages[0].text).toBe(d.text);
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);
+    await worker.tick();
+    expect((await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id]))).toHaveLength(1);
+    await expect(db.query('UPDATE source_ir_revisions SET content=$1 WHERE id=$2',[{},ir.id])).rejects.toThrow('immutable');
+    await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+    await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(404);
+  });
+  it('creates a new source revision when page attribution changes but text does not',async()=>{
+    ai.call.mockImplementation(withIR);const d=await ready();
+    const first=(await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200)).body;
+    ai.call.mockImplementation(async(route,body)=>{const r=await withIR(route,body);if(route==='process'){
+      r.pages[0].pageNumber=1;r.sourceIR.sourceHash=irHash(r.pages);
+      const {irHash:old,...content}=r.sourceIR;void old;r.sourceIR.irHash=irHash(content);
+    }return r;});
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);await worker.tick();
+    const after=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(after.text).toBe(d.text);expect(after.textVersion).toBe(d.textVersion+1);
+    const second=(await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200)).body;
+    expect(second.textRevisionId).not.toBe(first.textRevisionId);
+    const old=await db.query('SELECT content FROM source_ir_revisions WHERE id=$1',[first.id]);
+    expect(old[0].content.pages[0].pageNumber).toBeNull();
+  });
+  it('rejects corrupted IR before persisting new facts or IR',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await withIR(route,body);if(route==='process')r.sourceIR.blocks[0].normalizedText='invented';return r;});
+    const d=await ready();
+    expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('SOURCE_IR_INVALID');expect(d.facts).toHaveLength(0);
+    expect(await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id])).toHaveLength(0);
+  });
+  it('migrates existing source text without rewriting it',async()=>{
+    await db.undoLastMigration();
+    const d=await note();
+    await db.runMigrations();
+    ai.call.mockImplementation(withIR);await worker.tick();
+    const after=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(after.text).toBe('LDL 4.7 mmol/L.');expect(after.textVersion).toBe(1);
+    await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200);
+  });
+  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(2);});
   it('validates unknown properties and empty title at the API boundary',async()=>{await request(app.getHttpServer()).post('/api/documents/note').send({title:' ',text:'ok text',storagePath:'/secret'}).expect(400);});
   it('returns durable IDs before inference and completes the worker job',async()=>{const d=await note();expect(d.jobId).toBeDefined();expect(ai.call).not.toHaveBeenCalled();await worker.tick();const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});expect(job.status).toBe('READY');expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('READY');});
   it('detects duplicate text documents with safe conflict error',async()=>{await note();const r=await request(app.getHttpServer()).post('/api/documents/note').send({title:'Second',text:'LDL 4.7 mmol/L.'}).expect(409);expect(r.body.code).toBe('DUPLICATE');expect(r.body).not.toHaveProperty('query');});

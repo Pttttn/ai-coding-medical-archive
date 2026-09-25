@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "source-ir-v1",
+  "stage": "SOURCE_ONLY",
+  "documentId": "synthetic-cross-language",
+  "parserVersion": "synthetic-parser",
+  "normalizerVersion": "whitespace-map-v1",
+  "sourceHash": "0e0b8955dcf5f2ff9c8732c9ada783389c00834e395241abe6acdbd542d349e4",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "text": "  ЛПНП 4,1 ммоль/л < 3,0\n\nНе подтверждён. 🙂\t5 мг\n"
+    },
+    {
+      "pageNumber": 2,
+      "text": ""
+    }
+  ],
+  "blocks": [
+    {
+      "blockId": "p0:b0",
+      "kind": "paragraph",
+      "source": {
+        "pageIndex": 0,
+        "startByte": 0,
+        "endByte": 34
+      },
+      "normalizedText": " ЛПНП 4,1 ммоль/л < 3,0",
+      "mapping": [
+        {
+          "normalizedStartByte": 0,
+          "normalizedEndByte": 1,
+          "source": {
+            "pageIndex": 0,
+            "startByte": 0,
+            "endByte": 2
+          },
+          "operation": "WHITESPACE"
+        },
+        {
+          "normalizedStartByte": 1,
+          "normalizedEndByte": 33,
+          "source": {
+            "pageIndex": 0,
+            "startByte": 2,
+            "endByte": 34
+          },
+          "operation": "IDENTITY"
+        }
+      ]
+    },
+    {
+      "blockId": "p0:b1",
+      "kind": "separator",
+      "source": {
+        "pageIndex": 0,
+        "startByte": 34,
+        "endByte": 36
+      },
+      "normalizedText": " ",
+      "mapping": [
+        {
+          "normalizedStartByte": 0,
+          "normalizedEndByte": 1,
+          "source": {
+            "pageIndex": 0,
+            "startByte": 34,
+            "endByte": 36
+          },
+          "operation": "WHITESPACE"
+        }
+      ]
+    },
+    {
+      "blockId": "p0:b2",
+      "kind": "paragraph",
+      "source": {
+        "pageIndex": 0,
+        "startByte": 36,
+        "endByte": 77
+      },
+      "normalizedText": "Не подтверждён. 🙂 5 мг ",
+      "mapping": [
+        {
+          "normalizedStartByte": 0,
+          "normalizedEndByte": 33,
+          "source": {
+            "pageIndex": 0,
+            "startByte": 36,
+            "endByte": 69
+          },
+          "operation": "IDENTITY"
+        },
+        {
+          "normalizedStartByte": 33,
+          "normalizedEndByte": 34,
+          "source": {
+            "pageIndex": 0,
+            "startByte": 69,
+            "endByte": 70
+          },
+          "operation": "WHITESPACE"
+        },
+        {
+          "normalizedStartByte": 34,
+          "normalizedEndByte": 40,
+          "source": {
+            "pageIndex": 0,
+            "startByte": 70,
+            "endByte": 76
+          },
+          "operation": "IDENTITY"
+        },
+        {
+          "normalizedStartByte": 40,
+          "normalizedEndByte": 41,
+          "source": {
+            "pageIndex": 0,
+            "startByte": 76,
+            "endByte": 77
+          },
+          "operation": "WHITESPACE"
+        }
+      ]
+    }
+  ],
+  "irHash": "4eda0b4c04fd043ff207c3f4952b12e8da8d32634e00333a816a545ca6df725a"
+}

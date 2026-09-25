@@ -16,6 +16,7 @@ from .ollama import Ollama
 from .parsing import PARSER_VERSION, confined_path, parse_file
 from .privacy import consultation
 from .rag import CorrectiveRAG
+from .source_ir import IR_VERSION, build_source_ir
 from .schemas import AskRequest, ConsultationRequest, IndexRequest, Page, ProcessRequest, RemoveRequest
 
 
@@ -49,7 +50,7 @@ def create_app(services: Services | None = None) -> FastAPI:
 
     @app.get("/health")
     def health():
-        return {"status": "running", **services.provider.health(), "promptVersion": PROMPT_VERSION,
+        return {"status": "running", "sourceIRVersion": IR_VERSION, **services.provider.health(), "promptVersion": PROMPT_VERSION,
                 "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/process", dependencies=[Depends(authorize)])
@@ -68,7 +69,8 @@ def create_app(services: Services | None = None) -> FastAPI:
         model_meta = services.provider.health().get("models", [])
         model_digest = next((m.get("digest") for m in model_meta if isinstance(m, dict)
                              and m.get("name") in {services.settings.llm_model, services.settings.llm_model + ":latest"}), None)
-        return {"modelDigest": model_digest, "text": text, "pages": [p.model_dump() for p in pages],
+        return {"sourceIR": build_source_ir(body.documentId, pages, PARSER_VERSION if body.filePath else "user-text-v1"),
+                "modelDigest": model_digest, "text": text, "pages": [p.model_dump() for p in pages],
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
                 "model": services.settings.llm_model, "promptVersion": PROMPT_VERSION,
                 "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}

@@ -39,6 +39,12 @@ export class ArchiveService {
     if(!doc) throw new NotFoundException({message:'Документ не найден',code:'DOCUMENT_NOT_FOUND'});
     return doc;
   }
+  async sourceIR(id:string) {
+    await this.document(id);
+    const rows=await this.db.query('SELECT i.id,i."textRevisionId",i."irHash",i.content FROM source_ir_revisions i JOIN text_revisions t ON t.id=i."textRevisionId" JOIN documents d ON d.id=i."documentId" WHERE d.id=$1 AND d."deletedAt" IS NULL AND t.version=d."textVersion" ORDER BY i."createdAt" DESC,i.id LIMIT 1',[id]);
+    if(!rows.length)throw new NotFoundException({message:'Исходное представление ещё не создано',code:'SOURCE_IR_UNAVAILABLE'});
+    return rows[0];
+  }
   async createNote(dto:CreateNoteDto) {
     return this.db.transaction(async m=>{
       const doc=await m.save(Document,m.create(Document,{title:dto.title.trim(),documentType:dto.documentType,documentDate:dto.documentDate??null,sourceType:'TEXT',sha256:contentHash(dto.text),tags:normalizeTags(dto.tags),textVersion:1,searchText:`${dto.title}\n${dto.text}`}));

@@ -31,6 +31,8 @@ export class AppController {
   list(@Query()q:DocumentQueryDto){return this.archive.list(q);}
   @Get('documents/:id') @ApiOperation({summary:'Document with current text, facts, immutable revision list and latest job'})
   document(@Param('id',ParseUUIDPipe)id:string){return this.archive.detail(id);}
+  @Get('documents/:id/source-ir') @ApiOperation({summary:'Private source-only IR for the current immutable text revision; not a public MCP tool'})
+  sourceIR(@Param('id',ParseUUIDPipe)id:string){return this.archive.sourceIR(id);}
   @Patch('documents/:id') @ApiOperation({summary:'Edit metadata or create an immutable text revision'})
   edit(@Param('id',ParseUUIDPipe)id:string,@Body()dto:UpdateDocumentDto){return this.archive.update(id,dto);}
   @Delete('documents/:id') @ApiOperation({summary:'Move to trash and queue removal from AI index'})
