@@ -102,3 +102,30 @@ def test_visit_with_embedded_lab_table_is_not_reclassified(tmp_path):
     table.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black)]))
     SimpleDocTemplate(str(path)).build([Paragraph("Visit note, 2026-05-14", styles["Normal"]), table])
     assert parse_pdf_lab_tables(path) is None
+
+
+def test_table_flush_with_page_edge_and_side_comment_are_kept(tmp_path):
+    from reportlab.pdfgen import canvas
+
+    path = tmp_path / "edges.pdf"
+    page = canvas.Canvas(str(path), pagesize=A4)
+    page.drawString(40, 800, "Specimen date: 2026-05-13")
+    first = Table([["Test", "Result", "Unit", "Reference"], ["LDL", "4.1", "mmol/L", "<3.0"],
+                   ["HDL", "1.0", "mmol/L", ">1.0"]], colWidths=[80, 50, 50, 70])
+    second = Table([["Test", "Result", "Unit", "Reference"],
+                    ["Glucose", "5.8", "mmol/L", "3.9-6.1"]], colWidths=[80, 50, 50, 70])
+    for table in (first, second):
+        table.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black)]))
+    first.wrapOn(page, 0, 0)
+    first.drawOn(page, 40, 700)
+    page.drawString(360, 720, "Comment: hemolysis noted")
+    page.showPage()
+    _, height = second.wrapOn(page, 0, 0)
+    second.drawOn(page, 40, A4[1] - height)  # No text band above this table.
+    page.save()
+    _, pages = parse_pdf_lab_tables(path)
+    assert "Comment: hemolysis noted" in pages[0].text
+    ir = SourceIR.model_validate(build_source_ir("synthetic", pages, LAB_TABLE_PARSER_VERSION))
+    lab = annotate_laboratory(ir)
+    assert lab is not None and [row.name for row in lab.rows] == ["LDL", "HDL", "Glucose"]
+    assert [row.source.pageIndex for row in lab.rows] == [0, 0, 1]
