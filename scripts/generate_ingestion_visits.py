@@ -1,6 +1,7 @@
 """Freeze synthetic VISIT originals and scorer-only labels; never overwrite a frozen set."""
 import hashlib
 import json
+import re
 from pathlib import Path
 
 # name | kind | subject | assertion | medicationState | temporality | original sentence
@@ -127,6 +128,8 @@ def main():
     fields = ['name', 'kind', 'subject', 'assertion', 'medicationState', 'temporality', 'sourceText']
     for ident, split, title, lines in CASES:
         rows = [dict(zip(fields, line.split('|'))) for line in lines]
+        for row in rows:
+            row['name'] = re.search(re.escape(row['name']), row['sourceText'], re.I).group()
         # Development uses separated statements; held-out uses pairs within paragraphs.
         paragraphs = [r['sourceText'] for r in rows]
         if split == 'held-out':

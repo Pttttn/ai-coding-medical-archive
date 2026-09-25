@@ -40,7 +40,7 @@
           "contextText": "У пациента подозревается стенокардия, обследование продолжается."
         },
         {
-          "name": "пневмония",
+          "name": "Пневмония",
           "kind": "CONDITION",
           "subject": "PATIENT",
           "assertion": "RULED_OUT",
@@ -98,7 +98,7 @@
           "contextText": "У пациента подтверждён гипотиреоз; состояние актуально."
         },
         {
-          "name": "диабет",
+          "name": "Диабет",
           "kind": "CONDITION",
           "subject": "PATIENT",
           "assertion": "NOT_CONFIRMED",
@@ -254,7 +254,7 @@
           "contextText": "По ЭКГ у пациента подтверждена аритмия."
         },
         {
-          "name": "кардиомиопатия",
+          "name": "Кардиомиопатия",
           "kind": "CONDITION",
           "subject": "PATIENT",
           "assertion": "NOT_CONFIRMED",
@@ -304,7 +304,7 @@
           "contextText": "Супруг пациента принимает Варфарин; это сведения о супруге."
         },
         {
-          "name": "одышка",
+          "name": "Одышка",
           "kind": "SYMPTOM",
           "subject": "PATIENT",
           "assertion": "NEGATED",
@@ -478,7 +478,7 @@
       "sha256": "ec2e95da36047385b979f48cce9ec9ee712633b1c6385a260d541aa6238173c8",
       "statements": [
         {
-          "name": "анемия",
+          "name": "Анемия",
           "kind": "CONDITION",
           "subject": "PATIENT",
           "assertion": "NOT_CONFIRMED",
@@ -498,7 +498,7 @@
           "contextText": "У дяди пациента установлена гемофилия."
         },
         {
-          "name": "тромбоз",
+          "name": "Тромбоз",
           "kind": "CONDITION",
           "subject": "PATIENT",
           "assertion": "RULED_OUT",
@@ -616,7 +616,7 @@
           "contextText": "Мать пациента наблюдается с подтверждённым диагнозом остеопороз."
         },
         {
-          "name": "лихорадка",
+          "name": "Лихорадка",
           "kind": "SYMPTOM",
           "subject": "PATIENT",
           "assertion": "NEGATED",
@@ -762,7 +762,7 @@
           "contextText": "Пациент ответил отрицательно на вопрос, есть ли сейчас гематурия. Нефролитиаз имеется у родного брата, со слов пациента диагноз брату подтверждён."
         },
         {
-          "name": "нефролитиаз",
+          "name": "Нефролитиаз",
           "kind": "CONDITION",
           "subject": "FAMILY",
           "assertion": "CONFIRMED",
