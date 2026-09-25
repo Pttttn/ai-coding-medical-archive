@@ -91,3 +91,5 @@
 - [x] SOURCE_ONLY IR: общая JSON Schema, UTF-8 spans/mappings, Python/TypeScript проверка, immutable storage migration и приватный source API.
 - [x] PostgreSQL-проверки upgrade/idempotency/immutable IR/page-version changes; AI регрессия.
 - [ ] Закрыть оставшиеся P0/P1: независимый held-out набор, полный recipe и сохранение стадий до LLM; затем P2 LAB/VISIT и единые проекции P3.
+
+- [ ] P4: проверить автоматическое восстановление маршрутизации/health ingress после изменения IP backend/AI; сейчас после выборочного пересоздания требуется документированный restart frontend/gateway.
