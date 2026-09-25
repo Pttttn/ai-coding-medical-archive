@@ -1,0 +1,229 @@
+{
+  "$defs": {
+    "Span": {
+      "additionalProperties": false,
+      "properties": {
+        "pageIndex": {
+          "minimum": 0,
+          "title": "Pageindex",
+          "type": "integer"
+        },
+        "startByte": {
+          "minimum": 0,
+          "title": "Startbyte",
+          "type": "integer"
+        },
+        "endByte": {
+          "minimum": 0,
+          "title": "Endbyte",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pageIndex",
+        "startByte",
+        "endByte"
+      ],
+      "title": "Span",
+      "type": "object"
+    },
+    "Statement": {
+      "additionalProperties": false,
+      "properties": {
+        "blockId": {
+          "title": "Blockid",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "CONDITION",
+            "SYMPTOM",
+            "MEDICATION"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "subject": {
+          "enum": [
+            "PATIENT",
+            "FAMILY",
+            "OTHER",
+            "UNKNOWN"
+          ],
+          "title": "Subject",
+          "type": "string"
+        },
+        "assertion": {
+          "enum": [
+            "CONFIRMED",
+            "SUSPECTED",
+            "NEGATED",
+            "NOT_CONFIRMED",
+            "RULED_OUT",
+            "UNKNOWN"
+          ],
+          "title": "Assertion",
+          "type": "string"
+        },
+        "medicationState": {
+          "enum": [
+            "NOT_APPLICABLE",
+            "PRESCRIBED",
+            "TAKING",
+            "NOT_STARTED",
+            "NOT_TAKING",
+            "STOPPED",
+            "UNKNOWN"
+          ],
+          "title": "Medicationstate",
+          "type": "string"
+        },
+        "temporality": {
+          "enum": [
+            "CURRENT",
+            "HISTORICAL",
+            "FUTURE",
+            "UNKNOWN"
+          ],
+          "title": "Temporality",
+          "type": "string"
+        },
+        "sourceText": {
+          "maxLength": 3000,
+          "minLength": 1,
+          "title": "Sourcetext",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/Span"
+        },
+        "contextSource": {
+          "$ref": "#/$defs/Span"
+        },
+        "contextText": {
+          "title": "Contexttext",
+          "type": "string"
+        }
+      },
+      "required": [
+        "blockId",
+        "name",
+        "kind",
+        "subject",
+        "assertion",
+        "medicationState",
+        "temporality",
+        "sourceText",
+        "source",
+        "contextSource",
+        "contextText"
+      ],
+      "title": "Statement",
+      "type": "object"
+    },
+    "VisitIssue": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "UNSUPPORTED_BLOCK",
+            "BLOCK_LIMIT",
+            "OUTPUT_LIMIT",
+            "REJECTED_CANDIDATE",
+            "DUPLICATE",
+            "STATEMENT_LIMIT"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "blockId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Blockid"
+        }
+      },
+      "required": [
+        "code",
+        "blockId"
+      ],
+      "title": "VisitIssue",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "visit-assertions-v1",
+      "default": "visit-assertions-v1",
+      "title": "Schemaversion",
+      "type": "string"
+    },
+    "sourceIRHash": {
+      "title": "Sourceirhash",
+      "type": "string"
+    },
+    "sourceHash": {
+      "title": "Sourcehash",
+      "type": "string"
+    },
+    "coverage": {
+      "const": "CONDITIONS_SYMPTOMS_MEDICATIONS_ONLY",
+      "default": "CONDITIONS_SYMPTOMS_MEDICATIONS_ONLY",
+      "title": "Coverage",
+      "type": "string"
+    },
+    "candidateBlocks": {
+      "title": "Candidateblocks",
+      "type": "integer"
+    },
+    "processedBlocks": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Processedblocks",
+      "type": "array"
+    },
+    "statements": {
+      "items": {
+        "$ref": "#/$defs/Statement"
+      },
+      "maxItems": 200,
+      "title": "Statements",
+      "type": "array"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/VisitIssue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "artifactHash": {
+      "title": "Artifacthash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "sourceIRHash",
+    "sourceHash",
+    "candidateBlocks",
+    "processedBlocks",
+    "statements",
+    "issues",
+    "artifactHash"
+  ],
+  "title": "Visit",
+  "type": "object"
+}

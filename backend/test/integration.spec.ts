@@ -64,6 +64,39 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     const content={schemaVersion:'source-ir-v1',stage:'SOURCE_ONLY',documentId:body.documentId,parserVersion:'synthetic-test',normalizerVersion:'whitespace-map-v1',sourceHash:irHash(result.pages),pages:result.pages,blocks:[{blockId:'p0:b0',kind:'paragraph',source:span,normalizedText:text,mapping:[{normalizedStartByte:0,normalizedEndByte:length,source:span,operation:'IDENTITY'}]}]};
     return {...result,sourceIR:{...content,irHash:irHash(content)} as SourceIR};
   };
+  const visitMock=async(route:string,body:any)=>{
+    if(route!=='process')return mock(route,body);
+    const f=JSON.parse(await readFile(join(__dirname,'../../contracts/visit-assertions-v1.synthetic.json'),'utf8'));
+    f.sourceIR.documentId=body.documentId;
+    const {irHash:old,...irBody}=f.sourceIR;void old;f.sourceIR.irHash=irHash(irBody);
+    f.visit.sourceIRHash=f.sourceIR.irHash;
+    const {artifactHash:previous,...visitBody}=f.visit;void previous;f.visit.artifactHash=irHash(visitBody);
+    return {...f,text:f.sourceIR.pages[0].text,pages:f.sourceIR.pages,extractionProfile:'clinical-v1',model:'unit-double'};
+  };
+  it('persists visit annotation, keeps review separate and hides stale results',async()=>{
+    ai.call.mockImplementation(visitMock);const d=await ready();
+    expect(d.visit.statements).toHaveLength(7);
+    const medication=d.facts.find((f:any)=>f.name==='Аторвастатин');
+    expect(medication.assertionStatus).toBe('UNKNOWN');
+    await request(app.getHttpServer()).patch('/api/facts/'+medication.id).send({valueText:'Synthetic user correction',reviewStatus:'CORRECTED'}).expect(200);
+    await worker.tick();
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.visit).toBeNull();
+    await worker.tick();
+    const repeated=(await request(app.getHttpServer()).get('/api/documents/'+d.id)).body;
+    expect(repeated.facts.find((f:any)=>f.name==='Аторвастатин').valueText).toBe('Synthetic user correction');
+    expect(repeated.visit.statements[5].medicationState).toBe('NOT_STARTED');
+    expect(repeated.facts).toHaveLength(7);
+    await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({text:'Synthetic updated source.'}).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.visit).toBeNull();
+    await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.visit).toBeNull();
+  });
+  it('fails a visit projection that promotes family history before publishing facts',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await visitMock(route,body);if(route==='process')r.extraction.facts[1].assertionStatus='CONFIRMED';return r;});
+    const d=await ready();expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('VISIT_ARTIFACT_INVALID');
+    expect(d.facts).toHaveLength(0);expect(d.visit).toBeNull();
+  });
   const labMock=async(route:string,body:any)=>{
     if(route!=='process')return mock(route,body);
     const fixture=JSON.parse(await readFile(join(__dirname,'../../contracts/lab-rows-v1.synthetic.json'),'utf8'));

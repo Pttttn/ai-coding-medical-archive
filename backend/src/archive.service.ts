@@ -1,3 +1,4 @@
+import {Visit} from './visit';
 import {BadRequestException, ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {DataSource, EntityManager, In, IsNull} from 'typeorm';
 import {randomUUID,createHash} from 'node:crypto';
@@ -99,11 +100,14 @@ export class ArchiveService {
     ]);
     const rawWarnings=(extractionRun?.rawJson as {warnings?:unknown}|null)?.warnings;
     const processingWarnings=Array.isArray(rawWarnings)?rawWarnings.filter((warning):warning is string=>typeof warning==='string'):[];
+    const recipe=(extractionRun?.rawJson as {processingRecipe?:Record<string,unknown>}|null)?.processingRecipe;
+    const processingRecipe=recipe?Object.fromEntries(['profile','sourceIRVersion','normalizerVersion','model','modelDigest','generationOptions'].map(k=>[k,recipe[k]])):null;
     const extraction=extractionRun?{id:extractionRun.id,textVersion:extractionRun.textVersion,model:extractionRun.model,modelDigest:extractionRun.modelDigest,promptVersion:extractionRun.promptVersion,schemaVersion:extractionRun.schemaVersion,parserVersion:extractionRun.parserVersion,status:extractionRun.status,validationErrors:extractionRun.validationErrors,createdAt:extractionRun.createdAt,completedAt:extractionRun.completedAt}:null;
     // Never expose a failed, deleted, superseded or earlier-text lab artifact as current.
-    const raw=extractionRun?.rawJson as {laboratory?:Laboratory;extractionProfile?:string}|null;
+    const raw=extractionRun?.rawJson as {laboratory?:Laboratory;visit?:Visit;extractionProfile?:string}|null;
     const laboratory=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.laboratory??null:null;
-    return {...doc,text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,extractionProfile:raw?.extractionProfile??'legacy'};
+    const visit=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.visit??null:null;
+    return {...doc,text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,visit,processingRecipe,extractionProfile:raw?.extractionProfile??'legacy'};
   }
   async revision(id:string,version:number) {
     await this.document(id,true);

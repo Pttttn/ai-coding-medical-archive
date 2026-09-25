@@ -3,7 +3,7 @@ export interface Document {
   id: string; title: string; documentType: string; documentDate: string | null;
   sourceType: string; status: string; summary: string | null; tags: string[];
   createdAt: string; updatedAt: string; deletedAt: string | null;
-  laboratory?: Laboratory | null; pages?: { pageNumber: number | null; text: string }[];
+  visit?: Visit | null; laboratory?: Laboratory | null; pages?: { pageNumber: number | null; text: string }[];
   text?: string; textVersion?: number; originalFilename?: string; facts?: Fact[];
   textRevisions?: TextRevision[]; latestJob?: { id: string; status: string; error?: string; errorCode?: string; attempts?: number }; processingError?: string; processingWarnings?: string[]; isSeed?: boolean;
 }
@@ -40,4 +40,10 @@ export interface Laboratory {
   dates: { role: string; raw: string }[];
   issues: { code: string }[];
   candidateRows: number;
+}
+
+export interface Visit {
+  candidateBlocks: number; processedBlocks: string[]; issues: { code: string }[];
+  statements: { name: string; kind: string; subject: string; assertion: string; medicationState: string;
+    temporality: string; sourceText: string; contextText: string; source: { pageIndex: number } }[];
 }
