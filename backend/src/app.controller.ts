@@ -7,7 +7,7 @@ import {DataSource} from 'typeorm';
 import {createReadStream} from 'node:fs';
 import {ArchiveService} from './archive.service';
 import {ConsultationService} from './consultation.service';
-import {AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
+import {AddConsultationResponseDto,ConsultationQueryDto,AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
 import {MAX_UPLOAD_BYTES} from './core';
 
 @ApiTags('Local archive')
@@ -79,6 +79,10 @@ export class AppController {
   editTag(@Param('id',ParseUUIDPipe)id:string,@Body()dto:TagDto){return this.archive.editTag(id,dto.name);}
   @Delete('tags/:id') @ApiOperation({summary:'Delete a tag from catalogue and documents'})
   deleteTag(@Param('id',ParseUUIDPipe)id:string){return this.archive.deleteTag(id);}
+  @Get('consultations') @ApiOperation({summary:'Saved local consultations with response counts'})
+  listConsultations(@Query()dto:ConsultationQueryDto){return this.consultation.list(dto);}
+  @Post('consultations/:id/responses') @ApiOperation({summary:'Store a manually pasted model response against an immutable reviewed prompt'})
+  addConsultationResponse(@Param('id',ParseUUIDPipe)id:string,@Body()dto:AddConsultationResponseDto){return this.consultation.addResponse(id,dto);}
   @Post('consultations/prepare') @ApiOperation({summary:'Prepare a locally sanitized consultation draft; never sends it externally'})
   prepare(@Body()dto:PrepareConsultationDto){return this.consultation.prepare(dto);}
   @Get('consultations/:id') @ApiOperation({summary:'Local consultation preview, warnings, and source refs'})

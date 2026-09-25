@@ -316,3 +316,9 @@
 .ask-period input { padding: 8px; border: 1px solid #dbe3df; border-radius: 8px; }
 .ask-period p { flex-basis: 100%; margin: 0; }
 .coverage-summary { margin-bottom: 20px; line-height: 1.6; }
+
+.consultation-history { display:grid; gap:8px; margin:16px 0; }
+.consultation-history-item { display:flex; flex-direction:column; align-items:flex-start; text-align:left; white-space:normal; overflow-wrap:anywhere; }
+.consultation-history-item span { font-size:12px; }
+.consultation-text { white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; line-height:1.6; }
+.consultation-answer { border-top:1px solid #dce3df; padding:16px 0; }

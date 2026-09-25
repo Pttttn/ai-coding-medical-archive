@@ -2,8 +2,8 @@ import {ConflictException,Injectable,NotFoundException,BadRequestException} from
 import {DataSource,In,IsNull} from 'typeorm';
 import {ArchiveService,audit} from './archive.service';
 import {AiClient,contentHash,ensureReviewed,exportSafe} from './core';
-import {Consultation,Document,MedicalFact,TextRevision} from './entities';
-import {PrepareConsultationDto} from './dto';
+import {Consultation,ConsultationPrompt,ConsultationResponse,Document,MedicalFact,TextRevision} from './entities';
+import {PrepareConsultationDto,ConsultationQueryDto,AddConsultationResponseDto} from './dto';
 
 const sameSnapshots=(expected:Document[],current:Document[])=>current.length===expected.length&&expected.every(d=>current.some(n=>n.id===d.id&&n.generation===d.generation&&n.textVersion===d.textVersion));
 const sourceChanged=()=>new ConflictException({message:'Источники изменились. Подготовьте пакет повторно.',code:'SOURCE_CHANGED'});
@@ -11,7 +11,30 @@ const sourceChanged=()=>new ConflictException({message:'Источники из�
 @Injectable()
 export class ConsultationService {
   constructor(private readonly db:DataSource,private readonly ai:AiClient,private readonly archive:ArchiveService){}
-  async get(id:string){const c=await this.db.getRepository(Consultation).findOneBy({id});if(!c)throw new NotFoundException('Консультация не найдена');return c;}
+  async get(id:string){const c=await this.db.getRepository(Consultation).findOneBy({id});if(!c)throw new NotFoundException('Консультация не найдена');return {...c,prompts:await this.db.getRepository(ConsultationPrompt).find({where:{consultationId:id},order:{createdAt:'ASC',id:'ASC'}}),responses:await this.db.getRepository(ConsultationResponse).find({where:{consultationId:id},order:{createdAt:'ASC',id:'ASC'}})};}
+  async list(dto:ConsultationQueryDto) {
+    const qb=this.db.getRepository(Consultation).createQueryBuilder('c');
+    if(dto.q?.trim())qb.where('c.question ILIKE :q',{q:'%'+dto.q.trim()+'%'});
+    const [rows,total]=await qb.orderBy('c.createdAt','DESC').addOrderBy('c.id','DESC').skip((dto.page-1)*dto.pageSize).take(dto.pageSize).getManyAndCount();
+    const counts=rows.length?await this.db.getRepository(ConsultationResponse).createQueryBuilder('r').select('r.consultationId','id').addSelect('COUNT(*)','count').where('r.consultationId IN (:...ids)',{ids:rows.map(r=>r.id)}).groupBy('r.consultationId').getRawMany():[];
+    return {items:rows.map(c=>({id:c.id,question:c.question,status:c.status,createdAt:c.createdAt,updatedAt:c.updatedAt,sourceCount:c.sourceRefs.length,responseCount:Number(counts.find(r=>r.id===c.id)?.count??0)})),total,page:dto.page,pageSize:dto.pageSize};
+  }
+  async addResponse(id:string,dto:AddConsultationResponseDto) {
+    return this.db.transaction(async m=>{
+      const c=await m.getRepository(Consultation).findOne({where:{id},lock:{mode:'pessimistic_write'}});
+      if(!c)throw new NotFoundException('Консультация не найдена');
+      const prompt=await m.getRepository(ConsultationPrompt).findOneBy({id:dto.promptId,consultationId:id});
+      if(!prompt)throw new BadRequestException({message:'Выберите сохранённую проверенную версию запроса',code:'PROMPT_VERSION_REQUIRED'});
+      const existing=await m.getRepository(ConsultationResponse).findOneBy({id:dto.id});
+      if(existing){
+        if(existing.consultationId!==id||existing.promptId!==dto.promptId||existing.model!==dto.model.trim()||existing.content!==dto.content)throw new ConflictException('Повторный идентификатор с другим содержимым');
+        return existing;
+      }
+      const response=await m.getRepository(ConsultationResponse).save({id:dto.id,consultationId:id,promptId:dto.promptId,model:dto.model.trim(),content:dto.content});
+      await audit(m,null,'CONSULTATION',id,'CONSULTATION_RESPONSE_ADDED',null,{responseId:response.id,promptId:prompt.id,contentHash:contentHash(response.content)});
+      return response;
+    });
+  }
   async prepare(dto:PrepareConsultationDto) {
     // Explicit selection already expresses the user's relevance decision; QA generation is
     // needed only for automatic selection and must not veto an explicitly chosen source.
@@ -68,6 +91,7 @@ export class ConsultationService {
       if(!c)throw new NotFoundException('Консультация не найдена');
       if(c.contentHash!==hash||contentHash(c.content)!==hash)throw new ConflictException({message:'Текст изменился. Просмотрите текущую версию.',code:'CONTENT_CHANGED'});
       c.reviewedHash=hash;c.status='REVIEWED';await m.save(c);
+      if(!await m.getRepository(ConsultationPrompt).findOneBy({consultationId:id,contentHash:hash}))await m.getRepository(ConsultationPrompt).save({consultationId:id,content:c.content,contentHash:hash,sourceRefs:c.sourceRefs});
       await audit(m,null,'CONSULTATION',id,'CONSULTATION_REVIEWED',null,{contentHash:hash});return c;
     });
   }
