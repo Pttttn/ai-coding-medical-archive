@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 # Exact source spelling. One annotation per explicitly described event; no medical inference.
@@ -656,6 +657,8 @@ def main():
     ]
     for ident, split, title, layout, values in CASES:
         rows = [dict(zip(FIELDS, row)) for row in values]
+        for row in rows:
+            row["name"] = re.search(re.escape(row["name"]), row["sourceText"], re.I).group()
         sentences = [r["sourceText"] for r in rows]
         if layout == "paired":
             paragraphs = [
