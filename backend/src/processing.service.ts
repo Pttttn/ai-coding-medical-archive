@@ -1,5 +1,6 @@
 import {Visit,validateVisit} from './visit';
-import {SourceIR,validateSourceIR} from './source-ir';
+import {irHash,SourceIR,validateSourceIR} from './source-ir';
+import {ParseRecipe,validateParseRecipe,validateProcessingRecipe} from './recipe';
 import {Laboratory,validateLaboratory} from './laboratory';
 import {Injectable,OnApplicationBootstrap,OnApplicationShutdown} from '@nestjs/common';
 import {DataSource} from 'typeorm';
@@ -13,6 +14,7 @@ export interface ProcessResult {
   extraction:{documentType:string;documentDate:string|null;summary:string;tags:string[];facts:ExtractedFact[]};
   warnings?:string[];model?:string;modelDigest?:string;promptVersion?:string;schemaVersion?:string;parserVersion?:string;
 }
+export interface ParseResult {text:string;pages:Page[];sourceIR:SourceIR;parseRecipe:ParseRecipe;warnings?:string[];parserVersion?:string}
 const norm=(s:string)=>s.replace(/\s+/g,' ').trim();
 const isDate=(s:unknown)=>s===null||s===undefined||(typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&!Number.isNaN(Date.parse(s))&&new Date(s).toISOString().slice(0,10)===s);
 export function validateExtraction(r:ProcessResult):void {
@@ -72,26 +74,26 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
       }
       let revision=await this.db.getRepository(TextRevision).findOneBy({documentId:doc.id,version:doc.textVersion});
       if(job.operation==='PROCESS') {
-        await this.setStatus(doc.id,job.generation,revision?'EXTRACTING':'PARSING');
-        run=await this.db.getRepository(ExtractionRun).save({documentId:doc.id,textVersion:revision?.version??1,status:'RUNNING',validationErrors:[]});
-        const result=await this.ai.call<ProcessResult>('process',{documentId:doc.id,version:revision?.version??1,title:doc.title,...(doc.sourceType==='PDF'&&revision?.parser!=='user-edit'?{filePath:doc.storagePath}:revision?{text:revision.content}:{filePath:doc.storagePath})});
+        const stage=await this.parseStage(job,doc,revision);
+        if(!stage){await this.db.getRepository(ProcessingJob).update(job.id,{status:'SUPERSEDED'});return;}
+        revision=stage.revision;
+        await this.setStatus(doc.id,job.generation,'EXTRACTING');
+        run=await this.db.getRepository(ExtractionRun).save({documentId:doc.id,textVersion:revision.version,sourceIrRevisionId:stage.id,status:'RUNNING',validationErrors:[]});
+        const result=await this.ai.call<ProcessResult>('process',{documentId:doc.id,version:revision.version,title:doc.title,sourceIR:stage.ir});
+        result.warnings=[...stage.warnings,...(Array.isArray(result.warnings)?result.warnings:[])];
         await this.db.getRepository(ExtractionRun).update(run.id,{rawJson:result as any,model:result.model??null,modelDigest:result.modelDigest??null,promptVersion:result.promptVersion??null,schemaVersion:result.schemaVersion??null,parserVersion:result.parserVersion??null});
         validateExtraction(result);
-        if(result.sourceIR!==undefined){
-          validateSourceIR(result.sourceIR,doc.id,result.pages);
-          if(result.text!==result.pages.map(p=>p.text).join('\n\n'))throw new AiError('SOURCE_IR_INVALID');
-        }
+        // Extraction must be a projection of exactly the stored parse stage, never a re-parse.
+        if(result.text!==revision.content||irHash(result.pages)!==stage.ir.sourceHash||(result.sourceIR!==undefined&&result.sourceIR.irHash!==stage.ir.irHash))throw new AiError('SOURCE_IR_INVALID');
+        result.sourceIR=stage.ir;
+        const recipeHash=validateProcessingRecipe(result.processingRecipe,stage.parseRecipeHash);
         if(result.laboratory!=null&&result.visit!=null)throw new AiError('VISIT_ARTIFACT_INVALID');
         if(result.visit!=null)validateVisit(result.visit,result.sourceIR,result.extraction);
         if(result.laboratory!=null)validateLaboratory(result.laboratory,result.sourceIR,result.extraction.facts);
         const applied=await this.db.transaction(async m=>{
           const current=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
           if(!current||current.deletedAt||current.generation!==job.generation)return false;
-          if(!revision||revision.content!==result.text||JSON.stringify(revision.pages.length?revision.pages:[{pageNumber:null,text:revision.content}])!==JSON.stringify(result.pages)) {
-            current.textVersion++;
-            revision=await m.save(TextRevision,m.create(TextRevision,{documentId:doc.id,version:current.textVersion,content:result.text,pages:result.pages,parser:'pypdf',parserVersion:result.parserVersion??'unknown'}));
-          }
-          if(result.sourceIR)await m.query('INSERT INTO source_ir_revisions ("documentId","textRevisionId","irHash","schemaVersion",content) VALUES ($1,$2,$3,$4,$5::jsonb) ON CONFLICT ("textRevisionId","irHash") DO NOTHING',[doc.id,revision!.id,result.sourceIR.irHash,result.sourceIR.schemaVersion,JSON.stringify(result.sourceIR)]);
+          if(current.textVersion!==revision!.version)return false;
           const preserved=await m.getRepository(MedicalFact).createQueryBuilder('f').where('f."documentId"=:id AND f.active = true AND f."reviewStatus" <> :status',{id:doc.id,status:'UNREVIEWED'}).getMany();
           await m.update(MedicalFact,{documentId:doc.id,reviewStatus:'UNREVIEWED',active:true},{active:false});
           for(const incoming of result.extraction.facts) {
@@ -106,7 +108,7 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
           current.tags=normalizeTags([...current.tags,...result.extraction.tags]);await ensureTags(m,current.tags);
           current.searchText=[current.title,current.summary,revision!.content].join('\n');current.status='INDEXING';
           await m.save(current);await rebuildTimeline(m,current);
-          await m.update(ExtractionRun,run!.id,{textVersion:revision!.version,model:result.model??'unknown',modelDigest:result.modelDigest??null,promptVersion:result.promptVersion??'unknown',schemaVersion:result.schemaVersion??'unknown',parserVersion:result.parserVersion??'unknown',status:'READY',rawJson:result as any,completedAt:new Date()});
+          await m.update(ExtractionRun,run!.id,{textVersion:revision!.version,model:result.model??'unknown',modelDigest:result.modelDigest??null,promptVersion:result.promptVersion??'unknown',schemaVersion:result.schemaVersion??'unknown',parserVersion:result.parserVersion??'unknown',status:'READY',rawJson:result as any,recipeHash,completedAt:new Date()});
           await audit(m,doc.id,'DOCUMENT',doc.id,'EXTRACTION_COMPLETED',null,{runId:run!.id,textVersion:revision!.version});
           return true;
         });
@@ -134,6 +136,36 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
       if(!retry||job.operation!=='REMOVE') await this.db.getRepository(Document).createQueryBuilder().update().set({status:code==='UNSUPPORTED_OCR_REQUIRED'?'UNSUPPORTED_OCR_REQUIRED':retry?'UPLOADED':'FAILED',errorCode:code}).where('id=:id AND generation=:generation AND "deletedAt" IS NULL',{id:job.documentId,generation:job.generation}).execute();
       if(!retry)await audit(this.db.manager,job.documentId,'DOCUMENT',job.documentId,'PROCESSING_FAILED',null,{code,jobId:job.id});
     }
+  }
+  /** Deterministic parse stage, committed before any model call. A retry of the same job reuses it. */
+  private async parseStage(job:ProcessingJob,doc:Document,revision:TextRevision|null):Promise<{id:string;ir:SourceIR;parseRecipeHash:string;revision:TextRevision;warnings:string[]}|null> {
+    if(job.sourceIrRevisionId&&revision) {
+      const [row]=await this.db.query('SELECT id,content,"parseRecipeHash" FROM source_ir_revisions WHERE id=$1 AND "documentId"=$2 AND "textRevisionId"=$3',[job.sourceIrRevisionId,doc.id,revision.id]);
+      if(row?.parseRecipeHash)return {id:row.id,ir:row.content,parseRecipeHash:row.parseRecipeHash,revision,warnings:[]};
+    }
+    await this.setStatus(doc.id,job.generation,'PARSING');
+    const parsed=await this.ai.call<ParseResult>('parse',{documentId:doc.id,version:revision?.version??1,title:doc.title,...(doc.sourceType==='PDF'&&revision?.parser!=='user-edit'?{filePath:doc.storagePath}:revision?{text:revision.content}:{filePath:doc.storagePath})});
+    if(!parsed||typeof parsed.text!=='string'||!parsed.text.trim()||parsed.text.length>2_000_000||!Array.isArray(parsed.pages)||!parsed.pages.length)throw new AiError('SOURCE_IR_INVALID');
+    validateSourceIR(parsed.sourceIR,doc.id,parsed.pages);
+    if(parsed.text!==parsed.pages.map(p=>p.text).join('\n\n'))throw new AiError('SOURCE_IR_INVALID');
+    validateParseRecipe(parsed.parseRecipe,parsed.sourceIR);
+    const warnings=Array.isArray(parsed.warnings)?parsed.warnings.filter((w):w is string=>typeof w==='string'):[];
+    return this.db.transaction(async m=>{
+      const current=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
+      if(!current||current.deletedAt||current.generation!==job.generation)return null;
+      let stored=await m.getRepository(TextRevision).findOneBy({documentId:doc.id,version:current.textVersion});
+      if(!stored||stored.content!==parsed.text||JSON.stringify(stored.pages.length?stored.pages:[{pageNumber:null,text:stored.content}])!==JSON.stringify(parsed.pages)) {
+        current.textVersion++;await m.save(current);
+        stored=await m.save(TextRevision,m.create(TextRevision,{documentId:doc.id,version:current.textVersion,content:parsed.text,pages:parsed.pages,parser:'pypdf',parserVersion:parsed.sourceIR.parserVersion}));
+      }
+      const ir=parsed.sourceIR,recipe=parsed.parseRecipe;
+      await m.query('INSERT INTO source_ir_revisions ("documentId","textRevisionId","irHash","schemaVersion",content,"parseRecipe","parseRecipeHash") VALUES ($1,$2,$3,$4,$5::jsonb,$6::jsonb,$7) ON CONFLICT ("textRevisionId","irHash") DO NOTHING',[doc.id,stored.id,ir.irHash,ir.schemaVersion,JSON.stringify(ir),JSON.stringify(recipe),recipe.recipeHash]);
+      const [row]=await m.query('SELECT id,"parseRecipeHash" FROM source_ir_revisions WHERE "textRevisionId"=$1 AND "irHash"=$2',[stored.id,ir.irHash]);
+      await m.update(ProcessingJob,job.id,{sourceIrRevisionId:row.id});
+      await audit(m,doc.id,'DOCUMENT',doc.id,'PARSE_COMPLETED',null,{jobId:job.id,textVersion:stored.version,parseRecipeHash:recipe.recipeHash});
+      // An IR row stored before recipes were recorded keeps its immutable content; the job still names this run's recipe.
+      return {id:row.id,ir,parseRecipeHash:recipe.recipeHash,revision:stored,warnings};
+    });
   }
   private async setStatus(id:string,generation:number,status:string){await this.db.getRepository(Document).update({id,generation},{status});}
 }
