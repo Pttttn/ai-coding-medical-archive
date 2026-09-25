@@ -113,3 +113,12 @@
 - [x] CI 257 AI / 86 backend / 25 frontend, browser desktop/mobile и сохранность VISIT/фактов/IR после Compose down/up.
 
 - [x] Отдельное сравнение source IR/extractor/projection на mpc1 Q8 27B: held-out 26/28 × 3, 0 critical promotions, стабильные hashes; не полный Docker/backend/QA прогон, gates ещё не пройдены.
+
+
+## Второе чтение P0/P2b, 25 сентября 2026
+
+- [x] Зафиксировать новый corpus v2 (10 TXT / 60 assertions) и worksheet независимой ручной проверки; сам review ещё не выполнен.
+- [x] Разделить строгую tuple-оценку, смысл статусов и точность цитат без изменения прежних результатов; withheld остаются FN.
+- [x] Реализовать opt-in clinical-reviewed-v1: blind second reading, source-bound v2 контракт, quarantine OBSERVATION/UNKNOWN, приватный UI и тесты между сервисами.
+- [x] Development 9B × 3: устойчивые 28/36 до проверки и 10/36 AGREES, критическая ошибка сохранилась. Эксперимент не принят как улучшение; [протокол и дальнейшие серии](docs/evaluation/visit-review-v1/README.md).
+- [ ] Независимый human gold, сравнение отдельной проверяющей модели/правил и подтверждение полезности на новом frozen наборе; затем recipe/checkpoints и единая facts/chunks activation P3.

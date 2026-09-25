@@ -1,0 +1,1778 @@
+{
+  "kind": "visit-source-ir-extractor-ssh-series",
+  "createdAt": "2026-09-25T09:33:09.398940+00:00",
+  "split": "held-out",
+  "plannedRepeats": 1,
+  "plannedCasesPerRepeat": 4,
+  "complete": true,
+  "goldSha256": "f3290ddf47e5b7d97a0e0c52fa78ce26f487aabf42bcb10c23682696cf5ccb44",
+  "codeHashes": {
+    "ai-service/medical_ai/visit.py": "3e4efa47d05633e475c6f75a6650edf38807823815cfaeac1d9996759ff53224",
+    "ai-service/medical_ai/visit_review.py": "b44ced837b19f680765caf45bb5fe735ba4b24eb5220c275127de8333ef2f832",
+    "ai-service/medical_ai/source_ir.py": "61fed93e79286703a839d1e31f1e76798add849d5ef6c5a168694f228c2ca871",
+    "ai-service/medical_ai/ollama.py": "1eeeac90d1b223b39b08dd36c3ac8cd2d5a0fbfe2fa1c137bfffaeeab934f787",
+    "scripts/evaluate_visit_ssh.py": "75e15abaa341e55b0631deba91a3e685464d23d7a015221c9f5e1bb0202ecc77",
+    "scripts/evaluate_clinical_ssh.py": "f1b525c784a439d8568dc6ada6cc0c91e0fe9fa8412d62d2fbc3ada9848ccf52",
+    "scripts/evaluate_visit_ingestion.py": "f315f39de1a7147dfc1ce548eaa3f00fc616f6a24f0714a5573c733720e8317a",
+    "scripts/visit_semantic_metrics.py": "14fd9177020b6ee57cac8e4e6b300c02940a41adffc23b5cf79cc2772170f338"
+  },
+  "recipe": {
+    "modelAlias": "qwen3.8-27b-q8-100k-cuda",
+    "modelDigest": null,
+    "promptVersion": "visit-extract-v2",
+    "temperature": 0,
+    "seed": 42,
+    "maxTokens": 2048,
+    "enableThinking": false,
+    "server": {
+      "models": [
+        "qwen3.8-27b-q8-100k-cuda"
+      ],
+      "context": 180224,
+      "slots": 1,
+      "build": "b0-unknown"
+    }
+  },
+  "limitations": [
+    "AI-authored synthetic gold; no independent clinical review.",
+    "12 fictional visits / 84 statements. Explicit source assertions; held-out has different specialties and paired prose. Small correlated set, not clinical validation.",
+    "Source IR -> real model annotation -> checked legacy projection only. No backend, indexing, Docker or QA acceptance.",
+    "Server context applies; Ollama num_ctx is NOT forwarded. Different installation/weights; not an isolated parameter-count comparison.",
+    "Model alias is operator-provided; no fresh GGUF digest or provenance verification."
+  ],
+  "results": [
+    {
+      "case": "v09",
+      "split": "held-out",
+      "repeat": 1,
+      "score": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "semantic": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 7,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": []
+      },
+      "released": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 7,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": []
+      },
+      "status": "READY",
+      "verifiedSources": 7,
+      "projectedFacts": 7,
+      "verificationStatuses": null,
+      "verificationHash": null,
+      "semanticHash": "70550171014d1ff332b7507243e694c28d947eab50de70425cf9874f284c4b61",
+      "issues": [],
+      "seconds": 82.61
+    },
+    {
+      "case": "v10",
+      "split": "held-out",
+      "repeat": 1,
+      "score": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 1,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 1
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 1,
+              "fn": 1
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "semantic": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 6,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": [
+          {
+            "goldIndex": 2,
+            "fields": [
+              "sourceText"
+            ]
+          }
+        ]
+      },
+      "released": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 6,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": [
+          {
+            "goldIndex": 2,
+            "fields": [
+              "sourceText"
+            ]
+          }
+        ]
+      },
+      "status": "READY",
+      "verifiedSources": 7,
+      "projectedFacts": 7,
+      "verificationStatuses": null,
+      "verificationHash": null,
+      "semanticHash": "be21ce8995be2cf97a5aea1b15405e4e5f70ff914dd1f6ccf3b95d54459f995a",
+      "issues": [],
+      "seconds": 67.77
+    },
+    {
+      "case": "v11",
+      "split": "held-out",
+      "repeat": 1,
+      "score": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 1,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 1
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "semantic": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 6,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": [
+          {
+            "goldIndex": 6,
+            "fields": [
+              "sourceText"
+            ]
+          }
+        ]
+      },
+      "released": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 6,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": [
+          {
+            "goldIndex": 6,
+            "fields": [
+              "sourceText"
+            ]
+          }
+        ]
+      },
+      "status": "READY",
+      "verifiedSources": 7,
+      "projectedFacts": 7,
+      "verificationStatuses": null,
+      "verificationHash": null,
+      "semanticHash": "e7415d4e8d39db2a7f409fd9f199db9fd0f5d0cabedae27479b60f2c1e2d6d52",
+      "issues": [],
+      "seconds": 42.06
+    },
+    {
+      "case": "v12",
+      "split": "held-out",
+      "repeat": 1,
+      "score": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "semantic": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 7,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": []
+      },
+      "released": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 0,
+        "classes": {
+          "kind": {
+            "CONDITION": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SYMPTOM": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "MEDICATION": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "subject": {
+            "PATIENT": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "medicationState": {
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0,
+        "aligned": 7,
+        "exactQuotes": 7,
+        "unmatchedGold": [],
+        "unmatchedActual": 0,
+        "ambiguousActual": 0,
+        "differences": []
+      },
+      "status": "READY",
+      "verifiedSources": 7,
+      "projectedFacts": 7,
+      "verificationStatuses": null,
+      "verificationHash": null,
+      "semanticHash": "37a62755fdb231a916cc3b16bc9d2eb2b87768851e5a06fd535765ff3c96b8ad",
+      "issues": [],
+      "seconds": 65.92
+    }
+  ],
+  "summary": [
+    {
+      "repeat": 1,
+      "cases": 4,
+      "ready": 4,
+      "tp": 26,
+      "fp": 2,
+      "fn": 2,
+      "criticalPromotions": 0,
+      "macroF1": {
+        "subject": 0.73913,
+        "assertion": 0.966667,
+        "medicationState": 0.944862,
+        "temporality": 0.863095
+      }
+    }
+  ],
+  "semanticSummary": [
+    {
+      "repeat": 1,
+      "tp": 28,
+      "fp": 0,
+      "fn": 0,
+      "criticalPromotions": 0,
+      "aligned": 28,
+      "exactQuotes": 26,
+      "unmatchedActual": 0,
+      "ambiguousActual": 0,
+      "macroF1": {
+        "kind": 1.0,
+        "subject": 1.0,
+        "assertion": 1.0,
+        "medicationState": 1.0,
+        "temporality": 1.0
+      }
+    }
+  ],
+  "releasedSummary": [
+    {
+      "repeat": 1,
+      "tp": 28,
+      "fp": 0,
+      "fn": 0,
+      "criticalPromotions": 0,
+      "aligned": 28,
+      "exactQuotes": 26,
+      "unmatchedActual": 0,
+      "ambiguousActual": 0,
+      "macroF1": {
+        "kind": 1.0,
+        "subject": 1.0,
+        "assertion": 1.0,
+        "medicationState": 1.0,
+        "temporality": 1.0
+      }
+    }
+  ]
+}
