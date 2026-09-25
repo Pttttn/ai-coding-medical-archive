@@ -203,6 +203,59 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   it('searches PostgreSQL text and filters with server pagination',async()=>{await ready();await note('Другая заметка о симптомах.');const r=await request(app.getHttpServer()).get('/api/documents?page=1&pageSize=1&tag=lipid&q=LDL').expect(200);expect(r.body.total).toBe(1);expect(r.body.items).toHaveLength(1);});
   it('creates actual provenance and leaves unknown medical dates null',async()=>{const d=await ready();expect(d.documentDate).toBeNull();expect(d.facts).toHaveLength(1);const r=await request(app.getHttpServer()).get('/api/facts/'+d.facts[0].id+'/source').expect(200);expect(r.body.textVersion).toBe(1);expect(r.body.pageNumber).toBeNull();expect(r.body.sourceText).toBe('LDL 4.7 mmol/L.');});
   it('preserves corrected fact value and original provenance after reprocessing',async()=>{const d=await ready(),f=d.facts[0];await request(app.getHttpServer()).patch('/api/facts/'+f.id).send({valueNumber:4.1}).expect(200);await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);await worker.tick();await worker.tick();const updated=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;expect(updated.facts).toHaveLength(1);expect(updated.facts[0].valueNumber).toBe(4.1);expect(updated.facts[0].originalValue.valueNumber).toBe(4.7);const h=await request(app.getHttpServer()).get('/api/facts/'+f.id+'/history').expect(200);expect(h.body.total).toBe(1);expect(h.body.items[0].oldValue.valueNumber).toBe(4.7);});
+  it('stores an edited value as a user correction even when CONFIRMED is requested',async()=>{
+    const d=await ready(),f=d.facts[0];
+    const confirmed=(await request(app.getHttpServer()).patch('/api/facts/'+f.id).send({valueNumber:5.2,reviewStatus:'CONFIRMED'}).expect(200)).body;
+    expect(confirmed.reviewStatus).toBe('CORRECTED');
+    // Unchanged value may still be confirmed; the extracted value stays the source claim.
+    await worker.tick();
+    const g=(await ready('HDL 1.2 mmol/L.')).facts[0];
+    expect((await request(app.getHttpServer()).patch('/api/facts/'+g.id).send({valueNumber:4.7,reviewStatus:'CONFIRMED'}).expect(200)).body.reviewStatus).toBe('CONFIRMED');
+    // An UNREVIEWED edit is also a correction, so reprocessing cannot silently discard it.
+    await worker.tick();
+    const h=(await ready('LDL 3.9 mmol/L.')).facts[0];
+    expect((await request(app.getHttpServer()).patch('/api/facts/'+h.id).send({unit:'mg/dL',reviewStatus:'UNREVIEWED'}).expect(200)).body.reviewStatus).toBe('CORRECTED');
+    // Confirming a previously corrected value does not turn it into a document claim.
+    expect((await request(app.getHttpServer()).patch('/api/facts/'+f.id).send({reviewStatus:'CONFIRMED'}).expect(200)).body.reviewStatus).toBe('CORRECTED');
+    const history=(await request(app.getHttpServer()).get('/api/facts/'+f.id+'/history').expect(200)).body;
+    expect(history.items.map((i:any)=>i.changeType)).toEqual(['CORRECTED','CORRECTED']);
+  });
+  it('keeps fact extraction when metadata is edited before a pending text edit is processed',async()=>{
+    const d=await ready();
+    await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({text:'LDL 4.1 mmol/L.'}).expect(200);
+    await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({title:'Переименованный анализ'}).expect(200);
+    for(let n=0;n<4;n++)await worker.tick();
+    const updated=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(updated.status).toBe('READY');
+    expect(updated.textVersion).toBe(2);
+    expect(updated.extraction.textVersion).toBe(2);
+    expect(updated.facts).toHaveLength(1);
+    expect(updated.facts[0].provenance.sourceText).toBe('LDL 4.1 mmol/L.');
+  });
+  it('does not turn a failed extraction READY after a metadata edit',async()=>{
+    const d=await note();
+    ai.call.mockRejectedValueOnce(new AiError('EXTRACTION_INVALID'));
+    await worker.tick();
+    expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('FAILED');
+    ai.call.mockRejectedValueOnce(new AiError('EXTRACTION_INVALID'));
+    const edited=(await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({title:'Новое название'}).expect(200)).body;
+    expect((await db.getRepository(ProcessingJob).findOneByOrFail({id:edited.jobId})).operation).toBe('PROCESS');
+    await worker.tick();
+    expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('FAILED');
+  });
+  it('re-extracts a pending text edit when a reviewed fact is corrected before processing',async()=>{
+    const d=await ready(),f=d.facts[0];
+    await request(app.getHttpServer()).patch('/api/facts/'+f.id).send({reviewStatus:'CONFIRMED'}).expect(200);
+    await worker.tick();
+    await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({text:'LDL 4.7 mmol/L.\nHDL 1.2 mmol/L.'}).expect(200);
+    const corrected=(await request(app.getHttpServer()).patch('/api/facts/'+f.id).send({valueNumber:4.8}).expect(200)).body;
+    expect((await db.getRepository(ProcessingJob).findOneByOrFail({id:corrected.jobId})).operation).toBe('PROCESS');
+    for(let n=0;n<4;n++)await worker.tick();
+    const updated=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(updated.status).toBe('READY');
+    expect(updated.extraction.textVersion).toBe(2);
+    expect(updated.facts.find((x:any)=>x.id===f.id).valueNumber).toBe(4.8);
+  });
   it('keeps immutable prior text and excludes pending edits from RAG',async()=>{const d=await ready();await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({text:'LDL 4.1 mmol/L.'}).expect(200);const rev=await request(app.getHttpServer()).get('/api/documents/'+d.id+'/text-revisions/1').expect(200);expect(rev.body.content).toBe('LDL 4.7 mmol/L.');ai.call.mockClear();const answer=await request(app.getHttpServer()).post('/api/ask').send({question:'Каков LDL?'}).expect(201);expect(answer.body.insufficientContext).toBe(true);expect(ai.call).not.toHaveBeenCalled();});
   it('soft deletes from active archive, facts, timeline and dashboard, then removes index',async()=>{const d=await ready();await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);expect((await request(app.getHttpServer()).get('/api/documents').expect(200)).body.total).toBe(0);expect((await request(app.getHttpServer()).get('/api/timeline').expect(200)).body.total).toBe(0);expect((await request(app.getHttpServer()).get('/api/dashboard').expect(200)).body.medicalFacts).toBe(0);await request(app.getHttpServer()).get('/api/facts/'+d.facts[0].id+'/source').expect(404);await worker.tick();expect(ai.call).toHaveBeenCalledWith('remove',{documentId:d.id});});
   it('restores trash and reindexes without overwriting source history',async()=>{const d=await ready();await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);await worker.tick();expect((await request(app.getHttpServer()).get('/api/documents?deleted=true').expect(200)).body.total).toBe(1);await request(app.getHttpServer()).post('/api/documents/'+d.id+'/restore').expect(201);await worker.tick();const r=await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200);expect(r.body.status).toBe('READY');expect(r.body.textRevisions).toHaveLength(1);});
