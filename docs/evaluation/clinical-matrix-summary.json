@@ -1,0 +1,3174 @@
+{
+  "description": "Aggregate metrics only; one-run stability counts are not evidence of repeatability.",
+  "experiments": [
+    {
+      "kind": "synthetic-direct-engine-matrix-not-API",
+      "createdAt": "2026-09-24T20:43:03.099416+00:00",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "673bc300f0ad0bd2c588f40d31d2b14b4e4c642fdc8086c9c422e3ec913206fd",
+      "modelDigests": {
+        "qwen3.5:2b": "324d162be6ca5629ae4517c8710434d0bd2d665bc94dbad46e9af8fbf8a2f0df",
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "qwen3.5:9b": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "qwen3.5:4b": "2a654d98e6fba55d452b7043684e9b57a947e393bbffa62485a7aac05ee4eefd",
+        "qwen3.5:27b": "7653528ba5cba4dd8e19da24aaddc7f4d0b5ecd93571c0825dfd4137958ec06e"
+      },
+      "referenceDate": "2026-09-24",
+      "parameters": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 4096,
+        "batchChunks": 6,
+        "scanLimit": 120
+      },
+      "engineSha256": "b54ce170c957fc2ad9dc8ee14e0e8f3c261f58bffd16b198f9c5afb92202d5fa",
+      "environment": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14"
+      },
+      "index": {
+        "files": 32,
+        "chunks": 37,
+        "lastIndexedAt": "2026-09-24T20:43:03.071827+00:00",
+        "corpus": "archive",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      },
+      "plannedRuns": 1,
+      "plannedProfiles": [
+        {
+          "model": "qwen3.5:2b",
+          "strategy": "scan"
+        },
+        {
+          "model": "qwen3.5:2b",
+          "strategy": "hybrid12"
+        },
+        {
+          "model": "qwen3.5:4b",
+          "strategy": "scan"
+        },
+        {
+          "model": "qwen3.5:4b",
+          "strategy": "hybrid12"
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "scan"
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "hybrid12"
+        },
+        {
+          "model": "qwen3.5:27b",
+          "strategy": "scan"
+        },
+        {
+          "model": "qwen3.5:27b",
+          "strategy": "hybrid12"
+        }
+      ],
+      "selectedCases": [
+        "chronic",
+        "diabetes",
+        "cholesterol",
+        "abnormal-year",
+        "head-injury",
+        "metformin",
+        "allergy",
+        "missing",
+        "illnesses-plain",
+        "abnormal-plain"
+      ],
+      "providerMetadata": {
+        "interruption": "Local 27B scan deliberately interrupted because of CPU offload latency; 27B hybrid12 not started. Completed cases and profiles retained."
+      },
+      "complete": false,
+      "expectedCaseCount": 10,
+      "profiles": [
+        {
+          "model": "qwen3.5:2b",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 8,
+              "evidencePass": 8,
+              "seconds": 100.93,
+              "index": {},
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 17.48,
+                  "sourceCount": 25,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "cf4c14d2a277fafa64c4dc1793e4af613e629e7d8bd179f73bba0e9e130e8d69"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 7.98,
+                  "sourceCount": 19,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "49ea4be256066fef19c009e6d74202e0ecac1f8dee075237fe41b2c27ef7c6c7"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 34.69,
+                  "sourceCount": 20,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "27e3d7ff930236b1c8eceaa195d8d127826915d22a97c3174976291edd8223be"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 10.23,
+                  "sourceCount": 19,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "04316e6ed2f592a4e07eefbdc35bf6553adef161a0b50ccd857a17245cccac50"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 2.06,
+                  "sourceCount": 3,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "5b3d919b4522295fc9ed5e1b2d76980a1cacc36d7de4e1cfb9e87d4e2f4956aa"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": true,
+                  "seconds": 1.42,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": true,
+                  "seconds": 1.74,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "7db7e3c23e4ad2ed07b56849f57c05de249ac53ca485a17e69f2d5ba9ae0424b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 1.47,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 13.94,
+                  "sourceCount": 35,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "5584a2ff84750d8fe26e99c06fb678eabe2dc2422fa542616ab53e9a3840018f"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 9.92,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bc2fbcec5434a578db0650dcd5f45a9aeb736047aef6cc9edade2aecd659d5f7"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 8,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:2b",
+          "strategy": "hybrid12",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 0,
+              "evidencePass": 4,
+              "seconds": 24.41,
+              "index": {},
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 4.51,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "ec41b5f6b4bc077273a3d56f2a14a88ce80b4f1f8abaed38f1a68e31812d7d37"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 3.22,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "a9c37f0d6bff32e4fb1470dfbeaf83c689e1e9ff8eb8761e684a4766cff48cc9"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 4.2,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "91532823ec7dd58a33c9c59a782253975bff63f8161412e3d77e972b4d009e91"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 2.52,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 17,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "cd5d7171b67adcbf2f922da7cbf3d2ef7a6d9094fbcdf6ba2a95b9a9b0b336e5"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 1.92,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "cbcb018557534d1832affa2d0ca09f6108b8c905e19cdf596997b9c551f5c7e6"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 0.41,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 0.44,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "missing",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 1.03,
+                  "sourceCount": 3,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "94ba4188506bd6281c08a2dabcd23264dd1a7088a80fbb7b45ab1e30980a974c"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 3.24,
+                  "sourceCount": 12,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "db37399fd49bc6e4e064ea5d329d47f20a93892874611bc2c46ab8d1e278e665"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 2.92,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 22,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "06f61764e74b8c8463f7e2275f431238e5331f1aa2dd695321942440d2aa4a4c"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 4,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:4b",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 166.12,
+              "index": {},
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 26.17,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "d1e876f61ee20209cb777e6c4c6d96c626179663dd1a5fcf08ebe794000c1ecc"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 21.08,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "9d74650e3ec0f8d73a2fd30b9bdc89b970c761cd0934155955f7cc4e6cb411c7"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.03,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "e06869e32f18b9e75db6404543e886f45913f443a7b6826060c0f246e2d8c95c"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 24.95,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf844c9d0129ba7b7363e676ec2ee00c52c357627bf6793c99c1bb86de4b767a"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 11.06,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "25cb4f4788e10634d061ff87a7b043537303663edb493bac9227aa2e2b1af64b"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 3.7,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 3.05,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 21.83,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 35.75,
+                  "sourceCount": 25,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "50b14b5924c8b70025e9a257c10b7ccb5c62cd7c05750234c4971b90805fb80e"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 10.5,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "5babf26f3a5ebf838ed58355d5cbeb1e13c05d954dee9b080bbdacf20c31a624"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 10,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:4b",
+          "strategy": "hybrid12",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 0,
+              "evidencePass": 8,
+              "seconds": 54.06,
+              "index": {},
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 9.58,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "f5fa306769c02b338eeedc9aafa98f00354c2ebf7288345558cf0fd786da6ed4"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 3.16,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "2e79613c79047b892eafbb1f7253ebadc882e4a0b5e1a8f07e34c5eb0a67930e"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 6.0,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "3792aebd48093e5f270b7a37702701c715629941fd46b8f9718648c41f3b449d"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 24.44,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 17,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "4cc77c2210c1498aa207dc88e28401fda6ffb3d3f99ba889557a013503ebda15"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 2.76,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "2892c0aebbc7109c57120ea222171acb9a3e11872aa28bf0ebb26c3b3c90cb11"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 1.53,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "83c552bb186024faa6b2083010814d9607804eac5309d152385f706b4a72e086"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 0.97,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 0.73,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 2.97,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "4f83f846fbd0987fad54ff944327859aad335783e25bee70ca96e13535dc4eec"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 1.92,
+                  "sourceCount": 2,
+                  "missingEvidenceCount": 22,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "fc8704314aed91226dbb9d9bc61e2a39d392e7eb51c2d4f7f9deb6b75c1996f4"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 8,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 171.65,
+              "index": {},
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 25.44,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "d6a350ec1bb1968094b37e4d57ad326308fdb35e5f94e886d391651215da02d2"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 29.2,
+                  "sourceCount": 17,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "9023bfad370a515fcd7c1656b0ea1cdfd7b07fb11ba915975805e443d3cb78d5"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 13.39,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "e7ffc1dc26913c4b24aa7ba4e06391e861acb3655bb3a6ac6743d6daded5c194"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 27.81,
+                  "sourceCount": 11,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "b14de04f149581ff1448acc7d2e42372e52129006d72b6c6f14705ce33f985a9"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 17.66,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "0666b8cc9e423ead5c551ba8c67df95c7170d1900a298bfdcb85e43564016a0d"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 6.72,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 3.8,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 3.38,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 28.34,
+                  "sourceCount": 28,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "10cc8072ed300f0ef1501b10e0da80262504e809b8d708fea77edfbfcd77725c"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 15.91,
+                  "sourceCount": 11,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "775f015d21b7c2405bb4d6f8cd3d08c6a9b12152dcb7260a4dac37d872fa8bbe"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 10,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "hybrid12",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 0,
+              "evidencePass": 8,
+              "seconds": 60.15,
+              "index": {},
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 2.88,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "4d0d996d4568fe3f046936cf68db655ca92dce6901201226f90e0bee5ef1d9a9"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 7.8,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "e721fc9319b3de4552c8cf053dabb8bfa231804e53dc1583446848733f072b23"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 15.61,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "9c6b246992469aba7da22763b78d0a0b901e236f61fe041964824dcdfbeb6a99"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 7.06,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 17,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "d9687e34398f66c4e6c49fabfdba8486706143a8d93bb9bf28f322b1d1f27684"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 11.73,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "1ee65c590ca87bf3070a3939a00aedb1b2aa454695559b245ab18f70715541da"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 2.7,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "83c552bb186024faa6b2083010814d9607804eac5309d152385f706b4a72e086"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 1.45,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 1.03,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 7.44,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "c9cc012d5d37b49beeb5e03188767f9038050530c6873e36dc65d592e60f498c"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 2.45,
+                  "sourceCount": 2,
+                  "missingEvidenceCount": 22,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "d603c1b9432efcb384dfbe224ec3bd42ef006f05cb62240305f024fbfe80c737"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 8,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:27b",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 5,
+              "passed": 5,
+              "evidencePass": 5,
+              "seconds": 1267.41,
+              "index": {},
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 289.48,
+                  "sourceCount": 23,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "9201dfbd3814a5d31862e2a08708e443c77931d499bba2bcf8c1362f5d4c60dc"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 126.7,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "177a2d1264d8e86dcf6f9e7bd34f7d27ae154db5223f124fd682ab887f68436a"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 191.03,
+                  "sourceCount": 13,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "c993333c71c0b9416d13baa8c49ce35d721c73fcccd1cd9dfe44a3e177aefb12"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 234.86,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "84c0cfc35deaf19c7c8278a359d57adb53bce7e7a21c3b9766350d71746964b1"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 425.34,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": null,
+                  "answerSha256": "25076bcdbc62a2d4833c5de0a2eb0abb13501292539b54c8372f257ca3ca5927"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 5,
+          "stableAnswers": 5,
+          "allRunsEvidencePass": 5,
+          "caseCount": 5
+        }
+      ]
+    },
+    {
+      "kind": "synthetic-direct-engine-matrix-not-API",
+      "createdAt": "2026-09-24T21:17:03.340308+00:00",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "673bc300f0ad0bd2c588f40d31d2b14b4e4c642fdc8086c9c422e3ec913206fd",
+      "modelDigests": {
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "qwen3.5:9b": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7"
+      },
+      "referenceDate": "2026-09-24",
+      "parameters": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 4096,
+        "batchChunks": 6,
+        "scanLimit": 120,
+        "requestTimeoutSeconds": 300.0
+      },
+      "engineSha256": "b54ce170c957fc2ad9dc8ee14e0e8f3c261f58bffd16b198f9c5afb92202d5fa",
+      "environment": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14"
+      },
+      "index": {
+        "files": 32,
+        "chunks": 37,
+        "lastIndexedAt": "2026-09-24T20:43:03.071827+00:00",
+        "corpus": "archive",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      },
+      "indexMode": "reused",
+      "plannedRuns": 1,
+      "plannedProfiles": [
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "bm2512"
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "dense12"
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "tools"
+        }
+      ],
+      "selectedCases": [
+        "chronic",
+        "diabetes",
+        "cholesterol",
+        "abnormal-year",
+        "head-injury",
+        "metformin",
+        "allergy",
+        "missing",
+        "illnesses-plain",
+        "abnormal-plain"
+      ],
+      "providerMetadata": null,
+      "complete": true,
+      "expectedCaseCount": 10,
+      "profiles": [
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "bm2512",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 0,
+              "evidencePass": 8,
+              "seconds": 58.63,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 17.3,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "55883110149bc50f9767fbc43289df6e932c6f7f7b6197331e49d8f117919086"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 5.02,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "0a83f49ae21c4f75a1cb9a90997d07b1f7546fb9e453306ec5ee39d61f028faa"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 8.16,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "e419a02c982ae6d2327c20b5699c88df6adc1e34e7ea824e426265c8dfb7f49b"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 8.14,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 6,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "bc7de20085433623b1841e5f6d654a2e0bfedc4d52eb660e3e69085ea5837cfe"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 5.5,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "a7992e1b020157ba7722c25848bbf9a4aa4d5be68ae15cc0fa4bceee4b9b16fe"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 2.84,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 1.39,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 0.98,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 4.69,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "06e1c088f57b5ff9d7338a7795a3e8b83ec159677b59a31b7504e594ccffdb08"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 4.61,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 21,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "5b4101feb5e860687bb413db7938f5ca63dc155049247b12e2a80619051d050d"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 8,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "dense12",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 0,
+              "evidencePass": 7,
+              "seconds": 37.0,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 4.3,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "a9418348c1438bd50e59d431977126b92c2d2277fcd7aae45990e1c9d4c8c35b"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 4.11,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "9094513f09df5e2baccbac1a81e96ac53229e3c3e7fc0383c793b11ccbfa2adc"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 5.41,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "828eefc9ea62ac5a203bc8e5fb9beddeb2fabe06972c1a98698454df9ae60ab7"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 3.89,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 19,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "9fb01a56be3ff7b26398ae4470343b66e8b35d37ac12955a74bed1b91df055b1"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 4.72,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "bdf2c05658685c24f554ee2582b7f5e8a53709769d5aa6316f41547b739324b5"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 2.47,
+                  "sourceCount": 3,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "e6a3725054196d22df2f09cbac6a1ef84da847cc2a11941d0e37714b6ecbfeb1"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 1.45,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 1.06,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 7.39,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "c099517b6c3ee4f46d9c20c6ce7dc829841a7ff20728127d61d13a43ce07e360"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 2.2,
+                  "sourceCount": 2,
+                  "missingEvidenceCount": 22,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "65f547e33bed19a9c0b45e5ee732f91b905b3d52621a49b07cf902723eb5017a"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 7,
+          "caseCount": 10
+        },
+        {
+          "model": "qwen3.5:9b",
+          "strategy": "tools",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 0,
+              "evidencePass": 8,
+              "seconds": 90.46,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 9.52,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 1,
+                  "generationCalls": 4,
+                  "answerSha256": "746f166dd3abc26b58bf8578d5ef8da1cdba1dd6640cc0480e703de390443ef2"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 11.66,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 2,
+                  "generationCalls": 6,
+                  "answerSha256": "17872031f6816f22944aa3bfcfc71fed8d06ea154bcb0d6f551577ef2cc42a52"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 13.34,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 2,
+                  "generationCalls": 6,
+                  "answerSha256": "31c4ff939da3958c2ca8511e648eaac9d5f3a1ba7722a0b368471b66c0cd0d2e"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 8.11,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": null,
+                  "toolCalls": 1,
+                  "generationCalls": 2,
+                  "answerSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "error": "ValueError"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 10.5,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 1,
+                  "generationCalls": 4,
+                  "answerSha256": "06d8789c19680f76e2da3302fe6ad84815ddb52a676ad384042082bb39db0ef6"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 7.5,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 2,
+                  "generationCalls": 6,
+                  "answerSha256": "83c552bb186024faa6b2083010814d9607804eac5309d152385f706b4a72e086"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 3.75,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 1,
+                  "generationCalls": 4,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 5.41,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 2,
+                  "generationCalls": 5,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 13.36,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 2,
+                  "generationCalls": 6,
+                  "answerSha256": "17a5192df5f38a258fc6fcf11a6a7c345fd5ee22345c52853ed14eefdc9b215f"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 7.31,
+                  "sourceCount": 3,
+                  "missingEvidenceCount": 22,
+                  "failedBatches": 0,
+                  "toolCalls": 1,
+                  "generationCalls": 4,
+                  "answerSha256": "285cf3466cdbb70b08cc3f792d50b4812339315aaea59e502f34903ef36d90fa"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 9,
+          "allRunsEvidencePass": 8,
+          "caseCount": 10
+        }
+      ]
+    },
+    {
+      "kind": "synthetic-direct-engine-matrix-not-API",
+      "createdAt": "2026-09-24T21:24:08.057816+00:00",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "673bc300f0ad0bd2c588f40d31d2b14b4e4c642fdc8086c9c422e3ec913206fd",
+      "modelDigests": {
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "qwen3.5:4b": "2a654d98e6fba55d452b7043684e9b57a947e393bbffa62485a7aac05ee4eefd"
+      },
+      "referenceDate": "2026-09-24",
+      "parameters": {
+        "thinkingOverride": false,
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 4096,
+        "batchChunks": 6,
+        "scanLimit": 120,
+        "requestTimeoutSeconds": 300.0
+      },
+      "engineSha256": "b54ce170c957fc2ad9dc8ee14e0e8f3c261f58bffd16b198f9c5afb92202d5fa",
+      "environment": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14"
+      },
+      "index": null,
+      "indexMode": "fresh-per-run",
+      "plannedRuns": 3,
+      "plannedProfiles": [
+        {
+          "model": "qwen3.5:4b",
+          "strategy": "scan"
+        }
+      ],
+      "selectedCases": [
+        "chronic",
+        "diabetes",
+        "cholesterol",
+        "abnormal-year",
+        "head-injury",
+        "metformin",
+        "allergy",
+        "missing",
+        "illnesses-plain",
+        "abnormal-plain"
+      ],
+      "providerMetadata": null,
+      "complete": true,
+      "expectedCaseCount": 10,
+      "profiles": [
+        {
+          "model": "qwen3.5:4b",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 81.67,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 16.72,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "d1e876f61ee20209cb777e6c4c6d96c626179663dd1a5fcf08ebe794000c1ecc"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.03,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "9d74650e3ec0f8d73a2fd30b9bdc89b970c761cd0934155955f7cc4e6cb411c7"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.34,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "e06869e32f18b9e75db6404543e886f45913f443a7b6826060c0f246e2d8c95c"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.99,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 4,
+                  "answerSha256": "bf844c9d0129ba7b7363e676ec2ee00c52c357627bf6793c99c1bb86de4b767a"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 5.73,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "25cb4f4788e10634d061ff87a7b043537303663edb493bac9227aa2e2b1af64b"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 3.95,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 2.89,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 2.55,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 15.36,
+                  "sourceCount": 25,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "50b14b5924c8b70025e9a257c10b7ccb5c62cd7c05750234c4971b90805fb80e"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 9.11,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5babf26f3a5ebf838ed58355d5cbeb1e13c05d954dee9b080bbdacf20c31a624"
+                }
+              ]
+            },
+            {
+              "run": 2,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 80.03,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 12.83,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "d1e876f61ee20209cb777e6c4c6d96c626179663dd1a5fcf08ebe794000c1ecc"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.22,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "9d74650e3ec0f8d73a2fd30b9bdc89b970c761cd0934155955f7cc4e6cb411c7"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.86,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "e06869e32f18b9e75db6404543e886f45913f443a7b6826060c0f246e2d8c95c"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 9.52,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 4,
+                  "answerSha256": "bf844c9d0129ba7b7363e676ec2ee00c52c357627bf6793c99c1bb86de4b767a"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 5.86,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "25cb4f4788e10634d061ff87a7b043537303663edb493bac9227aa2e2b1af64b"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 3.95,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 2.92,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 2.62,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 15.89,
+                  "sourceCount": 25,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "50b14b5924c8b70025e9a257c10b7ccb5c62cd7c05750234c4971b90805fb80e"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 9.36,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5babf26f3a5ebf838ed58355d5cbeb1e13c05d954dee9b080bbdacf20c31a624"
+                }
+              ]
+            },
+            {
+              "run": 3,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 79.26,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 13.11,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "d1e876f61ee20209cb777e6c4c6d96c626179663dd1a5fcf08ebe794000c1ecc"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.34,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "9d74650e3ec0f8d73a2fd30b9bdc89b970c761cd0934155955f7cc4e6cb411c7"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 8.52,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "e06869e32f18b9e75db6404543e886f45913f443a7b6826060c0f246e2d8c95c"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 9.22,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 4,
+                  "answerSha256": "bf844c9d0129ba7b7363e676ec2ee00c52c357627bf6793c99c1bb86de4b767a"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 5.78,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "25cb4f4788e10634d061ff87a7b043537303663edb493bac9227aa2e2b1af64b"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 3.86,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 2.86,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 2.58,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 15.69,
+                  "sourceCount": 25,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "50b14b5924c8b70025e9a257c10b7ccb5c62cd7c05750234c4971b90805fb80e"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 9.3,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5babf26f3a5ebf838ed58355d5cbeb1e13c05d954dee9b080bbdacf20c31a624"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 10,
+          "caseCount": 10
+        }
+      ]
+    },
+    {
+      "kind": "synthetic-direct-engine-matrix-not-API",
+      "createdAt": "2026-09-24T21:12:59.725114+00:00",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "673bc300f0ad0bd2c588f40d31d2b14b4e4c642fdc8086c9c422e3ec913206fd",
+      "modelDigests": {
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "qwen3.8-27b-q8-100k-cuda": "a680f44a06920e5d689774823782006aa3acc8db95750323373b24139b67e348"
+      },
+      "referenceDate": "2026-09-24",
+      "parameters": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 4096,
+        "batchChunks": 6,
+        "scanLimit": 120,
+        "requestTimeoutSeconds": 300.0
+      },
+      "engineSha256": "b54ce170c957fc2ad9dc8ee14e0e8f3c261f58bffd16b198f9c5afb92202d5fa",
+      "environment": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14"
+      },
+      "index": null,
+      "indexMode": "fresh-per-run",
+      "plannedRuns": 3,
+      "plannedProfiles": [
+        {
+          "model": "qwen3.8-27b-q8-100k-cuda",
+          "strategy": "scan"
+        }
+      ],
+      "selectedCases": [
+        "chronic",
+        "diabetes",
+        "cholesterol",
+        "abnormal-year",
+        "head-injury",
+        "metformin",
+        "allergy",
+        "missing",
+        "illnesses-plain",
+        "abnormal-plain"
+      ],
+      "providerMetadata": {
+        "transport": "SSH stdio / remote loopback llama.cpp",
+        "modelSha256": "a680f44a06920e5d689774823782006aa3acc8db95750323373b24139b67e348",
+        "modelSha256Origin": "measured on remote GGUF",
+        "ggufBytes": 29047086048,
+        "ggufArchitecture": "qwen35",
+        "ggufName": "Qwen3.8-27B",
+        "quantization": "Q8_0",
+        "serverContext": 180224,
+        "slots": 1,
+        "gpu": [
+          "RTX 4090 24GB",
+          "RTX 5080 16GB"
+        ],
+        "gpuLayers": 99,
+        "tensorSplit": "64,36",
+        "splitMode": "layer",
+        "flashAttention": true,
+        "requestedThinking": false,
+        "contextNote": "Ollama num_ctx not forwarded; server context applies. Only generation remote; embeddings and index on Windows. Initial temporary transport equivalent to documented SSH adapter."
+      },
+      "complete": true,
+      "expectedCaseCount": 10,
+      "profiles": [
+        {
+          "model": "qwen3.8-27b-q8-100k-cuda",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 220.15,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 30.76,
+                  "sourceCount": 18,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "a220058731304839791c42ad0e74d6150de32a8c9749fcfb3da3f7f65edae0de"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 23.55,
+                  "sourceCount": 15,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "ceae54caf30054099fbfcd150c54892aeddc884875839215a9fcb980357c7362"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 25.86,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "33cd1f4a7503706503ab8b1e00b75fb4f9c2f5a21058f05c39ca41e6d20b16af"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 20.25,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 4,
+                  "answerSha256": "b4b95ded346d45bda62d51b12cc5f45b88aaae0510a2dcade8e70ba13d4eb793"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 17.97,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "25076bcdbc62a2d4833c5de0a2eb0abb13501292539b54c8372f257ca3ca5927"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 14.27,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 12.51,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 12.19,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 34.48,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "f9f27447798063ab4dc2f36706e42b2fd5f55fd0d2c199a7b12b3aae2834fd07"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 28.31,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "13f11b4ddc40e8b852e60502b274c3939f9be7a6ce4b6e7d2e73911cc60c2094"
+                }
+              ]
+            },
+            {
+              "run": 2,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 221.07,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 29.58,
+                  "sourceCount": 18,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "a220058731304839791c42ad0e74d6150de32a8c9749fcfb3da3f7f65edae0de"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 24.59,
+                  "sourceCount": 15,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "ceae54caf30054099fbfcd150c54892aeddc884875839215a9fcb980357c7362"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 26.25,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "33cd1f4a7503706503ab8b1e00b75fb4f9c2f5a21058f05c39ca41e6d20b16af"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 20.24,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 4,
+                  "answerSha256": "b4b95ded346d45bda62d51b12cc5f45b88aaae0510a2dcade8e70ba13d4eb793"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 18.3,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "25076bcdbc62a2d4833c5de0a2eb0abb13501292539b54c8372f257ca3ca5927"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 14.49,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 13.01,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 12.06,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 34.3,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "f9f27447798063ab4dc2f36706e42b2fd5f55fd0d2c199a7b12b3aae2834fd07"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 28.25,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "13f11b4ddc40e8b852e60502b274c3939f9be7a6ce4b6e7d2e73911cc60c2094"
+                }
+              ]
+            },
+            {
+              "run": 3,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 219.98,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 29.33,
+                  "sourceCount": 18,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "a220058731304839791c42ad0e74d6150de32a8c9749fcfb3da3f7f65edae0de"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 24.08,
+                  "sourceCount": 15,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "ceae54caf30054099fbfcd150c54892aeddc884875839215a9fcb980357c7362"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 26.28,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "33cd1f4a7503706503ab8b1e00b75fb4f9c2f5a21058f05c39ca41e6d20b16af"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 20.17,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 4,
+                  "answerSha256": "b4b95ded346d45bda62d51b12cc5f45b88aaae0510a2dcade8e70ba13d4eb793"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 18.36,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "25076bcdbc62a2d4833c5de0a2eb0abb13501292539b54c8372f257ca3ca5927"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 14.47,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "10a0d0c01e0b69692d8d1820f10e03ad808f8aeb013e753dd61beb9125326b8c"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 12.69,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 12.09,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 34.28,
+                  "sourceCount": 22,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "f9f27447798063ab4dc2f36706e42b2fd5f55fd0d2c199a7b12b3aae2834fd07"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 28.23,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "13f11b4ddc40e8b852e60502b274c3939f9be7a6ce4b6e7d2e73911cc60c2094"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 10,
+          "caseCount": 10
+        }
+      ]
+    },
+    {
+      "kind": "synthetic-direct-engine-matrix-not-API",
+      "createdAt": "2026-09-24T21:25:17.031431+00:00",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "673bc300f0ad0bd2c588f40d31d2b14b4e4c642fdc8086c9c422e3ec913206fd",
+      "modelDigests": {
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "qwen3.8-27b-q8-100k-cuda": "a680f44a06920e5d689774823782006aa3acc8db95750323373b24139b67e348"
+      },
+      "referenceDate": "2026-09-24",
+      "parameters": {
+        "thinkingOverride": "provider-default (Qwen disabled)",
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 4096,
+        "batchChunks": 6,
+        "scanLimit": 120,
+        "requestTimeoutSeconds": 300.0
+      },
+      "engineSha256": "b54ce170c957fc2ad9dc8ee14e0e8f3c261f58bffd16b198f9c5afb92202d5fa",
+      "environment": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14"
+      },
+      "index": {
+        "files": 32,
+        "chunks": 37,
+        "lastIndexedAt": "2026-09-24T20:43:03.071827+00:00",
+        "corpus": "archive",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      },
+      "indexMode": "reused",
+      "plannedRuns": 1,
+      "plannedProfiles": [
+        {
+          "model": "qwen3.8-27b-q8-100k-cuda",
+          "strategy": "hybrid12"
+        }
+      ],
+      "selectedCases": [
+        "chronic",
+        "diabetes",
+        "cholesterol",
+        "abnormal-year",
+        "head-injury",
+        "metformin",
+        "allergy",
+        "missing",
+        "illnesses-plain",
+        "abnormal-plain"
+      ],
+      "providerMetadata": {
+        "transport": "SSH stdio / remote loopback llama.cpp",
+        "modelSha256": "a680f44a06920e5d689774823782006aa3acc8db95750323373b24139b67e348",
+        "modelSha256Origin": "operator-supplied measurement",
+        "server": {
+          "models": [
+            {
+              "id": "qwen3.8-27b-q8-100k-cuda",
+              "meta": {
+                "vocab_type": 2,
+                "n_vocab": 248320,
+                "n_ctx": 180224,
+                "n_ctx_train": 262144,
+                "n_embd": 5120,
+                "n_params": 27320697856,
+                "size": 29036089344,
+                "ftype": "Q8_0"
+              }
+            }
+          ],
+          "context": 180224,
+          "slots": 1,
+          "build": "b0-unknown"
+        },
+        "embeddingEndpoint": "local Ollama",
+        "requestedThinking": false,
+        "contextNote": "Ollama num_ctx is not forwarded; the server context applies."
+      },
+      "complete": true,
+      "expectedCaseCount": 10,
+      "profiles": [
+        {
+          "model": "qwen3.8-27b-q8-100k-cuda",
+          "strategy": "hybrid12",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 0,
+              "evidencePass": 8,
+              "seconds": 78.97,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 9.38,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "1c21ef76d7515030cae4d9722221e9d3dcfa9a40940d7364958b57f8de3153ff"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 8.92,
+                  "sourceCount": 7,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "6a7ecf0ac946fee80390ba78b5be2ef77346fbf57bf0a47f7d4e5bc6d58ac15e"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 14.05,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "844360efb168b2e811d8b5764290262bdbcb08fefa2156902661fb2d3319a952"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 8.91,
+                  "sourceCount": 5,
+                  "missingEvidenceCount": 17,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "4cc77c2210c1498aa207dc88e28401fda6ffb3d3f99ba889557a013503ebda15"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 8.39,
+                  "sourceCount": 6,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "8d96fc76707a16b459262a7dc25e35a1b336743b95cbabb137f9dc191f013363"
+                },
+                {
+                  "id": "metformin",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 5.14,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "83c552bb186024faa6b2083010814d9607804eac5309d152385f706b4a72e086"
+                },
+                {
+                  "id": "allergy",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 4.03,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 3.61,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": false,
+                  "evidencePass": true,
+                  "coverageComplete": false,
+                  "seconds": 10.92,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "8b09b4aabf8be7d8c68c09c818be159b87cff336518b012e259f3d2e8994d77d"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": false,
+                  "evidencePass": false,
+                  "coverageComplete": false,
+                  "seconds": 5.62,
+                  "sourceCount": 2,
+                  "missingEvidenceCount": 22,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 2,
+                  "answerSha256": "fc8704314aed91226dbb9d9bc61e2a39d392e7eb51c2d4f7f9deb6b75c1996f4"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 8,
+          "caseCount": 10
+        }
+      ]
+    },
+    {
+      "kind": "synthetic-direct-engine-matrix-not-API",
+      "createdAt": "2026-09-24T21:25:14.774541+00:00",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "673bc300f0ad0bd2c588f40d31d2b14b4e4c642fdc8086c9c422e3ec913206fd",
+      "modelDigests": {
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "gemma4:12b": "4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c"
+      },
+      "referenceDate": "2026-09-24",
+      "parameters": {
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 4096,
+        "batchChunks": 6,
+        "scanLimit": 120,
+        "thinkingOverride": "provider-default (Gemma thinking not disabled)"
+      },
+      "engineSha256": "b54ce170c957fc2ad9dc8ee14e0e8f3c261f58bffd16b198f9c5afb92202d5fa",
+      "environment": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14"
+      },
+      "index": {
+        "files": 32,
+        "chunks": 37,
+        "lastIndexedAt": "2026-09-24T20:43:03.071827+00:00",
+        "corpus": "archive",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      },
+      "plannedRuns": 1,
+      "plannedProfiles": [
+        {
+          "model": "gemma4:12b",
+          "strategy": "scan"
+        }
+      ],
+      "selectedCases": [
+        "chronic",
+        "diabetes",
+        "cholesterol",
+        "abnormal-year",
+        "head-injury",
+        "metformin",
+        "allergy",
+        "missing",
+        "illnesses-plain",
+        "abnormal-plain"
+      ],
+      "providerMetadata": {
+        "interruption": "Stopped before first completed question after several minutes; thinking-capable Gemma used provider default, not explicit think=false. No quality score available.",
+        "timestampMeaning": "interruption record creation"
+      },
+      "complete": false,
+      "expectedCaseCount": 10,
+      "profiles": [
+        {
+          "model": "gemma4:12b",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 0,
+              "passed": 0,
+              "evidencePass": 0,
+              "seconds": 0,
+              "index": {},
+              "results": []
+            }
+          ],
+          "stableEvidenceResults": 0,
+          "stableAnswers": 0,
+          "allRunsEvidencePass": 0,
+          "caseCount": 0
+        }
+      ]
+    },
+    {
+      "kind": "synthetic-direct-engine-matrix-not-API",
+      "createdAt": "2026-09-24T21:28:16.402366+00:00",
+      "seedSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+      "questionsSha256": "673bc300f0ad0bd2c588f40d31d2b14b4e4c642fdc8086c9c422e3ec913206fd",
+      "modelDigests": {
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+        "gemma4:12b": "4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c"
+      },
+      "referenceDate": "2026-09-24",
+      "parameters": {
+        "thinkingOverride": false,
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 16384,
+        "num_predict": 4096,
+        "batchChunks": 6,
+        "scanLimit": 120,
+        "requestTimeoutSeconds": 300.0
+      },
+      "engineSha256": "b54ce170c957fc2ad9dc8ee14e0e8f3c261f58bffd16b198f9c5afb92202d5fa",
+      "environment": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14"
+      },
+      "index": {
+        "files": 32,
+        "chunks": 37,
+        "lastIndexedAt": "2026-09-24T20:43:03.071827+00:00",
+        "corpus": "archive",
+        "embeddingModel": "nomic-embed-text",
+        "chunkSize": 900,
+        "chunkOverlap": 120
+      },
+      "indexMode": "reused",
+      "plannedRuns": 1,
+      "plannedProfiles": [
+        {
+          "model": "gemma4:12b",
+          "strategy": "scan"
+        }
+      ],
+      "selectedCases": [
+        "chronic",
+        "diabetes",
+        "cholesterol",
+        "abnormal-year",
+        "head-injury",
+        "metformin",
+        "allergy",
+        "missing",
+        "illnesses-plain",
+        "abnormal-plain"
+      ],
+      "providerMetadata": null,
+      "complete": true,
+      "expectedCaseCount": 10,
+      "profiles": [
+        {
+          "model": "gemma4:12b",
+          "strategy": "scan",
+          "runs": [
+            {
+              "run": 1,
+              "total": 10,
+              "passed": 10,
+              "evidencePass": 10,
+              "seconds": 138.86,
+              "index": {
+                "files": 32,
+                "chunks": 37,
+                "embeddingModel": "nomic-embed-text",
+                "chunkSize": 900,
+                "chunkOverlap": 120
+              },
+              "results": [
+                {
+                  "id": "chronic",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 15.95,
+                  "sourceCount": 16,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "36f28fb26b7f66a393ca0291dec169796e109743b159184196e460207cd06805"
+                },
+                {
+                  "id": "diabetes",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 11.64,
+                  "sourceCount": 10,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "c95ecec151c8ce4067374de7154b2d858e746705af3370ee43c47d19b9c8dab6"
+                },
+                {
+                  "id": "cholesterol",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 17.83,
+                  "sourceCount": 14,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "3bbffe41fc783ea34478309ed693a519dd3118434d32fd52a6c35585183a2885"
+                },
+                {
+                  "id": "abnormal-year",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 18.47,
+                  "sourceCount": 9,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 4,
+                  "answerSha256": "f30e4c39f4f6cc3b3656f43aabf4fbae78718c9ee41e0877d99b7a3750e98dc7"
+                },
+                {
+                  "id": "head-injury",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 11.22,
+                  "sourceCount": 8,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "b81d0b98ad5ae086c5623a858a9d74f27405e540cae681f8050028c6378f4fbe"
+                },
+                {
+                  "id": "metformin",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 6.88,
+                  "sourceCount": 4,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "f9be8ffdef206a21174c714705e7bc96139f6fb991c549a48317b0f8aaf8cff8"
+                },
+                {
+                  "id": "allergy",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 5.92,
+                  "sourceCount": 1,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "5453ebdade8df0b781d0719b03b394b1432bbf99ac3cfd14f7d969174e75747b"
+                },
+                {
+                  "id": "missing",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 5.51,
+                  "sourceCount": 0,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "bf8b0c7a8657faaf33f82a68c7a77d664165446c1431be62de18e8325e09b37e"
+                },
+                {
+                  "id": "illnesses-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 20.38,
+                  "sourceCount": 16,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "d9f3bd599d58867b432e974c1d499676d62eb77b554ab134670da2a2cde8b4a5"
+                },
+                {
+                  "id": "abnormal-plain",
+                  "passed": true,
+                  "evidencePass": true,
+                  "coverageComplete": true,
+                  "seconds": 25.06,
+                  "sourceCount": 12,
+                  "missingEvidenceCount": 0,
+                  "failedBatches": 0,
+                  "toolCalls": 0,
+                  "generationCalls": 7,
+                  "answerSha256": "84785195870a27bc23cfbb6078e4111f3ffbeeeb7f55a1279ff97723cf621882"
+                }
+              ]
+            }
+          ],
+          "stableEvidenceResults": 10,
+          "stableAnswers": 10,
+          "allRunsEvidencePass": 10,
+          "caseCount": 10
+        }
+      ]
+    }
+  ]
+}

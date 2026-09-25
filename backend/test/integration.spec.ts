@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import {irHash,SourceIR} from '../src/source-ir';
 import {Test} from '@nestjs/testing';
 import {INestApplication,ValidationPipe} from '@nestjs/common';
 import request from 'supertest';
@@ -30,6 +31,16 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   };
   const note=async(text='LDL 4.7 mmol/L.')=>(await request(app.getHttpServer()).post('/api/documents/note').send({title:'Лабораторная заметка',text,tags:['lipid']}).expect(201)).body;
   const ready=async(text?:string)=>{const d=await note(text);await worker.tick();return (await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;};
+  it('passes document dates and explicit period to archive AI and rejects inverted periods',async()=>{
+    const d=await ready();
+    await db.getRepository(Document).update(d.id,{documentDate:'2026-01-15'});
+    ai.call.mockClear();
+    await request(app.getHttpServer()).post('/api/ask').send({question:'Какие отклонения?',dateFrom:'2025-09-24',dateTo:'2026-09-24'}).expect(201);
+    expect(ai.call).toHaveBeenCalledWith('ask',expect.objectContaining({dateFrom:'2025-09-24',dateTo:'2026-09-24',documents:[{documentId:d.id,documentDate:'2026-01-15'}]}));
+    ai.call.mockClear();
+    await request(app.getHttpServer()).post('/api/ask').send({question:'Какие отклонения?',dateFrom:'2026-09-24',dateTo:'2025-09-24'}).expect(400);
+    expect(ai.call).not.toHaveBeenCalled();
+  });
   beforeAll(async()=>{
     const url=process.env.TEST_DATABASE_URL!;
     if(!new URL(url).pathname.includes('test'))throw new Error('Integration tests require a dedicated test database');
@@ -45,7 +56,124 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     ai.call.mockReset();ai.call.mockImplementation(mock);
   });
   afterAll(async()=>{if(app)await app.close();if(db?.isInitialized)await db.destroy();if(uploads)await rm(uploads,{recursive:true,force:true});});
-  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(1);});
+  const withIR=async(route:string,body:any)=>{
+    const result=await mock(route,body);
+    if(route!=='process')return result;
+    const text=result.pages[0].text,length=Buffer.byteLength(text);
+    const span={pageIndex:0,startByte:0,endByte:length};
+    const content={schemaVersion:'source-ir-v1',stage:'SOURCE_ONLY',documentId:body.documentId,parserVersion:'synthetic-test',normalizerVersion:'whitespace-map-v1',sourceHash:irHash(result.pages),pages:result.pages,blocks:[{blockId:'p0:b0',kind:'paragraph',source:span,normalizedText:text,mapping:[{normalizedStartByte:0,normalizedEndByte:length,source:span,operation:'IDENTITY'}]}]};
+    return {...result,sourceIR:{...content,irHash:irHash(content)} as SourceIR};
+  };
+  const visitMock=async(route:string,body:any)=>{
+    if(route!=='process')return mock(route,body);
+    const f=JSON.parse(await readFile(join(__dirname,'../../contracts/visit-assertions-v1.synthetic.json'),'utf8'));
+    f.sourceIR.documentId=body.documentId;
+    const {irHash:old,...irBody}=f.sourceIR;void old;f.sourceIR.irHash=irHash(irBody);
+    f.visit.sourceIRHash=f.sourceIR.irHash;
+    const {artifactHash:previous,...visitBody}=f.visit;void previous;f.visit.artifactHash=irHash(visitBody);
+    return {...f,text:f.sourceIR.pages[0].text,pages:f.sourceIR.pages,extractionProfile:'clinical-v1',model:'unit-double'};
+  };
+  it('persists visit annotation, keeps review separate and hides stale results',async()=>{
+    ai.call.mockImplementation(visitMock);const d=await ready();
+    expect(d.visit.statements).toHaveLength(7);
+    const medication=d.facts.find((f:any)=>f.name==='Аторвастатин');
+    expect(medication.assertionStatus).toBe('UNKNOWN');
+    await request(app.getHttpServer()).patch('/api/facts/'+medication.id).send({valueText:'Synthetic user correction',reviewStatus:'CORRECTED'}).expect(200);
+    await worker.tick();
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.visit).toBeNull();
+    await worker.tick();
+    const repeated=(await request(app.getHttpServer()).get('/api/documents/'+d.id)).body;
+    expect(repeated.facts.find((f:any)=>f.name==='Аторвастатин').valueText).toBe('Synthetic user correction');
+    expect(repeated.visit.statements[5].medicationState).toBe('NOT_STARTED');
+    expect(repeated.facts).toHaveLength(7);
+    await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({text:'Synthetic updated source.'}).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.visit).toBeNull();
+    await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.visit).toBeNull();
+  });
+  it('fails a visit projection that promotes family history before publishing facts',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await visitMock(route,body);if(route==='process')r.extraction.facts[1].assertionStatus='CONFIRMED';return r;});
+    const d=await ready();expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('VISIT_ARTIFACT_INVALID');
+    expect(d.facts).toHaveLength(0);expect(d.visit).toBeNull();
+  });
+  const labMock=async(route:string,body:any)=>{
+    if(route!=='process')return mock(route,body);
+    const fixture=JSON.parse(await readFile(join(__dirname,'../../contracts/lab-rows-v1.synthetic.json'),'utf8'));
+    const sourceIR=fixture.sourceIR;sourceIR.documentId=body.documentId;
+    const {irHash:old,...irBody}=sourceIR;void old;sourceIR.irHash=irHash(irBody);
+    const laboratory=fixture.laboratory;laboratory.sourceIRHash=sourceIR.irHash;
+    const {artifactHash:previous,...labBody}=laboratory;void previous;laboratory.artifactHash=irHash(labBody);
+    return {text:sourceIR.pages[0].text,pages:sourceIR.pages,sourceIR,laboratory,extractionProfile:'lab-rows-v1',
+      extraction:{documentType:'LAB_REPORT',documentDate:'2026-06-18',summary:'Synthetic lab',tags:[],facts:fixture.facts},
+      model:'deterministic:lab-rows-v1',promptVersion:'lab-rows-v1',schemaVersion:'medical-facts-v1'};
+  };
+  it('persists typed lab annotation, preserves reviewed overlay and hides artifact during pending/edit/delete',async()=>{
+    ai.call.mockImplementation(labMock);const d=await ready();
+    expect(d.laboratory.rows).toHaveLength(2);expect(d.facts[0].type).toBe('LAB_RESULT');
+    const scalar=d.facts.find((f:any)=>f.name==='MCV');
+    await request(app.getHttpServer()).patch('/api/facts/'+scalar.id).send({valueNumber:75,reviewStatus:'CORRECTED'}).expect(200);
+    await worker.tick();
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.laboratory).toBeNull();
+    await worker.tick();
+    const repeated=(await request(app.getHttpServer()).get('/api/documents/'+d.id)).body;
+    expect(repeated.facts.find((f:any)=>f.name==='MCV').valueNumber).toBe(75);
+    expect(repeated.laboratory.rows[1].result.numericValue).toBe('74.20');
+    expect(repeated.facts).toHaveLength(2);
+    await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({text:'Updated source text, no longer the same lab.'}).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.laboratory).toBeNull();
+    await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.laboratory).toBeNull();
+  });
+  it('fails inconsistent lab projection before publishing facts or annotation',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await labMock(route,body);if(route==='process')r.extraction.facts[0].valueNumber=5;return r;});
+    const d=await ready();expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('LAB_ARTIFACT_INVALID');
+    expect(d.facts).toHaveLength(0);expect(d.laboratory).toBeNull();
+  });
+  it('stores immutable source IR and reuses identical revision after reprocessing',async()=>{
+    ai.call.mockImplementation(withIR);
+    const d=await ready();
+    const ir=(await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200)).body;
+    expect(ir.content.pages[0].text).toBe(d.text);
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);
+    await worker.tick();
+    expect((await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id]))).toHaveLength(1);
+    await expect(db.query('UPDATE source_ir_revisions SET content=$1 WHERE id=$2',[{},ir.id])).rejects.toThrow('immutable');
+    await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+    await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(404);
+  });
+  it('creates a new source revision when page attribution changes but text does not',async()=>{
+    ai.call.mockImplementation(withIR);const d=await ready();
+    const first=(await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200)).body;
+    ai.call.mockImplementation(async(route,body)=>{const r=await withIR(route,body);if(route==='process'){
+      r.pages[0].pageNumber=1;r.sourceIR.sourceHash=irHash(r.pages);
+      const {irHash:old,...content}=r.sourceIR;void old;r.sourceIR.irHash=irHash(content);
+    }return r;});
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);await worker.tick();
+    const after=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(after.text).toBe(d.text);expect(after.textVersion).toBe(d.textVersion+1);
+    const second=(await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200)).body;
+    expect(second.textRevisionId).not.toBe(first.textRevisionId);
+    const old=await db.query('SELECT content FROM source_ir_revisions WHERE id=$1',[first.id]);
+    expect(old[0].content.pages[0].pageNumber).toBeNull();
+  });
+  it('rejects corrupted IR before persisting new facts or IR',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await withIR(route,body);if(route==='process')r.sourceIR.blocks[0].normalizedText='invented';return r;});
+    const d=await ready();
+    expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('SOURCE_IR_INVALID');expect(d.facts).toHaveLength(0);
+    expect(await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id])).toHaveLength(0);
+  });
+  it('migrates existing source text without rewriting it',async()=>{
+    await db.undoLastMigration();
+    const d=await note();
+    await db.runMigrations();
+    ai.call.mockImplementation(withIR);await worker.tick();
+    const after=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(after.text).toBe('LDL 4.7 mmol/L.');expect(after.textVersion).toBe(1);
+    await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200);
+  });
+  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(2);});
   it('validates unknown properties and empty title at the API boundary',async()=>{await request(app.getHttpServer()).post('/api/documents/note').send({title:' ',text:'ok text',storagePath:'/secret'}).expect(400);});
   it('returns durable IDs before inference and completes the worker job',async()=>{const d=await note();expect(d.jobId).toBeDefined();expect(ai.call).not.toHaveBeenCalled();await worker.tick();const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});expect(job.status).toBe('READY');expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('READY');});
   it('detects duplicate text documents with safe conflict error',async()=>{await note();const r=await request(app.getHttpServer()).post('/api/documents/note').send({title:'Second',text:'LDL 4.7 mmol/L.'}).expect(409);expect(r.body.code).toBe('DUPLICATE');expect(r.body).not.toHaveProperty('query');});
@@ -112,6 +240,20 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   it('never exports local source IDs, filenames or paths',async()=>{const d=await ready();const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context'}).expect(201)).body;const updated=(await request(app.getHttpServer()).patch('/api/consultations/'+c.id).send({content:'Dose 20 mg. '+d.id+' C:\\private\\patient.pdf'}).expect(200)).body;expect(updated.content).not.toContain(d.id);await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:updated.contentHash}).expect(201);expect((await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(200)).text).toBe(updated.content);});
   it('suppresses stale RAG answers when document generation changes even if status is READY',async()=>{const d=await ready();ai.call.mockImplementation(async(route,body)=>{if(route==='ask'){await db.getRepository(Document).increment({id:d.id},'generation',1);}return mock(route,body);});const r=await request(app.getHttpServer()).post('/api/ask').send({question:'What is LDL?'}).expect(201);expect(r.body.insufficientContext).toBe(true);expect(r.body.sources).toHaveLength(0);});
   it('rejects consultation generation if a source changes during privacy pass',async()=>{const d=await ready();ai.call.mockImplementation(async(route,body)=>{if(route==='consultation')await db.getRepository(Document).increment({id:d.id},'generation',1);return mock(route,body);});await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context'}).expect(409);expect(await db.getRepository(Consultation).count()).toBe(0);});
+  it('imports clinical seed idempotently and refuses to mix a different synthetic patient',async()=>{
+    process.env.SEED_ENABLED='true';process.env.SEED_DIR=resolve(__dirname,'../../seed/clinical');
+    try {
+      const seed=new SeedService(db);await seed.onModuleInit();await seed.onModuleInit();
+      expect(await db.getRepository(Document).count()).toBe(32);
+      process.env.SEED_DIR=resolve(__dirname,'../../seed');await seed.onModuleInit();
+      expect(await db.getRepository(Document).count()).toBe(32);
+    }finally{process.env.SEED_ENABLED='false';}
+  },30000);
+  it('never adds synthetic data to a pre-existing personal archive',async()=>{
+    await ready();process.env.SEED_ENABLED='true';process.env.SEED_DIR=resolve(__dirname,'../../seed/clinical');
+    try{await new SeedService(db).onModuleInit();expect(await db.getRepository(Document).count()).toBe(1);}
+    finally{process.env.SEED_ENABLED='false';}
+  });
   it('imports complete synthetic seed idempotently with original TXT and PDF files',async()=>{process.env.SEED_ENABLED='true';process.env.SEED_DIR=resolve(__dirname,'../../seed');try{const seed=new SeedService(db);await seed.onModuleInit();await seed.onModuleInit();const docs=await db.getRepository(Document).find();expect(docs).toHaveLength(36);const original=await app.get(ArchiveServiceForTest()).original(docs.find(d=>d.sourceType==='PDF')!.id);expect((await readFile(original.path)).subarray(0,5).toString()).toBe('%PDF-');const textDoc=docs.find(d=>d.sourceType==='TEXT')!;expect((await app.get(ArchiveServiceForTest()).original(textDoc.id)).mimeType).toContain('text/plain');expect((await request(app.getHttpServer()).get('/api/history?pageSize=100').expect(200)).body.total).toBeGreaterThanOrEqual(41);}finally{process.env.SEED_ENABLED='false';}},30000);
   it('recovers persisted RUNNING jobs after worker restart',async()=>{const d=await note();await db.getRepository(ProcessingJob).update(d.jobId,{status:'RUNNING'});const restarted=new ProcessingService(db,ai as any);process.env.WORKER_ENABLED='true';try{await restarted.onApplicationBootstrap();for(let n=0;n<30;n++){const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});if(job.status==='READY')break;await new Promise(r=>setTimeout(r,30));}expect((await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId})).status).toBe('READY');}finally{await restarted.onApplicationShutdown();process.env.WORKER_ENABLED='false';}});
 });

@@ -1,0 +1,457 @@
+{
+  "sourceIR": {
+    "schemaVersion": "source-ir-v1",
+    "stage": "SOURCE_ONLY",
+    "documentId": "synthetic-lab",
+    "parserVersion": "test-v1",
+    "normalizerVersion": "whitespace-map-v1",
+    "sourceHash": "5804ce396d7f2180f67b1eb40916af1bc22a3c139fea7a1aae3fa75ea582e0e3",
+    "pages": [
+      {
+        "pageNumber": 2,
+        "text": "Лабораторные исследования\nСубъект: пациент\nДата результата: 2026-06-18\nДата исследования: 2026-06-18\nПоказатель\tРезультат\tЕдиница\tРеференс\nФерритин\t<5,0\tмкг/л\t15–150\nMCV\t74,20\tфл\t80–100\n"
+      }
+    ],
+    "blocks": [
+      {
+        "blockId": "p0:b0",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 0,
+          "endByte": 306
+        },
+        "normalizedText": "Лабораторные исследования Субъект: пациент Дата результата: 2026-06-18 Дата исследования: 2026-06-18 Показатель Результат Единица Референс Ферритин <5,0 мкг/л 15–150 MCV 74,20 фл 80–100 ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 49,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 0,
+              "endByte": 49
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 49,
+            "normalizedEndByte": 50,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 49,
+              "endByte": 50
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 50,
+            "normalizedEndByte": 80,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 50,
+              "endByte": 80
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 80,
+            "normalizedEndByte": 81,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 80,
+              "endByte": 81
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 81,
+            "normalizedEndByte": 122,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 81,
+              "endByte": 122
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 122,
+            "normalizedEndByte": 123,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 122,
+              "endByte": 123
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 123,
+            "normalizedEndByte": 168,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 123,
+              "endByte": 168
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 168,
+            "normalizedEndByte": 169,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 168,
+              "endByte": 169
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 169,
+            "normalizedEndByte": 189,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 169,
+              "endByte": 189
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 189,
+            "normalizedEndByte": 190,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 189,
+              "endByte": 190
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 190,
+            "normalizedEndByte": 208,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 190,
+              "endByte": 208
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 208,
+            "normalizedEndByte": 209,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 208,
+              "endByte": 209
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 209,
+            "normalizedEndByte": 223,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 209,
+              "endByte": 223
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 223,
+            "normalizedEndByte": 224,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 223,
+              "endByte": 224
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 224,
+            "normalizedEndByte": 240,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 224,
+              "endByte": 240
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 240,
+            "normalizedEndByte": 241,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 240,
+              "endByte": 241
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 241,
+            "normalizedEndByte": 257,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 241,
+              "endByte": 257
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 257,
+            "normalizedEndByte": 258,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 257,
+              "endByte": 258
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 258,
+            "normalizedEndByte": 262,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 258,
+              "endByte": 262
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 262,
+            "normalizedEndByte": 263,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 262,
+              "endByte": 263
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 263,
+            "normalizedEndByte": 272,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 263,
+              "endByte": 272
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 272,
+            "normalizedEndByte": 273,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 272,
+              "endByte": 273
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 273,
+            "normalizedEndByte": 281,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 273,
+              "endByte": 281
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 281,
+            "normalizedEndByte": 282,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 281,
+              "endByte": 282
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 282,
+            "normalizedEndByte": 285,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 282,
+              "endByte": 285
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 285,
+            "normalizedEndByte": 286,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 285,
+              "endByte": 286
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 286,
+            "normalizedEndByte": 291,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 286,
+              "endByte": 291
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 291,
+            "normalizedEndByte": 292,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 291,
+              "endByte": 292
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 292,
+            "normalizedEndByte": 296,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 292,
+              "endByte": 296
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 296,
+            "normalizedEndByte": 297,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 296,
+              "endByte": 297
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 297,
+            "normalizedEndByte": 305,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 297,
+              "endByte": 305
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 305,
+            "normalizedEndByte": 306,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 305,
+              "endByte": 306
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      }
+    ],
+    "irHash": "4d03b9ed9024d59d5deea73df8da788c2afedbb0868d985e78c7c544be3de505"
+  },
+  "laboratory": {
+    "schemaVersion": "lab-rows-v1",
+    "sourceIRHash": "4d03b9ed9024d59d5deea73df8da788c2afedbb0868d985e78c7c544be3de505",
+    "sourceHash": "5804ce396d7f2180f67b1eb40916af1bc22a3c139fea7a1aae3fa75ea582e0e3",
+    "rows": [
+      {
+        "name": "Ферритин",
+        "result": {
+          "raw": "<5,0",
+          "kind": "NUMERIC",
+          "comparator": "<",
+          "numericValue": "5.0"
+        },
+        "unit": "мкг/л",
+        "referenceRaw": "15–150",
+        "subject": "PATIENT",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 241,
+          "endByte": 281
+        },
+        "sourceText": "Ферритин\t<5,0\tмкг/л\t15–150"
+      },
+      {
+        "name": "MCV",
+        "result": {
+          "raw": "74,20",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "numericValue": "74.20"
+        },
+        "unit": "фл",
+        "referenceRaw": "80–100",
+        "subject": "PATIENT",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 282,
+          "endByte": 305
+        },
+        "sourceText": "MCV\t74,20\tфл\t80–100"
+      }
+    ],
+    "dates": [
+      {
+        "role": "RESULT",
+        "iso": "2026-06-18",
+        "raw": "2026-06-18",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 81,
+          "endByte": 122
+        }
+      },
+      {
+        "role": "STUDY",
+        "iso": "2026-06-18",
+        "raw": "2026-06-18",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 123,
+          "endByte": 168
+        }
+      }
+    ],
+    "subjectSources": [
+      {
+        "pageIndex": 0,
+        "startByte": 50,
+        "endByte": 80
+      }
+    ],
+    "issues": [],
+    "candidateRows": 2,
+    "coverage": "SUPPORTED_ROWS_ONLY",
+    "artifactHash": "7892a69758faac192bcebf98b7e20de5a538ba3718ee7baec558f9da92fbcd1e"
+  },
+  "facts": [
+    {
+      "type": "LAB_RESULT",
+      "name": "Ферритин",
+      "valueText": "Ферритин\t<5,0\tмкг/л\t15–150",
+      "valueNumber": null,
+      "unit": "мкг/л",
+      "eventDate": "2026-06-18",
+      "assertionStatus": "CONFIRMED",
+      "confidence": null,
+      "provenance": {
+        "page": 2,
+        "sourceText": "Ферритин\t<5,0\tмкг/л\t15–150"
+      }
+    },
+    {
+      "type": "LAB_RESULT",
+      "name": "MCV",
+      "valueText": "MCV\t74,20\tфл\t80–100",
+      "valueNumber": 74.2,
+      "unit": "фл",
+      "eventDate": "2026-06-18",
+      "assertionStatus": "CONFIRMED",
+      "confidence": null,
+      "provenance": {
+        "page": 2,
+        "sourceText": "MCV\t74,20\tфл\t80–100"
+      }
+    }
+  ]
+}

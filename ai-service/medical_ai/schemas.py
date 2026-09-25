@@ -70,9 +70,17 @@ class RemoveRequest(StrictModel):
     documentId: str
 
 
+class DocumentDate(StrictModel):
+    documentId: str
+    documentDate: date | None = None
+
+
 class AskRequest(StrictModel):
     question: str = Field(min_length=1, max_length=4000)
-    documentIds: list[str] | None = Field(default=None, max_length=100)
+    documentIds: list[str] | None = Field(default=None, max_length=10000)
+    documents: list[DocumentDate] = Field(default_factory=list, max_length=10000)
+    dateFrom: date | None = None
+    dateTo: date | None = None
 
 
 class Context(StrictModel):

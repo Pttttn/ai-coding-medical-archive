@@ -163,8 +163,9 @@ class Corpus:
                 self.collection.delete(ids=ids)
         return {"ok": True}
 
-    def retrieve(self, query: str, top_k: int = 5, document_ids: list[str] | None = None) -> list[Document]:
-        if not 1 <= top_k <= 20:
+    def retrieve(self, query: str, top_k: int = 5, document_ids: list[str] | None = None, *, archive_scan: bool = False) -> list[Document]:
+        maximum = 1000 if archive_scan and self.name == "archive" else 20
+        if not 1 <= top_k <= maximum:
             raise ServiceError("INVALID_TOP_K", "top_k должен быть от 1 до 20.")
         with self.lock:
             if not self.documents or document_ids == []:

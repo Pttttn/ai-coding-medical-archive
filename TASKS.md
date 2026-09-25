@@ -53,3 +53,63 @@
 
 - [x] Независимый чистый Docker Compose на второй Ubuntu-машине: API 20/20, PDF 4/4, MCP, runtime 5/5, сохранность 12 таблиц после down/up.
 - [x] Независимая CUDA-серия 5+3 на RTX 5060 Ti: восемь раз 18/21 и 10/10, 0/147 внутренних расхождений; PASS/FAIL совпал с RTX 5080. [Протокол](docs/evaluation/independent-2026-09-22/README.md). Задача отдельной CPU/Mac серии выше остаётся открытой.
+
+
+## Расширение клинического архива по запросу пользователя, 24 сентября 2026
+
+- [x] Связный синтетический пациент, 32 документа / 6 PDF / 108 фактов; защита от смешивания seed.
+- [x] Архивный LangGraph: даты, обзор контекста, проверенные цитаты, корректирующий повтор и явный охват; публичный MCP сохранён.
+- [x] Период в UI/API; unit/integration проверки, Docker с новыми томами, побайтная проверка оригиналов, browser QA.
+- [x] Десять клинических API-вопросов проверены по три раза на 9b, неудачные предварительные серии сохранены.
+- [x] Стенд сравнения моделей и BM25/dense/RRF/обзора/инструментов; метрики содержания отделены от охвата.
+- [x] Первичный отсев 2B/4B/9B/Gemma 12B, сравнение пяти методов; 4B и серверная Q8 27B — 10/10 × 3 на новых индексах. Агрегаты опубликованы, остановленные CPU-offload 27B и thinking Gemma явно отмечены неполными.
+
+
+## План следующего этапа — ingestion прежде tools/agent, 25 сентября 2026
+
+- [x] Сверить предложение с текущим кодом и оформить [план pipeline](docs/MEDICAL_DOCUMENT_PIPELINE_PLAN.md) и [следующих слоёв](docs/MEDICAL_KNOWLEDGE_PLAN.md). Это завершение проектирования, не реализации.
+- [ ] P0: original-upload synthetic fixtures + отдельный gold/held-out; baseline реального ingestion без предвычисленных фактов.
+- [ ] P1: IR schema/spans/normalization map, processing revision и явная совместимая миграция.
+- [ ] P2a: LAB_REPORT — строки/единицы/референсы/даты, валидация и измерение полноты.
+- [ ] P2b: VISIT — секции, subject/assertion/medication events, отрицания и временные роли.
+- [ ] P3: facts/provenance/chunks из одной IR; staging/activation, crash/retry/reprocess, UI качества/источника.
+- [ ] P4: три полные реальные серии ingestion→QA, тесты существующей/пустой БД и чистый Docker; default только после gates.
+- [ ] P5: предметные read-only tools и router, общий snapshot и coverage, полная пагинация.
+- [ ] P6: ограниченный агент и отдельный reference corpus (2–5 разделов), manifest лицензий/версий, раздельные источники в ответе; сравнительная оценка пользы.
+
+## Переход к самостоятельному продукту, 25 сентября 2026
+
+- [x] Зафиксировать [продуктовое направление](docs/PRODUCT_DIRECTION.md); отделить учебную приёмку от готовности личного архива к повседневному использованию.
+- [ ] P0: дополнительные синтетические истории/шаблоны, отложенное разбиение без близких копий, оценка потребности в OCR/layout и объёма целевого архива.
+- [ ] P4: согласованный backup оригиналов/БД/IR/review, восстановление на чистом Compose и проверка полноты.
+- [ ] P4: обновление существующей установки, восстановление после неудачной миграции, отмена/сбои worker и нехватка места.
+- [ ] После P0 установить и измерить бюджеты времени/памяти; после gates организовать ограниченную локальную проверку владельцем с ручной сверкой оригиналов.
+
+## Выполненный первый срез P0/P1, 25 сентября 2026
+
+- [x] Original-upload baseline текущих 32 синтетических оригиналов без seed: 32 READY/IR, 140 source-backed facts, строгое частичное сопоставление 30/108. Не held-out, один прогон; [ограничения и результаты](docs/evaluation/INGESTION_BASELINE.md).
+- [x] SOURCE_ONLY IR: общая JSON Schema, UTF-8 spans/mappings, Python/TypeScript проверка, immutable storage migration и приватный source API.
+- [x] PostgreSQL-проверки upgrade/idempotency/immutable IR/page-version changes; AI регрессия.
+- [ ] Закрыть оставшиеся P0/P1: независимый held-out набор, полный recipe и сохранение стадий до LLM; затем P2 LAB/VISIT и единые проекции P3.
+
+- [ ] P4: проверить автоматическое восстановление маршрутизации/health ingress после изменения IP backend/AI; сейчас после выборочного пересоздания требуется документированный restart frontend/gateway.
+
+## Следующий рабочий срез P0/P2a, 25 сентября 2026
+
+- [x] Заморозить 12 новых синтетических LAB originals / 120 строк, development 8 и held-out 4; AI-authored gold, без независимой медицинской проверки.
+- [x] Opt-in lab-rows-v1: typed decimal/comparator/unit/referenceRaw, роли дат, source spans/hash, проверенная fact projection и UI исходных строк.
+- [x] Три настоящих обработки: development 80/80 и held-out 40/40 каждый раз, 0 FP/FN/semantic drift; baseline и неудачные попытки сохранены. [Протокол](docs/evaluation/lab-rows-v1/README.md).
+- [ ] Довести P0/P2: VISIT subject/assertion/medication events, дополнительные независимые макеты/ручная проверка gold, сложные LAB/reference/date scopes; full recipe/checkpoints и общая facts/chunks activation P3.
+
+
+## Первый рабочий срез P2b — клинические утверждения, 25 сентября 2026
+
+- [x] Зафиксировать 12 синтетических VISIT / 84 утверждения, development 8/56 и held-out 4/28; gold не поступает модели, независимой медицинской проверки пока нет.
+- [x] Opt-in clinical-v1: subject/assertion/medicationState/temporality, точные source/context spans, проверенная legacy projection и приватная вкладка источника.
+- [x] Проверить сохранность review при reprocess, скрытие старого артефакта и отказ до публикации при несогласованной проекции; общие Python/TypeScript contract tests.
+- [ ] Закрыть P2b gates и полный P0–P4: отдельная clinical activity/календарные роли, более широкие разделы/макеты, независимая проверка gold, recipe/checkpoints/activation; [текущие реальные результаты](docs/evaluation/visit-assertions-v1/README.md).
+
+- [x] Реальные 9b original-upload/reprocess серии: development 53/56 × 3 после начальных 39/56 × 3; held-out 18/28 × 3. Стабильность подтверждена в этой среде, качество gate не прошло (ошибка отрицания сохранена).
+- [x] CI 257 AI / 86 backend / 25 frontend, browser desktop/mobile и сохранность VISIT/фактов/IR после Compose down/up.
+
+- [x] Отдельное сравнение source IR/extractor/projection на mpc1 Q8 27B: held-out 26/28 × 3, 0 critical promotions, стабильные hashes; не полный Docker/backend/QA прогон, gates ещё не пройдены.

@@ -1,0 +1,664 @@
+{
+  "kind": "original-upload-laboratory-series",
+  "createdAt": "2026-09-25T07:55:36.653836+00:00",
+  "goldSha256": "04fc7309ae9e236e5d2ae2f3a8509a1b21871a71c3e379c7a8042ee5a030e6b8",
+  "codeHashes": {
+    "scripts/evaluate_lab_ingestion.py": "a8e1533e0894121118072e3005a2447b2c80c493eb1ed2b5b16be4e6056c2581",
+    "ai-service/medical_ai/extraction.py": "afbfe1c553f2a698c63b0816e83f84aa5e62134c578fcb56b8674f5f0a9ba7d9",
+    "ai-service/medical_ai/laboratory.py": "604806ff0df6610dc5e32932177dcf579b1ee5d3a0e7ab6bd9b4300c62f0c71f",
+    "ai-service/medical_ai/source_ir.py": "61fed93e79286703a839d1e31f1e76798add849d5ef6c5a168694f228c2ca871",
+    "ai-service/medical_ai/ollama.py": "1eeeac90d1b223b39b08dd36c3ac8cd2d5a0fbfe2fa1c137bfffaeeab934f787",
+    "backend/src/laboratory.ts": "bd05d3d43d192cf63634aeb009f8325c12a796e913704aa631fc05a4c486c959"
+  },
+  "plannedRepeats": 3,
+  "plannedCasesPerRepeat": 8,
+  "split": "development",
+  "complete": true,
+  "limitations": [
+    "AI-authored from source templates; no independent clinical review",
+    "LAB_REPORT only. Held-out layouts/panel excluded from implementation tuning. Repeated panels are correlated; 120 rows are not 120 independent clinical cases.",
+    "Exact source-row tuple, not medical validation or numeric reference interpretation.",
+    "Each repeat uploads new documents; no seed facts, no deletion or selected best run."
+  ],
+  "results": [
+    {
+      "case": "lab-01",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "3d1b337705ff5160befe3c95fb1377f8899b238e0f126d9835c124501ed73beb",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "b6a71b24b6e041fb422c2ba805273e8cdd1e5e1cff012105b9438325b0abfeac",
+      "artifactPresent": false,
+      "legacyScalarMatches": 0,
+      "actualFacts": 8,
+      "seconds": 8.31,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-02",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "f72be7f5927e58d009ee2db194d0991b6936f076ee8e6e57ef7666637f927b40",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "1182c33e7526e022617d055469334a473ec76571268a3047e10cbc0c85e461b5",
+      "artifactPresent": false,
+      "legacyScalarMatches": 7,
+      "actualFacts": 8,
+      "seconds": 10.84,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-03",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "8ef8e855abc7d38b810c93a4f4529511e7d7585905a04d736b32af4bb5cb44a2",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "d33ad8b3048dc30c403f9d22bc4a6c9673f8209d768ca30a539dcc4310bd4883",
+      "artifactPresent": false,
+      "legacyScalarMatches": 0,
+      "actualFacts": 8,
+      "seconds": 7.83,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-04",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "a24e5ca85ca1c9fb006f4991bdaa5880022837bd569f8a314135021945ba49a7",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "3b9efdd1de2e7640ddc77dabb01d6c2c506132ad7a64802538cff5164891627a",
+      "artifactPresent": false,
+      "legacyScalarMatches": 7,
+      "actualFacts": 8,
+      "seconds": 10.31,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-05",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "0e2ec968d2cfe36429dd84e86443927e104c21f8bbee450d52bb5e0bcdec3d32",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "ca67972d1108ef5bbfd00b3364bfdd0a56e188f6d0c611eb601ae814bce68e1d",
+      "artifactPresent": false,
+      "legacyScalarMatches": 0,
+      "actualFacts": 8,
+      "seconds": 9.33,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-06",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "d4d5eb4b779f8fc85e015e1a8e977c95beeae057e582839bcb52b3f45c1a7329",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "f51d7c631775829f889ffaf533e1f1e0342d33aafef42d5d61ed557cd3a97bc3",
+      "artifactPresent": false,
+      "legacyScalarMatches": 0,
+      "actualFacts": 8,
+      "seconds": 9.81,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-07",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "64d2e33f75e91e06c496eaabd6857cf9e4d9b519cc54f6f780b2f06cf06d8063",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "a6eed79bbb972d41226af29ab53a80d2451c889ffa6b8cdf31aca83993b82cdd",
+      "artifactPresent": false,
+      "legacyScalarMatches": 0,
+      "actualFacts": 8,
+      "seconds": 9.3,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-08",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "818c10b0a42b07da3ae2992360d79d716df426f329de2c01dff8864b2706f141",
+      "expected": 10,
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "legacy",
+      "sourceHash": "1441da11e71109e0e2918e009706c1d8f3a8c371f8ce223ba068fb11c8f0c9ea",
+      "artifactPresent": false,
+      "legacyScalarMatches": 7,
+      "actualFacts": 8,
+      "seconds": 9.83,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-01",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "3d1b337705ff5160befe3c95fb1377f8899b238e0f126d9835c124501ed73beb",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.03,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-02",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "f72be7f5927e58d009ee2db194d0991b6936f076ee8e6e57ef7666637f927b40",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.03,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-03",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "8ef8e855abc7d38b810c93a4f4529511e7d7585905a04d736b32af4bb5cb44a2",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.02,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-04",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "a24e5ca85ca1c9fb006f4991bdaa5880022837bd569f8a314135021945ba49a7",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.01,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-05",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "0e2ec968d2cfe36429dd84e86443927e104c21f8bbee450d52bb5e0bcdec3d32",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.03,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-06",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "d4d5eb4b779f8fc85e015e1a8e977c95beeae057e582839bcb52b3f45c1a7329",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.02,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-07",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "64d2e33f75e91e06c496eaabd6857cf9e4d9b519cc54f6f780b2f06cf06d8063",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.02,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-08",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "818c10b0a42b07da3ae2992360d79d716df426f329de2c01dff8864b2706f141",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.0,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-01",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "3d1b337705ff5160befe3c95fb1377f8899b238e0f126d9835c124501ed73beb",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.02,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-02",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "f72be7f5927e58d009ee2db194d0991b6936f076ee8e6e57ef7666637f927b40",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.03,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-03",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "8ef8e855abc7d38b810c93a4f4529511e7d7585905a04d736b32af4bb5cb44a2",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.03,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-04",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "a24e5ca85ca1c9fb006f4991bdaa5880022837bd569f8a314135021945ba49a7",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.0,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-05",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "0e2ec968d2cfe36429dd84e86443927e104c21f8bbee450d52bb5e0bcdec3d32",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.02,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-06",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "d4d5eb4b779f8fc85e015e1a8e977c95beeae057e582839bcb52b3f45c1a7329",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.0,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-07",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "64d2e33f75e91e06c496eaabd6857cf9e4d9b519cc54f6f780b2f06cf06d8063",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.0,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    },
+    {
+      "case": "lab-08",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "818c10b0a42b07da3ae2992360d79d716df426f329de2c01dff8864b2706f141",
+      "expected": 10,
+      "error": "HTTPError",
+      "seconds": 0.0,
+      "tuple": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10
+      }
+    }
+  ],
+  "perSplitRepeat": [
+    {
+      "split": "development",
+      "repeat": 1,
+      "ready": 8,
+      "cases": 8,
+      "tp": 0,
+      "fp": 0,
+      "fn": 80,
+      "scalarMatches": 21,
+      "fields": {
+        "resultKind": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "comparator": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "numericValue": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "name": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "resultRaw": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "unit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "referenceRaw": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "resultDate": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "specimenDate": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "subject": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "sourceText": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        }
+      },
+      "secondsSum": 75.56
+    },
+    {
+      "split": "development",
+      "repeat": 2,
+      "ready": 0,
+      "cases": 8,
+      "tp": 0,
+      "fp": 0,
+      "fn": 80,
+      "scalarMatches": 0,
+      "fields": {
+        "resultKind": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "comparator": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "numericValue": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "name": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "resultRaw": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "unit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "referenceRaw": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "resultDate": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "specimenDate": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "subject": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "sourceText": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        }
+      },
+      "secondsSum": 0.16
+    },
+    {
+      "split": "development",
+      "repeat": 3,
+      "ready": 0,
+      "cases": 8,
+      "tp": 0,
+      "fp": 0,
+      "fn": 80,
+      "scalarMatches": 0,
+      "fields": {
+        "resultKind": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "comparator": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "numericValue": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "name": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "resultRaw": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "unit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "referenceRaw": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "resultDate": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "specimenDate": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "subject": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        },
+        "sourceText": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 80
+        }
+      },
+      "secondsSum": 0.1
+    }
+  ],
+  "failureExplanation": "Repeat uploads returned HTTP 409 DUPLICATE; independently confirmed. Only first repeat ran. Superseded by baseline-legacy; not a successful 3-run series."
+}

@@ -23,7 +23,9 @@ class Ollama:
     def generation_options(self, task: str) -> dict:
         """Each operation has a hard decoding budget; timeout is not its stopping condition."""
         settings = self.settings
-        if task.startswith(("TASK: rewrite_query", "TASK: broaden_query")):
+        if task.startswith("TASK: archive_evidence"):
+            budget, context = settings.archive_evidence_max_tokens, 16384
+        elif task.startswith(("TASK: rewrite_query", "TASK: broaden_query")):
             budget, context = settings.llm_query_max_tokens, 8192
         elif task.startswith("TASK: grade_chunks"):
             budget, context = settings.llm_grade_max_tokens, 8192

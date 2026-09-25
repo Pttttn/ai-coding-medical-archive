@@ -1,0 +1,9 @@
+{
+  "desktop": true,
+  "mobile": true,
+  "rows": 10,
+  "comparisonSignPreserved": true,
+  "sourceOpens": true,
+  "noPageOverflow": true,
+  "pageErrors": 0
+}

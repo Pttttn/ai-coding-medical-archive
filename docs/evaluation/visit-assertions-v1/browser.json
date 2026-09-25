@@ -1,0 +1,10 @@
+{
+  "desktop": true,
+  "mobile": true,
+  "rows": 7,
+  "familySeparated": true,
+  "notStartedPreserved": true,
+  "sourceAndContextOpen": true,
+  "noPageOverflow": true,
+  "pageErrors": 0
+}

@@ -1,0 +1,17 @@
+{
+  "sameSnapshot": true,
+  "before": {
+    "documents": 8,
+    "ready": 8,
+    "facts": 54,
+    "sourceIRs": 8,
+    "snapshotHash": "f7f823116c3dbccd8fbf215f1906c907520cd37a0b5fe517d5c63f944953b6c4"
+  },
+  "after": {
+    "documents": 8,
+    "ready": 8,
+    "facts": 54,
+    "sourceIRs": 8,
+    "snapshotHash": "f7f823116c3dbccd8fbf215f1906c907520cd37a0b5fe517d5c63f944953b6c4"
+  }
+}

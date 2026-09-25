@@ -1,3 +1,4 @@
+import {Visit} from './visit';
 import {BadRequestException, ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {DataSource, EntityManager, In, IsNull} from 'typeorm';
 import {randomUUID,createHash} from 'node:crypto';
@@ -5,6 +6,7 @@ import {mkdir,realpath,unlink,writeFile} from 'node:fs/promises';
 import {basename,resolve,relative,isAbsolute} from 'node:path';
 import {AuditEvent,Document,ExtractionRun,FactProvenance,FactRevision,MedicalFact,ProcessingJob,Tag,TextRevision,TimelineEvent} from './entities';
 import {CreateNoteDto,DocumentQueryDto,PaginationDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
+import {Laboratory} from './laboratory';
 import {AiClient,contentHash,normalizeTags,paginate,safeStoragePath,validatePdf} from './core';
 
 export async function audit(m:EntityManager,documentId:string|null,entityType:string,entityId:string,action:string,before:unknown=null,after:unknown=null) {
@@ -38,6 +40,12 @@ export class ArchiveService {
     const doc=await qb.getOne();
     if(!doc) throw new NotFoundException({message:'Документ не найден',code:'DOCUMENT_NOT_FOUND'});
     return doc;
+  }
+  async sourceIR(id:string) {
+    await this.document(id);
+    const rows=await this.db.query('SELECT i.id,i."textRevisionId",i."irHash",i.content FROM source_ir_revisions i JOIN text_revisions t ON t.id=i."textRevisionId" JOIN documents d ON d.id=i."documentId" WHERE d.id=$1 AND d."deletedAt" IS NULL AND t.version=d."textVersion" ORDER BY i."createdAt" DESC,i.id LIMIT 1',[id]);
+    if(!rows.length)throw new NotFoundException({message:'Исходное представление ещё не создано',code:'SOURCE_IR_UNAVAILABLE'});
+    return rows[0];
   }
   async createNote(dto:CreateNoteDto) {
     return this.db.transaction(async m=>{
@@ -92,8 +100,14 @@ export class ArchiveService {
     ]);
     const rawWarnings=(extractionRun?.rawJson as {warnings?:unknown}|null)?.warnings;
     const processingWarnings=Array.isArray(rawWarnings)?rawWarnings.filter((warning):warning is string=>typeof warning==='string'):[];
+    const recipe=(extractionRun?.rawJson as {processingRecipe?:Record<string,unknown>}|null)?.processingRecipe;
+    const processingRecipe=recipe?Object.fromEntries(['profile','sourceIRVersion','normalizerVersion','model','modelDigest','generationOptions'].map(k=>[k,recipe[k]])):null;
     const extraction=extractionRun?{id:extractionRun.id,textVersion:extractionRun.textVersion,model:extractionRun.model,modelDigest:extractionRun.modelDigest,promptVersion:extractionRun.promptVersion,schemaVersion:extractionRun.schemaVersion,parserVersion:extractionRun.parserVersion,status:extractionRun.status,validationErrors:extractionRun.validationErrors,createdAt:extractionRun.createdAt,completedAt:extractionRun.completedAt}:null;
-    return {...doc,text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction};
+    // Never expose a failed, deleted, superseded or earlier-text lab artifact as current.
+    const raw=extractionRun?.rawJson as {laboratory?:Laboratory;visit?:Visit;extractionProfile?:string}|null;
+    const laboratory=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.laboratory??null:null;
+    const visit=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.visit??null:null;
+    return {...doc,text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,visit,processingRecipe,extractionProfile:raw?.extractionProfile??'legacy'};
   }
   async revision(id:string,version:number) {
     await this.document(id,true);
@@ -253,13 +267,14 @@ export class ArchiveService {
       await m.delete(Tag,id);await audit(m,null,'TAG',id,'TAG_DELETED',{name:tag.name});return {ok:true};
     });
   }
-  async ask(question:string,documentIds?:string[]) {
-    const qb=this.db.getRepository(Document).createQueryBuilder('d').select(['d.id','d.generation','d.textVersion']).where('d."deletedAt" IS NULL AND d.status = :status',{status:'READY'});
+  async ask(question:string,documentIds?:string[],dateFrom?:string,dateTo?:string) {
+    if(dateFrom&&dateTo&&dateFrom>dateTo)throw new BadRequestException({code:'INVALID_PERIOD',message:'Начало периода должно быть не позже конца'});
+    const qb=this.db.getRepository(Document).createQueryBuilder('d').select(['d.id','d.generation','d.textVersion','d.documentDate']).where('d."deletedAt" IS NULL AND d.status = :status',{status:'READY'});
     if(documentIds!==undefined){if(!documentIds.length)return {answer:'В выбранном контексте нет доступных документов.',sources:[],insufficientContext:true};qb.andWhere('d.id IN (:...ids)',{ids:documentIds});}
     const snapshots=await qb.getMany();
     const allowed=snapshots.map(d=>d.id);
     if(!allowed.length) return {answer:'В архиве пока нет готовых документов для ответа.',sources:[],insufficientContext:true};
-    const result=await this.ai.call('ask',{question,documentIds:allowed});
+    const result=await this.ai.call('ask',{question,documentIds:allowed,documents:snapshots.map(d=>({documentId:d.id,documentDate:d.documentDate})),dateFrom,dateTo});
     const current=await this.db.getRepository(Document).find({where:{id:In(allowed),deletedAt:IsNull(),status:'READY'},select:['id','generation','textVersion']});
     const stillAllowed=new Set(current.filter(d=>snapshots.some(s=>s.id===d.id&&s.generation===d.generation&&s.textVersion===d.textVersion)).map(d=>d.id));
     // Never return an answer derived from a document deleted/edited while generation was running.

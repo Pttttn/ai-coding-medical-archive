@@ -1,0 +1,281 @@
+{
+  "$defs": {
+    "LabDate": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "enum": [
+            "RESULT",
+            "SPECIMEN",
+            "STUDY"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "iso": {
+          "title": "Iso",
+          "type": "string"
+        },
+        "raw": {
+          "title": "Raw",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/Span"
+        }
+      },
+      "required": [
+        "role",
+        "iso",
+        "raw",
+        "source"
+      ],
+      "title": "LabDate",
+      "type": "object"
+    },
+    "LabIssue": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "UNSUPPORTED_ROW",
+            "DATE_CONFLICT",
+            "INVALID_DATE",
+            "ROW_LIMIT",
+            "UNSUPPORTED_CONTENT"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Span"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "title": "LabIssue",
+      "type": "object"
+    },
+    "LabResult": {
+      "additionalProperties": false,
+      "properties": {
+        "raw": {
+          "title": "Raw",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "NUMERIC",
+            "QUALITATIVE"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "comparator": {
+          "anyOf": [
+            {
+              "enum": [
+                "=",
+                "<",
+                ">",
+                "<=",
+                ">="
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Comparator"
+        },
+        "numericValue": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Numericvalue"
+        }
+      },
+      "required": [
+        "raw",
+        "kind",
+        "comparator",
+        "numericValue"
+      ],
+      "title": "LabResult",
+      "type": "object"
+    },
+    "LabRow": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/LabResult"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Unit"
+        },
+        "referenceRaw": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Referenceraw"
+        },
+        "subject": {
+          "enum": [
+            "PATIENT",
+            "UNKNOWN"
+          ],
+          "title": "Subject",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/Span"
+        },
+        "sourceText": {
+          "title": "Sourcetext",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "result",
+        "unit",
+        "referenceRaw",
+        "subject",
+        "source",
+        "sourceText"
+      ],
+      "title": "LabRow",
+      "type": "object"
+    },
+    "Span": {
+      "additionalProperties": false,
+      "properties": {
+        "pageIndex": {
+          "minimum": 0,
+          "title": "Pageindex",
+          "type": "integer"
+        },
+        "startByte": {
+          "minimum": 0,
+          "title": "Startbyte",
+          "type": "integer"
+        },
+        "endByte": {
+          "minimum": 0,
+          "title": "Endbyte",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pageIndex",
+        "startByte",
+        "endByte"
+      ],
+      "title": "Span",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "lab-rows-v1",
+      "default": "lab-rows-v1",
+      "title": "Schemaversion",
+      "type": "string"
+    },
+    "sourceIRHash": {
+      "title": "Sourceirhash",
+      "type": "string"
+    },
+    "sourceHash": {
+      "title": "Sourcehash",
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "$ref": "#/$defs/LabRow"
+      },
+      "title": "Rows",
+      "type": "array"
+    },
+    "dates": {
+      "items": {
+        "$ref": "#/$defs/LabDate"
+      },
+      "title": "Dates",
+      "type": "array"
+    },
+    "subjectSources": {
+      "items": {
+        "$ref": "#/$defs/Span"
+      },
+      "title": "Subjectsources",
+      "type": "array"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/LabIssue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "candidateRows": {
+      "title": "Candidaterows",
+      "type": "integer"
+    },
+    "coverage": {
+      "const": "SUPPORTED_ROWS_ONLY",
+      "default": "SUPPORTED_ROWS_ONLY",
+      "title": "Coverage",
+      "type": "string"
+    },
+    "artifactHash": {
+      "title": "Artifacthash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "sourceIRHash",
+    "sourceHash",
+    "rows",
+    "dates",
+    "subjectSources",
+    "issues",
+    "candidateRows",
+    "artifactHash"
+  ],
+  "title": "Laboratory",
+  "type": "object"
+}

@@ -1,0 +1,837 @@
+{
+  "kind": "original-ingestion-development-baseline",
+  "createdAt": "2026-09-25T07:15:20.565643+00:00",
+  "goldKind": "partial development seed annotations, used only by scorer; not held-out",
+  "goldSha256": "33baa67a8c0e3237e4247cfb8531af80e28840f0b5ea75650286b0dbc38087ff",
+  "plannedCases": 32,
+  "complete": true,
+  "results": [
+    {
+      "fixture": "originals/2024-08-17-head-injury.md",
+      "expected": 4,
+      "originalSha256": "cd953d2111f12e66cda48d7995f1dc0360bb59222c9e9863059cbf46552664f0",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 3,
+      "actual": 8,
+      "unmatchedActual": 5,
+      "sourceQuotesValid": 8,
+      "warningCount": 1,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 9,
+        "sourceHash": "83face6e0d46890679de88e0982a2cb0487a4b52cc3b53ee3dc2ffbab06fb81e"
+      },
+      "seconds": 15.52
+    },
+    {
+      "fixture": "originals/2024-09-05-neuro-recovery.md",
+      "expected": 2,
+      "originalSha256": "47f7f16c0678d0ac82dc860eb880723e7db55ebd33e378cba58b415d07b02c7d",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 3,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "37468a86182f2ad0162c492066ccca3a815bc4c38cdcb051a5c935620ec2ef82"
+      },
+      "seconds": 5.14
+    },
+    {
+      "fixture": "originals/2024-10-14-bp-diary.md",
+      "expected": 2,
+      "originalSha256": "89d7a67c50d8d4c9be16e711e71d9a6345694ce65db639a6bf89e27c0b3605b8",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 2,
+      "actual": 3,
+      "unmatchedActual": 1,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "9dca6c14f7bf88abd05a0b14dd5fb80dbdd64cae173246778e0b7e91f578ef64"
+      },
+      "seconds": 5.16
+    },
+    {
+      "fixture": "originals/2024-11-02-hypertension.md",
+      "expected": 3,
+      "originalSha256": "9b86412643c5b92f27b9407ec9364c91d7878fd74481261719cde07b8d85506e",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 3,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "5a3ba6bf9f45a8054e471c8ff648b8c6a41509bcc57ed7af8c6a1117dd69fee7"
+      },
+      "seconds": 5.11
+    },
+    {
+      "fixture": "originals/2024-12-02-laboratory.pdf",
+      "expected": 7,
+      "originalSha256": "916767eff726f7c6e01f63810d08299d380cd75d811ffd93991b36e767403a52",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 7,
+      "unmatchedActual": 7,
+      "sourceQuotesValid": 7,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 1,
+        "sourceHash": "ae18fb0e3cc7da63f541c187eaaa2becb77ddadccc28ef0576c657db549212c0"
+      },
+      "seconds": 9.22
+    },
+    {
+      "fixture": "originals/2024-12-10-lipid-diagnosis.md",
+      "expected": 3,
+      "originalSha256": "279d09496c6f413c1985e409cf65d9c4fe183a2b1c93bd6d5b7b6e8bd5546a87",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 4,
+      "unmatchedActual": 3,
+      "sourceQuotesValid": 4,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "4f3c91765e302025632853f82ec028228b29dfbf1f91e8aa205ca87039041d48"
+      },
+      "seconds": 6.2
+    },
+    {
+      "fixture": "originals/2025-01-15-amlodipine-plan.md",
+      "expected": 2,
+      "originalSha256": "c7f2e6d5f48611f4087ac993d25d1c4a4091d6fca52c46bd986a8d223eba1a68",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 2,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 2,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "ecf9f395e5e9a1e3ea32adc81fc3610f48a9cf8f50db119cc2d26d69f85cd0b9"
+      },
+      "seconds": 4.12
+    },
+    {
+      "fixture": "originals/2025-02-03-not-started.md",
+      "expected": 2,
+      "originalSha256": "b6090053f4c1e736dd591e4a9ad887ee9fef1b461599963bc4e19272640f33e2",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 3,
+      "unmatchedActual": 3,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "7df18dbaa9d1b146cd428959c833197ae3d3d03f5864d537d23b14e7f527f5b6"
+      },
+      "seconds": 5.17
+    },
+    {
+      "fixture": "originals/2025-03-04-intake-confirmed.md",
+      "expected": 2,
+      "originalSha256": "071223afdd2ea85fc98c3b667cb4382da42be11db126ae46dbf12aa1bd4d03cb",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 2,
+      "actual": 3,
+      "unmatchedActual": 1,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "a7a48bd76b10848949282da83f05973179af6df05ef39c97d1fc50b31aa363b2"
+      },
+      "seconds": 5.14
+    },
+    {
+      "fixture": "originals/2025-04-16-bp-followup.md",
+      "expected": 2,
+      "originalSha256": "25588641853e24296fb6622eea336bd59faa49cb93259f5aaba1bc435bdc9f90",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 2,
+      "actual": 4,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 4,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "45829d79edb944b713b5ac216579783b618d2b466d525de627e6acf24e767ab1"
+      },
+      "seconds": 6.14
+    },
+    {
+      "fixture": "originals/2025-05-20-lifestyle.md",
+      "expected": 2,
+      "originalSha256": "8d7e8b63716609f2a96f4ea8f96d24586ade57b8d3d5f45eae6d52fe93772bc3",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 2,
+      "unmatchedActual": 1,
+      "sourceQuotesValid": 2,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "8a7126380a84253b9c7598c30cebaf9c607ec0dc670e9793f0c33647f9111d1b"
+      },
+      "seconds": 4.09
+    },
+    {
+      "fixture": "originals/2025-06-18-allergy.md",
+      "expected": 2,
+      "originalSha256": "d3dbe2cfcd9d0003fae34f6445e1e6f978b9c270e5a5282b2d66b8374258e38f",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 3,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "cc6fef7fa74ebd93647e6fc65b4f6c76027a63027418db8a6b6e062445fb9e34"
+      },
+      "seconds": 4.14
+    },
+    {
+      "fixture": "originals/2025-08-29-annual-review.md",
+      "expected": 2,
+      "originalSha256": "04ba59bee812a4f75bfc0f5ec6649a5ea09446456953ce390e0b91111522f0cc",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 3,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "6b1b8742601bd560d67f46063c6feaf4b0540d557b436be8755d343660a06701"
+      },
+      "seconds": 4.16
+    },
+    {
+      "fixture": "originals/2025-10-01-laboratory.pdf",
+      "expected": 7,
+      "originalSha256": "c85b17f553f5cf1a6a30f29242bd42f418ffb6ce9beced8dc4a995f798c3af58",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 7,
+      "unmatchedActual": 7,
+      "sourceQuotesValid": 7,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 1,
+        "sourceHash": "b9c1e836879b77495476aac02c2b428cd803e5a685e151777345e2ba7bdc4b48"
+      },
+      "seconds": 9.28
+    },
+    {
+      "fixture": "originals/2025-10-08-statin-plan.md",
+      "expected": 3,
+      "originalSha256": "260241dd4009605eef49879024ecdd892e037dca6771a1c0c90024be2e05881e",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 5,
+      "unmatchedActual": 5,
+      "sourceQuotesValid": 5,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "9e869357ed7c68829bc45b8d06b14c0b5b9a5a4b6cc51515a9e22a92afa1cdb3"
+      },
+      "seconds": 7.33
+    },
+    {
+      "fixture": "originals/2025-11-10-laboratory.pdf",
+      "expected": 7,
+      "originalSha256": "ba18676b7e0631214dfa0d96b0cf087c869b070238d9543e06022a72ed6e256d",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 7,
+      "unmatchedActual": 7,
+      "sourceQuotesValid": 7,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 1,
+        "sourceHash": "eabf98f634963fc878e3c22e52dbe9bcf4bc05d9e950e71c3ea328b1ee2e6c30"
+      },
+      "seconds": 9.28
+    },
+    {
+      "fixture": "originals/2025-11-14-diabetes-suspected.md",
+      "expected": 3,
+      "originalSha256": "8bbe76be18bb698d8f95cbd01a0ff1183a280668788cacdeef6b30f2eb0ff494",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 3,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 3,
+      "warningCount": 1,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "7e05dc2592109ba4e863605f317b18b9e618e967106751ff79ff2274be9a3767"
+      },
+      "seconds": 7.17
+    },
+    {
+      "fixture": "originals/2025-12-12-prediabetes.md",
+      "expected": 3,
+      "originalSha256": "ce6748829572a43a754828b319bc096fe84fc0b50bbff70ae130c25c5c1b2914",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 5,
+      "unmatchedActual": 4,
+      "sourceQuotesValid": 5,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "2b74cac63fae66950d7db33a3c12b19d47924d571fa35962d14c804cd557bc9d"
+      },
+      "seconds": 7.25
+    },
+    {
+      "fixture": "originals/2025-12-19-statin-intake.md",
+      "expected": 2,
+      "originalSha256": "12cab74d9eed4928614b5001bde7c4b6509cad4299fe086b592231b8f6e9302c",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 2,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 2,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "b5237fdbe4c13f9231c3cc16c02589ea418fe598bb325e60c749b9016fcea897"
+      },
+      "seconds": 4.14
+    },
+    {
+      "fixture": "originals/2026-01-15-laboratory.pdf",
+      "expected": 7,
+      "originalSha256": "f1dba1a61f1904ba6b93173f0f3d4aebbd30a2f01b8e8012501bf56d94ff6ca5",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 7,
+      "unmatchedActual": 7,
+      "sourceQuotesValid": 7,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 1,
+        "sourceHash": "b15daf51cf38467a2d3aaff2321b137502d37a1f1142a06886fa5c91bc0454ee"
+      },
+      "seconds": 9.16
+    },
+    {
+      "fixture": "originals/2026-01-21-alt-review.md",
+      "expected": 3,
+      "originalSha256": "907f6a5cfe1b518315b132387ded0ddb0193d59d8115c77e2fc16c6e1297d98d",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 2,
+      "actual": 6,
+      "unmatchedActual": 4,
+      "sourceQuotesValid": 6,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "888209f14b2251ece9ec5cad54a3f69ba123a7fa75ec1163608e3918ce10126d"
+      },
+      "seconds": 7.16
+    },
+    {
+      "fixture": "originals/2026-02-09-ankle-fall.md",
+      "expected": 3,
+      "originalSha256": "254c1293ed13a8c23a55ba7a820ae49815226b7f1c48515697ebe617621af897",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 3,
+      "actual": 7,
+      "unmatchedActual": 4,
+      "sourceQuotesValid": 7,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "acbdad0ce298b4ce91c91e9abe7c3b97612131ad082ca48d08cc0532d6d67fd4"
+      },
+      "seconds": 8.22
+    },
+    {
+      "fixture": "originals/2026-03-11-diabetes-review.md",
+      "expected": 2,
+      "originalSha256": "e628bfea75cee9f019a70b2180b9fde95cb97c074eccc2b9fb2f52b84d00d7fb",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 3,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "a7f670457385bc51da7eef22af93296c886bce92ca51c8d15c2529ac26f6f8e0"
+      },
+      "seconds": 5.14
+    },
+    {
+      "fixture": "originals/2026-04-02-laboratory.pdf",
+      "expected": 7,
+      "originalSha256": "fa02dc9db2cf659e265834ad0ed0f5813642f14bc680b502e5e1117a1ecc5c0c",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 7,
+      "unmatchedActual": 7,
+      "sourceQuotesValid": 7,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 1,
+        "sourceHash": "e24dd03595e6be0b1df4559e5d244f97f936a49e51c77fbfc1c635bf497558e1"
+      },
+      "seconds": 8.27
+    },
+    {
+      "fixture": "originals/2026-04-10-renal-review.md",
+      "expected": 3,
+      "originalSha256": "1fc2d87a979aa5975b8c76775ae0f07ff4f6eebcd5fdb89d75b65ccd0ceb4e97",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 3,
+      "unmatchedActual": 3,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "46d6b350f8582c10022fefe767f924d77d3faabb6867b48f425b352cf8308518"
+      },
+      "seconds": 6.2
+    },
+    {
+      "fixture": "originals/2026-05-07-neuro-history.md",
+      "expected": 2,
+      "originalSha256": "17f7bb335bcc087e490e2ce815837885fe795341742879c1906f1ec5252d8a1c",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 4,
+      "unmatchedActual": 3,
+      "sourceQuotesValid": 4,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "f7dfced9234d665383b7e94734da1cf43d0531007b040a40414ef6b5a6ea6c6d"
+      },
+      "seconds": 7.12
+    },
+    {
+      "fixture": "originals/2026-06-03-lipid-goal.md",
+      "expected": 2,
+      "originalSha256": "219a5d410965d6ca093b98db2112fa48f2aa80602590f3f4bd27e456c092f24b",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 1,
+      "unmatchedActual": 1,
+      "sourceQuotesValid": 1,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "d2b8adc131f2f343b8f5df040c489b6e7b529b0416f875c8b55662a5c390c8bb"
+      },
+      "seconds": 3.08
+    },
+    {
+      "fixture": "originals/2026-07-17-summer-diary.md",
+      "expected": 2,
+      "originalSha256": "2b0fd5200871641ec72f18c48fcdefcafe123717f8f4b33b3619ca4302a377c8",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 2,
+      "actual": 3,
+      "unmatchedActual": 1,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 5,
+        "sourceHash": "3b5985d8d4db96309e72cae204500484f8906b7915e80df58da1465f21b6d6bc"
+      },
+      "seconds": 5.12
+    },
+    {
+      "fixture": "originals/2026-08-12-chronic-review.md",
+      "expected": 3,
+      "originalSha256": "506e1620d95f12b05bf146c52c884e84a077a8c79b3bf7cdce24124b212ae740",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 5,
+      "unmatchedActual": 4,
+      "sourceQuotesValid": 5,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "ea2c432a99954969697490953ae5cfe7ce45011b861d8e25032eb14ee7062a5b"
+      },
+      "seconds": 6.19
+    },
+    {
+      "fixture": "originals/2026-09-10-laboratory.pdf",
+      "expected": 7,
+      "originalSha256": "bae033e39b4c0d75b6dac7c2259d21e57ba057b8cd41c21c463a7fa5546f3d44",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 0,
+      "actual": 7,
+      "unmatchedActual": 7,
+      "sourceQuotesValid": 7,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 1,
+        "sourceHash": "16f75150af1e9dc8d95c889e4bc0e6e1bcfea10f046fb24221cff4f1eb876fb4"
+      },
+      "seconds": 8.25
+    },
+    {
+      "fixture": "originals/2026-09-15-latest-endo.md",
+      "expected": 3,
+      "originalSha256": "76904a96a86bf698460141bf5bec57adb231d7f8c08ba15530d1543927621dec",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 1,
+      "actual": 3,
+      "unmatchedActual": 2,
+      "sourceQuotesValid": 3,
+      "warningCount": 0,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 7,
+        "sourceHash": "799f3113c6edefcd14634341b96e9cbba331025625f0ef426e20b0b628eb9602"
+      },
+      "seconds": 5.12
+    },
+    {
+      "fixture": "originals/2026-09-20-latest-summary.md",
+      "expected": 4,
+      "originalSha256": "025f45c0b237a8129a5cfff1315c53e24e89997e5700528ab3887f62b84c459c",
+      "status": "READY",
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "medical-extract-v4",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "matched": 2,
+      "actual": 7,
+      "unmatchedActual": 5,
+      "sourceQuotesValid": 7,
+      "warningCount": 2,
+      "sourceIR": {
+        "schemaVersion": "source-ir-v1",
+        "pages": 1,
+        "blocks": 9,
+        "sourceHash": "a47d793face6aaa7f98a3bea32efc21dac8612a4dce30f15c7333c9638ff3e5a"
+      },
+      "seconds": 10.25
+    }
+  ],
+  "scorerVersion": "partial-gold-v1",
+  "limitations": [
+    "Development corpus already used for QA; not held-out.",
+    "Gold is partial; unmatched extra facts are not necessarily false positives.",
+    "Strict legacy matching requires source overlap, type, assertion, numeric value and original unit when present; not full medical tuple accuracy.",
+    "One run only; source IR is SOURCE_ONLY and does not drive extraction or retrieval yet."
+  ],
+  "extractionCodeSha256": "afbfe1c553f2a698c63b0816e83f84aa5e62134c578fcb56b8674f5f0a9ba7d9",
+  "summary": {
+    "expected": 108,
+    "matched": 30,
+    "actual": 140,
+    "sourceQuotesValid": 140,
+    "seconds": 213.04,
+    "ready": 32,
+    "sourceIRStored": 32
+  },
+  "posthocDiagnostics": {
+    "description": "After-run inspection of stored PDF fact fields; does not alter baseline matching.",
+    "pdfFacts": {
+      "OBSERVATION": 35,
+      "valueNumberPresent": 35,
+      "LAB_RESULT": 7,
+      "valueNumberMissing": 7,
+      "labResultWithoutNumericValue": 7
+    }
+  }
+}

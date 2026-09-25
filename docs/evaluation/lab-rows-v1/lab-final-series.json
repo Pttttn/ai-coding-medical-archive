@@ -1,0 +1,3265 @@
+{
+  "kind": "original-upload-laboratory-series",
+  "createdAt": "2026-09-25T08:21:50.718865+00:00",
+  "goldSha256": "04fc7309ae9e236e5d2ae2f3a8509a1b21871a71c3e379c7a8042ee5a030e6b8",
+  "codeHashes": {
+    "scripts/evaluate_lab_ingestion.py": "62a6e3697ab9422cba94b43cd1d603b1fd4f8c95b12bede7a1d16c036b5b9bae",
+    "ai-service/medical_ai/extraction.py": "afbfe1c553f2a698c63b0816e83f84aa5e62134c578fcb56b8674f5f0a9ba7d9",
+    "ai-service/medical_ai/laboratory.py": "828fc0ffb86eba7bf0e6f3ad58761de330400f1f81654def6c4a4ee7aef913ae",
+    "ai-service/medical_ai/source_ir.py": "61fed93e79286703a839d1e31f1e76798add849d5ef6c5a168694f228c2ca871",
+    "ai-service/medical_ai/ollama.py": "1eeeac90d1b223b39b08dd36c3ac8cd2d5a0fbfe2fa1c137bfffaeeab934f787",
+    "backend/src/laboratory.ts": "b7bc342d34e715048c3805ad099958febd18535ad311baa87d5488d3f40092a7"
+  },
+  "plannedRepeats": 3,
+  "plannedCasesPerRepeat": 12,
+  "split": "all",
+  "complete": true,
+  "results": [
+    {
+      "case": "lab-01",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "3d1b337705ff5160befe3c95fb1377f8899b238e0f126d9835c124501ed73beb",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "b6a71b24b6e041fb422c2ba805273e8cdd1e5e1cff012105b9438325b0abfeac",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "ae941621b79ec490ad7c50ced7d46711008d4b874e2c8bf40763a553af1519d2",
+      "actualFacts": 10,
+      "seconds": 1.14
+    },
+    {
+      "case": "lab-02",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "f72be7f5927e58d009ee2db194d0991b6936f076ee8e6e57ef7666637f927b40",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "1182c33e7526e022617d055469334a473ec76571268a3047e10cbc0c85e461b5",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "796f0d938c563872a63bf0185c4e0677902c9bef4c8cce82b4a82b86046d24c4",
+      "actualFacts": 10,
+      "seconds": 1.11
+    },
+    {
+      "case": "lab-03",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "8ef8e855abc7d38b810c93a4f4529511e7d7585905a04d736b32af4bb5cb44a2",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "d33ad8b3048dc30c403f9d22bc4a6c9673f8209d768ca30a539dcc4310bd4883",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "09a2109fd34b371b11188499d8e13931df40d7d2c5ac7c45b566fe1377d2c0ff",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-04",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "a24e5ca85ca1c9fb006f4991bdaa5880022837bd569f8a314135021945ba49a7",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "3b9efdd1de2e7640ddc77dabb01d6c2c506132ad7a64802538cff5164891627a",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "311b3dc4023630ffc69670f571614d28528ba272a329a7bb0a520f2277b045ef",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-05",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "0e2ec968d2cfe36429dd84e86443927e104c21f8bbee450d52bb5e0bcdec3d32",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "ca67972d1108ef5bbfd00b3364bfdd0a56e188f6d0c611eb601ae814bce68e1d",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "8d57fe28fb316d32672a4ced8f1a2bf4d258c045c3a4547a85f3bfaa94868f30",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-06",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "d4d5eb4b779f8fc85e015e1a8e977c95beeae057e582839bcb52b3f45c1a7329",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "f51d7c631775829f889ffaf533e1f1e0342d33aafef42d5d61ed557cd3a97bc3",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "703c75dbe89b17eff45556e305c0c9ed82a2c4c4de004ef9dd8d567c6549383b",
+      "actualFacts": 10,
+      "seconds": 1.05
+    },
+    {
+      "case": "lab-07",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "64d2e33f75e91e06c496eaabd6857cf9e4d9b519cc54f6f780b2f06cf06d8063",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "a6eed79bbb972d41226af29ab53a80d2451c889ffa6b8cdf31aca83993b82cdd",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "9a8938bb85e74f7672b531e8593ad7e52cf74f5637bd09e74141d341ca65e72d",
+      "actualFacts": 10,
+      "seconds": 0.56
+    },
+    {
+      "case": "lab-08",
+      "split": "development",
+      "repeat": 1,
+      "sha256": "818c10b0a42b07da3ae2992360d79d716df426f329de2c01dff8864b2706f141",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "1441da11e71109e0e2918e009706c1d8f3a8c371f8ce223ba068fb11c8f0c9ea",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "e2db210d0fa28fc6e56ee34d6a0ed61644d095a65ff3a9837eb6382c3f7d716e",
+      "actualFacts": 10,
+      "seconds": 1.11
+    },
+    {
+      "case": "lab-09",
+      "split": "held-out",
+      "repeat": 1,
+      "sha256": "4743d8168edbe84c25d16b02d63eb6c3aebf906604d63ef85e737cae6df19fda",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "3cd440228fc68e6f52c5aad42a4ee0dd21002c0051d9c7eca755fd5ba078a7a2",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "6b7ec22cac40c45f32056b21ec698aec4136d15c524ce1434d3f35be6210e04c",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-10",
+      "split": "held-out",
+      "repeat": 1,
+      "sha256": "e6f637c76db13d46047d712295a97f49276f7930331f90e9eca90088ed58d8cd",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "fae8a202762f58100c7a7590a1876d7d4cb9548932a48aa9341f14ef5a8f8d71",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "b5355ebd2f32702c13b241d917bd43c920610bc6b9dbd549d1ea8e2b070304b9",
+      "actualFacts": 10,
+      "seconds": 1.11
+    },
+    {
+      "case": "lab-11",
+      "split": "held-out",
+      "repeat": 1,
+      "sha256": "9ba52b0faebdeeffe8ec72608408c11eed0ee28b6f73d7b2335f7b4df5162b1b",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "9ad7fd0d34716138a674365d9e17bc1d527ededfe80f8442f72830bc43998ed7",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "c9986816c99df41a3eff028867042e7649961b9a5c27aea38f611bd1136ff05d",
+      "actualFacts": 10,
+      "seconds": 1.05
+    },
+    {
+      "case": "lab-12",
+      "split": "held-out",
+      "repeat": 1,
+      "sha256": "4a1c2425f1f0c2764515457e25f2db84156955f7554d7de96899faa2d02c2ae0",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "78439de4a40edda73ee76b0e4559d3e4bb79074494e6d8ef99c84d3f2e21f5f9",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "6f5ea65cc15e940b07ed657571f0e01fa0cf0abc5e03096173967da2491cbe7c",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-01",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "3d1b337705ff5160befe3c95fb1377f8899b238e0f126d9835c124501ed73beb",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "b6a71b24b6e041fb422c2ba805273e8cdd1e5e1cff012105b9438325b0abfeac",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "ae941621b79ec490ad7c50ced7d46711008d4b874e2c8bf40763a553af1519d2",
+      "actualFacts": 10,
+      "seconds": 0.59
+    },
+    {
+      "case": "lab-02",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "f72be7f5927e58d009ee2db194d0991b6936f076ee8e6e57ef7666637f927b40",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "1182c33e7526e022617d055469334a473ec76571268a3047e10cbc0c85e461b5",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "796f0d938c563872a63bf0185c4e0677902c9bef4c8cce82b4a82b86046d24c4",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-03",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "8ef8e855abc7d38b810c93a4f4529511e7d7585905a04d736b32af4bb5cb44a2",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "d33ad8b3048dc30c403f9d22bc4a6c9673f8209d768ca30a539dcc4310bd4883",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "09a2109fd34b371b11188499d8e13931df40d7d2c5ac7c45b566fe1377d2c0ff",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-04",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "a24e5ca85ca1c9fb006f4991bdaa5880022837bd569f8a314135021945ba49a7",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "3b9efdd1de2e7640ddc77dabb01d6c2c506132ad7a64802538cff5164891627a",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "311b3dc4023630ffc69670f571614d28528ba272a329a7bb0a520f2277b045ef",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-05",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "0e2ec968d2cfe36429dd84e86443927e104c21f8bbee450d52bb5e0bcdec3d32",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "ca67972d1108ef5bbfd00b3364bfdd0a56e188f6d0c611eb601ae814bce68e1d",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "8d57fe28fb316d32672a4ced8f1a2bf4d258c045c3a4547a85f3bfaa94868f30",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-06",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "d4d5eb4b779f8fc85e015e1a8e977c95beeae057e582839bcb52b3f45c1a7329",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "f51d7c631775829f889ffaf533e1f1e0342d33aafef42d5d61ed557cd3a97bc3",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "703c75dbe89b17eff45556e305c0c9ed82a2c4c4de004ef9dd8d567c6549383b",
+      "actualFacts": 10,
+      "seconds": 1.09
+    },
+    {
+      "case": "lab-07",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "64d2e33f75e91e06c496eaabd6857cf9e4d9b519cc54f6f780b2f06cf06d8063",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "a6eed79bbb972d41226af29ab53a80d2451c889ffa6b8cdf31aca83993b82cdd",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "9a8938bb85e74f7672b531e8593ad7e52cf74f5637bd09e74141d341ca65e72d",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-08",
+      "split": "development",
+      "repeat": 2,
+      "sha256": "818c10b0a42b07da3ae2992360d79d716df426f329de2c01dff8864b2706f141",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "1441da11e71109e0e2918e009706c1d8f3a8c371f8ce223ba068fb11c8f0c9ea",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "e2db210d0fa28fc6e56ee34d6a0ed61644d095a65ff3a9837eb6382c3f7d716e",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-09",
+      "split": "held-out",
+      "repeat": 2,
+      "sha256": "4743d8168edbe84c25d16b02d63eb6c3aebf906604d63ef85e737cae6df19fda",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "3cd440228fc68e6f52c5aad42a4ee0dd21002c0051d9c7eca755fd5ba078a7a2",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "6b7ec22cac40c45f32056b21ec698aec4136d15c524ce1434d3f35be6210e04c",
+      "actualFacts": 10,
+      "seconds": 0.56
+    },
+    {
+      "case": "lab-10",
+      "split": "held-out",
+      "repeat": 2,
+      "sha256": "e6f637c76db13d46047d712295a97f49276f7930331f90e9eca90088ed58d8cd",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "fae8a202762f58100c7a7590a1876d7d4cb9548932a48aa9341f14ef5a8f8d71",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "b5355ebd2f32702c13b241d917bd43c920610bc6b9dbd549d1ea8e2b070304b9",
+      "actualFacts": 10,
+      "seconds": 1.12
+    },
+    {
+      "case": "lab-11",
+      "split": "held-out",
+      "repeat": 2,
+      "sha256": "9ba52b0faebdeeffe8ec72608408c11eed0ee28b6f73d7b2335f7b4df5162b1b",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "9ad7fd0d34716138a674365d9e17bc1d527ededfe80f8442f72830bc43998ed7",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "c9986816c99df41a3eff028867042e7649961b9a5c27aea38f611bd1136ff05d",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-12",
+      "split": "held-out",
+      "repeat": 2,
+      "sha256": "4a1c2425f1f0c2764515457e25f2db84156955f7554d7de96899faa2d02c2ae0",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "78439de4a40edda73ee76b0e4559d3e4bb79074494e6d8ef99c84d3f2e21f5f9",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "6f5ea65cc15e940b07ed657571f0e01fa0cf0abc5e03096173967da2491cbe7c",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-01",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "3d1b337705ff5160befe3c95fb1377f8899b238e0f126d9835c124501ed73beb",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "b6a71b24b6e041fb422c2ba805273e8cdd1e5e1cff012105b9438325b0abfeac",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "ae941621b79ec490ad7c50ced7d46711008d4b874e2c8bf40763a553af1519d2",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-02",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "f72be7f5927e58d009ee2db194d0991b6936f076ee8e6e57ef7666637f927b40",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "1182c33e7526e022617d055469334a473ec76571268a3047e10cbc0c85e461b5",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "796f0d938c563872a63bf0185c4e0677902c9bef4c8cce82b4a82b86046d24c4",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-03",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "8ef8e855abc7d38b810c93a4f4529511e7d7585905a04d736b32af4bb5cb44a2",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "d33ad8b3048dc30c403f9d22bc4a6c9673f8209d768ca30a539dcc4310bd4883",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "09a2109fd34b371b11188499d8e13931df40d7d2c5ac7c45b566fe1377d2c0ff",
+      "actualFacts": 10,
+      "seconds": 0.53
+    },
+    {
+      "case": "lab-04",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "a24e5ca85ca1c9fb006f4991bdaa5880022837bd569f8a314135021945ba49a7",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "3b9efdd1de2e7640ddc77dabb01d6c2c506132ad7a64802538cff5164891627a",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "311b3dc4023630ffc69670f571614d28528ba272a329a7bb0a520f2277b045ef",
+      "actualFacts": 10,
+      "seconds": 1.12
+    },
+    {
+      "case": "lab-05",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "0e2ec968d2cfe36429dd84e86443927e104c21f8bbee450d52bb5e0bcdec3d32",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "ca67972d1108ef5bbfd00b3364bfdd0a56e188f6d0c611eb601ae814bce68e1d",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "8d57fe28fb316d32672a4ced8f1a2bf4d258c045c3a4547a85f3bfaa94868f30",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-06",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "d4d5eb4b779f8fc85e015e1a8e977c95beeae057e582839bcb52b3f45c1a7329",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "f51d7c631775829f889ffaf533e1f1e0342d33aafef42d5d61ed557cd3a97bc3",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "703c75dbe89b17eff45556e305c0c9ed82a2c4c4de004ef9dd8d567c6549383b",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-07",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "64d2e33f75e91e06c496eaabd6857cf9e4d9b519cc54f6f780b2f06cf06d8063",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "a6eed79bbb972d41226af29ab53a80d2451c889ffa6b8cdf31aca83993b82cdd",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "9a8938bb85e74f7672b531e8593ad7e52cf74f5637bd09e74141d341ca65e72d",
+      "actualFacts": 10,
+      "seconds": 1.09
+    },
+    {
+      "case": "lab-08",
+      "split": "development",
+      "repeat": 3,
+      "sha256": "818c10b0a42b07da3ae2992360d79d716df426f329de2c01dff8864b2706f141",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "1441da11e71109e0e2918e009706c1d8f3a8c371f8ce223ba068fb11c8f0c9ea",
+      "artifactPresent": true,
+      "legacyScalarMatches": 9,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "e2db210d0fa28fc6e56ee34d6a0ed61644d095a65ff3a9837eb6382c3f7d716e",
+      "actualFacts": 10,
+      "seconds": 0.55
+    },
+    {
+      "case": "lab-09",
+      "split": "held-out",
+      "repeat": 3,
+      "sha256": "4743d8168edbe84c25d16b02d63eb6c3aebf906604d63ef85e737cae6df19fda",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "3cd440228fc68e6f52c5aad42a4ee0dd21002c0051d9c7eca755fd5ba078a7a2",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "6b7ec22cac40c45f32056b21ec698aec4136d15c524ce1434d3f35be6210e04c",
+      "actualFacts": 10,
+      "seconds": 1.06
+    },
+    {
+      "case": "lab-10",
+      "split": "held-out",
+      "repeat": 3,
+      "sha256": "e6f637c76db13d46047d712295a97f49276f7930331f90e9eca90088ed58d8cd",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "fae8a202762f58100c7a7590a1876d7d4cb9548932a48aa9341f14ef5a8f8d71",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "b5355ebd2f32702c13b241d917bd43c920610bc6b9dbd549d1ea8e2b070304b9",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-11",
+      "split": "held-out",
+      "repeat": 3,
+      "sha256": "9ba52b0faebdeeffe8ec72608408c11eed0ee28b6f73d7b2335f7b4df5162b1b",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "9ad7fd0d34716138a674365d9e17bc1d527ededfe80f8442f72830bc43998ed7",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "c9986816c99df41a3eff028867042e7649961b9a5c27aea38f611bd1136ff05d",
+      "actualFacts": 10,
+      "seconds": 1.08
+    },
+    {
+      "case": "lab-12",
+      "split": "held-out",
+      "repeat": 3,
+      "sha256": "4a1c2425f1f0c2764515457e25f2db84156955f7554d7de96899faa2d02c2ae0",
+      "expected": 10,
+      "tuple": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "resultKind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "numericValue": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "name": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "referenceRaw": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "resultDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "specimenDate": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "sourceText": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "deterministic:lab-rows-v1",
+        "modelDigest": null,
+        "promptVersion": "lab-facts-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "lab-rows-v1",
+      "sourceHash": "78439de4a40edda73ee76b0e4559d3e4bb79074494e6d8ef99c84d3f2e21f5f9",
+      "artifactPresent": true,
+      "legacyScalarMatches": 8,
+      "verifiedSourceRows": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "semanticHash": "6f5ea65cc15e940b07ed657571f0e01fa0cf0abc5e03096173967da2491cbe7c",
+      "actualFacts": 10,
+      "seconds": 1.12
+    }
+  ],
+  "limitations": [
+    "AI-authored from source templates; no independent clinical review",
+    "LAB_REPORT only. Held-out layouts/panel excluded from implementation tuning. Repeated panels are correlated; 120 rows are not 120 independent clinical cases.",
+    "Exact source-row tuple, not medical validation or numeric reference interpretation.",
+    "First repeat uploads originals; subsequent repeats explicitly reprocess the same documents. New jobs/extraction IDs are required; not three independent fresh indexes."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "before": {
+    "documents": 32,
+    "ready": 32,
+    "facts": 140,
+    "sourceIRs": 32,
+    "snapshotHash": "52454a8616342e646deb3bb2bf2f76e93c6b3beaf69059a9d9a5d9db8e881ad8"
+  },
+  "after": {
+    "documents": 32,
+    "ready": 32,
+    "facts": 140,
+    "sourceIRs": 32,
+    "snapshotHash": "52454a8616342e646deb3bb2bf2f76e93c6b3beaf69059a9d9a5d9db8e881ad8"
+  },
+  "identical": true
+}

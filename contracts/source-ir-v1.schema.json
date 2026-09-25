@@ -1,0 +1,193 @@
+{
+  "$defs": {
+    "Block": {
+      "additionalProperties": false,
+      "properties": {
+        "blockId": {
+          "title": "Blockid",
+          "type": "string"
+        },
+        "kind": {
+          "default": "paragraph",
+          "enum": [
+            "paragraph",
+            "separator"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/Span"
+        },
+        "normalizedText": {
+          "title": "Normalizedtext",
+          "type": "string"
+        },
+        "mapping": {
+          "items": {
+            "$ref": "#/$defs/Mapping"
+          },
+          "title": "Mapping",
+          "type": "array"
+        }
+      },
+      "required": [
+        "blockId",
+        "source",
+        "normalizedText",
+        "mapping"
+      ],
+      "title": "Block",
+      "type": "object"
+    },
+    "Mapping": {
+      "additionalProperties": false,
+      "properties": {
+        "normalizedStartByte": {
+          "minimum": 0,
+          "title": "Normalizedstartbyte",
+          "type": "integer"
+        },
+        "normalizedEndByte": {
+          "minimum": 0,
+          "title": "Normalizedendbyte",
+          "type": "integer"
+        },
+        "source": {
+          "$ref": "#/$defs/Span"
+        },
+        "operation": {
+          "enum": [
+            "IDENTITY",
+            "WHITESPACE"
+          ],
+          "title": "Operation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "normalizedStartByte",
+        "normalizedEndByte",
+        "source",
+        "operation"
+      ],
+      "title": "Mapping",
+      "type": "object"
+    },
+    "Page": {
+      "additionalProperties": false,
+      "properties": {
+        "pageNumber": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pagenumber"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "Page",
+      "type": "object"
+    },
+    "Span": {
+      "additionalProperties": false,
+      "properties": {
+        "pageIndex": {
+          "minimum": 0,
+          "title": "Pageindex",
+          "type": "integer"
+        },
+        "startByte": {
+          "minimum": 0,
+          "title": "Startbyte",
+          "type": "integer"
+        },
+        "endByte": {
+          "minimum": 0,
+          "title": "Endbyte",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pageIndex",
+        "startByte",
+        "endByte"
+      ],
+      "title": "Span",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "source-ir-v1",
+      "default": "source-ir-v1",
+      "title": "Schemaversion",
+      "type": "string"
+    },
+    "stage": {
+      "const": "SOURCE_ONLY",
+      "default": "SOURCE_ONLY",
+      "title": "Stage",
+      "type": "string"
+    },
+    "documentId": {
+      "title": "Documentid",
+      "type": "string"
+    },
+    "parserVersion": {
+      "title": "Parserversion",
+      "type": "string"
+    },
+    "normalizerVersion": {
+      "const": "whitespace-map-v1",
+      "default": "whitespace-map-v1",
+      "title": "Normalizerversion",
+      "type": "string"
+    },
+    "sourceHash": {
+      "title": "Sourcehash",
+      "type": "string"
+    },
+    "pages": {
+      "items": {
+        "$ref": "#/$defs/Page"
+      },
+      "title": "Pages",
+      "type": "array"
+    },
+    "blocks": {
+      "items": {
+        "$ref": "#/$defs/Block"
+      },
+      "title": "Blocks",
+      "type": "array"
+    },
+    "irHash": {
+      "title": "Irhash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "documentId",
+    "parserVersion",
+    "sourceHash",
+    "pages",
+    "blocks",
+    "irHash"
+  ],
+  "title": "SourceIR",
+  "type": "object"
+}

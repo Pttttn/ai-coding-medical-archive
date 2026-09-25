@@ -3,6 +3,7 @@ export interface Document {
   id: string; title: string; documentType: string; documentDate: string | null;
   sourceType: string; status: string; summary: string | null; tags: string[];
   createdAt: string; updatedAt: string; deletedAt: string | null;
+  visit?: Visit | null; laboratory?: Laboratory | null; pages?: { pageNumber: number | null; text: string }[];
   text?: string; textVersion?: number; originalFilename?: string; facts?: Fact[];
   textRevisions?: TextRevision[]; latestJob?: { id: string; status: string; error?: string; errorCode?: string; attempts?: number }; processingError?: string; processingWarnings?: string[]; isSeed?: boolean;
 }
@@ -18,8 +19,8 @@ export interface FactSource { factId: string; documentId: string; textVersion: n
 export interface FactRevision { id: string; factId: string; oldValue: unknown; newValue: unknown; changeType: string; createdAt: string }
 export interface HistoryEvent { id: string; action: string; entityType: string; entityId: string; documentId?: string; createdAt: string; payloadBefore?: unknown; payloadAfter?: unknown; before?: unknown; after?: unknown }
 export interface TimelineEvent { id: string; documentId: string; eventType: string; eventDate: string | null; title: string; description: string; category?: string; documentTitle?: string }
-export interface AskSource { documentId?: string; source: string; chunkId: string; position: number; pageNumber?: number; text?: string }
-export interface AskAnswer { answer: string; sources: AskSource[]; insufficientContext?: boolean; trace?: unknown }
+export interface AskSource { documentDate?: string | null; documentId?: string; source: string; chunkId: string; position: number; pageNumber?: number; text?: string }
+export interface AskAnswer { answer: string; sources: AskSource[]; insufficientContext?: boolean; trace?: unknown; reasonCode?: string; warnings?: string[]; coverage?: { eligibleDocuments: number; scannedDocuments: number; complete: boolean; period: { from: string | null; to: string | null; asOf: string } } }
 export interface Consultation { id: string; question: string; content: string; contentHash: string; reviewedHash?: string | null; status: string; warnings: string[]; sourceRefs: {documentId: string; title: string; textVersion: number}[]; contexts?: { text: string }[]; createdAt: string }
 export interface DashboardData {
   totalDocuments: number; processedDocuments: number; failedDocuments: number; pendingDocuments: number;
@@ -32,3 +33,17 @@ export interface DashboardData {
 
 
 
+
+export interface Laboratory {
+  rows: { name: string; result: { raw: string }; unit: string | null; referenceRaw: string | null; subject: string;
+    sourceText: string; source: { pageIndex: number } }[];
+  dates: { role: string; raw: string }[];
+  issues: { code: string }[];
+  candidateRows: number;
+}
+
+export interface Visit {
+  candidateBlocks: number; processedBlocks: string[]; issues: { code: string }[];
+  statements: { name: string; kind: string; subject: string; assertion: string; medicationState: string;
+    temporality: string; sourceText: string; contextText: string; source: { pageIndex: number } }[];
+}

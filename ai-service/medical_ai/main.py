@@ -7,14 +7,18 @@ from fastapi.responses import JSONResponse
 from fastmcp import FastMCP
 
 from .config import Settings
+from .archive_qa import ArchiveRAG, PROMPT_VERSION as ARCHIVE_PROMPT_VERSION
 from .errors import ServiceError
 from .extraction import PROMPT_VERSION, SCHEMA_VERSION, extract
 from .external_output import PublicOutput, PublicToolErrors
 from .indexer import Corpus, source_of
+from .visit import CLINICAL_PROFILE, VISIT_PROMPT_VERSION, annotate_visit, project_visit, supports_visit
+from .laboratory import LAB_PROJECTION_VERSION, LAB_VERSION, annotate_laboratory, project_laboratory
 from .ollama import Ollama
 from .parsing import PARSER_VERSION, confined_path, parse_file
 from .privacy import consultation
 from .rag import CorrectiveRAG
+from .source_ir import IR_VERSION, SourceIR, build_source_ir
 from .schemas import AskRequest, ConsultationRequest, IndexRequest, Page, ProcessRequest, RemoveRequest
 
 
@@ -24,7 +28,7 @@ class Services:
         self.provider = provider or Ollama(settings)
         self.archive = Corpus("archive", settings, self.provider)
         self.demo = Corpus("mcp_demo", settings, self.provider)
-        self.archive_rag = CorrectiveRAG(self.archive, self.provider, settings)
+        self.archive_rag = ArchiveRAG(self.archive, self.provider, settings)
         self.demo_rag = CorrectiveRAG(self.demo, self.provider, settings)
         self.public_output = PublicOutput(self.demo, self.provider)
 
@@ -48,8 +52,8 @@ def create_app(services: Services | None = None) -> FastAPI:
 
     @app.get("/health")
     def health():
-        return {"status": "running", **services.provider.health(), "promptVersion": PROMPT_VERSION,
-                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION}
+        return {"status": "running", "sourceIRVersion": IR_VERSION, "extractionProfile": services.settings.extraction_profile, **services.provider.health(), "promptVersion": PROMPT_VERSION,
+                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/process", dependencies=[Depends(authorize)])
     def process(body: ProcessRequest):
@@ -63,14 +67,34 @@ def create_app(services: Services | None = None) -> FastAPI:
             text, pages, warnings = parse_file(path, services.settings.max_file_bytes)
         else:
             text, pages = body.text or "", [Page(text=body.text or "")]
-        extracted, extraction_warnings = extract(services.provider, body.title, pages)
+        source_ir = build_source_ir(body.documentId, pages, PARSER_VERSION if body.filePath else "user-text-v1")
+        laboratory, visit = None, None
+        if services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE}:
+            ir = SourceIR.model_validate(source_ir)
+            laboratory = annotate_laboratory(ir)
+        if laboratory is not None:
+            extracted, extraction_warnings = project_laboratory(ir, laboratory)
+        elif services.settings.extraction_profile == CLINICAL_PROFILE and supports_visit(ir):
+            visit = annotate_visit(services.provider, ir)
+            extracted, extraction_warnings = project_visit(ir, visit)
+        else:
+            extracted, extraction_warnings = extract(services.provider, body.title, pages)
         model_meta = services.provider.health().get("models", [])
         model_digest = next((m.get("digest") for m in model_meta if isinstance(m, dict)
                              and m.get("name") in {services.settings.llm_model, services.settings.llm_model + ":latest"}), None)
-        return {"modelDigest": model_digest, "text": text, "pages": [p.model_dump() for p in pages],
+        return {"sourceIR": source_ir, "visit": visit.model_dump(mode="json") if visit is not None else None,
+                "laboratory": laboratory.model_dump(mode="json") if laboratory is not None else None,
+                "extractionProfile": services.settings.extraction_profile,
+                "processingRecipe": {"profile": services.settings.extraction_profile,
+                    "sourceIRVersion": IR_VERSION, "normalizerVersion": source_ir['normalizerVersion'],
+                    "model": None if laboratory is not None else services.settings.llm_model,
+                    "modelDigest": None if laboratory is not None else model_digest,
+                    "generationOptions": None if laboratory is not None else services.provider.generation_options("TASK: extraction") if hasattr(services.provider, 'generation_options') else None},
+                "modelDigest": None if laboratory is not None else model_digest, "text": text, "pages": [p.model_dump() for p in pages],
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
-                "model": services.settings.llm_model, "promptVersion": PROMPT_VERSION,
-                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION}
+                "model": "deterministic:lab-rows-v1" if laboratory is not None else services.settings.llm_model,
+                "promptVersion": LAB_PROJECTION_VERSION if laboratory is not None else VISIT_PROMPT_VERSION if visit is not None else PROMPT_VERSION,
+                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/index", dependencies=[Depends(authorize)])
     def index(body: IndexRequest):
@@ -83,7 +107,10 @@ def create_app(services: Services | None = None) -> FastAPI:
 
     @app.post("/internal/ask", dependencies=[Depends(authorize)])
     def ask(body: AskRequest):
-        return services.archive_rag.ask(body.question, body.documentIds)
+        return services.archive_rag.ask(body.question, body.documentIds,
+            [d.model_dump(mode="json") for d in body.documents],
+            body.dateFrom.isoformat() if body.dateFrom else None,
+            body.dateTo.isoformat() if body.dateTo else None)
 
     @app.post("/internal/consultation", dependencies=[Depends(authorize)])
     def prepare(body: ConsultationRequest):

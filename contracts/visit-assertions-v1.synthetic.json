@@ -1,0 +1,673 @@
+{
+  "sourceIR": {
+    "schemaVersion": "source-ir-v1",
+    "stage": "SOURCE_ONLY",
+    "documentId": "synthetic-visit-contract",
+    "parserVersion": "user-text-v1",
+    "normalizerVersion": "whitespace-map-v1",
+    "sourceHash": "312ec12dbcb077a577110a92de25aed26581933317acf42840966280da5c2d97",
+    "pages": [
+      {
+        "pageNumber": null,
+        "text": "Врачебное заключение\nСИНТЕТИЧЕСКИЙ ПРИМЕР. Не реальный пациент.\nПервичный приём терапевта\n\nУ пациента установлена гипертония, диагноз сохраняется.\n\nУ матери был диагностирован диабет.\n\nУ пациента подозревается стенокардия, обследование продолжается.\n\nПневмония у пациента исключена по результатам обследования.\n\nАмлодипин пациент принимает сейчас по 5 мг утром.\n\nАторвастатин назначен ранее, но пациент его до сих пор не начал принимать.\n\nСейчас головная боль пациентом отрицается.\n"
+      }
+    ],
+    "blocks": [
+      {
+        "blockId": "p0:b0",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 0,
+          "endByte": 167
+        },
+        "normalizedText": "Врачебное заключение СИНТЕТИЧЕСКИЙ ПРИМЕР. Не реальный пациент. Первичный приём терапевта",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 39,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 0,
+              "endByte": 39
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 39,
+            "normalizedEndByte": 40,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 39,
+              "endByte": 40
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 40,
+            "normalizedEndByte": 118,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 40,
+              "endByte": 118
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 118,
+            "normalizedEndByte": 119,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 118,
+              "endByte": 119
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 119,
+            "normalizedEndByte": 167,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 119,
+              "endByte": 167
+            },
+            "operation": "IDENTITY"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b1",
+        "kind": "separator",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 167,
+          "endByte": 169
+        },
+        "normalizedText": " ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 1,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 167,
+              "endByte": 169
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b2",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 169,
+          "endByte": 272
+        },
+        "normalizedText": "У пациента установлена гипертония, диагноз сохраняется.",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 103,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 169,
+              "endByte": 272
+            },
+            "operation": "IDENTITY"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b3",
+        "kind": "separator",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 272,
+          "endByte": 274
+        },
+        "normalizedText": " ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 1,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 272,
+              "endByte": 274
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b4",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 274,
+          "endByte": 339
+        },
+        "normalizedText": "У матери был диагностирован диабет.",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 65,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 274,
+              "endByte": 339
+            },
+            "operation": "IDENTITY"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b5",
+        "kind": "separator",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 339,
+          "endByte": 341
+        },
+        "normalizedText": " ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 1,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 339,
+              "endByte": 341
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b6",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 341,
+          "endByte": 462
+        },
+        "normalizedText": "У пациента подозревается стенокардия, обследование продолжается.",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 121,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 341,
+              "endByte": 462
+            },
+            "operation": "IDENTITY"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b7",
+        "kind": "separator",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 462,
+          "endByte": 464
+        },
+        "normalizedText": " ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 1,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 462,
+              "endByte": 464
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b8",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 464,
+          "endByte": 575
+        },
+        "normalizedText": "Пневмония у пациента исключена по результатам обследования.",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 111,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 464,
+              "endByte": 575
+            },
+            "operation": "IDENTITY"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b9",
+        "kind": "separator",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 575,
+          "endByte": 577
+        },
+        "normalizedText": " ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 1,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 575,
+              "endByte": 577
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b10",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 577,
+          "endByte": 666
+        },
+        "normalizedText": "Амлодипин пациент принимает сейчас по 5 мг утром.",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 89,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 577,
+              "endByte": 666
+            },
+            "operation": "IDENTITY"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b11",
+        "kind": "separator",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 666,
+          "endByte": 668
+        },
+        "normalizedText": " ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 1,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 666,
+              "endByte": 668
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b12",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 668,
+          "endByte": 803
+        },
+        "normalizedText": "Аторвастатин назначен ранее, но пациент его до сих пор не начал принимать.",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 135,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 668,
+              "endByte": 803
+            },
+            "operation": "IDENTITY"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b13",
+        "kind": "separator",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 803,
+          "endByte": 805
+        },
+        "normalizedText": " ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 1,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 803,
+              "endByte": 805
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      },
+      {
+        "blockId": "p0:b14",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 805,
+          "endByte": 885
+        },
+        "normalizedText": "Сейчас головная боль пациентом отрицается. ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 79,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 805,
+              "endByte": 884
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 79,
+            "normalizedEndByte": 80,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 884,
+              "endByte": 885
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      }
+    ],
+    "irHash": "4f02b99cde74562c2ae84ef51be2fb5d06a7eea789e04a8a63c92036768151af"
+  },
+  "visit": {
+    "schemaVersion": "visit-assertions-v1",
+    "sourceIRHash": "4f02b99cde74562c2ae84ef51be2fb5d06a7eea789e04a8a63c92036768151af",
+    "sourceHash": "312ec12dbcb077a577110a92de25aed26581933317acf42840966280da5c2d97",
+    "coverage": "CONDITIONS_SYMPTOMS_MEDICATIONS_ONLY",
+    "candidateBlocks": 8,
+    "processedBlocks": [
+      "p0:b0",
+      "p0:b2",
+      "p0:b4",
+      "p0:b6",
+      "p0:b8",
+      "p0:b10",
+      "p0:b12",
+      "p0:b14"
+    ],
+    "statements": [
+      {
+        "blockId": "p0:b2",
+        "name": "гипертония",
+        "kind": "CONDITION",
+        "subject": "PATIENT",
+        "assertion": "CONFIRMED",
+        "medicationState": "NOT_APPLICABLE",
+        "temporality": "CURRENT",
+        "sourceText": "У пациента установлена гипертония, диагноз сохраняется.",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 169,
+          "endByte": 272
+        },
+        "contextSource": {
+          "pageIndex": 0,
+          "startByte": 169,
+          "endByte": 272
+        },
+        "contextText": "У пациента установлена гипертония, диагноз сохраняется."
+      },
+      {
+        "blockId": "p0:b4",
+        "name": "диабет",
+        "kind": "CONDITION",
+        "subject": "FAMILY",
+        "assertion": "CONFIRMED",
+        "medicationState": "NOT_APPLICABLE",
+        "temporality": "HISTORICAL",
+        "sourceText": "У матери был диагностирован диабет.",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 274,
+          "endByte": 339
+        },
+        "contextSource": {
+          "pageIndex": 0,
+          "startByte": 274,
+          "endByte": 339
+        },
+        "contextText": "У матери был диагностирован диабет."
+      },
+      {
+        "blockId": "p0:b6",
+        "name": "стенокардия",
+        "kind": "CONDITION",
+        "subject": "PATIENT",
+        "assertion": "SUSPECTED",
+        "medicationState": "NOT_APPLICABLE",
+        "temporality": "CURRENT",
+        "sourceText": "У пациента подозревается стенокардия, обследование продолжается.",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 341,
+          "endByte": 462
+        },
+        "contextSource": {
+          "pageIndex": 0,
+          "startByte": 341,
+          "endByte": 462
+        },
+        "contextText": "У пациента подозревается стенокардия, обследование продолжается."
+      },
+      {
+        "blockId": "p0:b8",
+        "name": "Пневмония",
+        "kind": "CONDITION",
+        "subject": "PATIENT",
+        "assertion": "RULED_OUT",
+        "medicationState": "NOT_APPLICABLE",
+        "temporality": "CURRENT",
+        "sourceText": "Пневмония у пациента исключена по результатам обследования.",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 464,
+          "endByte": 575
+        },
+        "contextSource": {
+          "pageIndex": 0,
+          "startByte": 464,
+          "endByte": 575
+        },
+        "contextText": "Пневмония у пациента исключена по результатам обследования."
+      },
+      {
+        "blockId": "p0:b10",
+        "name": "Амлодипин",
+        "kind": "MEDICATION",
+        "subject": "PATIENT",
+        "assertion": "UNKNOWN",
+        "medicationState": "TAKING",
+        "temporality": "CURRENT",
+        "sourceText": "Амлодипин пациент принимает сейчас по 5 мг утром.",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 577,
+          "endByte": 666
+        },
+        "contextSource": {
+          "pageIndex": 0,
+          "startByte": 577,
+          "endByte": 666
+        },
+        "contextText": "Амлодипин пациент принимает сейчас по 5 мг утром."
+      },
+      {
+        "blockId": "p0:b12",
+        "name": "Аторвастатин",
+        "kind": "MEDICATION",
+        "subject": "PATIENT",
+        "assertion": "UNKNOWN",
+        "medicationState": "NOT_STARTED",
+        "temporality": "CURRENT",
+        "sourceText": "Аторвастатин назначен ранее, но пациент его до сих пор не начал принимать.",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 668,
+          "endByte": 803
+        },
+        "contextSource": {
+          "pageIndex": 0,
+          "startByte": 668,
+          "endByte": 803
+        },
+        "contextText": "Аторвастатин назначен ранее, но пациент его до сих пор не начал принимать."
+      },
+      {
+        "blockId": "p0:b14",
+        "name": "головная боль",
+        "kind": "SYMPTOM",
+        "subject": "PATIENT",
+        "assertion": "NEGATED",
+        "medicationState": "NOT_APPLICABLE",
+        "temporality": "CURRENT",
+        "sourceText": "Сейчас головная боль пациентом отрицается.",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 805,
+          "endByte": 884
+        },
+        "contextSource": {
+          "pageIndex": 0,
+          "startByte": 805,
+          "endByte": 885
+        },
+        "contextText": "Сейчас головная боль пациентом отрицается.\n"
+      }
+    ],
+    "issues": [],
+    "artifactHash": "c6a9d62a36c7360e8ce6dc8b6ee73a856002c58fa7d05e976341ba74be70283c"
+  },
+  "extraction": {
+    "documentType": "VISIT",
+    "documentDate": null,
+    "summary": "Клинические утверждения: 7; экспериментальное извлечение.",
+    "tags": [],
+    "facts": [
+      {
+        "type": "CONDITION",
+        "name": "гипертония",
+        "valueText": "У пациента установлена гипертония, диагноз сохраняется.",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "У пациента установлена гипертония, диагноз сохраняется."
+        }
+      },
+      {
+        "type": "OBSERVATION",
+        "name": "диабет",
+        "valueText": "У матери был диагностирован диабет.",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "UNKNOWN",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "У матери был диагностирован диабет."
+        }
+      },
+      {
+        "type": "CONDITION",
+        "name": "стенокардия",
+        "valueText": "У пациента подозревается стенокардия, обследование продолжается.",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "SUSPECTED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "У пациента подозревается стенокардия, обследование продолжается."
+        }
+      },
+      {
+        "type": "CONDITION",
+        "name": "Пневмония",
+        "valueText": "Пневмония у пациента исключена по результатам обследования.",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "UNKNOWN",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Пневмония у пациента исключена по результатам обследования."
+        }
+      },
+      {
+        "type": "MEDICATION",
+        "name": "Амлодипин",
+        "valueText": "Амлодипин пациент принимает сейчас по 5 мг утром.",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "CONFIRMED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Амлодипин пациент принимает сейчас по 5 мг утром."
+        }
+      },
+      {
+        "type": "MEDICATION",
+        "name": "Аторвастатин",
+        "valueText": "Аторвастатин назначен ранее, но пациент его до сих пор не начал принимать.",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "UNKNOWN",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Аторвастатин назначен ранее, но пациент его до сих пор не начал принимать."
+        }
+      },
+      {
+        "type": "SYMPTOM",
+        "name": "головная боль",
+        "valueText": "Сейчас головная боль пациентом отрицается.\n",
+        "valueNumber": null,
+        "unit": null,
+        "eventDate": null,
+        "assertionStatus": "NEGATED",
+        "confidence": null,
+        "provenance": {
+          "page": null,
+          "sourceText": "Сейчас головная боль пациентом отрицается.\n"
+        }
+      }
+    ]
+  }
+}
