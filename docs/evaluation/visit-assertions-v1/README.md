@@ -44,6 +44,7 @@
 | --- | --- | --- | --- | --- |
 | qwen3.5:9b / development | Полный original-upload + reprocess | 53/56 × 3 | 1 / 3 каждый раз | 0 |
 | qwen3.5:9b / held-out | Полный original-upload + reprocess | 18/28 × 3 | 8 / 10 каждый раз | 1 каждый раз |
+| server Q8 27B / held-out | Source IR → extractor → projection, SSH | 26/28 × 3 | 2 / 2 каждый раз | 0 |
 
 [Development v2](development-final.json), [held-out 9b](held-out-9b.json). Во всех повторах каждой части совпали semantic hashes. Это стабильность на данной установке, при этом gate качества **НЕ пройден**. У 9b есть реальная ошибка NEGATED → CONFIRMED для симптома; остальные ошибки включают NOT_STARTED/NOT_TAKING, временную роль прекращённого курса, пропуски и сокращённые предложения. Полный абзац при этом сохранён; строгий tuple штрафует сокращение quote даже при правильных остальных полях. Поэтому 18/28 нельзя описывать как долю клинически неверных статусов: это более строгая совместная метрика.
 
@@ -58,3 +59,14 @@ Macro F1 v2 development: subject 0.733333, assertion 0.990991, medicationState 0
 [Headless Edge](browser.json): desktop/mobile 390px, семейный субъект, NOT_STARTED, раскрытие quote/context, отсутствие переполнения страницы и JS errors. [Compose down/up](restart.json) сохранил точный snapshot hash `f7f823116c3dbccd8fbf215f1906c907520cd37a0b5fe517d5c63f944953b6c4`: 8 документов / 8 source IR / 54 факта и VISIT-аннотации. Это проверка сохранности томов; не backup/restore на иной машине.
 
 Новый CLI `scripts/evaluate_visit_ssh.py` использует тот же extractor и оценщик для отдельного сравнения с моделью через SSH. Ключ читается только на сервере. Пример для ранее настроенного пользователем стенда: `python scripts/evaluate_visit_ssh.py --wsl --ssh-target root@mpc1 --ssh-key-file /etc/llama-q8-64k.keys --model qwen3.8-27b-q8-100k-cuda --split held-out --repeats 3 --output .runtime/visit-27b-held.json`. Это original text → IR → реальная модель → проверенная fact projection; backend, index и QA этим запуском не проверяются.
+
+
+## Сравнение 27B завершено
+
+[Все три remote-прогона](held-out-27b-ssh.json): **26/28 × 3**, 0 critical promotions, 0 различающихся semantic hashes по четырём документам. Macro F1 subject 0.739130, assertion 0.966667, medicationState 0.944862, temporality 0.863095. Результат лучше 9b на том же зафиксированном prompt/gold, но формальные gates всё ещё не выполнены; это не основание автоматического принятия медицинских утверждений.
+
+Серверный alias `qwen3.8-27b-q8-100k-cuda`, context 180224, один slot, llama.cpp build `b0-unknown`; temperature 0, seed 42, max_tokens 2048, enable_thinking=false. Alias не удостоверяет происхождение весов, свежий GGUF digest не вычислялся. Ollama num_ctx 16384 не передаётся этому серверу. Сравниваются две установки/модели, а не изолированное изменение числа параметров. Секрет читается из указанного пользователем файла только на mpc1 и не покидает сервер.
+
+Точная версия сравнительного runner при запуске — `1f82911`; следующий коммит добавил только комментарий о standalone imports и Ruff E402, без изменения алгоритма. [CI f58c749](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36117008227) полностью прошёл, включая статическую проверку нового CLI и images. Извлечение допускает до двух модельных попыток на батч при невалидном/оборванном JSON; серия измеряет конечный результат этого фиксированного алгоритма с retry, не стабильность каждого отдельного model call.
+
+Следующие действия: независимая проверка gold/новые формулировки, верификация отрицаний/subject/medication событий и точности evidence; фиксация полного model/processing recipe, затем полноценная original-upload→facts/index→QA серия с выбранным профилем. Отложенная часть после этого анализа не должна считаться новым независимым тестом для дальнейшей настройки.

@@ -181,3 +181,5 @@ Linux CI реализации `fa31c6d`: **209 AI, 60 backend, 23 frontend**, li
 ## Техническое дополнение AI: VISIT, 25 сентября 2026
 
 Опциональный clinical-v1 добавляет source/context spans, subject/assertion/medication events/temporality, проверенную проекцию и приватный UI. [Протокол](evaluation/visit-assertions-v1/README.md) отделяет тесты механизмов от реальных модельных оценок. CI 04ea0ac: 257 AI, 86 backend, 25 frontend; lint/build/images PASS. Реальный 9b original-upload/reprocess: development 53/56 × 3, held-out 18/28 × 3, стабильные hashes, но повторяющаяся ошибка отрицания. Gate качества не пройден, default legacy сохранён. PostgreSQL и Docker down/up сохранили разметку/review; полная P3 activation и P4 независимая установка/backup ещё не выполнены.
+
+Отдельный source IR/extractor/projection тест через SSH на mpc1: 27B 26/28 × 3, 0 critical promotions, стабильные hashes. Backend/index/QA этим тестом не проверены; model alias и context отличаются от локальной 9b, свежего digest весов нет. Полный CI сравнительного CLI f58c749 также PASS.

@@ -111,3 +111,5 @@
 
 - [x] Реальные 9b original-upload/reprocess серии: development 53/56 × 3 после начальных 39/56 × 3; held-out 18/28 × 3. Стабильность подтверждена в этой среде, качество gate не прошло (ошибка отрицания сохранена).
 - [x] CI 257 AI / 86 backend / 25 frontend, browser desktop/mobile и сохранность VISIT/фактов/IR после Compose down/up.
+
+- [x] Отдельное сравнение source IR/extractor/projection на mpc1 Q8 27B: held-out 26/28 × 3, 0 critical promotions, стабильные hashes; не полный Docker/backend/QA прогон, gates ещё не пройдены.
