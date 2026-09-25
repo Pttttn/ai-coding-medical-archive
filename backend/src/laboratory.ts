@@ -27,12 +27,17 @@ export function validateLaboratory(lab:Laboratory,ir:SourceIR|undefined,facts:an
     const role=lab.dates.some(d=>d.role==='RESULT')?'RESULT':'STUDY';
     const dates=new Set(lab.dates.filter(d=>d.role===role).map(d=>d.iso));
     const eventDate=dates.size===1&&!lab.issues.some(i=>['INVALID_DATE','DATE_CONFLICT'].includes(i.code))?[...dates][0]:null;
-    const dateRoles:Record<string,string>={'дата результата':'RESULT','дата взятия материала':'SPECIMEN','дата исследования':'STUDY','result date':'RESULT','specimen date':'SPECIMEN'};
+    const dateRoles:Record<string,string>={'дата результата':'RESULT','дата взятия материала':'SPECIMEN','дата исследования':'STUDY','дата выдачи результата':'RESULT','result date':'RESULT','specimen date':'SPECIMEN'};
     for(const d of lab.dates){
       const source=resolve(d.source).trim(),colon=source.indexOf(':');
-      if(dateRoles[source.slice(0,colon).toLowerCase()]!==d.role||source.slice(colon+1).trim()!==d.raw)fail();
-      const normalized=/^\d{2}\.\d{2}\.\d{4}$/.test(d.raw)?d.raw.split('.').reverse().join('-'):d.raw;
-      if(!['RESULT','SPECIMEN','STUDY'].includes(d.role)||!/^\d{4}-\d{2}-\d{2}$/.test(d.iso)||d.iso!==normalized||new Date(d.iso).toISOString().slice(0,10)!==d.iso||!resolve(d.source).includes(d.raw))fail();
+      const sourceValue=source.slice(colon+1).trim();
+      if(dateRoles[source.slice(0,colon).toLowerCase()]!==d.role||
+         !(sourceValue===d.raw||sourceValue.startsWith(d.raw+' ')))fail();
+      const raw=/^(\d{2}\.\d{2}\.\d{4}|\d{4}-\d{2}-\d{2})(?:\s+(\d{2}):(\d{2})(?::(\d{2}))?)?$/.exec(d.raw);
+      if(!raw)return fail();
+      const normalized=/^\d{2}\.\d{2}\.\d{4}$/.test(raw[1])?raw[1].split('.').reverse().join('-'):raw[1];
+      if(raw[2]&&(Number(raw[2])>23||Number(raw[3])>59||(raw[4]!==undefined&&Number(raw[4])>59)))fail();
+      if(!['RESULT','SPECIMEN','STUDY'].includes(d.role)||!/^\d{4}-\d{2}-\d{2}$/.test(d.iso)||d.iso!==normalized||new Date(d.iso).toISOString().slice(0,10)!==d.iso)fail();
     }
     for(const span of lab.subjectSources)if(!['субъект: пациент','subject: patient'].includes(resolve(span).trim().toLowerCase()))fail();
     for(const issue of lab.issues){if(!['UNSUPPORTED_ROW','DATE_CONFLICT','INVALID_DATE','ROW_LIMIT','UNSUPPORTED_CONTENT'].includes(issue.code))fail();if(issue.source)resolve(issue.source);}

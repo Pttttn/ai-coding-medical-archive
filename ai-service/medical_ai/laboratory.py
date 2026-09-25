@@ -5,7 +5,7 @@ Unknown layouts remain explicit issues; the raw document is always retained.
 """
 import math
 import re
-from datetime import date
+from datetime import date, time
 from decimal import Decimal
 from typing import Literal
 
@@ -22,7 +22,7 @@ TITLE = re.compile(r'^(?:лабораторные исследования|ла�
 HEADERS = [{'показатель', 'test'}, {'результат', 'result'},
            {'единица', 'единицы', 'unit'}, {'референс', 'референсный интервал', 'reference'}]
 DATE_LABELS = {'дата результата': 'RESULT', 'дата взятия материала': 'SPECIMEN',
-               'дата исследования': 'STUDY', 'result date': 'RESULT', 'specimen date': 'SPECIMEN'}
+               'дата исследования': 'STUDY', 'дата выдачи результата': 'RESULT', 'result date': 'RESULT', 'specimen date': 'SPECIMEN'}
 
 
 class LabResult(StrictModel):
@@ -123,13 +123,18 @@ def annotate_laboratory(ir: SourceIR) -> Laboratory | None:
         label, separator, value = stripped.partition(':')
         if separator and label.casefold() in DATE_LABELS:
             try:
-                original = value.strip()
-                # Only complete ISO/day-first dates; no fabricated first day of a month/year.
-                if re.fullmatch(r'\d{2}\.\d{2}\.\d{4}', original):
-                    day, month, year = original.split('.')
+                candidate = value.strip()
+                timestamp = re.match(r'(?:\d{2}\.\d{2}\.\d{4}|\d{4}-\d{2}-\d{2})(?:\s+\d{2}:\d{2}(?::\d{2})?)?(?=\s|$)', candidate)
+                original = timestamp.group().strip() if timestamp else candidate
+                # Accept an explicit timestamp while retaining its raw form. Never invent a partial date.
+                if len(original.split()) > 1:
+                    time.fromisoformat(original.split()[1])
+                date_token = original.split()[0] if original else ''
+                if re.fullmatch(r'\d{2}\.\d{2}\.\d{4}', date_token):
+                    day, month, year = date_token.split('.')
                     normalized = f'{year}-{month}-{day}'
-                elif re.fullmatch(r'\d{4}-\d{2}-\d{2}', original):
-                    normalized = original
+                elif re.fullmatch(r'\d{4}-\d{2}-\d{2}', date_token):
+                    normalized = date_token
                 else:
                     raise ValueError('Partial or unsupported date')
                 dates.append(LabDate(role=DATE_LABELS[label.casefold()], iso=date.fromisoformat(normalized).isoformat(),

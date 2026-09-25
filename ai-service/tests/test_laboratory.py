@@ -156,3 +156,11 @@ def test_explicit_study_date_projects_to_generic_date_without_changing_its_role(
     assert [d.role for d in lab.dates] == ['STUDY']
     source = ir('Лабораторные исследования\nДата исследования: 2024-12-02\nДата результата: 2024\nАЛТ: 23 Ед/л; референс <40; норма.\n')
     assert project_laboratory(source, annotate_laboratory(source))[0].documentDate is None
+
+
+def test_invalid_result_timestamp_does_not_set_event_date():
+    source = ir('Лабораторные исследования\nДата выдачи результата: 2026-05-14 28:00:00\n'
+                'АЛТ: 23 Ед/л; референс <40.\n')
+    lab = annotate_laboratory(source)
+    assert any(issue.code == 'INVALID_DATE' for issue in lab.issues)
+    assert project_laboratory(source, lab)[0].documentDate is None

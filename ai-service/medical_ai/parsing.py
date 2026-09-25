@@ -1,11 +1,14 @@
 from pathlib import Path
+import re
 
+import pdfplumber
 from pypdf import PdfReader, __version__ as pdf_version
 
 from .errors import ServiceError
 from .schemas import Page
 
 PARSER_VERSION = f"pypdf-{pdf_version}/text-v1"
+LAB_TABLE_PARSER_VERSION = f"{PARSER_VERSION}+pdfplumber-table-v1"
 SUPPORTED_EXTENSIONS = {".md", ".txt", ".pdf"}
 
 
@@ -42,3 +45,63 @@ def parse_file(path: Path, max_bytes: int) -> tuple[str, list[Page], list[str]]:
     missing = [str(p.pageNumber) for p in pages if not p.text.strip()]
     warnings = ["Текст извлечён не со всех страниц PDF. Пустые страницы: " + ", ".join(missing)] if missing else []
     return "\n\n".join(p.text for p in pages), pages, warnings
+
+
+def parse_pdf_lab_tables(path: Path) -> tuple[str, list[Page]] | None:
+    """Reflow four-column laboratory tables while preserving surrounding PDF text.
+
+    This parser is opt-in. Spans reference this versioned text extraction;
+    the uploaded PDF remains the immutable original for visual verification.
+    """
+    def clean(value: str | None) -> str:
+        return " ".join((value or "").split())
+
+    def is_lab_header(row: list[str | None]) -> bool:
+        if len(row) != 4:
+            return False
+        cells = [clean(cell).casefold() for cell in row]
+        return (cells[0] in {"тест", "показатель", "test"}
+                and cells[1] in {"результат", "result"}
+                and cells[2] in {"ед. измерения", "ед.измерения", "единица", "единицы", "unit"}
+                and cells[3] in {"референсный интервал", "референс", "reference"})
+
+    try:
+        with pdfplumber.open(path) as pdf:
+            # An embedded table in a visit is not sufficient to classify the document.
+            first_page_text = pdf.pages[0].extract_text() if pdf.pages else ""
+            if not re.search(r"(?:дата (?:взятия материала|выдачи результата)|specimen date|result date)\s*:",
+                             first_page_text or "", re.I):
+                return None
+            pages: list[Page] = []
+            found = False
+            for number, page in enumerate(pdf.pages, 1):
+                tables = [(table, table.extract()) for table in page.find_tables()]
+                tables = [(table, rows) for table, rows in tables if rows and is_lab_header(rows[0])]
+                if not tables:
+                    pages.append(Page(pageNumber=number, text=page.extract_text() or ""))
+                    continue
+                found = True
+                segments = ["Лабораторные исследования"] if number == 1 else []
+                cursor = 0.0
+                for table, rows in sorted(tables, key=lambda item: item[0].bbox[1]):
+                    top, bottom = table.bbox[1], table.bbox[3]
+                    if top < cursor:
+                        raise ValueError("Overlapping laboratory tables")
+                    before = page.crop((0, cursor, page.width, top)).extract_text() or ""
+                    if before.strip():
+                        segments.append(before)
+                    segments.append("Показатель\tРезультат\tЕдиница\tРеференс")
+                    segments.extend("\t".join(clean(cell) for cell in row) for row in rows[1:])
+                    segments.append("")  # End this table before surrounding report text.
+                    cursor = bottom
+                after = page.crop((0, cursor, page.width, page.height)).extract_text() or ""
+                if after.strip():
+                    segments.append(after)
+                pages.append(Page(pageNumber=number, text="\n".join(segments)))
+    except Exception as exc:
+        raise ServiceError("LAB_TABLE_PARSE_FAILED", "Не удалось разобрать лабораторную таблицу PDF.") from exc
+    if not found:
+        return None
+    if pages and not pages[0].text.startswith("Лабораторные исследования\n"):
+        pages[0].text = "Лабораторные исследования\n" + pages[0].text
+    return "\n\n".join(p.text for p in pages), pages
