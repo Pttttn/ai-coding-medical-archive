@@ -14,6 +14,7 @@ describe('consultation page review lifecycle', () => {
   it('sends the currently displayed hash for review and invalidates it on every local edit, even if reverted', async () => {
     const fetchMock = vi.fn(async (url: string, init?: RequestInit) => {
       if (url.startsWith('/api/documents')) return response({ items: [], total: 0, page: 1, pageSize: 8 });
+      if (url.startsWith('/api/consultations?')) return response({items:[],total:0,page:1,pageSize:5});
       if (url.endsWith('/review')) {
         expect(JSON.parse(init?.body as string)).toEqual({ contentHash: draft.contentHash });
         return response({ ...draft, reviewedHash: draft.contentHash, status: 'REVIEWED' });
@@ -42,6 +43,7 @@ describe('consultation page review lifecycle', () => {
     vi.stubGlobal('navigator', { clipboard });
     vi.stubGlobal('fetch', vi.fn(async (url: string) => {
       if (url.startsWith('/api/documents')) return response({ items: [], total: 0, page: 1, pageSize: 8 });
+      if (url.startsWith('/api/consultations?')) return response({items:[],total:0,page:1,pageSize:5});
       if (url.endsWith('/export')) return { ok: true, status: 200, headers: new Headers({ 'Content-Type': 'text/markdown' }), text: async () => 'Изменённая версия из другой вкладки.' };
       return response({ ...draft, reviewedHash: draft.contentHash, status: 'REVIEWED' });
     }));

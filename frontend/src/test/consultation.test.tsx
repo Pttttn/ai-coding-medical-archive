@@ -13,7 +13,10 @@ describe('consultation review controls', () => {
     expect(props.onAcknowledge).toHaveBeenCalledWith(true);
   });
   it('enables export for a reviewed exact version, then locks it immediately after an edit', () => {
-    const { rerender } = render(<ReviewControls {...props} reviewed acknowledged />);
+    const { rerender } = render(<ReviewControls {...props} reviewed acknowledged={false} />);
+    expect(screen.getByRole('checkbox')).toBeChecked();
+    expect(screen.getByRole('checkbox')).toBeDisabled();
+    expect(screen.getByText(/Эта версия текста уже подтверждена/)).toBeVisible();
     expect(screen.getByRole('button', { name: 'Копировать' })).toBeEnabled();
     fireEvent.click(screen.getByRole('button', { name: 'Копировать' }));
     expect(props.onCopy).toHaveBeenCalledOnce();

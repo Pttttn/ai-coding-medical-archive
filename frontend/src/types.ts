@@ -21,7 +21,7 @@ export interface HistoryEvent { id: string; action: string; entityType: string; 
 export interface TimelineEvent { id: string; documentId: string; eventType: string; eventDate: string | null; title: string; description: string; category?: string; documentTitle?: string }
 export interface AskSource { documentDate?: string | null; documentId?: string; source: string; chunkId: string; position: number; pageNumber?: number; text?: string }
 export interface AskAnswer { answer: string; sources: AskSource[]; insufficientContext?: boolean; trace?: unknown; reasonCode?: string; warnings?: string[]; coverage?: { eligibleDocuments: number; scannedDocuments: number; complete: boolean; period: { from: string | null; to: string | null; asOf: string } } }
-export interface Consultation { id: string; question: string; content: string; contentHash: string; reviewedHash?: string | null; status: string; warnings: string[]; sourceRefs: {documentId: string; title: string; textVersion: number}[]; contexts?: { text: string }[]; createdAt: string }
+export interface Consultation { prompts?: ConsultationPrompt[]; responses?: ConsultationResponse[]; id: string; question: string; content: string; contentHash: string; reviewedHash?: string | null; status: string; warnings: string[]; sourceRefs: {documentId: string; title: string; textVersion: number}[]; contexts?: { text: string }[]; createdAt: string }
 export interface DashboardData {
   totalDocuments: number; processedDocuments: number; failedDocuments: number; pendingDocuments: number;
   medicalFacts: number; timelineEvents: number;
@@ -48,3 +48,7 @@ export interface Visit {
   statements: { name: string; kind: string; subject: string; assertion: string; medicationState: string;
     temporality: string; sourceText: string; contextText: string; source: { pageIndex: number } }[];
 }
+
+export interface ConsultationSummary { id:string; question:string; status:string; createdAt:string; updatedAt:string; sourceCount:number; responseCount:number }
+export interface ConsultationPrompt { id:string; content:string; contentHash:string; createdAt:string }
+export interface ConsultationResponse { id:string; promptId:string; model:string; content:string; createdAt:string }

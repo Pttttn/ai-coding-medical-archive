@@ -76,3 +76,13 @@ export class EditConsultationDto {
 export class ReviewDto {
   @ApiProperty({description:'SHA256 of the exact previewed UTF-8 content'}) @IsString() @Matches(/^[a-f0-9]{64}$/) contentHash:string;
 }
+
+export class ConsultationQueryDto extends PaginationDto {
+  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(500) q?:string;
+}
+export class AddConsultationResponseDto {
+  @ApiProperty({description:'Client-generated idempotency UUID'}) @IsUUID() id:string;
+  @ApiProperty() @IsUUID() promptId:string;
+  @ApiProperty() @IsString() @Length(1,200) @Matches(/\S/) model:string;
+  @ApiProperty() @IsString() @Length(1,100000) @Matches(/\S/) content:string;
+}

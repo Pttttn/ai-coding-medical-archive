@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn,PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
 export const DOCUMENT_TYPES = ['LAB_REPORT','VISIT','VISIT_TRANSCRIPT','DISCHARGE_SUMMARY','PRESCRIPTION','IMAGING_REPORT','PROCEDURE_REPORT','NOTE','OTHER'] as const;
 export const FACT_TYPES = ['CONDITION','SYMPTOM','MEDICATION','LAB_RESULT','PROCEDURE','RECOMMENDATION','OBSERVATION','OTHER'] as const;
@@ -153,4 +153,22 @@ export class Consultation {
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
   @UpdateDateColumn({type:'timestamptz'}) updatedAt:Date;
 }
-export const ENTITIES = [Document,TextRevision,Tag,MedicalFact,FactProvenance,FactRevision,AuditEvent,TimelineEvent,ProcessingJob,ExtractionRun,Consultation];
+@Entity('consultation_prompts')
+export class ConsultationPrompt {
+  @PrimaryGeneratedColumn('uuid') id:string;
+  @Column('uuid') consultationId:string;
+  @Column('text') content:string;
+  @Column() contentHash:string;
+  @Column('jsonb') sourceRefs:unknown[];
+  @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
+}
+@Entity('consultation_responses')
+export class ConsultationResponse {
+  @PrimaryColumn('uuid') id:string;
+  @Column('uuid') consultationId:string;
+  @Column('uuid') promptId:string;
+  @Column('text') model:string;
+  @Column('text') content:string;
+  @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
+}
+export const ENTITIES = [Document,TextRevision,Tag,MedicalFact,FactProvenance,FactRevision,AuditEvent,TimelineEvent,ProcessingJob,ExtractionRun,Consultation,ConsultationPrompt,ConsultationResponse];

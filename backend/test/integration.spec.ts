@@ -188,6 +188,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   });
   it('migrates existing source text without rewriting it',async()=>{
     await db.undoLastMigration();
+    await db.undoLastMigration();
     const d=await note();
     await db.runMigrations();
     ai.call.mockImplementation(withIR);await worker.tick();
@@ -195,7 +196,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     expect(after.text).toBe('LDL 4.7 mmol/L.');expect(after.textVersion).toBe(1);
     await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200);
   });
-  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(2);});
+  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(3);});
   it('validates unknown properties and empty title at the API boundary',async()=>{await request(app.getHttpServer()).post('/api/documents/note').send({title:' ',text:'ok text',storagePath:'/secret'}).expect(400);});
   it('returns durable IDs before inference and completes the worker job',async()=>{const d=await note();expect(d.jobId).toBeDefined();expect(ai.call).not.toHaveBeenCalled();await worker.tick();const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});expect(job.status).toBe('READY');expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('READY');});
   it('detects duplicate text documents with safe conflict error',async()=>{await note();const r=await request(app.getHttpServer()).post('/api/documents/note').send({title:'Second',text:'LDL 4.7 mmol/L.'}).expect(409);expect(r.body.code).toBe('DUPLICATE');expect(r.body).not.toHaveProperty('query');});
@@ -210,6 +211,49 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   it('handles OCR-required documents with safe persisted errors',async()=>{const d=await note();ai.call.mockRejectedValue(new AiError('UNSUPPORTED_OCR_REQUIRED'));await worker.tick();expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('UNSUPPORTED_OCR_REQUIRED');expect((await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId})).errorCode).toBe('UNSUPPORTED_OCR_REQUIRED');});
   it('shows partial parsing warnings and safe extraction metadata without raw AI content',async()=>{ai.call.mockImplementation(async(route,body)=>{const r=await mock(route,body);return route==='process'?{...r,warnings:['Page 2 has no text layer',42,{unexpected:'data'}]}:r;});const d=await ready();expect(d.processingWarnings).toEqual(['Page 2 has no text layer']);expect(d.extraction.model).toBe('unit-double');expect(d.extraction.textVersion).toBe(1);expect(d.extraction).not.toHaveProperty('rawJson');});
   it('records extraction versions and safe raw structured output locally',async()=>{const d=await ready();const run=await db.getRepository(ExtractionRun).findOneByOrFail({documentId:d.id});expect(run.model).toBe('unit-double');expect(run.status).toBe('READY');expect(run.textVersion).toBe(1);});
+  it('lists saved drafts without raw contexts and keeps pagination stable',async()=>{
+    const d=await ready();
+    const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Saved consultation example',documentIds:[d.id]}).expect(201)).body;
+    const list=(await request(app.getHttpServer()).get('/api/consultations?q=Saved&pageSize=1').expect(200)).body;
+    expect(list.total).toBe(1);expect(list.items[0]).toMatchObject({id:c.id,responseCount:0,sourceCount:1});
+    expect(list.items[0].contexts).toBeUndefined();expect(list.items[0].content).toBeUndefined();
+    expect((await request(app.getHttpServer()).get('/api/consultations/'+c.id).expect(200)).body.content).toBe(c.content);
+    await request(app.getHttpServer()).get('/api/consultations?page=0').expect(400);
+  });
+  it('binds idempotent responses to immutable reviewed versions after later edits',async()=>{
+    const d=await ready();
+    const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Review archived request',documentIds:[d.id]}).expect(201)).body;
+    const path='/api/consultations/'+c.id;
+    await request(app.getHttpServer()).post(path+'/responses').send({id:randomUUID(),promptId:randomUUID(),model:'Synthetic test model',content:'Synthetic response'}).expect(400);
+    await request(app.getHttpServer()).post(path+'/review').send({contentHash:c.contentHash}).expect(201);
+    await request(app.getHttpServer()).post(path+'/review').send({contentHash:c.contentHash}).expect(201);
+    const first=(await request(app.getHttpServer()).get(path).expect(200)).body;
+    expect(first.prompts).toHaveLength(1);
+    await request(app.getHttpServer()).patch(path).send({content:c.content+' Changed draft.'}).expect(200);
+    const payload={id:randomUUID(),promptId:first.prompts[0].id,model:'Synthetic test model',content:'<script>untrusted</script> Not a diagnosis.'};
+    await request(app.getHttpServer()).post(path+'/responses').send(payload).expect(201);
+    await request(app.getHttpServer()).post(path+'/responses').send(payload).expect(201);
+    await request(app.getHttpServer()).post(path+'/responses').send({...payload,content:'Changed response'}).expect(409);
+    const after=(await request(app.getHttpServer()).get(path).expect(200)).body;
+    expect(after.responses).toHaveLength(1);expect(after.responses[0].content).toBe(payload.content);
+    expect(after.prompts[0].content).toBe(c.content);expect(after.reviewedHash).toBeNull();
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body.facts).toHaveLength(d.facts.length);
+    await expect(db.query('UPDATE consultation_prompts SET content=$1 WHERE id=$2',['tampered',payload.promptId])).rejects.toThrow();
+    await expect(db.query('UPDATE consultation_responses SET content=$1 WHERE id=$2',['tampered',payload.id])).rejects.toThrow();
+    const other=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Other request',documentIds:[d.id]}).expect(201)).body;
+    await request(app.getHttpServer()).post('/api/consultations/'+other.id+'/responses').send({...payload,id:randomUUID()}).expect(400);
+    await request(app.getHttpServer()).post(path+'/responses').send({...payload,id:randomUUID(),model:' '}).expect(400);
+    expect((await request(app.getHttpServer()).get('/api/consultations?q=Review').expect(200)).body.items[0].responseCount).toBe(1);
+  });
+  it('upgrades existing reviewed consultations without losing drafts',async()=>{
+    await db.undoLastMigration();
+    const reviewed=await db.getRepository(Consultation).save({question:'Legacy reviewed',content:'Exact legacy text',contentHash:contentHash('Exact legacy text'),reviewedHash:contentHash('Exact legacy text'),status:'REVIEWED',warnings:[],sourceRefs:[],contexts:[]});
+    const draft=await db.getRepository(Consultation).save({question:'Legacy draft',content:'Draft text',contentHash:contentHash('Draft text'),reviewedHash:null,warnings:[],sourceRefs:[],contexts:[]});
+    await db.runMigrations();
+    const after=(await request(app.getHttpServer()).get('/api/consultations/'+reviewed.id).expect(200)).body;
+    expect(after.prompts).toHaveLength(1);expect(after.prompts[0].content).toBe('Exact legacy text');
+    expect((await request(app.getHttpServer()).get('/api/consultations/'+draft.id).expect(200)).body.prompts).toHaveLength(0);
+  });
   it('blocks consultation export until exact review and invalidates it after edit',async()=>{const d=await ready();const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Prepare LDL context',documentIds:[d.id]}).expect(201)).body;await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(409);await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:contentHash('wrong')}).expect(409);await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:c.contentHash}).expect(201);expect((await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(200)).text).toBe(c.content);await request(app.getHttpServer()).patch('/api/consultations/'+c.id).send({content:c.content+'\nReviewed edit'}).expect(200);await request(app.getHttpServer()).get('/api/consultations/'+c.id+'/export').expect(409);});
   it('prepares explicitly selected sources even when QA abstains and preserves corrections',async()=>{
     const d=await ready();
