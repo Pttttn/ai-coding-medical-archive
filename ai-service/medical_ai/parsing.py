@@ -82,21 +82,31 @@ def parse_pdf_lab_tables(path: Path) -> tuple[str, list[Page]] | None:
                     continue
                 found = True
                 segments = ["Лабораторные исследования"] if number == 1 else []
-                cursor = 0.0
+                left, cursor, right, page_bottom = page.bbox
+
+                def band(top: float, bottom: float, table_bbox=None) -> None:
+                    # Zero-height bands occur for tables flush with a page edge or another table.
+                    if bottom <= top:
+                        return
+                    region = page.crop((left, top, right, bottom))
+                    if table_bbox is not None:
+                        # Keep text printed beside a table (comments, stamps) instead of dropping it.
+                        region = region.outside_bbox(table_bbox)
+                    text = region.extract_text() or ""
+                    if text.strip():
+                        segments.append(text)
+
                 for table, rows in sorted(tables, key=lambda item: item[0].bbox[1]):
                     top, bottom = table.bbox[1], table.bbox[3]
                     if top < cursor:
                         raise ValueError("Overlapping laboratory tables")
-                    before = page.crop((0, cursor, page.width, top)).extract_text() or ""
-                    if before.strip():
-                        segments.append(before)
+                    band(cursor, top)
                     segments.append("Показатель\tРезультат\tЕдиница\tРеференс")
                     segments.extend("\t".join(clean(cell) for cell in row) for row in rows[1:])
                     segments.append("")  # End this table before surrounding report text.
+                    band(top, bottom, table.bbox)
                     cursor = bottom
-                after = page.crop((0, cursor, page.width, page.height)).extract_text() or ""
-                if after.strip():
-                    segments.append(after)
+                band(cursor, page_bottom)
                 pages.append(Page(pageNumber=number, text="\n".join(segments)))
     except Exception as exc:
         raise ServiceError("LAB_TABLE_PARSE_FAILED", "Не удалось разобрать лабораторную таблицу PDF.") from exc
