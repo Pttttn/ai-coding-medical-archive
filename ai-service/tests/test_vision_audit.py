@@ -45,3 +45,47 @@ def test_cli_error_never_prints_private_source_path(monkeypatch, capsys):
     output = capsys.readouterr().out
     assert private_path not in output
     assert json.loads(output) == {"status": "ERROR", "code": "AUDIT_UNAVAILABLE"}
+
+
+def test_audit_labels_matching_two_channels_as_insufficient(tmp_path, monkeypatch):
+    import medical_ai.vision_audit as audit_module
+
+    path = tmp_path / 'synthetic.pdf'
+    table = Table([['Test', 'Result', 'Unit', 'Reference'],
+                   ['LDL', '<4.1', 'mmol/L', '<3.0']], colWidths=[120, 70, 70, 140])
+    table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 0.5, colors.black)]))
+    SimpleDocTemplate(str(path)).build([table])
+
+    class Response:
+        def __init__(self, data):
+            self.data = data
+
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return self.data
+
+    class Client:
+        def __init__(self, **_kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            pass
+
+        def post(self, _route, **_kwargs):
+            return Response({'capabilities': ['vision']})
+
+        def get(self, _route):
+            return Response({'models': [{'name': 'local', 'digest': 'synthetic', 'size': 1}]})
+
+    monkeypatch.setattr(audit_module.httpx, 'Client', Client)
+    monkeypatch.setattr(audit_module, 'read_image', lambda *_args: [
+        {'test': 'LDL', 'result': '<4.1', 'unit': 'mmol/L', 'reference': '<3.0'}])
+    report = audit_module.audit([path], 'local')
+    assert report['passedTables'] == 1
+    assert report['checks'][0]['evidenceDecision'] == 'REVIEW_INSUFFICIENT'
+    assert '<4.1' not in str(report)

@@ -16,6 +16,8 @@ import httpx
 import pdfplumber
 from jsonschema import ValidationError, validate
 
+from .lab_consensus import reconcile_lab_rows
+
 FIELDS = ("test", "result", "unit", "reference")
 PROMPT_VERSION = "lab-vision-audit-v2"
 SCHEMA = {
@@ -98,7 +100,8 @@ def audit(paths: list[Path], model: str, runs: int = 1) -> dict:
     """Read-only evaluation. The returned report contains no PDF/model text."""
     if not 1 <= runs <= 10 or not paths or len(paths) > 20:
         raise ValueError("Expected 1-20 PDFs and 1-10 runs")
-    report = {"schemaVersion": "vision-lab-audit-v1", "promptVersion": PROMPT_VERSION,
+    report = {"schemaVersion": "vision-lab-audit-v2", "evidencePolicyVersion": "lab-consensus-v1",
+              "promptVersion": PROMPT_VERSION,
               "model": model, "documents": len(paths), "runs": runs, "checks": []}
     with httpx.Client(base_url=OLLAMA_URL, timeout=240, trust_env=False) as client:
         model_info = client.post("/api/show", json={"model": model})
@@ -130,11 +133,17 @@ def audit(paths: list[Path], model: str, runs: int = 1) -> dict:
                             try:
                                 observed = read_image(client, model, table_png(page, table.bbox))
                                 mismatches = compare_rows(expected, observed)
+                                evidence = reconcile_lab_rows({
+                                    "text_layer": [dict(zip(FIELDS, row)) for row in expected],
+                                    "vision": observed,
+                                })
                                 check.update(status="REVIEW" if mismatches else "PASS",
-                                             observedRows=len(observed), mismatches=mismatches)
+                                             observedRows=len(observed), mismatches=mismatches,
+                                             evidenceDecision=evidence["decision"])
                             except (httpx.HTTPError, ValueError, KeyError, TypeError, ValidationError):
                                 check.update(status="ERROR", observedRows=None,
-                                             mismatches=[{"row": None, "field": "model_error"}])
+                                             mismatches=[{"row": None, "field": "model_error"}],
+                                             evidenceDecision="REVIEW_UNAVAILABLE")
                             check["seconds"] = round(time.monotonic() - started, 2)
                             report["checks"].append(check)
     if not report["checks"]:
