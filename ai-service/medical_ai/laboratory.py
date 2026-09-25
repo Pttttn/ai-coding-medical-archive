@@ -14,6 +14,7 @@ from .schemas import Extraction, Fact, Provenance, StrictModel
 from .source_ir import SourceIR, Span, canonical_hash, resolve_span
 
 LAB_VERSION = 'lab-rows-v1'
+LAB_PROJECTION_VERSION = 'lab-facts-v2'
 NUMBER = r'[+−-]?\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?'
 RESULT = re.compile(rf'(?P<comparator><=|>=|≤|≥|<|>|=)?\s*(?P<number>{NUMBER})')
 QUALITATIVE = {'положительно', 'отрицательно', 'не обнаружено', 'обнаружено', 'positive', 'negative'}
@@ -196,8 +197,12 @@ def project_laboratory(ir: SourceIR, lab: Laboratory) -> tuple[Extraction, list[
     payload = lab.model_dump(exclude={'artifactHash'})
     if lab.artifactHash != canonical_hash(payload) or lab.sourceIRHash != ir.irHash or lab.sourceHash != ir.sourceHash:
         raise ValueError('Laboratory artifact references another IR')
-    result_date = unique_date(lab, 'RESULT')
-    # STUDY is explicitly distinct from specimen/result; no fallback that relabels a date.
+    # documentDate/eventDate are legacy generic medical dates, not a resultDate field.
+    # Keep the explicit role in the artifact; use STUDY only when RESULT is absent.
+    # Invalid/conflicting candidate dates never permit a convenient fallback.
+    result_date = None
+    if not any(issue.code in {'INVALID_DATE', 'DATE_CONFLICT'} for issue in lab.issues):
+        result_date = unique_date(lab, 'RESULT') if any(d.role == 'RESULT' for d in lab.dates) else unique_date(lab, 'STUDY')
     facts = []
     for row in lab.rows:
         if resolve_span(ir.pages, row.source) != row.sourceText:

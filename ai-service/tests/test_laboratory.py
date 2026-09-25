@@ -145,3 +145,14 @@ def test_labelled_scientific_count_unit_is_preserved_and_cannot_be_rewritten():
     lab.rows[0].result.numericValue = '9'
     with pytest.raises(ValueError):
         project_laboratory(source, lab)
+
+
+def test_explicit_study_date_projects_to_generic_date_without_changing_its_role():
+    source = ir('Лабораторные исследования\nДата исследования: 2024-12-02\nАЛТ: 23 Ед/л; референс <40; норма.\n')
+    lab = annotate_laboratory(source)
+    result, _ = project_laboratory(source, lab)
+    assert str(result.documentDate) == '2024-12-02'
+    assert str(result.facts[0].eventDate) == '2024-12-02'
+    assert [d.role for d in lab.dates] == ['STUDY']
+    source = ir('Лабораторные исследования\nДата исследования: 2024-12-02\nДата результата: 2024\nАЛТ: 23 Ед/л; референс <40; норма.\n')
+    assert project_laboratory(source, annotate_laboratory(source))[0].documentDate is None

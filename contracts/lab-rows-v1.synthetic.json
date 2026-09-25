@@ -5,11 +5,11 @@
     "documentId": "synthetic-lab",
     "parserVersion": "test-v1",
     "normalizerVersion": "whitespace-map-v1",
-    "sourceHash": "6bf2b677517bf91a2beb55a8731b6a30c27fed304d242c5e616ecb50b22c5927",
+    "sourceHash": "5804ce396d7f2180f67b1eb40916af1bc22a3c139fea7a1aae3fa75ea582e0e3",
     "pages": [
       {
         "pageNumber": 2,
-        "text": "Лабораторные исследования\nСубъект: пациент\nДата результата: 2026-06-18\nПоказатель\tРезультат\tЕдиница\tРеференс\nФерритин\t<5,0\tмкг/л\t15–150\nMCV\t74,20\tфл\t80–100\n"
+        "text": "Лабораторные исследования\nСубъект: пациент\nДата результата: 2026-06-18\nДата исследования: 2026-06-18\nПоказатель\tРезультат\tЕдиница\tРеференс\nФерритин\t<5,0\tмкг/л\t15–150\nMCV\t74,20\tфл\t80–100\n"
       }
     ],
     "blocks": [
@@ -19,9 +19,9 @@
         "source": {
           "pageIndex": 0,
           "startByte": 0,
-          "endByte": 260
+          "endByte": 306
         },
-        "normalizedText": "Лабораторные исследования Субъект: пациент Дата результата: 2026-06-18 Показатель Результат Единица Референс Ферритин <5,0 мкг/л 15–150 MCV 74,20 фл 80–100 ",
+        "normalizedText": "Лабораторные исследования Субъект: пациент Дата результата: 2026-06-18 Дата исследования: 2026-06-18 Показатель Результат Единица Референс Ферритин <5,0 мкг/л 15–150 MCV 74,20 фл 80–100 ",
         "mapping": [
           {
             "normalizedStartByte": 0,
@@ -85,253 +85,273 @@
           },
           {
             "normalizedStartByte": 123,
-            "normalizedEndByte": 143,
+            "normalizedEndByte": 168,
             "source": {
               "pageIndex": 0,
               "startByte": 123,
-              "endByte": 143
+              "endByte": 168
             },
             "operation": "IDENTITY"
           },
           {
-            "normalizedStartByte": 143,
-            "normalizedEndByte": 144,
+            "normalizedStartByte": 168,
+            "normalizedEndByte": 169,
             "source": {
               "pageIndex": 0,
-              "startByte": 143,
-              "endByte": 144
+              "startByte": 168,
+              "endByte": 169
             },
             "operation": "WHITESPACE"
           },
           {
-            "normalizedStartByte": 144,
-            "normalizedEndByte": 162,
+            "normalizedStartByte": 169,
+            "normalizedEndByte": 189,
             "source": {
               "pageIndex": 0,
-              "startByte": 144,
-              "endByte": 162
+              "startByte": 169,
+              "endByte": 189
             },
             "operation": "IDENTITY"
           },
           {
-            "normalizedStartByte": 162,
-            "normalizedEndByte": 163,
+            "normalizedStartByte": 189,
+            "normalizedEndByte": 190,
             "source": {
               "pageIndex": 0,
-              "startByte": 162,
-              "endByte": 163
+              "startByte": 189,
+              "endByte": 190
             },
             "operation": "WHITESPACE"
           },
           {
-            "normalizedStartByte": 163,
-            "normalizedEndByte": 177,
+            "normalizedStartByte": 190,
+            "normalizedEndByte": 208,
             "source": {
               "pageIndex": 0,
-              "startByte": 163,
-              "endByte": 177
+              "startByte": 190,
+              "endByte": 208
             },
             "operation": "IDENTITY"
           },
           {
-            "normalizedStartByte": 177,
-            "normalizedEndByte": 178,
+            "normalizedStartByte": 208,
+            "normalizedEndByte": 209,
             "source": {
               "pageIndex": 0,
-              "startByte": 177,
-              "endByte": 178
+              "startByte": 208,
+              "endByte": 209
             },
             "operation": "WHITESPACE"
           },
           {
-            "normalizedStartByte": 178,
-            "normalizedEndByte": 194,
+            "normalizedStartByte": 209,
+            "normalizedEndByte": 223,
             "source": {
               "pageIndex": 0,
-              "startByte": 178,
-              "endByte": 194
+              "startByte": 209,
+              "endByte": 223
             },
             "operation": "IDENTITY"
           },
           {
-            "normalizedStartByte": 194,
-            "normalizedEndByte": 195,
+            "normalizedStartByte": 223,
+            "normalizedEndByte": 224,
             "source": {
               "pageIndex": 0,
-              "startByte": 194,
-              "endByte": 195
+              "startByte": 223,
+              "endByte": 224
             },
             "operation": "WHITESPACE"
           },
           {
-            "normalizedStartByte": 195,
-            "normalizedEndByte": 211,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 195,
-              "endByte": 211
-            },
-            "operation": "IDENTITY"
-          },
-          {
-            "normalizedStartByte": 211,
-            "normalizedEndByte": 212,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 211,
-              "endByte": 212
-            },
-            "operation": "WHITESPACE"
-          },
-          {
-            "normalizedStartByte": 212,
-            "normalizedEndByte": 216,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 212,
-              "endByte": 216
-            },
-            "operation": "IDENTITY"
-          },
-          {
-            "normalizedStartByte": 216,
-            "normalizedEndByte": 217,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 216,
-              "endByte": 217
-            },
-            "operation": "WHITESPACE"
-          },
-          {
-            "normalizedStartByte": 217,
-            "normalizedEndByte": 226,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 217,
-              "endByte": 226
-            },
-            "operation": "IDENTITY"
-          },
-          {
-            "normalizedStartByte": 226,
-            "normalizedEndByte": 227,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 226,
-              "endByte": 227
-            },
-            "operation": "WHITESPACE"
-          },
-          {
-            "normalizedStartByte": 227,
-            "normalizedEndByte": 235,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 227,
-              "endByte": 235
-            },
-            "operation": "IDENTITY"
-          },
-          {
-            "normalizedStartByte": 235,
-            "normalizedEndByte": 236,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 235,
-              "endByte": 236
-            },
-            "operation": "WHITESPACE"
-          },
-          {
-            "normalizedStartByte": 236,
-            "normalizedEndByte": 239,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 236,
-              "endByte": 239
-            },
-            "operation": "IDENTITY"
-          },
-          {
-            "normalizedStartByte": 239,
+            "normalizedStartByte": 224,
             "normalizedEndByte": 240,
             "source": {
               "pageIndex": 0,
-              "startByte": 239,
+              "startByte": 224,
               "endByte": 240
             },
-            "operation": "WHITESPACE"
+            "operation": "IDENTITY"
           },
           {
             "normalizedStartByte": 240,
-            "normalizedEndByte": 245,
+            "normalizedEndByte": 241,
             "source": {
               "pageIndex": 0,
               "startByte": 240,
-              "endByte": 245
-            },
-            "operation": "IDENTITY"
-          },
-          {
-            "normalizedStartByte": 245,
-            "normalizedEndByte": 246,
-            "source": {
-              "pageIndex": 0,
-              "startByte": 245,
-              "endByte": 246
+              "endByte": 241
             },
             "operation": "WHITESPACE"
           },
           {
-            "normalizedStartByte": 246,
-            "normalizedEndByte": 250,
+            "normalizedStartByte": 241,
+            "normalizedEndByte": 257,
             "source": {
               "pageIndex": 0,
-              "startByte": 246,
-              "endByte": 250
+              "startByte": 241,
+              "endByte": 257
             },
             "operation": "IDENTITY"
           },
           {
-            "normalizedStartByte": 250,
-            "normalizedEndByte": 251,
+            "normalizedStartByte": 257,
+            "normalizedEndByte": 258,
             "source": {
               "pageIndex": 0,
-              "startByte": 250,
-              "endByte": 251
+              "startByte": 257,
+              "endByte": 258
             },
             "operation": "WHITESPACE"
           },
           {
-            "normalizedStartByte": 251,
-            "normalizedEndByte": 259,
+            "normalizedStartByte": 258,
+            "normalizedEndByte": 262,
             "source": {
               "pageIndex": 0,
-              "startByte": 251,
-              "endByte": 259
+              "startByte": 258,
+              "endByte": 262
             },
             "operation": "IDENTITY"
           },
           {
-            "normalizedStartByte": 259,
-            "normalizedEndByte": 260,
+            "normalizedStartByte": 262,
+            "normalizedEndByte": 263,
             "source": {
               "pageIndex": 0,
-              "startByte": 259,
-              "endByte": 260
+              "startByte": 262,
+              "endByte": 263
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 263,
+            "normalizedEndByte": 272,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 263,
+              "endByte": 272
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 272,
+            "normalizedEndByte": 273,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 272,
+              "endByte": 273
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 273,
+            "normalizedEndByte": 281,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 273,
+              "endByte": 281
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 281,
+            "normalizedEndByte": 282,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 281,
+              "endByte": 282
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 282,
+            "normalizedEndByte": 285,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 282,
+              "endByte": 285
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 285,
+            "normalizedEndByte": 286,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 285,
+              "endByte": 286
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 286,
+            "normalizedEndByte": 291,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 286,
+              "endByte": 291
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 291,
+            "normalizedEndByte": 292,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 291,
+              "endByte": 292
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 292,
+            "normalizedEndByte": 296,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 292,
+              "endByte": 296
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 296,
+            "normalizedEndByte": 297,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 296,
+              "endByte": 297
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 297,
+            "normalizedEndByte": 305,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 297,
+              "endByte": 305
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 305,
+            "normalizedEndByte": 306,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 305,
+              "endByte": 306
             },
             "operation": "WHITESPACE"
           }
         ]
       }
     ],
-    "irHash": "960c4d998ca1d1920f823af80389806366b6c83b9ff98f43009543acfdf44a6e"
+    "irHash": "4d03b9ed9024d59d5deea73df8da788c2afedbb0868d985e78c7c544be3de505"
   },
   "laboratory": {
     "schemaVersion": "lab-rows-v1",
-    "sourceIRHash": "960c4d998ca1d1920f823af80389806366b6c83b9ff98f43009543acfdf44a6e",
-    "sourceHash": "6bf2b677517bf91a2beb55a8731b6a30c27fed304d242c5e616ecb50b22c5927",
+    "sourceIRHash": "4d03b9ed9024d59d5deea73df8da788c2afedbb0868d985e78c7c544be3de505",
+    "sourceHash": "5804ce396d7f2180f67b1eb40916af1bc22a3c139fea7a1aae3fa75ea582e0e3",
     "rows": [
       {
         "name": "Ферритин",
@@ -346,8 +366,8 @@
         "subject": "PATIENT",
         "source": {
           "pageIndex": 0,
-          "startByte": 195,
-          "endByte": 235
+          "startByte": 241,
+          "endByte": 281
         },
         "sourceText": "Ферритин\t<5,0\tмкг/л\t15–150"
       },
@@ -364,8 +384,8 @@
         "subject": "PATIENT",
         "source": {
           "pageIndex": 0,
-          "startByte": 236,
-          "endByte": 259
+          "startByte": 282,
+          "endByte": 305
         },
         "sourceText": "MCV\t74,20\tфл\t80–100"
       }
@@ -380,6 +400,16 @@
           "startByte": 81,
           "endByte": 122
         }
+      },
+      {
+        "role": "STUDY",
+        "iso": "2026-06-18",
+        "raw": "2026-06-18",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 123,
+          "endByte": 168
+        }
       }
     ],
     "subjectSources": [
@@ -392,7 +422,7 @@
     "issues": [],
     "candidateRows": 2,
     "coverage": "SUPPORTED_ROWS_ONLY",
-    "artifactHash": "4296a117e570b847b9bd180234c2bf95595c2e58a7f648d1bf430e5c31e04f73"
+    "artifactHash": "7892a69758faac192bcebf98b7e20de5a538ba3718ee7baec558f9da92fbcd1e"
   },
   "facts": [
     {

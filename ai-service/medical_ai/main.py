@@ -12,7 +12,7 @@ from .errors import ServiceError
 from .extraction import PROMPT_VERSION, SCHEMA_VERSION, extract
 from .external_output import PublicOutput, PublicToolErrors
 from .indexer import Corpus, source_of
-from .laboratory import LAB_VERSION, annotate_laboratory, project_laboratory
+from .laboratory import LAB_PROJECTION_VERSION, LAB_VERSION, annotate_laboratory, project_laboratory
 from .ollama import Ollama
 from .parsing import PARSER_VERSION, confined_path, parse_file
 from .privacy import consultation
@@ -84,7 +84,7 @@ def create_app(services: Services | None = None) -> FastAPI:
                 "modelDigest": None if laboratory is not None else model_digest, "text": text, "pages": [p.model_dump() for p in pages],
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
                 "model": "deterministic:lab-rows-v1" if laboratory is not None else services.settings.llm_model,
-                "promptVersion": LAB_VERSION if laboratory is not None else PROMPT_VERSION,
+                "promptVersion": LAB_PROJECTION_VERSION if laboratory is not None else PROMPT_VERSION,
                 "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/index", dependencies=[Depends(authorize)])

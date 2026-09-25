@@ -19,3 +19,20 @@ test.each(['numeric','comparator','source','version','duplicate','date','subject
   const {artifactHash,...body}=lab;void artifactHash;lab.artifactHash=irHash(body);
   expect(()=>validateLaboratory(lab,f.sourceIR,f.facts)).toThrow();
 });
+
+test('generic fact date supports an explicit STUDY role without relabeling it as RESULT',()=>{
+  const f=fixture(),lab=f.laboratory;
+  lab.dates=lab.dates.filter((d:any)=>d.role==='STUDY');
+  const {artifactHash,...body}=lab;void artifactHash;lab.artifactHash=irHash(body);
+  expect(()=>validateLaboratory(lab,f.sourceIR,f.facts)).not.toThrow();
+  lab.issues.push({code:'DATE_CONFLICT',source:null});
+  const {artifactHash:previous,...changed}=lab;void previous;lab.artifactHash=irHash(changed);
+  expect(()=>validateLaboratory(lab,f.sourceIR,f.facts)).toThrow();
+});
+
+test('rejects a date role that differs from its source heading',()=>{
+  const f=fixture(),lab=f.laboratory;
+  lab.dates[0].role='SPECIMEN';
+  const {artifactHash,...body}=lab;void artifactHash;lab.artifactHash=irHash(body);
+  expect(()=>validateLaboratory(lab,f.sourceIR,f.facts)).toThrow();
+});

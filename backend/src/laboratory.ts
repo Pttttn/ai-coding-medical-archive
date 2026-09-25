@@ -24,9 +24,13 @@ export function validateLaboratory(lab:Laboratory,ir:SourceIR|undefined,facts:an
       if(span.endByte>bytes.length)fail();
       return decoder.decode(bytes.subarray(span.startByte,span.endByte));
     };
-    const dates=new Set(lab.dates.filter(d=>d.role==='RESULT').map(d=>d.iso));
-    const eventDate=dates.size===1?[...dates][0]:null;
+    const role=lab.dates.some(d=>d.role==='RESULT')?'RESULT':'STUDY';
+    const dates=new Set(lab.dates.filter(d=>d.role===role).map(d=>d.iso));
+    const eventDate=dates.size===1&&!lab.issues.some(i=>['INVALID_DATE','DATE_CONFLICT'].includes(i.code))?[...dates][0]:null;
+    const dateRoles:Record<string,string>={'дата результата':'RESULT','дата взятия материала':'SPECIMEN','дата исследования':'STUDY','result date':'RESULT','specimen date':'SPECIMEN'};
     for(const d of lab.dates){
+      const source=resolve(d.source).trim(),colon=source.indexOf(':');
+      if(dateRoles[source.slice(0,colon).toLowerCase()]!==d.role||source.slice(colon+1).trim()!==d.raw)fail();
       const normalized=/^\d{2}\.\d{2}\.\d{4}$/.test(d.raw)?d.raw.split('.').reverse().join('-'):d.raw;
       if(!['RESULT','SPECIMEN','STUDY'].includes(d.role)||!/^\d{4}-\d{2}-\d{2}$/.test(d.iso)||d.iso!==normalized||new Date(d.iso).toISOString().slice(0,10)!==d.iso||!resolve(d.source).includes(d.raw))fail();
     }
