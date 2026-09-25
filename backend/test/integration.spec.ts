@@ -64,9 +64,9 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     const content={schemaVersion:'source-ir-v1',stage:'SOURCE_ONLY',documentId:body.documentId,parserVersion:'synthetic-test',normalizerVersion:'whitespace-map-v1',sourceHash:irHash(result.pages),pages:result.pages,blocks:[{blockId:'p0:b0',kind:'paragraph',source:span,normalizedText:text,mapping:[{normalizedStartByte:0,normalizedEndByte:length,source:span,operation:'IDENTITY'}]}]};
     return {...result,sourceIR:{...content,irHash:irHash(content)} as SourceIR};
   };
-  const visitMock=async(route:string,body:any)=>{
+  const visitMock=async(route:string,body:any,reviewed=false)=>{
     if(route!=='process')return mock(route,body);
-    const f=JSON.parse(await readFile(join(__dirname,'../../contracts/visit-assertions-v1.synthetic.json'),'utf8'));
+    const f=JSON.parse(await readFile(join(__dirname,reviewed?'../../contracts/visit-assertions-v2.synthetic.json':'../../contracts/visit-assertions-v1.synthetic.json'),'utf8'));
     f.sourceIR.documentId=body.documentId;
     const {irHash:old,...irBody}=f.sourceIR;void old;f.sourceIR.irHash=irHash(irBody);
     f.visit.sourceIRHash=f.sourceIR.irHash;
@@ -96,6 +96,28 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     ai.call.mockImplementation(async(route,body)=>{const r=await visitMock(route,body);if(route==='process')r.extraction.facts[1].assertionStatus='CONFIRMED';return r;});
     const d=await ready();expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('VISIT_ARTIFACT_INVALID');
     expect(d.facts).toHaveLength(0);expect(d.visit).toBeNull();
+  });
+  it('publishes source review disagreements as UNKNOWN and preserves user correction',async()=>{
+    ai.call.mockImplementation((route,body)=>visitMock(route,body,true));const d=await ready();
+    expect(d.visit.schemaVersion).toBe('visit-assertions-v2');
+    const disputed=d.facts.find((f:any)=>f.name==='Аторвастатин');
+    expect(disputed).toMatchObject({type:'OBSERVATION',assertionStatus:'UNKNOWN'});
+    await request(app.getHttpServer()).patch('/api/facts/'+disputed.id).send({valueText:'Synthetic reviewed correction',reviewStatus:'CORRECTED'}).expect(200);
+    await worker.tick();
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id)).body.visit).toBeNull();
+    await worker.tick();
+    const current=(await request(app.getHttpServer()).get('/api/documents/'+d.id)).body;
+    expect(current.facts.find((f:any)=>f.name==='Аторвастатин').valueText).toBe('Synthetic reviewed correction');
+    expect(current.visit.verifications[5].status).toBe('DISAGREES');
+    expect(current.visit.statements[5].medicationState).toBe('TAKING');
+  });
+  it('does not publish a claimed agreement with a contradictory alternative',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await visitMock(route,body,true);if(route==='process'){
+      r.visit.verifications[5].status='AGREES';
+      const {artifactHash,...rest}=r.visit;void artifactHash;r.visit.artifactHash=irHash(rest);
+    }return r;});
+    const d=await ready();expect(d.status).toBe('FAILED');expect(d.facts).toHaveLength(0);expect(d.visit).toBeNull();
   });
   const labMock=async(route:string,body:any)=>{
     if(route!=='process')return mock(route,body);

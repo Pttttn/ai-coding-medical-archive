@@ -1,3 +1,4 @@
+from .visit_review import REVIEW_PROFILE, REVIEW_PROMPT_VERSION, annotate_reviewed_visit, project_reviewed_visit
 import secrets
 from functools import lru_cache
 from typing import Annotated
@@ -69,11 +70,14 @@ def create_app(services: Services | None = None) -> FastAPI:
             text, pages = body.text or "", [Page(text=body.text or "")]
         source_ir = build_source_ir(body.documentId, pages, PARSER_VERSION if body.filePath else "user-text-v1")
         laboratory, visit = None, None
-        if services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE}:
+        if services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE, REVIEW_PROFILE}:
             ir = SourceIR.model_validate(source_ir)
             laboratory = annotate_laboratory(ir)
         if laboratory is not None:
             extracted, extraction_warnings = project_laboratory(ir, laboratory)
+        elif services.settings.extraction_profile == REVIEW_PROFILE and supports_visit(ir):
+            visit = annotate_reviewed_visit(services.provider, ir)
+            extracted, extraction_warnings = project_reviewed_visit(ir, visit)
         elif services.settings.extraction_profile == CLINICAL_PROFILE and supports_visit(ir):
             visit = annotate_visit(services.provider, ir)
             extracted, extraction_warnings = project_visit(ir, visit)
@@ -93,7 +97,7 @@ def create_app(services: Services | None = None) -> FastAPI:
                 "modelDigest": None if laboratory is not None else model_digest, "text": text, "pages": [p.model_dump() for p in pages],
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
                 "model": "deterministic:lab-rows-v1" if laboratory is not None else services.settings.llm_model,
-                "promptVersion": LAB_PROJECTION_VERSION if laboratory is not None else VISIT_PROMPT_VERSION if visit is not None else PROMPT_VERSION,
+                "promptVersion": LAB_PROJECTION_VERSION if laboratory is not None else REVIEW_PROMPT_VERSION if visit is not None and services.settings.extraction_profile == REVIEW_PROFILE else VISIT_PROMPT_VERSION if visit is not None else PROMPT_VERSION,
                 "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/index", dependencies=[Depends(authorize)])

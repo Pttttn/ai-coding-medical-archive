@@ -20,11 +20,17 @@ sys.path.insert(0, str(ROOT / "ai-service"))
 import httpx
 import evaluate_clinical_ssh as remote
 from evaluate_visit_ingestion import key, score, summarize
+from visit_semantic_metrics import evaluate_semantics, summarize_semantics
 from medical_ai.config import Settings
 from medical_ai.ollama import Ollama
 from medical_ai.schemas import Page
 from medical_ai.source_ir import SourceIR, build_source_ir
 from medical_ai.visit import VISIT_PROMPT_VERSION, annotate_visit, project_visit
+from medical_ai.visit_review import (
+    REVIEW_PROMPT_VERSION,
+    annotate_reviewed_visit,
+    project_reviewed_visit,
+)
 
 
 def run(args):
@@ -81,7 +87,7 @@ except Exception as exc: print(json.dumps({'error':type(exc).__name__}))
         transport=remote.SSHTransport(),
         timeout=330,
     )
-    manifest_path = ROOT / "evaluation/ingestion-visits-v1/manifest.json"
+    manifest_path = ROOT / "evaluation" / args.dataset / "manifest.json"
     raw_manifest = manifest_path.read_bytes()
     manifest = json.loads(raw_manifest)
     cases = [
@@ -107,17 +113,21 @@ except Exception as exc: print(json.dumps({'error':type(exc).__name__}))
             p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest()
             for p in [
                 "ai-service/medical_ai/visit.py",
+                "ai-service/medical_ai/visit_review.py",
                 "ai-service/medical_ai/source_ir.py",
                 "ai-service/medical_ai/ollama.py",
                 "scripts/evaluate_visit_ssh.py",
                 "scripts/evaluate_clinical_ssh.py",
                 "scripts/evaluate_visit_ingestion.py",
+                "scripts/visit_semantic_metrics.py",
             ]
         },
         "recipe": {
             "modelAlias": args.model,
             "modelDigest": None,
-            "promptVersion": VISIT_PROMPT_VERSION,
+            "promptVersion": REVIEW_PROMPT_VERSION
+            if args.verify
+            else VISIT_PROMPT_VERSION,
             "temperature": 0,
             "seed": 42,
             "maxTokens": settings.llm_extraction_max_tokens,
@@ -137,6 +147,8 @@ except Exception as exc: print(json.dumps({'error':type(exc).__name__}))
 
     def save():
         report["summary"] = summarize(report["results"])
+        report["semanticSummary"] = summarize_semantics(report["results"])
+        report["releasedSummary"] = summarize_semantics(report["results"], "released")
         args.output.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
@@ -152,6 +164,8 @@ except Exception as exc: print(json.dumps({'error':type(exc).__name__}))
                     "split": c["split"],
                     "repeat": repeat,
                     "score": score(c["statements"], []),
+                    "semantic": evaluate_semantics(c["statements"], [], ""),
+                    "released": evaluate_semantics(c["statements"], [], ""),
                 }
                 started = time.monotonic()
                 try:
@@ -167,14 +181,50 @@ except Exception as exc: print(json.dumps({'error':type(exc).__name__}))
                             "user-text-v1",
                         )
                     )
-                    visit = annotate_visit(provider, ir)
-                    extraction, _ = project_visit(ir, visit)
+                    visit = (
+                        annotate_reviewed_visit(provider, ir)
+                        if args.verify
+                        else annotate_visit(provider, ir)
+                    )
+                    extraction, _ = (
+                        project_reviewed_visit(ir, visit)
+                        if args.verify
+                        else project_visit(ir, visit)
+                    )
                     statements = [s.model_dump() for s in visit.statements]
                     row.update(
                         status="READY",
                         score=score(c["statements"], statements),
                         verifiedSources=len(statements),
                         projectedFacts=len(extraction.facts),
+                    )
+                    row["semantic"] = evaluate_semantics(
+                        c["statements"], statements, text
+                    )
+                    checks = visit.model_dump().get("verifications")
+                    released = (
+                        statements
+                        if checks is None
+                        else [
+                            statements[v["statementIndex"]]
+                            for v in checks
+                            if v["status"] == "AGREES"
+                        ]
+                    )
+                    row["released"] = evaluate_semantics(
+                        c["statements"], released, text
+                    )
+                    row["verificationStatuses"] = (
+                        [v["status"] for v in checks] if checks is not None else None
+                    )
+                    row["verificationHash"] = (
+                        hashlib.sha256(
+                            json.dumps(
+                                checks, sort_keys=True, ensure_ascii=False
+                            ).encode()
+                        ).hexdigest()
+                        if checks is not None
+                        else None
                     )
                     row["semanticHash"] = hashlib.sha256(
                         json.dumps(
@@ -205,8 +255,18 @@ if __name__ == "__main__":
     parser.add_argument("--model", required=True)
     parser.add_argument("--wsl", action="store_true")
     parser.add_argument(
+        "--verify",
+        action="store_true",
+        help="Blind second reading; report withheld recall separately",
+    )
+    parser.add_argument(
         "--split", choices=["development", "held-out", "all"], default="development"
     )
     parser.add_argument("--repeats", type=int, choices=range(1, 11), default=3)
+    parser.add_argument(
+        "--dataset",
+        choices=["ingestion-visits-v1", "ingestion-visits-v2"],
+        default="ingestion-visits-v1",
+    )
     parser.add_argument("--output", type=Path, required=True)
     run(parser.parse_args())
