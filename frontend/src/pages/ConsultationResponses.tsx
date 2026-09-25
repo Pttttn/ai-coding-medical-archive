@@ -16,7 +16,7 @@ export function ConsultationResponses({ id, revision, onSaved, onDirty }: { id:s
   useEffect(()=>{onDirty(Boolean(content.trim()));return()=>onDirty(false);},[content,onDirty]);
   const prompts=data.data?.prompts??[];
   const latestPrompt=prompts.at(-1)?.id||'';
-  useEffect(()=>{if(!promptId&&latestPrompt)setPromptId(latestPrompt);},[promptId,latestPrompt]);
+  useEffect(()=>{if(!promptId&&latestPrompt)setPromptId(current=>current||latestPrompt);},[promptId,latestPrompt]);
   const selected=promptId||latestPrompt;
   useEffect(()=>{
     const prevent=(event:BeforeUnloadEvent)=>{if(content.trim()){event.preventDefault();event.returnValue='';}};
