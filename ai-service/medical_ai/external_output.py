@@ -96,7 +96,9 @@ class PublicOutput:
                     if (not isinstance(part, dict) or set(part) != {"citation", "text"}
                             or type(part["citation"]) is not int or part["citation"] not in numbered
                             or not isinstance(part["text"], str)
-                            or verified_excerpt(part["text"], numbered[part["citation"]]["text"]) is None):
+                            # Only one contiguous source span is an answer part, never glued lines.
+                            or verified_excerpt(part["text"], numbered[part["citation"]]["text"])
+                            != part["text"].strip()):
                         raise ServiceError("PRIVACY_CHECK_FAILED", "Проверка приватности не завершена.", 502)
                     parts.append(part)
                 fields = [part["text"] for part in parts] + fields
