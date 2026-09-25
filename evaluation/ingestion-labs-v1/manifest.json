@@ -1,0 +1,1304 @@
+{
+  "version": "ingestion-labs-v1",
+  "synthetic": true,
+  "goldReview": "AI-authored from source templates; no independent clinical review",
+  "scope": "LAB_REPORT only. Held-out layouts/panel excluded from implementation tuning. Repeated panels are correlated; 120 rows are not 120 independent clinical cases.",
+  "cases": [
+    {
+      "id": "lab-01",
+      "split": "development",
+      "originalFile": "development/lab-01.txt",
+      "sha256": "3d1b337705ff5160befe3c95fb1377f8899b238e0f126d9835c124501ed73beb",
+      "rows": [
+        {
+          "name": "Гемоглобин",
+          "resultRaw": "108",
+          "unit": "г/л",
+          "referenceRaw": "120–150",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| Гемоглобин | 108 | г/л | 120–150 |"
+        },
+        {
+          "name": "MCV",
+          "resultRaw": "74,2",
+          "unit": "фл",
+          "referenceRaw": "80–100",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| MCV | 74,2 | фл | 80–100 |"
+        },
+        {
+          "name": "Ферритин",
+          "resultRaw": "<5,0",
+          "unit": "мкг/л",
+          "referenceRaw": "15–150",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| Ферритин | <5,0 | мкг/л | 15–150 |"
+        },
+        {
+          "name": "Железо",
+          "resultRaw": "6,1",
+          "unit": "мкмоль/л",
+          "referenceRaw": "9–30",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| Железо | 6,1 | мкмоль/л | 9–30 |"
+        },
+        {
+          "name": "Трансферрин",
+          "resultRaw": "3,8",
+          "unit": "г/л",
+          "referenceRaw": "2,0–3,6",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| Трансферрин | 3,8 | г/л | 2,0–3,6 |"
+        },
+        {
+          "name": "СРБ",
+          "resultRaw": "2,0",
+          "unit": "мг/л",
+          "referenceRaw": "<5",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| СРБ | 2,0 | мг/л | <5 |"
+        },
+        {
+          "name": "Лейкоциты",
+          "resultRaw": "6,7",
+          "unit": "10^9/л",
+          "referenceRaw": "4–9",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| Лейкоциты | 6,7 | 10^9/л | 4–9 |"
+        },
+        {
+          "name": "Тромбоциты",
+          "resultRaw": "410",
+          "unit": "10^9/л",
+          "referenceRaw": "150–400",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| Тромбоциты | 410 | 10^9/л | 150–400 |"
+        },
+        {
+          "name": "Ретикулоциты",
+          "resultRaw": "1,2",
+          "unit": "%",
+          "referenceRaw": "0,5–2,0",
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| Ретикулоциты | 1,2 | % | 0,5–2,0 |"
+        },
+        {
+          "name": "B12",
+          "resultRaw": "380",
+          "unit": "пг/мл",
+          "referenceRaw": null,
+          "resultDate": "2026-01-18",
+          "specimenDate": "2026-01-17",
+          "subject": "PATIENT",
+          "sourceText": "| B12 | 380 | пг/мл |  |"
+        }
+      ]
+    },
+    {
+      "id": "lab-02",
+      "split": "development",
+      "originalFile": "development/lab-02.txt",
+      "sha256": "f72be7f5927e58d009ee2db194d0991b6936f076ee8e6e57ef7666637f927b40",
+      "rows": [
+        {
+          "name": "ТТГ",
+          "resultRaw": "8.4",
+          "unit": "мМЕ/л",
+          "referenceRaw": "0.4–4.0",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "ТТГ: 8.4 мМЕ/л; референс 0.4–4.0; запись лаборатории."
+        },
+        {
+          "name": "Свободный Т4",
+          "resultRaw": "9.2",
+          "unit": "пмоль/л",
+          "referenceRaw": "10–22",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "Свободный Т4: 9.2 пмоль/л; референс 10–22; запись лаборатории."
+        },
+        {
+          "name": "АТ-ТПО",
+          "resultRaw": ">600",
+          "unit": "МЕ/мл",
+          "referenceRaw": "<35",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "АТ-ТПО: >600 МЕ/мл; референс <35; запись лаборатории."
+        },
+        {
+          "name": "Натрий",
+          "resultRaw": "139",
+          "unit": "ммоль/л",
+          "referenceRaw": "135–145",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "Натрий: 139 ммоль/л; референс 135–145; запись лаборатории."
+        },
+        {
+          "name": "Калий",
+          "resultRaw": "4.2",
+          "unit": "ммоль/л",
+          "referenceRaw": "3.5–5.1",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "Калий: 4.2 ммоль/л; референс 3.5–5.1; запись лаборатории."
+        },
+        {
+          "name": "Кальций",
+          "resultRaw": "2.25",
+          "unit": "ммоль/л",
+          "referenceRaw": "2.15–2.55",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "Кальций: 2.25 ммоль/л; референс 2.15–2.55; запись лаборатории."
+        },
+        {
+          "name": "Альбумин",
+          "resultRaw": "42",
+          "unit": "г/л",
+          "referenceRaw": "35–50",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "Альбумин: 42 г/л; референс 35–50; запись лаборатории."
+        },
+        {
+          "name": "АСТ",
+          "resultRaw": "23",
+          "unit": "Ед/л",
+          "referenceRaw": "<35",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "АСТ: 23 Ед/л; референс <35; запись лаборатории."
+        },
+        {
+          "name": "Билирубин общий",
+          "resultRaw": "13",
+          "unit": "мкмоль/л",
+          "referenceRaw": "5–21",
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "Билирубин общий: 13 мкмоль/л; референс 5–21; запись лаборатории."
+        },
+        {
+          "name": "Магний",
+          "resultRaw": "0.82",
+          "unit": "ммоль/л",
+          "referenceRaw": null,
+          "resultDate": "2026-02-18",
+          "specimenDate": "2026-02-17",
+          "subject": "PATIENT",
+          "sourceText": "Магний: 0.82 ммоль/л; референс ; запись лаборатории."
+        }
+      ]
+    },
+    {
+      "id": "lab-03",
+      "split": "development",
+      "originalFile": "development/lab-03.txt",
+      "sha256": "8ef8e855abc7d38b810c93a4f4529511e7d7585905a04d736b32af4bb5cb44a2",
+      "rows": [
+        {
+          "name": "HbA1c",
+          "resultRaw": "≥6,7",
+          "unit": "%",
+          "referenceRaw": "4,0–5,6",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| HbA1c | ≥6,7 | % | 4,0–5,6 |"
+        },
+        {
+          "name": "Глюкоза плазмы",
+          "resultRaw": "7,3",
+          "unit": "ммоль/л",
+          "referenceRaw": "3,9–5,5",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| Глюкоза плазмы | 7,3 | ммоль/л | 3,9–5,5 |"
+        },
+        {
+          "name": "Холестерин ЛПВП",
+          "resultRaw": "0,9",
+          "unit": "ммоль/л",
+          "referenceRaw": ">1,0",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| Холестерин ЛПВП | 0,9 | ммоль/л | >1,0 |"
+        },
+        {
+          "name": "Холестерин ЛПНП",
+          "resultRaw": "3,9",
+          "unit": "ммоль/л",
+          "referenceRaw": "<3,0",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| Холестерин ЛПНП | 3,9 | ммоль/л | <3,0 |"
+        },
+        {
+          "name": "Триглицериды",
+          "resultRaw": "2,4",
+          "unit": "ммоль/л",
+          "referenceRaw": "<1,7",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| Триглицериды | 2,4 | ммоль/л | <1,7 |"
+        },
+        {
+          "name": "Креатинин",
+          "resultRaw": "104",
+          "unit": "мкмоль/л",
+          "referenceRaw": "62–106",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| Креатинин | 104 | мкмоль/л | 62–106 |"
+        },
+        {
+          "name": "Мочевина",
+          "resultRaw": "7,1",
+          "unit": "ммоль/л",
+          "referenceRaw": "2,8–8,3",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| Мочевина | 7,1 | ммоль/л | 2,8–8,3 |"
+        },
+        {
+          "name": "ГГТ",
+          "resultRaw": "61",
+          "unit": "Ед/л",
+          "referenceRaw": "<55",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| ГГТ | 61 | Ед/л | <55 |"
+        },
+        {
+          "name": "АЛТ",
+          "resultRaw": "48",
+          "unit": "Ед/л",
+          "referenceRaw": "0–41",
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| АЛТ | 48 | Ед/л | 0–41 |"
+        },
+        {
+          "name": "Липопротеин (а)",
+          "resultRaw": "≤30",
+          "unit": "мг/дл",
+          "referenceRaw": null,
+          "resultDate": "2026-03-18",
+          "specimenDate": "2026-03-17",
+          "subject": "PATIENT",
+          "sourceText": "| Липопротеин (а) | ≤30 | мг/дл |  |"
+        }
+      ]
+    },
+    {
+      "id": "lab-04",
+      "split": "development",
+      "originalFile": "development/lab-04.txt",
+      "sha256": "a24e5ca85ca1c9fb006f4991bdaa5880022837bd569f8a314135021945ba49a7",
+      "rows": [
+        {
+          "name": "Гемоглобин",
+          "resultRaw": "108",
+          "unit": "г/л",
+          "referenceRaw": "120–150",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "Гемоглобин: 108 г/л; референс 120–150; запись лаборатории."
+        },
+        {
+          "name": "MCV",
+          "resultRaw": "74,2",
+          "unit": "фл",
+          "referenceRaw": "80–100",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "MCV: 74,2 фл; референс 80–100; запись лаборатории."
+        },
+        {
+          "name": "Ферритин",
+          "resultRaw": "<5,0",
+          "unit": "мкг/л",
+          "referenceRaw": "15–150",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "Ферритин: <5,0 мкг/л; референс 15–150; запись лаборатории."
+        },
+        {
+          "name": "Железо",
+          "resultRaw": "6,1",
+          "unit": "мкмоль/л",
+          "referenceRaw": "9–30",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "Железо: 6,1 мкмоль/л; референс 9–30; запись лаборатории."
+        },
+        {
+          "name": "Трансферрин",
+          "resultRaw": "3,8",
+          "unit": "г/л",
+          "referenceRaw": "2,0–3,6",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "Трансферрин: 3,8 г/л; референс 2,0–3,6; запись лаборатории."
+        },
+        {
+          "name": "СРБ",
+          "resultRaw": "2,0",
+          "unit": "мг/л",
+          "referenceRaw": "<5",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "СРБ: 2,0 мг/л; референс <5; запись лаборатории."
+        },
+        {
+          "name": "Лейкоциты",
+          "resultRaw": "6,7",
+          "unit": "10^9/л",
+          "referenceRaw": "4–9",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "Лейкоциты: 6,7 10^9/л; референс 4–9; запись лаборатории."
+        },
+        {
+          "name": "Тромбоциты",
+          "resultRaw": "410",
+          "unit": "10^9/л",
+          "referenceRaw": "150–400",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "Тромбоциты: 410 10^9/л; референс 150–400; запись лаборатории."
+        },
+        {
+          "name": "Ретикулоциты",
+          "resultRaw": "1,2",
+          "unit": "%",
+          "referenceRaw": "0,5–2,0",
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "Ретикулоциты: 1,2 %; референс 0,5–2,0; запись лаборатории."
+        },
+        {
+          "name": "B12",
+          "resultRaw": "380",
+          "unit": "пг/мл",
+          "referenceRaw": null,
+          "resultDate": "2026-04-18",
+          "specimenDate": "2026-04-17",
+          "subject": "PATIENT",
+          "sourceText": "B12: 380 пг/мл; референс ; запись лаборатории."
+        }
+      ]
+    },
+    {
+      "id": "lab-05",
+      "split": "development",
+      "originalFile": "development/lab-05.txt",
+      "sha256": "0e2ec968d2cfe36429dd84e86443927e104c21f8bbee450d52bb5e0bcdec3d32",
+      "rows": [
+        {
+          "name": "ТТГ",
+          "resultRaw": "8.4",
+          "unit": "мМЕ/л",
+          "referenceRaw": "0.4–4.0",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| ТТГ | 8.4 | мМЕ/л | 0.4–4.0 |"
+        },
+        {
+          "name": "Свободный Т4",
+          "resultRaw": "9.2",
+          "unit": "пмоль/л",
+          "referenceRaw": "10–22",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| Свободный Т4 | 9.2 | пмоль/л | 10–22 |"
+        },
+        {
+          "name": "АТ-ТПО",
+          "resultRaw": ">600",
+          "unit": "МЕ/мл",
+          "referenceRaw": "<35",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| АТ-ТПО | >600 | МЕ/мл | <35 |"
+        },
+        {
+          "name": "Натрий",
+          "resultRaw": "139",
+          "unit": "ммоль/л",
+          "referenceRaw": "135–145",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| Натрий | 139 | ммоль/л | 135–145 |"
+        },
+        {
+          "name": "Калий",
+          "resultRaw": "4.2",
+          "unit": "ммоль/л",
+          "referenceRaw": "3.5–5.1",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| Калий | 4.2 | ммоль/л | 3.5–5.1 |"
+        },
+        {
+          "name": "Кальций",
+          "resultRaw": "2.25",
+          "unit": "ммоль/л",
+          "referenceRaw": "2.15–2.55",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| Кальций | 2.25 | ммоль/л | 2.15–2.55 |"
+        },
+        {
+          "name": "Альбумин",
+          "resultRaw": "42",
+          "unit": "г/л",
+          "referenceRaw": "35–50",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| Альбумин | 42 | г/л | 35–50 |"
+        },
+        {
+          "name": "АСТ",
+          "resultRaw": "23",
+          "unit": "Ед/л",
+          "referenceRaw": "<35",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| АСТ | 23 | Ед/л | <35 |"
+        },
+        {
+          "name": "Билирубин общий",
+          "resultRaw": "13",
+          "unit": "мкмоль/л",
+          "referenceRaw": "5–21",
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| Билирубин общий | 13 | мкмоль/л | 5–21 |"
+        },
+        {
+          "name": "Магний",
+          "resultRaw": "0.82",
+          "unit": "ммоль/л",
+          "referenceRaw": null,
+          "resultDate": "2026-05-18",
+          "specimenDate": "2026-05-17",
+          "subject": "PATIENT",
+          "sourceText": "| Магний | 0.82 | ммоль/л |  |"
+        }
+      ]
+    },
+    {
+      "id": "lab-06",
+      "split": "development",
+      "originalFile": "development/lab-06.txt",
+      "sha256": "d4d5eb4b779f8fc85e015e1a8e977c95beeae057e582839bcb52b3f45c1a7329",
+      "rows": [
+        {
+          "name": "HbA1c",
+          "resultRaw": "≥6,7",
+          "unit": "%",
+          "referenceRaw": "4,0–5,6",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "HbA1c: ≥6,7 %; референс 4,0–5,6; запись лаборатории."
+        },
+        {
+          "name": "Глюкоза плазмы",
+          "resultRaw": "7,3",
+          "unit": "ммоль/л",
+          "referenceRaw": "3,9–5,5",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "Глюкоза плазмы: 7,3 ммоль/л; референс 3,9–5,5; запись лаборатории."
+        },
+        {
+          "name": "Холестерин ЛПВП",
+          "resultRaw": "0,9",
+          "unit": "ммоль/л",
+          "referenceRaw": ">1,0",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "Холестерин ЛПВП: 0,9 ммоль/л; референс >1,0; запись лаборатории."
+        },
+        {
+          "name": "Холестерин ЛПНП",
+          "resultRaw": "3,9",
+          "unit": "ммоль/л",
+          "referenceRaw": "<3,0",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "Холестерин ЛПНП: 3,9 ммоль/л; референс <3,0; запись лаборатории."
+        },
+        {
+          "name": "Триглицериды",
+          "resultRaw": "2,4",
+          "unit": "ммоль/л",
+          "referenceRaw": "<1,7",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "Триглицериды: 2,4 ммоль/л; референс <1,7; запись лаборатории."
+        },
+        {
+          "name": "Креатинин",
+          "resultRaw": "104",
+          "unit": "мкмоль/л",
+          "referenceRaw": "62–106",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "Креатинин: 104 мкмоль/л; референс 62–106; запись лаборатории."
+        },
+        {
+          "name": "Мочевина",
+          "resultRaw": "7,1",
+          "unit": "ммоль/л",
+          "referenceRaw": "2,8–8,3",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "Мочевина: 7,1 ммоль/л; референс 2,8–8,3; запись лаборатории."
+        },
+        {
+          "name": "ГГТ",
+          "resultRaw": "61",
+          "unit": "Ед/л",
+          "referenceRaw": "<55",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "ГГТ: 61 Ед/л; референс <55; запись лаборатории."
+        },
+        {
+          "name": "АЛТ",
+          "resultRaw": "48",
+          "unit": "Ед/л",
+          "referenceRaw": "0–41",
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "АЛТ: 48 Ед/л; референс 0–41; запись лаборатории."
+        },
+        {
+          "name": "Липопротеин (а)",
+          "resultRaw": "≤30",
+          "unit": "мг/дл",
+          "referenceRaw": null,
+          "resultDate": "2026-06-18",
+          "specimenDate": "2026-06-17",
+          "subject": "PATIENT",
+          "sourceText": "Липопротеин (а): ≤30 мг/дл; референс ; запись лаборатории."
+        }
+      ]
+    },
+    {
+      "id": "lab-07",
+      "split": "development",
+      "originalFile": "development/lab-07.txt",
+      "sha256": "64d2e33f75e91e06c496eaabd6857cf9e4d9b519cc54f6f780b2f06cf06d8063",
+      "rows": [
+        {
+          "name": "Гемоглобин",
+          "resultRaw": "108",
+          "unit": "г/л",
+          "referenceRaw": "120–150",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| Гемоглобин | 108 | г/л | 120–150 |"
+        },
+        {
+          "name": "MCV",
+          "resultRaw": "74,2",
+          "unit": "фл",
+          "referenceRaw": "80–100",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| MCV | 74,2 | фл | 80–100 |"
+        },
+        {
+          "name": "Ферритин",
+          "resultRaw": "<5,0",
+          "unit": "мкг/л",
+          "referenceRaw": "15–150",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| Ферритин | <5,0 | мкг/л | 15–150 |"
+        },
+        {
+          "name": "Железо",
+          "resultRaw": "6,1",
+          "unit": "мкмоль/л",
+          "referenceRaw": "9–30",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| Железо | 6,1 | мкмоль/л | 9–30 |"
+        },
+        {
+          "name": "Трансферрин",
+          "resultRaw": "3,8",
+          "unit": "г/л",
+          "referenceRaw": "2,0–3,6",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| Трансферрин | 3,8 | г/л | 2,0–3,6 |"
+        },
+        {
+          "name": "СРБ",
+          "resultRaw": "2,0",
+          "unit": "мг/л",
+          "referenceRaw": "<5",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| СРБ | 2,0 | мг/л | <5 |"
+        },
+        {
+          "name": "Лейкоциты",
+          "resultRaw": "6,7",
+          "unit": "10^9/л",
+          "referenceRaw": "4–9",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| Лейкоциты | 6,7 | 10^9/л | 4–9 |"
+        },
+        {
+          "name": "Тромбоциты",
+          "resultRaw": "410",
+          "unit": "10^9/л",
+          "referenceRaw": "150–400",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| Тромбоциты | 410 | 10^9/л | 150–400 |"
+        },
+        {
+          "name": "Ретикулоциты",
+          "resultRaw": "1,2",
+          "unit": "%",
+          "referenceRaw": "0,5–2,0",
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| Ретикулоциты | 1,2 | % | 0,5–2,0 |"
+        },
+        {
+          "name": "B12",
+          "resultRaw": "380",
+          "unit": "пг/мл",
+          "referenceRaw": null,
+          "resultDate": "2026-07-18",
+          "specimenDate": "2026-07-17",
+          "subject": "PATIENT",
+          "sourceText": "| B12 | 380 | пг/мл |  |"
+        }
+      ]
+    },
+    {
+      "id": "lab-08",
+      "split": "development",
+      "originalFile": "development/lab-08.txt",
+      "sha256": "818c10b0a42b07da3ae2992360d79d716df426f329de2c01dff8864b2706f141",
+      "rows": [
+        {
+          "name": "ТТГ",
+          "resultRaw": "8.4",
+          "unit": "мМЕ/л",
+          "referenceRaw": "0.4–4.0",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "ТТГ: 8.4 мМЕ/л; референс 0.4–4.0; запись лаборатории."
+        },
+        {
+          "name": "Свободный Т4",
+          "resultRaw": "9.2",
+          "unit": "пмоль/л",
+          "referenceRaw": "10–22",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "Свободный Т4: 9.2 пмоль/л; референс 10–22; запись лаборатории."
+        },
+        {
+          "name": "АТ-ТПО",
+          "resultRaw": ">600",
+          "unit": "МЕ/мл",
+          "referenceRaw": "<35",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "АТ-ТПО: >600 МЕ/мл; референс <35; запись лаборатории."
+        },
+        {
+          "name": "Натрий",
+          "resultRaw": "139",
+          "unit": "ммоль/л",
+          "referenceRaw": "135–145",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "Натрий: 139 ммоль/л; референс 135–145; запись лаборатории."
+        },
+        {
+          "name": "Калий",
+          "resultRaw": "4.2",
+          "unit": "ммоль/л",
+          "referenceRaw": "3.5–5.1",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "Калий: 4.2 ммоль/л; референс 3.5–5.1; запись лаборатории."
+        },
+        {
+          "name": "Кальций",
+          "resultRaw": "2.25",
+          "unit": "ммоль/л",
+          "referenceRaw": "2.15–2.55",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "Кальций: 2.25 ммоль/л; референс 2.15–2.55; запись лаборатории."
+        },
+        {
+          "name": "Альбумин",
+          "resultRaw": "42",
+          "unit": "г/л",
+          "referenceRaw": "35–50",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "Альбумин: 42 г/л; референс 35–50; запись лаборатории."
+        },
+        {
+          "name": "АСТ",
+          "resultRaw": "23",
+          "unit": "Ед/л",
+          "referenceRaw": "<35",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "АСТ: 23 Ед/л; референс <35; запись лаборатории."
+        },
+        {
+          "name": "Билирубин общий",
+          "resultRaw": "13",
+          "unit": "мкмоль/л",
+          "referenceRaw": "5–21",
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "Билирубин общий: 13 мкмоль/л; референс 5–21; запись лаборатории."
+        },
+        {
+          "name": "Магний",
+          "resultRaw": "0.82",
+          "unit": "ммоль/л",
+          "referenceRaw": null,
+          "resultDate": "2026-08-18",
+          "specimenDate": "2026-08-17",
+          "subject": "PATIENT",
+          "sourceText": "Магний: 0.82 ммоль/л; референс ; запись лаборатории."
+        }
+      ]
+    },
+    {
+      "id": "lab-09",
+      "split": "held-out",
+      "originalFile": "held-out/lab-09.txt",
+      "sha256": "4743d8168edbe84c25d16b02d63eb6c3aebf906604d63ef85e737cae6df19fda",
+      "rows": [
+        {
+          "name": "D-димер",
+          "resultRaw": "0.62",
+          "unit": "мг/л FEU",
+          "referenceRaw": "<0.50",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "D-димер\t0.62\tмг/л FEU\t<0.50"
+        },
+        {
+          "name": "Фибриноген",
+          "resultRaw": "4.8",
+          "unit": "г/л",
+          "referenceRaw": "2–4",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "Фибриноген\t4.8\tг/л\t2–4"
+        },
+        {
+          "name": "МНО",
+          "resultRaw": "1.04",
+          "unit": null,
+          "referenceRaw": "0.8–1.2",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "МНО\t1.04\t\t0.8–1.2"
+        },
+        {
+          "name": "АЧТВ",
+          "resultRaw": "31",
+          "unit": "с",
+          "referenceRaw": "25–35",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "АЧТВ\t31\tс\t25–35"
+        },
+        {
+          "name": "Протромбиновое время",
+          "resultRaw": "12.8",
+          "unit": "с",
+          "referenceRaw": "10–14",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "Протромбиновое время\t12.8\tс\t10–14"
+        },
+        {
+          "name": "Антитромбин III",
+          "resultRaw": "96",
+          "unit": "%",
+          "referenceRaw": "80–120",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "Антитромбин III\t96\t%\t80–120"
+        },
+        {
+          "name": "Тромбиновое время",
+          "resultRaw": "17",
+          "unit": "с",
+          "referenceRaw": "14–21",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "Тромбиновое время\t17\tс\t14–21"
+        },
+        {
+          "name": "Протеин C",
+          "resultRaw": "82",
+          "unit": "%",
+          "referenceRaw": null,
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "Протеин C\t82\t%\t"
+        },
+        {
+          "name": "Волчаночный антикоагулянт",
+          "resultRaw": "отрицательно",
+          "unit": null,
+          "referenceRaw": null,
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "Волчаночный антикоагулянт\tотрицательно\t\t"
+        },
+        {
+          "name": "Тропонин I",
+          "resultRaw": "<0.01",
+          "unit": "нг/мл",
+          "referenceRaw": "<0.04",
+          "resultDate": "2026-09-18",
+          "specimenDate": "2026-09-17",
+          "subject": "PATIENT",
+          "sourceText": "Тропонин I\t<0.01\tнг/мл\t<0.04"
+        }
+      ]
+    },
+    {
+      "id": "lab-10",
+      "split": "held-out",
+      "originalFile": "held-out/lab-10.txt",
+      "sha256": "e6f637c76db13d46047d712295a97f49276f7930331f90e9eca90088ed58d8cd",
+      "rows": [
+        {
+          "name": "D-димер",
+          "resultRaw": "0.62",
+          "unit": "мг/л FEU",
+          "referenceRaw": "<0.50",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| D-димер | 0.62 | мг/л FEU | <0.50 |"
+        },
+        {
+          "name": "Фибриноген",
+          "resultRaw": "4.8",
+          "unit": "г/л",
+          "referenceRaw": "2–4",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| Фибриноген | 4.8 | г/л | 2–4 |"
+        },
+        {
+          "name": "МНО",
+          "resultRaw": "1.04",
+          "unit": null,
+          "referenceRaw": "0.8–1.2",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| МНО | 1.04 |  | 0.8–1.2 |"
+        },
+        {
+          "name": "АЧТВ",
+          "resultRaw": "31",
+          "unit": "с",
+          "referenceRaw": "25–35",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| АЧТВ | 31 | с | 25–35 |"
+        },
+        {
+          "name": "Протромбиновое время",
+          "resultRaw": "12.8",
+          "unit": "с",
+          "referenceRaw": "10–14",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| Протромбиновое время | 12.8 | с | 10–14 |"
+        },
+        {
+          "name": "Антитромбин III",
+          "resultRaw": "96",
+          "unit": "%",
+          "referenceRaw": "80–120",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| Антитромбин III | 96 | % | 80–120 |"
+        },
+        {
+          "name": "Тромбиновое время",
+          "resultRaw": "17",
+          "unit": "с",
+          "referenceRaw": "14–21",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| Тромбиновое время | 17 | с | 14–21 |"
+        },
+        {
+          "name": "Протеин C",
+          "resultRaw": "82",
+          "unit": "%",
+          "referenceRaw": null,
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| Протеин C | 82 | % |  |"
+        },
+        {
+          "name": "Волчаночный антикоагулянт",
+          "resultRaw": "отрицательно",
+          "unit": null,
+          "referenceRaw": null,
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| Волчаночный антикоагулянт | отрицательно |  |  |"
+        },
+        {
+          "name": "Тропонин I",
+          "resultRaw": "<0.01",
+          "unit": "нг/мл",
+          "referenceRaw": "<0.04",
+          "resultDate": "2026-10-18",
+          "specimenDate": "2026-10-17",
+          "subject": "PATIENT",
+          "sourceText": "| Тропонин I | <0.01 | нг/мл | <0.04 |"
+        }
+      ]
+    },
+    {
+      "id": "lab-11",
+      "split": "held-out",
+      "originalFile": "held-out/lab-11.txt",
+      "sha256": "9ba52b0faebdeeffe8ec72608408c11eed0ee28b6f73d7b2335f7b4df5162b1b",
+      "rows": [
+        {
+          "name": "D-димер",
+          "resultRaw": "0.62",
+          "unit": "мг/л FEU",
+          "referenceRaw": "<0.50",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "D-димер\t0.62\tмг/л FEU\t<0.50"
+        },
+        {
+          "name": "Фибриноген",
+          "resultRaw": "4.8",
+          "unit": "г/л",
+          "referenceRaw": "2–4",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "Фибриноген\t4.8\tг/л\t2–4"
+        },
+        {
+          "name": "МНО",
+          "resultRaw": "1.04",
+          "unit": null,
+          "referenceRaw": "0.8–1.2",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "МНО\t1.04\t\t0.8–1.2"
+        },
+        {
+          "name": "АЧТВ",
+          "resultRaw": "31",
+          "unit": "с",
+          "referenceRaw": "25–35",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "АЧТВ\t31\tс\t25–35"
+        },
+        {
+          "name": "Протромбиновое время",
+          "resultRaw": "12.8",
+          "unit": "с",
+          "referenceRaw": "10–14",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "Протромбиновое время\t12.8\tс\t10–14"
+        },
+        {
+          "name": "Антитромбин III",
+          "resultRaw": "96",
+          "unit": "%",
+          "referenceRaw": "80–120",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "Антитромбин III\t96\t%\t80–120"
+        },
+        {
+          "name": "Тромбиновое время",
+          "resultRaw": "17",
+          "unit": "с",
+          "referenceRaw": "14–21",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "Тромбиновое время\t17\tс\t14–21"
+        },
+        {
+          "name": "Протеин C",
+          "resultRaw": "82",
+          "unit": "%",
+          "referenceRaw": null,
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "Протеин C\t82\t%\t"
+        },
+        {
+          "name": "Волчаночный антикоагулянт",
+          "resultRaw": "отрицательно",
+          "unit": null,
+          "referenceRaw": null,
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "Волчаночный антикоагулянт\tотрицательно\t\t"
+        },
+        {
+          "name": "Тропонин I",
+          "resultRaw": "<0.01",
+          "unit": "нг/мл",
+          "referenceRaw": "<0.04",
+          "resultDate": "2026-11-18",
+          "specimenDate": "2026-11-17",
+          "subject": "PATIENT",
+          "sourceText": "Тропонин I\t<0.01\tнг/мл\t<0.04"
+        }
+      ]
+    },
+    {
+      "id": "lab-12",
+      "split": "held-out",
+      "originalFile": "held-out/lab-12.txt",
+      "sha256": "4a1c2425f1f0c2764515457e25f2db84156955f7554d7de96899faa2d02c2ae0",
+      "rows": [
+        {
+          "name": "D-димер",
+          "resultRaw": "0.62",
+          "unit": "мг/л FEU",
+          "referenceRaw": "<0.50",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| D-димер | 0.62 | мг/л FEU | <0.50 |"
+        },
+        {
+          "name": "Фибриноген",
+          "resultRaw": "4.8",
+          "unit": "г/л",
+          "referenceRaw": "2–4",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| Фибриноген | 4.8 | г/л | 2–4 |"
+        },
+        {
+          "name": "МНО",
+          "resultRaw": "1.04",
+          "unit": null,
+          "referenceRaw": "0.8–1.2",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| МНО | 1.04 |  | 0.8–1.2 |"
+        },
+        {
+          "name": "АЧТВ",
+          "resultRaw": "31",
+          "unit": "с",
+          "referenceRaw": "25–35",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| АЧТВ | 31 | с | 25–35 |"
+        },
+        {
+          "name": "Протромбиновое время",
+          "resultRaw": "12.8",
+          "unit": "с",
+          "referenceRaw": "10–14",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| Протромбиновое время | 12.8 | с | 10–14 |"
+        },
+        {
+          "name": "Антитромбин III",
+          "resultRaw": "96",
+          "unit": "%",
+          "referenceRaw": "80–120",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| Антитромбин III | 96 | % | 80–120 |"
+        },
+        {
+          "name": "Тромбиновое время",
+          "resultRaw": "17",
+          "unit": "с",
+          "referenceRaw": "14–21",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| Тромбиновое время | 17 | с | 14–21 |"
+        },
+        {
+          "name": "Протеин C",
+          "resultRaw": "82",
+          "unit": "%",
+          "referenceRaw": null,
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| Протеин C | 82 | % |  |"
+        },
+        {
+          "name": "Волчаночный антикоагулянт",
+          "resultRaw": "отрицательно",
+          "unit": null,
+          "referenceRaw": null,
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| Волчаночный антикоагулянт | отрицательно |  |  |"
+        },
+        {
+          "name": "Тропонин I",
+          "resultRaw": "<0.01",
+          "unit": "нг/мл",
+          "referenceRaw": "<0.04",
+          "resultDate": "2026-12-18",
+          "specimenDate": "2026-12-17",
+          "subject": "PATIENT",
+          "sourceText": "| Тропонин I | <0.01 | нг/мл | <0.04 |"
+        }
+      ]
+    }
+  ]
+}
