@@ -1,0 +1,697 @@
+{
+  "schemaVersion": "visit-gold-v2",
+  "goldReview": "AI-authored; independent human review pending, worksheet GOLD_REVIEW.md.",
+  "scope": "10 new fictional documents / 60 assertions: 6 development, 4 held-out. Paired prose, bullets, repeated names with distinct subjects/times, bilingual material. Small correlated synthetic set.",
+  "cases": [
+    {
+      "id": "d01",
+      "split": "development",
+      "layout": "paired",
+      "originalFile": "d01.txt",
+      "sha256": "75bf80c4ff8273158e6d309aa57f7fcb51f0a6deaa8b01e31d7dc0fff90974f8",
+      "statements": [
+        {
+          "name": "двоение",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Пациент уточняет: двоение отсутствует даже при чтении.",
+          "contextText": "Пациент уточняет: двоение отсутствует даже при чтении. При этом головокружение у пациента сохраняется."
+        },
+        {
+          "name": "головокружение",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "При этом головокружение у пациента сохраняется.",
+          "contextText": "Пациент уточняет: двоение отсутствует даже при чтении. При этом головокружение у пациента сохраняется."
+        },
+        {
+          "name": "диабет",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У отца пациента диабет подтверждён и остаётся актуальным диагнозом.",
+          "contextText": "У отца пациента диабет подтверждён и остаётся актуальным диагнозом. У самого пациента диабет пока не подтверждён; обследование не закончено."
+        },
+        {
+          "name": "диабет",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У самого пациента диабет пока не подтверждён; обследование не закончено.",
+          "contextText": "У отца пациента диабет подтверждён и остаётся актуальным диагнозом. У самого пациента диабет пока не подтверждён; обследование не закончено."
+        },
+        {
+          "name": "Амлодипин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "FUTURE",
+          "sourceText": "План: Амлодипин назначен пациенту со следующего вторника, сведений о фактическом старте нет.",
+          "contextText": "План: Амлодипин назначен пациенту со следующего вторника, сведений о фактическом старте нет. Метформин пациенту выписали месяц назад, но он так и не принял ни одной таблетки."
+        },
+        {
+          "name": "Метформин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Метформин пациенту выписали месяц назад, но он так и не принял ни одной таблетки.",
+          "contextText": "План: Амлодипин назначен пациенту со следующего вторника, сведений о фактическом старте нет. Метформин пациенту выписали месяц назад, но он так и не принял ни одной таблетки."
+        }
+      ]
+    },
+    {
+      "id": "d02",
+      "split": "development",
+      "layout": "lines",
+      "originalFile": "d02.txt",
+      "sha256": "0068bf42c783fbb331245244e92dd06802fba42a5ec0d4321dfa4e7fba4d0cdf",
+      "statements": [
+        {
+          "name": "Варфарин",
+          "kind": "MEDICATION",
+          "subject": "OTHER",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Варфарин принимает супруга; пациент рассказывает о её текущем лечении.",
+          "contextText": "- Варфарин принимает супруга; пациент рассказывает о её текущем лечении.\n- Бисопролол пациент сейчас не принимает; принимал ли когда-либо, установить не удалось.\n- После обследования аритмия у пациента исключена."
+        },
+        {
+          "name": "Бисопролол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Бисопролол пациент сейчас не принимает; принимал ли когда-либо, установить не удалось.",
+          "contextText": "- Варфарин принимает супруга; пациент рассказывает о её текущем лечении.\n- Бисопролол пациент сейчас не принимает; принимал ли когда-либо, установить не удалось.\n- После обследования аритмия у пациента исключена."
+        },
+        {
+          "name": "аритмия",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "После обследования аритмия у пациента исключена.",
+          "contextText": "- Варфарин принимает супруга; пациент рассказывает о её текущем лечении.\n- Бисопролол пациент сейчас не принимает; принимал ли когда-либо, установить не удалось.\n- После обследования аритмия у пациента исключена."
+        },
+        {
+          "name": "астма",
+          "kind": "CONDITION",
+          "subject": "UNKNOWN",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "UNKNOWN",
+          "sourceText": "На листке написано только «астма»; принадлежность листка и статус диагноза неизвестны.",
+          "contextText": "- На листке написано только «астма»; принадлежность листка и статус диагноза неизвестны.\n- Кашель? Ответ пациента на приёме: нет, кашель не беспокоит.\n- У родной сестры пациента подтверждена гипертония, она продолжает наблюдаться."
+        },
+        {
+          "name": "Кашель",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Кашель? Ответ пациента на приёме: нет, кашель не беспокоит.",
+          "contextText": "- На листке написано только «астма»; принадлежность листка и статус диагноза неизвестны.\n- Кашель? Ответ пациента на приёме: нет, кашель не беспокоит.\n- У родной сестры пациента подтверждена гипертония, она продолжает наблюдаться."
+        },
+        {
+          "name": "гипертония",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У родной сестры пациента подтверждена гипертония, она продолжает наблюдаться.",
+          "contextText": "- На листке написано только «астма»; принадлежность листка и статус диагноза неизвестны.\n- Кашель? Ответ пациента на приёме: нет, кашель не беспокоит.\n- У родной сестры пациента подтверждена гипертония, она продолжает наблюдаться."
+        }
+      ]
+    },
+    {
+      "id": "d03",
+      "split": "development",
+      "layout": "paragraphs",
+      "originalFile": "d03.txt",
+      "sha256": "0051ee4ca8c731c46b0383c44110912f2917ec45ce7cc75649bdb14f41b5149e",
+      "statements": [
+        {
+          "name": "Ибупрофен",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Первый курс: Ибупрофен пациент завершил в феврале 2025 года.",
+          "contextText": "Первый курс: Ибупрофен пациент завершил в феврале 2025 года."
+        },
+        {
+          "name": "Ибупрофен",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Новый курс: Ибупрофен пациент фактически принимает сейчас по согласованной схеме.",
+          "contextText": "Новый курс: Ибупрофен пациент фактически принимает сейчас по согласованной схеме."
+        },
+        {
+          "name": "перелом",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "В 2019 году у пациента был подтверждён перелом лучевой кости.",
+          "contextText": "В 2019 году у пациента был подтверждён перелом лучевой кости."
+        },
+        {
+          "name": "артрит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Текущее предположение врача для пациента — артрит, диагноз ещё проверяется.",
+          "contextText": "Текущее предположение врача для пациента — артрит, диагноз ещё проверяется."
+        },
+        {
+          "name": "отёк",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Сегодня при осмотре пациента сохраняется отёк кисти.",
+          "contextText": "Сегодня при осмотре пациента сохраняется отёк кисти."
+        },
+        {
+          "name": "подагра",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Подозревавшаяся у пациента подагра не подтверждена, исключить её пока тоже нельзя.",
+          "contextText": "Подозревавшаяся у пациента подагра не подтверждена, исключить её пока тоже нельзя."
+        }
+      ]
+    },
+    {
+      "id": "d04",
+      "split": "development",
+      "layout": "paired",
+      "originalFile": "d04.txt",
+      "sha256": "335c2454768f8c834c9cbea4c9117411e4ef052b0fa2e3c5c881c67cf7ca3b38",
+      "statements": [
+        {
+          "name": "тошнота",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Врач: беспокоит ли тошнота сейчас? Пациент: нет, тошнота отсутствует.",
+          "contextText": "Врач: беспокоит ли тошнота сейчас? Пациент: нет, тошнота отсутствует. Врач: а головная боль? Пациент: да, сейчас есть головная боль."
+        },
+        {
+          "name": "головная боль",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Врач: а головная боль? Пациент: да, сейчас есть головная боль.",
+          "contextText": "Врач: беспокоит ли тошнота сейчас? Пациент: нет, тошнота отсутствует. Врач: а головная боль? Пациент: да, сейчас есть головная боль."
+        },
+        {
+          "name": "инсульт",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "Мать пациента перенесла подтверждённый инсульт в 2017 году.",
+          "contextText": "Мать пациента перенесла подтверждённый инсульт в 2017 году. У пациента острый инсульт по результатам обследования исключён."
+        },
+        {
+          "name": "инсульт",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У пациента острый инсульт по результатам обследования исключён.",
+          "contextText": "Мать пациента перенесла подтверждённый инсульт в 2017 году. У пациента острый инсульт по результатам обследования исключён."
+        },
+        {
+          "name": "Напроксен",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "UNKNOWN",
+          "temporality": "UNKNOWN",
+          "sourceText": "Напроксен указан в карточке пациента без сведений о назначении, приёме или отмене.",
+          "contextText": "Напроксен указан в карточке пациента без сведений о назначении, приёме или отмене. Врач назначил пациенту Парацетамол на завтра; факт приёма не установлен."
+        },
+        {
+          "name": "Парацетамол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "FUTURE",
+          "sourceText": "Врач назначил пациенту Парацетамол на завтра; факт приёма не установлен.",
+          "contextText": "Напроксен указан в карточке пациента без сведений о назначении, приёме или отмене. Врач назначил пациенту Парацетамол на завтра; факт приёма не установлен."
+        }
+      ]
+    },
+    {
+      "id": "d05",
+      "split": "development",
+      "layout": "lines",
+      "originalFile": "d05.txt",
+      "sha256": "39bfd2ffaea9111d11a6d4e24b2ec9b407746d1fe6637a1fb67e255815f549e0",
+      "statements": [
+        {
+          "name": "Омепразол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Омепразол: пациент подтвердил, что принимает его ежедневно в настоящее время.",
+          "contextText": "- Омепразол: пациент подтвердил, что принимает его ежедневно в настоящее время.\n- Фамотидин: рецепт был выдан, но пациент сообщает, что лечение им вообще не начинал.\n- Панкреатит в прошлом пациент отрицает."
+        },
+        {
+          "name": "Фамотидин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Фамотидин: рецепт был выдан, но пациент сообщает, что лечение им вообще не начинал.",
+          "contextText": "- Омепразол: пациент подтвердил, что принимает его ежедневно в настоящее время.\n- Фамотидин: рецепт был выдан, но пациент сообщает, что лечение им вообще не начинал.\n- Панкреатит в прошлом пациент отрицает."
+        },
+        {
+          "name": "Панкреатит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "Панкреатит в прошлом пациент отрицает.",
+          "contextText": "- Омепразол: пациент подтвердил, что принимает его ежедневно в настоящее время.\n- Фамотидин: рецепт был выдан, но пациент сообщает, что лечение им вообще не начинал.\n- Панкреатит в прошлом пациент отрицает."
+        },
+        {
+          "name": "язва",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Предположение для пациента на текущем приёме: язва; подтверждающих результатов пока нет.",
+          "contextText": "- Предположение для пациента на текущем приёме: язва; подтверждающих результатов пока нет.\n- У соседа пациента имеется подтверждённый цирроз; это сведения исключительно о соседе.\n- По словам пациента, рвота отсутствует."
+        },
+        {
+          "name": "цирроз",
+          "kind": "CONDITION",
+          "subject": "OTHER",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У соседа пациента имеется подтверждённый цирроз; это сведения исключительно о соседе.",
+          "contextText": "- Предположение для пациента на текущем приёме: язва; подтверждающих результатов пока нет.\n- У соседа пациента имеется подтверждённый цирроз; это сведения исключительно о соседе.\n- По словам пациента, рвота отсутствует."
+        },
+        {
+          "name": "рвота",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "По словам пациента, рвота отсутствует.",
+          "contextText": "- Предположение для пациента на текущем приёме: язва; подтверждающих результатов пока нет.\n- У соседа пациента имеется подтверждённый цирроз; это сведения исключительно о соседе.\n- По словам пациента, рвота отсутствует."
+        }
+      ]
+    },
+    {
+      "id": "d06",
+      "split": "development",
+      "layout": "paragraphs",
+      "originalFile": "d06.txt",
+      "sha256": "f331c3b95e7280e910d27907c92be4918778aa93042a3aa4c2a3e7f099452c62",
+      "statements": [
+        {
+          "name": "бронхит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Подтверждённый текущий диагноз пациента: бронхит.",
+          "contextText": "Подтверждённый текущий диагноз пациента: бронхит."
+        },
+        {
+          "name": "пневмония",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У пациента пневмония не подтверждена, но обследование ещё продолжается.",
+          "contextText": "У пациента пневмония не подтверждена, но обследование ещё продолжается."
+        },
+        {
+          "name": "туберкулёз",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У пациента туберкулёз окончательно исключён врачом.",
+          "contextText": "У пациента туберкулёз окончательно исключён врачом."
+        },
+        {
+          "name": "Преднизолон",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Преднизолон пациенту отменили пять дней назад, он прекратил курс.",
+          "contextText": "Преднизолон пациенту отменили пять дней назад, он прекратил курс."
+        },
+        {
+          "name": "Сальбутамол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "UNKNOWN",
+          "temporality": "UNKNOWN",
+          "sourceText": "Сальбутамол упомянут в списке пациента; установить, назначен ли он и используется ли, не удалось.",
+          "contextText": "Сальбутамол упомянут в списке пациента; установить, назначен ли он и используется ли, не удалось."
+        },
+        {
+          "name": "одышку",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "На сегодняшнем приёме пациент жалуется на одышку при обычной ходьбе.",
+          "contextText": "На сегодняшнем приёме пациент жалуется на одышку при обычной ходьбе."
+        }
+      ]
+    },
+    {
+      "id": "h01",
+      "split": "held-out",
+      "layout": "paired",
+      "originalFile": "h01.txt",
+      "sha256": "7c6ce0708169d5a7e635e7615da0cd7ef69e51774c62b04ea853c3a786528fcb",
+      "statements": [
+        {
+          "name": "светобоязнь",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Со слов пациента на сегодняшний день светобоязнь полностью отсутствует.",
+          "contextText": "Со слов пациента на сегодняшний день светобоязнь полностью отсутствует. В отличие от этого, слезотечение пациента сегодня беспокоит."
+        },
+        {
+          "name": "слезотечение",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "В отличие от этого, слезотечение пациента сегодня беспокоит.",
+          "contextText": "Со слов пациента на сегодняшний день светобоязнь полностью отсутствует. В отличие от этого, слезотечение пациента сегодня беспокоит."
+        },
+        {
+          "name": "увеит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Рабочую версию «увеит» у пациента подтвердить пока не удалось; вопрос остаётся открытым.",
+          "contextText": "Рабочую версию «увеит» у пациента подтвердить пока не удалось; вопрос остаётся открытым. Сейчас катаракта установлена у бабушки пациента, о ней и идёт речь в семейном анамнезе."
+        },
+        {
+          "name": "катаракта",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Сейчас катаракта установлена у бабушки пациента, о ней и идёт речь в семейном анамнезе.",
+          "contextText": "Рабочую версию «увеит» у пациента подтвердить пока не удалось; вопрос остаётся открытым. Сейчас катаракта установлена у бабушки пациента, о ней и идёт речь в семейном анамнезе."
+        },
+        {
+          "name": "Тимолол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Пациенту выписали Тимолол, однако флакон ещё не открывался: ни одного применения не было.",
+          "contextText": "Пациенту выписали Тимолол, однако флакон ещё не открывался: ни одного применения не было. Следующее назначение пациенту: Латанопрост с первого числа следующего месяца; сведения о начале отсутствуют."
+        },
+        {
+          "name": "Латанопрост",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "FUTURE",
+          "sourceText": "Следующее назначение пациенту: Латанопрост с первого числа следующего месяца; сведения о начале отсутствуют.",
+          "contextText": "Пациенту выписали Тимолол, однако флакон ещё не открывался: ни одного применения не было. Следующее назначение пациенту: Латанопрост с первого числа следующего месяца; сведения о начале отсутствуют."
+        }
+      ]
+    },
+    {
+      "id": "h02",
+      "split": "held-out",
+      "layout": "lines",
+      "originalFile": "h02.txt",
+      "sha256": "1ff3cf1ffc27417be6478db46fee124a47ed8bd52f1a72307a850ca6c43e4172",
+      "statements": [
+        {
+          "name": "вывих",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "Достоверно перенесённое пациентом событие в 2020 году — вывих плечевого сустава.",
+          "contextText": "- Достоверно перенесённое пациентом событие в 2020 году — вывих плечевого сустава.\n- Сейчас пациент говорит, что онемение не ощущает.\n- На момент сегодняшнего осмотра врач допускает у пациента тендинит как возможный диагноз."
+        },
+        {
+          "name": "онемение",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Сейчас пациент говорит, что онемение не ощущает.",
+          "contextText": "- Достоверно перенесённое пациентом событие в 2020 году — вывих плечевого сустава.\n- Сейчас пациент говорит, что онемение не ощущает.\n- На момент сегодняшнего осмотра врач допускает у пациента тендинит как возможный диагноз."
+        },
+        {
+          "name": "тендинит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "На момент сегодняшнего осмотра врач допускает у пациента тендинит как возможный диагноз.",
+          "contextText": "- Достоверно перенесённое пациентом событие в 2020 году — вывих плечевого сустава.\n- Сейчас пациент говорит, что онемение не ощущает.\n- На момент сегодняшнего осмотра врач допускает у пациента тендинит как возможный диагноз."
+        },
+        {
+          "name": "Мелоксикам",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Мелоксикам: пациент завершил приём позавчера, курс закончился.",
+          "contextText": "- Мелоксикам: пациент завершил приём позавчера, курс закончился.\n- Мелоксикам продолжает ежедневно пить супруг пациента; это описание лечения супруга.\n- В приложенном листе встречается слово «сколиоз», но чей это лист и утверждается ли диагноз, выяснить нельзя."
+        },
+        {
+          "name": "Мелоксикам",
+          "kind": "MEDICATION",
+          "subject": "OTHER",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Мелоксикам продолжает ежедневно пить супруг пациента; это описание лечения супруга.",
+          "contextText": "- Мелоксикам: пациент завершил приём позавчера, курс закончился.\n- Мелоксикам продолжает ежедневно пить супруг пациента; это описание лечения супруга.\n- В приложенном листе встречается слово «сколиоз», но чей это лист и утверждается ли диагноз, выяснить нельзя."
+        },
+        {
+          "name": "сколиоз",
+          "kind": "CONDITION",
+          "subject": "UNKNOWN",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "UNKNOWN",
+          "sourceText": "В приложенном листе встречается слово «сколиоз», но чей это лист и утверждается ли диагноз, выяснить нельзя.",
+          "contextText": "- Мелоксикам: пациент завершил приём позавчера, курс закончился.\n- Мелоксикам продолжает ежедневно пить супруг пациента; это описание лечения супруга.\n- В приложенном листе встречается слово «сколиоз», но чей это лист и утверждается ли диагноз, выяснить нельзя."
+        }
+      ]
+    },
+    {
+      "id": "h03",
+      "split": "held-out",
+      "layout": "paragraphs",
+      "originalFile": "h03.txt",
+      "sha256": "72917250899f9ee50e7097a1f78e6ca81198fdddf53667a9c6c1e399597eba7c",
+      "statements": [
+        {
+          "name": "wheezing",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "The patient reports that wheezing is absent today.",
+          "contextText": "The patient reports that wheezing is absent today."
+        },
+        {
+          "name": "eczema",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "The patient’s father has a confirmed current diagnosis of eczema.",
+          "contextText": "The patient’s father has a confirmed current diagnosis of eczema."
+        },
+        {
+          "name": "pneumonia",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "The clinician has ruled out pneumonia in the patient at this visit.",
+          "contextText": "The clinician has ruled out pneumonia in the patient at this visit."
+        },
+        {
+          "name": "Cetirizine",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Cetirizine was prescribed for the patient, but the patient has never taken a single dose.",
+          "contextText": "Cetirizine was prescribed for the patient, but the patient has never taken a single dose."
+        },
+        {
+          "name": "Loratadine",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "The patient is currently taking Loratadine every morning.",
+          "contextText": "The patient is currently taking Loratadine every morning."
+        },
+        {
+          "name": "urticaria",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "The patient’s possible urticaria has not been confirmed; further assessment is pending and it has not been ruled out.",
+          "contextText": "The patient’s possible urticaria has not been confirmed; further assessment is pending and it has not been ruled out."
+        }
+      ]
+    },
+    {
+      "id": "h04",
+      "split": "held-out",
+      "layout": "paired",
+      "originalFile": "h04.txt",
+      "sha256": "fe776015981c53b5b83edf25f7dc60b5f1c6a2cbcae324e8dc330d0e07efd7d8",
+      "statements": [
+        {
+          "name": "тиреоидит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "В отношении пациента тиреоидит сейчас рассматривается врачом лишь как предположение.",
+          "contextText": "В отношении пациента тиреоидит сейчас рассматривается врачом лишь как предположение. После завершения обследования анемия у пациента отвергнута, диагноз исключён."
+        },
+        {
+          "name": "анемия",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "После завершения обследования анемия у пациента отвергнута, диагноз исключён.",
+          "contextText": "В отношении пациента тиреоидит сейчас рассматривается врачом лишь как предположение. После завершения обследования анемия у пациента отвергнута, диагноз исключён."
+        },
+        {
+          "name": "утомляемость",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Повод обращения пациента сегодня — выраженная утомляемость.",
+          "contextText": "Повод обращения пациента сегодня — выраженная утомляемость. На старой карточке пациента значится Левотироксин; сведений о его назначении и фактическом использовании нет."
+        },
+        {
+          "name": "Левотироксин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "UNKNOWN",
+          "temporality": "UNKNOWN",
+          "sourceText": "На старой карточке пациента значится Левотироксин; сведений о его назначении и фактическом использовании нет.",
+          "contextText": "Повод обращения пациента сегодня — выраженная утомляемость. На старой карточке пациента значится Левотироксин; сведений о его назначении и фактическом использовании нет."
+        },
+        {
+          "name": "Фолиевая кислота",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Фолиевая кислота сейчас пациентом не принимается; был ли приём раньше, неизвестно.",
+          "contextText": "Фолиевая кислота сейчас пациентом не принимается; был ли приём раньше, неизвестно. Супруга пациента наблюдается с установленным диагнозом остеопороз, актуальным для неё сейчас."
+        },
+        {
+          "name": "остеопороз",
+          "kind": "CONDITION",
+          "subject": "OTHER",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Супруга пациента наблюдается с установленным диагнозом остеопороз, актуальным для неё сейчас.",
+          "contextText": "Фолиевая кислота сейчас пациентом не принимается; был ли приём раньше, неизвестно. Супруга пациента наблюдается с установленным диагнозом остеопороз, актуальным для неё сейчас."
+        }
+      ]
+    }
+  ]
+}

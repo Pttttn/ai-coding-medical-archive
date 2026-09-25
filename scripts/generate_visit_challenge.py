@@ -369,7 +369,7 @@ CASES = [
                 "Сальбутамол упомянут в списке пациента; установить, назначен ли он и используется ли, не удалось.",
             ),
             (
-                "одышка",
+                "одышку",
                 "SYMPTOM",
                 "PATIENT",
                 "CONFIRMED",
@@ -640,6 +640,11 @@ FIELDS = (
 
 
 def main():
+    # Validate all label anchors before creating any output files.
+    for _, _, _, _, values in CASES:
+        for row in values:
+            if not re.search(re.escape(row[0]), row[-1], re.I):
+                raise ValueError("Label name is absent from its source")
     root = Path(__file__).resolve().parents[1] / "evaluation/ingestion-visits-v2"
     if root.exists():
         raise SystemExit("Refusing to overwrite frozen fixtures.")

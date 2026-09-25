@@ -1,0 +1,15 @@
+Врачебное заключение / SYNTHETIC ONLY
+Clinical note / medication reconciliation
+Не реальный пациент.
+
+The patient reports that wheezing is absent today.
+
+The patient’s father has a confirmed current diagnosis of eczema.
+
+The clinician has ruled out pneumonia in the patient at this visit.
+
+Cetirizine was prescribed for the patient, but the patient has never taken a single dose.
+
+The patient is currently taking Loratadine every morning.
+
+The patient’s possible urticaria has not been confirmed; further assessment is pending and it has not been ruled out.
