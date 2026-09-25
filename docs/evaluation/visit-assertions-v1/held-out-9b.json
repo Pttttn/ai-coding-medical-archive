@@ -1,0 +1,1943 @@
+{
+  "kind": "original-upload-visit-series",
+  "createdAt": "2026-09-25T09:02:27.258235+00:00",
+  "goldSha256": "f3290ddf47e5b7d97a0e0c52fa78ce26f487aabf42bcb10c23682696cf5ccb44",
+  "split": "held-out",
+  "plannedRepeats": 3,
+  "plannedCasesPerRepeat": 4,
+  "complete": true,
+  "codeHashes": {
+    "scripts/evaluate_visit_ingestion.py": "7e7552191a92734a81ae84e9bd6d9057f22d1af32a09188a74996d2d3b0d6c41",
+    "ai-service/medical_ai/visit.py": "3e4efa47d05633e475c6f75a6650edf38807823815cfaeac1d9996759ff53224",
+    "ai-service/medical_ai/ollama.py": "1eeeac90d1b223b39b08dd36c3ac8cd2d5a0fbfe2fa1c137bfffaeeab934f787",
+    "ai-service/medical_ai/source_ir.py": "61fed93e79286703a839d1e31f1e76798add849d5ef6c5a168694f228c2ca871",
+    "backend/src/visit.ts": "4267b72b0ec3eb57503ef305f3aa219cb580bef920c09462215503dc6effc32f"
+  },
+  "limitations": [
+    "AI-authored synthetic gold; no independent clinical review.",
+    "12 fictional visits / 84 statements. Explicit source assertions; held-out has different specialties and paired prose. Small correlated set, not clinical validation.",
+    "First upload then explicit reprocess with new jobs/extraction IDs; same installation/index, not independent deployments.",
+    "Exact source sentence tuple with case-insensitive name. Missing/failed outputs are FN, duplicates are FP. No clinical validity claim."
+  ],
+  "results": [
+    {
+      "case": "v09",
+      "split": "held-out",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 5,
+        "fp": 1,
+        "fn": 2,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 1
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 6,
+      "issues": {
+        "REJECTED_CANDIDATE": 1
+      },
+      "semanticHash": "5599dc8439936cf3f0fc890e08cefad9203f758d48452ec6802cac1d10876314",
+      "seconds": 27.52
+    },
+    {
+      "case": "v10",
+      "split": "held-out",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 1,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 1,
+              "fn": 1
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 7,
+      "issues": {},
+      "semanticHash": "7b16b3977042e8708b277e25c5178c81c4f54f2b6e0f1d37774af0b4fec403d1",
+      "seconds": 9.39
+    },
+    {
+      "case": "v11",
+      "split": "held-out",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 3,
+        "fp": 4,
+        "fn": 4,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 4,
+              "fp": 2,
+              "fn": 2
+            },
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 1
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 7,
+      "issues": {},
+      "semanticHash": "e9f7c46ec50f8960883d2925c950250cb309c688e1ce961d76ebd0e08d87996b",
+      "seconds": 15.53
+    },
+    {
+      "case": "v12",
+      "split": "held-out",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 4,
+        "fp": 2,
+        "fn": 3,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 2
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 1
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "HISTORICAL": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 6,
+      "issues": {
+        "REJECTED_CANDIDATE": 1
+      },
+      "semanticHash": "0dc4a3b610b943fe243d9d406180749dfe072d5a8311b4987987fbdf4f52004c",
+      "seconds": 8.2
+    },
+    {
+      "case": "v09",
+      "split": "held-out",
+      "repeat": 2,
+      "expected": 7,
+      "score": {
+        "tp": 5,
+        "fp": 1,
+        "fn": 2,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 1
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 6,
+      "issues": {
+        "REJECTED_CANDIDATE": 1
+      },
+      "semanticHash": "5599dc8439936cf3f0fc890e08cefad9203f758d48452ec6802cac1d10876314",
+      "seconds": 7.7
+    },
+    {
+      "case": "v10",
+      "split": "held-out",
+      "repeat": 2,
+      "expected": 7,
+      "score": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 1,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 1,
+              "fn": 1
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 7,
+      "issues": {},
+      "semanticHash": "7b16b3977042e8708b277e25c5178c81c4f54f2b6e0f1d37774af0b4fec403d1",
+      "seconds": 8.38
+    },
+    {
+      "case": "v11",
+      "split": "held-out",
+      "repeat": 2,
+      "expected": 7,
+      "score": {
+        "tp": 3,
+        "fp": 4,
+        "fn": 4,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 4,
+              "fp": 2,
+              "fn": 2
+            },
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 1
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 7,
+      "issues": {},
+      "semanticHash": "e9f7c46ec50f8960883d2925c950250cb309c688e1ce961d76ebd0e08d87996b",
+      "seconds": 7.73
+    },
+    {
+      "case": "v12",
+      "split": "held-out",
+      "repeat": 2,
+      "expected": 7,
+      "score": {
+        "tp": 4,
+        "fp": 2,
+        "fn": 3,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 2
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 1
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "HISTORICAL": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 6,
+      "issues": {
+        "REJECTED_CANDIDATE": 1
+      },
+      "semanticHash": "0dc4a3b610b943fe243d9d406180749dfe072d5a8311b4987987fbdf4f52004c",
+      "seconds": 104.12
+    },
+    {
+      "case": "v09",
+      "split": "held-out",
+      "repeat": 3,
+      "expected": 7,
+      "score": {
+        "tp": 5,
+        "fp": 1,
+        "fn": 2,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 1
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "HISTORICAL": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 6,
+      "issues": {
+        "REJECTED_CANDIDATE": 1
+      },
+      "semanticHash": "5599dc8439936cf3f0fc890e08cefad9203f758d48452ec6802cac1d10876314",
+      "seconds": 20.62
+    },
+    {
+      "case": "v10",
+      "split": "held-out",
+      "repeat": 3,
+      "expected": 7,
+      "score": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 1,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 0
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 0
+            },
+            "PRESCRIBED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 5,
+              "fp": 1,
+              "fn": 1
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 7,
+      "issues": {},
+      "semanticHash": "7b16b3977042e8708b277e25c5178c81c4f54f2b6e0f1d37774af0b4fec403d1",
+      "seconds": 19.03
+    },
+    {
+      "case": "v11",
+      "split": "held-out",
+      "repeat": 3,
+      "expected": 7,
+      "score": {
+        "tp": 3,
+        "fp": 4,
+        "fn": 4,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 4,
+              "fp": 2,
+              "fn": 2
+            },
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "RULED_OUT": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 2,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 1
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 7,
+      "issues": {},
+      "semanticHash": "e9f7c46ec50f8960883d2925c950250cb309c688e1ce961d76ebd0e08d87996b",
+      "seconds": 13.38
+    },
+    {
+      "case": "v12",
+      "split": "held-out",
+      "repeat": 3,
+      "expected": 7,
+      "score": {
+        "tp": 4,
+        "fp": 2,
+        "fn": 3,
+        "classes": {
+          "subject": {
+            "PATIENT": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 2
+            },
+            "FAMILY": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 0
+            },
+            "SUSPECTED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NEGATED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 1
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "NOT_TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "STOPPED": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 2
+            },
+            "HISTORICAL": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 1
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "status": "READY",
+      "newExtractionRun": true,
+      "recipe": {
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "promptVersion": "visit-extract-v2",
+        "schemaVersion": "medical-facts-v1",
+        "parserVersion": "pypdf-6.5.0/text-v1"
+      },
+      "profile": "clinical-v1",
+      "processingRecipe": {
+        "profile": "clinical-v1",
+        "sourceIRVersion": "source-ir-v1",
+        "normalizerVersion": "whitespace-map-v1",
+        "model": "qwen3.5:9b",
+        "modelDigest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+        "generationOptions": {
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 2048,
+          "temperature": 0
+        }
+      },
+      "artifactPresent": true,
+      "verifiedSources": 6,
+      "issues": {
+        "REJECTED_CANDIDATE": 1
+      },
+      "semanticHash": "0dc4a3b610b943fe243d9d406180749dfe072d5a8311b4987987fbdf4f52004c",
+      "seconds": 20.62
+    }
+  ],
+  "summary": [
+    {
+      "repeat": 1,
+      "cases": 4,
+      "ready": 4,
+      "tp": 18,
+      "fp": 8,
+      "fn": 10,
+      "criticalPromotions": 1,
+      "macroF1": {
+        "subject": 0.454545,
+        "assertion": 0.7439,
+        "medicationState": 0.558396,
+        "temporality": 0.732143
+      }
+    },
+    {
+      "repeat": 2,
+      "cases": 4,
+      "ready": 4,
+      "tp": 18,
+      "fp": 8,
+      "fn": 10,
+      "criticalPromotions": 1,
+      "macroF1": {
+        "subject": 0.454545,
+        "assertion": 0.7439,
+        "medicationState": 0.558396,
+        "temporality": 0.732143
+      }
+    },
+    {
+      "repeat": 3,
+      "cases": 4,
+      "ready": 4,
+      "tp": 18,
+      "fp": 8,
+      "fn": 10,
+      "criticalPromotions": 1,
+      "macroF1": {
+        "subject": 0.454545,
+        "assertion": 0.7439,
+        "medicationState": 0.558396,
+        "temporality": 0.732143
+      }
+    }
+  ]
+}

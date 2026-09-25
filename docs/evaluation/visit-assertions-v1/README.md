@@ -36,3 +36,25 @@
 5. Сохранить все попытки, сравнить semanticHash по case между повторами, macro F1 и critical promotions; сопоставить modelDigest/processingRecipe/хеши кода/gold. Агрегаты не содержат медицинских цитат, ключей или runtime dumps.
 
 Проверки механизмов не подменяют реальную LLM-серию. Целевой macro F1 ≥0.95 и отсутствие критических повышений оцениваются отдельно от стабильности. Полный ingestion→QA, другая установка/GPU, резервное восстановление и нагрузочные бюджеты остаются следующими этапами.
+
+
+## Результаты версии v2
+
+| Модель / часть | Режим | Точный tuple | FP / FN | Critical promotions |
+| --- | --- | --- | --- | --- |
+| qwen3.5:9b / development | Полный original-upload + reprocess | 53/56 × 3 | 1 / 3 каждый раз | 0 |
+| qwen3.5:9b / held-out | Полный original-upload + reprocess | 18/28 × 3 | 8 / 10 каждый раз | 1 каждый раз |
+
+[Development v2](development-final.json), [held-out 9b](held-out-9b.json). Во всех повторах каждой части совпали semantic hashes. Это стабильность на данной установке, при этом gate качества **НЕ пройден**. У 9b есть реальная ошибка NEGATED → CONFIRMED для симптома; остальные ошибки включают NOT_STARTED/NOT_TAKING, временную роль прекращённого курса, пропуски и сокращённые предложения. Полный абзац при этом сохранён; строгий tuple штрафует сокращение quote даже при правильных остальных полях. Поэтому 18/28 нельзя описывать как долю клинически неверных статусов: это более строгая совместная метрика.
+
+Macro F1 v2 development: subject 0.733333, assertion 0.990991, medicationState 0.928015, temporality 0.980321. Held-out: 0.454545 / 0.743900 / 0.558396 / 0.732143 соответственно. Эти F1 привязаны к точному name+sourceText, поэтому отражают также полноту/точность evidence; отдельной оценки только семантики без evidence-критерия здесь нет. Редкие классы с пропущенным единственным примером имеют F1=0, а не исключаются из средней.
+
+Параметры 9b: digest `6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7`, temperature 0, seed 42, num_ctx 16384, num_predict 2048, think:false. [Среда](environment.json): Ollama 0.34.4, RTX 5080 16 GB. В начале второй серии общий Ollama был занят другой моделью; ожидание включено в время строк. Из этих длительностей нельзя выводить изолированную производительность. Дополнительной настройки по held-out не делали.
+
+## Проверки приложения
+
+[Linux CI 04ea0ac](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36115989132): **257 AI / 86 backend / 25 frontend**, lint/build и Docker images PASS. Локальный ранний прогон Windows: 251 passed / 2 skipped до добавления ещё четырёх тестов; skips не выдаются за прохождение. Общий контракт и PostgreSQL проверяют source/version/projection, сохранение review и сокрытие устаревшего/ошибочного артефакта.
+
+[Headless Edge](browser.json): desktop/mobile 390px, семейный субъект, NOT_STARTED, раскрытие quote/context, отсутствие переполнения страницы и JS errors. [Compose down/up](restart.json) сохранил точный snapshot hash `f7f823116c3dbccd8fbf215f1906c907520cd37a0b5fe517d5c63f944953b6c4`: 8 документов / 8 source IR / 54 факта и VISIT-аннотации. Это проверка сохранности томов; не backup/restore на иной машине.
+
+Новый CLI `scripts/evaluate_visit_ssh.py` использует тот же extractor и оценщик для отдельного сравнения с моделью через SSH. Ключ читается только на сервере. Пример для ранее настроенного пользователем стенда: `python scripts/evaluate_visit_ssh.py --wsl --ssh-target root@mpc1 --ssh-key-file /etc/llama-q8-64k.keys --model qwen3.8-27b-q8-100k-cuda --split held-out --repeats 3 --output .runtime/visit-27b-held.json`. Это original text → IR → реальная модель → проверенная fact projection; backend, index и QA этим запуском не проверяются.

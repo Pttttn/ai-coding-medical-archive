@@ -1,0 +1,5 @@
+{
+  "ollamaVersion": "0.34.4",
+  "note": "Shared Ollama; initial v2 waiting overlapped another loaded model. Times are not isolated performance measurements.",
+  "gpu": "NVIDIA GeForce RTX 5080, 16303 MiB, 616.64"
+}

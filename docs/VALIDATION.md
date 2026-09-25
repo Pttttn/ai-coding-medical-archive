@@ -176,3 +176,8 @@ Linux CI реализации `fa31c6d`: **209 AI, 60 backend, 23 frontend**, li
 Прежний original-upload корпус: 32 READY/IR, 140 подтверждённых цитат, частичное сопоставление 72/108 (раньше 30/108); лабораторные PDF 42/42, текстовая часть остаётся 30/66. Один development-прогон, не итоговая клиническая accuracy. [Агрегаты](evaluation/lab-rows-v1/clinical-originals.json). Linux CI реализации прошёл: [run](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36111349486).
 
 Финальная проекция `lab-facts-v2` (`f10bfdf`) исправляет потерю общей даты при явном STUDY: 6 PDF × 3 — даты/роли/period filter PASS. Полная LAB серия на финальном коде повторно 120/120 × 3. После down/up совпал hash снимка 32 документов / 32 IR / 140 фактов. [Финальный CI PASS](https://github.com/ruslan-yusupov-open/ai-coding-medical-archive/actions/runs/36112212635).
+
+
+## Техническое дополнение AI: VISIT, 25 сентября 2026
+
+Опциональный clinical-v1 добавляет source/context spans, subject/assertion/medication events/temporality, проверенную проекцию и приватный UI. [Протокол](evaluation/visit-assertions-v1/README.md) отделяет тесты механизмов от реальных модельных оценок. CI 04ea0ac: 257 AI, 86 backend, 25 frontend; lint/build/images PASS. Реальный 9b original-upload/reprocess: development 53/56 × 3, held-out 18/28 × 3, стабильные hashes, но повторяющаяся ошибка отрицания. Gate качества не пройден, default legacy сохранён. PostgreSQL и Docker down/up сохранили разметку/review; полная P3 activation и P4 независимая установка/backup ещё не выполнены.

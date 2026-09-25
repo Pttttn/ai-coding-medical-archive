@@ -108,3 +108,6 @@
 - [x] Opt-in clinical-v1: subject/assertion/medicationState/temporality, точные source/context spans, проверенная legacy projection и приватная вкладка источника.
 - [x] Проверить сохранность review при reprocess, скрытие старого артефакта и отказ до публикации при несогласованной проекции; общие Python/TypeScript contract tests.
 - [ ] Закрыть P2b gates и полный P0–P4: отдельная clinical activity/календарные роли, более широкие разделы/макеты, независимая проверка gold, recipe/checkpoints/activation; [текущие реальные результаты](docs/evaluation/visit-assertions-v1/README.md).
+
+- [x] Реальные 9b original-upload/reprocess серии: development 53/56 × 3 после начальных 39/56 × 3; held-out 18/28 × 3. Стабильность подтверждена в этой среде, качество gate не прошло (ошибка отрицания сохранена).
+- [x] CI 257 AI / 86 backend / 25 frontend, browser desktop/mobile и сохранность VISIT/фактов/IR после Compose down/up.

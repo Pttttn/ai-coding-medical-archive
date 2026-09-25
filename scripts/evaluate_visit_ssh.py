@@ -1,3 +1,5 @@
+# Standalone CLI resolves the repository import path before importing services.
+# ruff: noqa: E402
 """Synthetic-only VISIT extractor comparison over SSH. Not Docker/backend/index/QA acceptance.
 
 Only frozen fixture originals reach the model; the key stays on the remote host.
