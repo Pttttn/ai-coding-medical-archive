@@ -9,7 +9,7 @@ from .schemas import Extraction, Fact, Provenance, StrictModel
 from .source_ir import SourceIR, Span, canonical_hash, resolve_span
 
 VISIT_VERSION = 'visit-assertions-v1'
-VISIT_PROMPT_VERSION = 'visit-extract-v1'
+VISIT_PROMPT_VERSION = 'visit-extract-v2'
 CLINICAL_PROFILE = 'clinical-v1'
 SUBJECTS = ('PATIENT', 'FAMILY', 'OTHER', 'UNKNOWN')
 ASSERTIONS = ('CONFIRMED', 'SUSPECTED', 'NEGATED', 'NOT_CONFIRMED', 'RULED_OUT', 'UNKNOWN')
@@ -76,6 +76,12 @@ STOPPED = explicitly discontinued/completed; UNKNOWN = mere mention or unknown s
 For non-medication medicationState MUST be NOT_APPLICABLE.
 If a prescription followed by non-start/stop is described, emit the explicitly stated latest event, not a duplicate prescription.
 Temporality CURRENT = at this encounter; HISTORICAL = prior/past event; FUTURE = planned later; UNKNOWN = no basis.
+A current statement about a relative remains CURRENT; FAMILY does NOT imply HISTORICAL.
+A document being old/archived does not establish when a mentioned event happened. A mere unattributed mention
+has assertion UNKNOWN and temporality UNKNOWN, not a confirmed or suspected condition.
+Unknown medication status means medicationState UNKNOWN and temporality UNKNOWN, not NOT_STARTED.
+An earlier prescription with STILL no start describes CURRENT NOT_STARTED. A prescription explicitly starting
+later (tomorrow/next week/from Monday) is FUTURE, even if the act of prescribing happened today.
 Do not invent calendar dates, subjects, dosages or diagnoses. A list mentioning a drug is not proof of taking it.
 Do not fill the array to its limit. Return an empty array for a block with no relevant statements.
 """
@@ -91,6 +97,12 @@ def bind_candidate(candidate: Candidate, ir: SourceIR) -> Statement:
     if block is None:
         raise ValueError('Unknown source block')
     text = resolve_span(ir.pages, block.source)
+    # Recover case-only model normalization from a unique occurrence, retaining SOURCE spelling.
+    # Do not rewrite, case-fold or fuzzy-match the quote itself.
+    if candidate.name not in candidate.sourceText:
+        matches = list(re.finditer(re.escape(candidate.name), candidate.sourceText, re.I))
+        if len(matches) == 1:
+            candidate = candidate.model_copy(update={'name': matches[0].group()})
     if text.count(candidate.sourceText) != 1 or candidate.name not in candidate.sourceText or COMMAND.search(text):
         raise ValueError('Missing or ambiguous source evidence')
     if (candidate.kind == 'MEDICATION' and (candidate.assertion != 'UNKNOWN' or candidate.medicationState == 'NOT_APPLICABLE')) or (

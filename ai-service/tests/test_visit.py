@@ -158,3 +158,16 @@ def test_profile_opt_in_and_lab_route_unchanged(services):
     assert r.status_code == 200 and r.json()["laboratory"] and r.json()["visit"] is None
     assert not services.provider.calls
     assert supports_visit(SourceIR.model_validate(fixture()["sourceIR"]))
+
+
+def test_name_case_recovery_uses_original_spelling_without_changing_quote():
+    f = fixture()
+    ir = SourceIR.model_validate(f['sourceIR'])
+    raw = f['visit']['statements'][4]
+    candidate = Candidate.model_validate({k:v for k,v in raw.items() if k not in {'source','contextSource','contextText'}})
+    candidate.name = candidate.name.lower()
+    restored = bind_candidate(candidate, ir)
+    assert restored.name == 'Амлодипин' and restored.sourceText == raw['sourceText']
+    candidate.sourceText = candidate.sourceText.lower()
+    with pytest.raises(ValueError):
+        bind_candidate(candidate, ir)
