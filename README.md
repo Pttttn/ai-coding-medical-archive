@@ -295,6 +295,12 @@ docker compose -f compose.evaluation.yaml run --rm --build evaluator --execution
 docker compose -p medical-personal -f compose.yaml -f compose.personal.yaml up
 ```
 
+Личный режим не запускается с демо-секретами из `compose.yaml`: задайте в `.env` уникальные `POSTGRES_PASSWORD` и `INTERNAL_API_TOKEN` длиной не меньше 16 символов, например из `openssl rand -hex 24`. Без них Compose остановится на проверке конфигурации, а backend откажется стартовать со слабым значением. PostgreSQL применяет `POSTGRES_PASSWORD` только при создании volume. Если личный архив уже создан с демо-паролем, до перезапуска смените пароль в существующей базе, подставив своё значение:
+
+```sh
+docker compose -p medical-personal -f compose.yaml exec postgres psql -U archive -d archive -c "ALTER USER archive PASSWORD 'новый-пароль'"
+```
+
 Освободите порты остановкой demo или переопределите их через `.env`. MCP и в этом режиме предоставляет только синтетический корпус. Soft delete сохраняет оригиналы и историю, а не стирает их физически. Шифрование диска управляется пользователем; резервные копии создаются командой из раздела [«Резервная копия и проверенное восстановление»](#резервная-копия-и-проверенное-восстановление).
 
 [ARCHITECTURE](ARCHITECTURE.md) описывает решения, [TASKS](TASKS.md) — статус. Личный [REPORT](REPORT.md) содержит предоставленные автором записи и реальные запросы; технические AI-вставки и разбор отделены. Тема отправлена на утверждение 14 сентября; публикация GitHub не подтверждает её принятие, IDE-проверку или итоговую приёмку. По конспекту защита 28 сентября 2026 перенесена; новая дата не подтверждена.
@@ -309,7 +315,7 @@ docker compose logs --tail=100 model-init ai backend
 curl http://127.0.0.1:3000/api/health
 ```
 
-Runtime-сеть `private` имеет `internal: true`. Порты публикует локальный nginx gateway с OUTPUT firewall, разрешающим только фиксированные upstream. Только gateway и опциональный host Ollama proxy получают `NET_ADMIN` для этих правил. Это сетевые прокси, **не внешний LLM-gateway**. Не отключайте firewall и не заменяйте фиксированный proxy произвольным URL-переадресатором. Пересоздание зависимостей через Compose перезапускает gateway для обновления upstream.
+Runtime-сеть `private` имеет `internal: true`. Порты публикует локальный nginx gateway с OUTPUT firewall, разрешающим только фиксированные upstream. Только gateway и опциональный host Ollama proxy получают `NET_ADMIN` для этих правил. Это сетевые прокси, **не внешний LLM-gateway**. Gateway принимает только loopback-Host (`localhost`, `127.0.0.1`, `[::1]`) и браузерный Origin своего же адреса, поэтому страница с DNS rebinding или чужого сайта получает 403; MCP-клиентам без Origin и браузерным MCP-клиентам с loopback-адреса доступ сохранён. Backend повторяет ту же проверку Host/Origin. Проверка правил nginx без Docker: `python scripts/check_gateway.py` (нужен `nginx` в PATH или `NGINX_BIN`). Не отключайте firewall и не заменяйте фиксированный proxy произвольным URL-переадресатором. Пересоздание зависимостей через Compose перезапускает gateway для обновления upstream.
 
 Загрузка весов зависит от сети. `MODEL_UNAVAILABLE` во внутреннем API или безопасный отказ MCP означает, что операция не завершена; проверьте Ollama и повторите. Сырые данные не являются запасным результатом privacy. Частичный PDF сопровождается предупреждением; ручные поправки сохраняются при reprocess.
 

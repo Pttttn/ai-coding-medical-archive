@@ -66,10 +66,14 @@ jobs:
           version: '0.10.7'
           enable-cache: true
       - run: uv sync --frozen --group dev --python 3.12
-      - run: uv run ruff check . ../infra/llama-shim.py ../scripts/evaluate_public.py ../scripts/evaluate_stability.py ../scripts/evaluation_support.py ../scripts/analyze_stability.py ../scripts/evaluate_clinical.py ../scripts/evaluate_ingestion.py ../scripts/evaluate_lab_ingestion.py ../scripts/evaluate_visit_ingestion.py ../scripts/evaluate_visit_ssh.py ../scripts/visit_semantic_metrics.py ../scripts/generate_visit_challenge.py ../scripts/generate_ingestion_visits.py ../scripts/generate_ingestion_labs.py ../scripts/evaluate_clinical_matrix.py ../scripts/analyze_clinical.py ../scripts/evaluate_clinical_ssh.py ../scripts/generate_clinical_demo.py ../scripts/verify_seed.py ../scripts/archive_backup.py
+      - run: uv run ruff check . ../infra/llama-shim.py ../scripts/evaluate_public.py ../scripts/evaluate_stability.py ../scripts/evaluation_support.py ../scripts/analyze_stability.py ../scripts/evaluate_clinical.py ../scripts/evaluate_ingestion.py ../scripts/evaluate_lab_ingestion.py ../scripts/evaluate_visit_ingestion.py ../scripts/evaluate_visit_ssh.py ../scripts/visit_semantic_metrics.py ../scripts/generate_visit_challenge.py ../scripts/generate_ingestion_visits.py ../scripts/generate_ingestion_labs.py ../scripts/evaluate_clinical_matrix.py ../scripts/analyze_clinical.py ../scripts/evaluate_clinical_ssh.py ../scripts/generate_clinical_demo.py ../scripts/verify_seed.py ../scripts/check_gateway.py ../scripts/archive_backup.py
       - run: uv run pytest
       - run: uv run python ../scripts/check_corpus.py
-      - run: uv run python ../scripts/verify_seed.py ../scripts/archive_backup.py
+      - run: uv run python ../scripts/verify_seed.py
+      - name: Gateway Host/Origin filtering
+        run: |
+          command -v nginx || (sudo apt-get update && sudo apt-get install -y nginx-light)
+          uv run python ../scripts/check_gateway.py
 
   images:
     needs: [frontend, backend, ai]
@@ -85,6 +89,10 @@ jobs:
           LLAMA_CPP_URL: http://example.invalid/v1/chat/completions
           LLAMA_CPP_KEY_FILE: /tmp/synthetic-test.key
           LLM_MODEL: synthetic-test-model
+      - name: Personal mode requires its own secrets
+        run: |
+          if docker compose -f compose.yaml -f compose.personal.yaml config --quiet; then exit 1; fi
+          POSTGRES_PASSWORD=synthetic-ci-password-0001 INTERNAL_API_TOKEN=synthetic-ci-token-00001 docker compose -f compose.yaml -f compose.personal.yaml config --quiet
       - run: docker compose -f compose.evaluation.yaml config --quiet
       - run: docker compose -f compose.evaluation.yaml -f compose.evaluation.cuda.yaml config --quiet
       - run: docker compose build

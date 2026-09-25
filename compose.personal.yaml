@@ -1,6 +1,17 @@
 # A distinct Compose project name creates distinct archive volumes.
 # Usage: docker compose -p medical-personal -f compose.yaml -f compose.personal.yaml up
+# Personal mode has no demo secrets: set POSTGRES_PASSWORD and INTERNAL_API_TOKEN
+# (unique, at least 16 characters) in .env; the backend refuses weak values.
 services:
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env for the personal archive}
+  ai:
+    environment:
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?set INTERNAL_API_TOKEN in .env for the personal archive}
   backend:
     environment:
+      ARCHIVE_MODE: personal
+      DATABASE_URL: postgresql://archive:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env for the personal archive}@postgres:5432/archive
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?set INTERNAL_API_TOKEN in .env for the personal archive}
       SEED_ENABLED: "false"

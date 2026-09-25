@@ -15,6 +15,7 @@
 - [x] Повторный аудит формальных критериев и консультации: [REQUIREMENTS_AUDIT](docs/REQUIREMENTS_AUDIT.md), с явными незакрытыми условиями сдачи.
 - [x] Реальный чистый GitHub clone / пустые тома / автоматическая загрузка весов: application 20/20, PDF 4/4, browser 15, MCP 42/773, runtime 5/5. Down/up сохранил содержимое 11 таблиц и индексов.
 - [x] Чёткий README clone/cd/up и readiness; AI проверяет ready=true, gateway ждёт healthy и проверяет UI/API.
+- [x] Gateway и backend отклоняют не-loopback Host и чужой Origin (DNS rebinding, cross-site запись); личный режим требует собственные секреты. Проверено `scripts/check_gateway.py` на реальном nginx и backend unit tests; полный Docker-запуск с этими правилами ещё не проверен.
 
 - [x] Независимый запуск с нуля в Docker на отдельном MacBook: автор сообщил об успешной установке и нормальной работе 21 сентября; подробности в REPORT.md.
 - [x] Подготовлено [сопроводительное письмо к сдаче](docs/SUBMISSION_LETTER.md).
