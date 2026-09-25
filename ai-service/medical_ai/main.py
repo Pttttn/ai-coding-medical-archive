@@ -16,7 +16,7 @@ from .indexer import Corpus, source_of
 from .visit import CLINICAL_PROFILE, VISIT_PROMPT_VERSION, annotate_visit, project_visit, supports_visit
 from .laboratory import LAB_PROJECTION_VERSION, LAB_VERSION, annotate_laboratory, project_laboratory
 from .ollama import Ollama
-from .parsing import PARSER_VERSION, confined_path, parse_file
+from .parsing import LAB_TABLE_PARSER_VERSION, PARSER_VERSION, confined_path, parse_file, parse_pdf_lab_tables
 from .privacy import consultation
 from .rag import CorrectiveRAG
 from .source_ir import IR_VERSION, SourceIR, build_source_ir
@@ -61,14 +61,20 @@ def create_app(services: Services | None = None) -> FastAPI:
         if (body.text is None) == (body.filePath is None):
             raise ServiceError("INVALID_INPUT", "Укажите ровно одно из text и filePath.")
         warnings = []
+        parser_version = PARSER_VERSION if body.filePath else "user-text-v1"
         if body.filePath is not None:
             path = confined_path(body.filePath, services.settings.upload_dir)
             if not path.is_file():
                 raise ServiceError("FILE_NOT_FOUND", "Исходный файл не найден.", 404)
             text, pages, warnings = parse_file(path, services.settings.max_file_bytes)
+            if path.suffix.lower() == ".pdf" and services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE, REVIEW_PROFILE}:
+                tabular = parse_pdf_lab_tables(path)
+                if tabular is not None:
+                    text, pages = tabular
+                    parser_version = LAB_TABLE_PARSER_VERSION
         else:
             text, pages = body.text or "", [Page(text=body.text or "")]
-        source_ir = build_source_ir(body.documentId, pages, PARSER_VERSION if body.filePath else "user-text-v1")
+        source_ir = build_source_ir(body.documentId, pages, parser_version)
         laboratory, visit = None, None
         if services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE, REVIEW_PROFILE}:
             ir = SourceIR.model_validate(source_ir)
@@ -98,7 +104,7 @@ def create_app(services: Services | None = None) -> FastAPI:
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
                 "model": "deterministic:lab-rows-v1" if laboratory is not None else services.settings.llm_model,
                 "promptVersion": LAB_PROJECTION_VERSION if laboratory is not None else REVIEW_PROMPT_VERSION if visit is not None and services.settings.extraction_profile == REVIEW_PROFILE else VISIT_PROMPT_VERSION if visit is not None else PROMPT_VERSION,
-                "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
+                "schemaVersion": SCHEMA_VERSION, "parserVersion": parser_version, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
     @app.post("/internal/index", dependencies=[Depends(authorize)])
     def index(body: IndexRequest):

@@ -1,0 +1,319 @@
+{
+  "sourceIR": {
+    "schemaVersion": "source-ir-v1",
+    "stage": "SOURCE_ONLY",
+    "documentId": "synthetic-pdf-date",
+    "parserVersion": "synthetic-pdf-date-v1",
+    "normalizerVersion": "whitespace-map-v1",
+    "sourceHash": "1b6ba2f0ac77f150bc407d1d972bd6d79ee84d1c64c9f842ac49c558b196127c",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "text": "Лабораторные исследования\nДата взятия материала: 2026-05-13 08:30:00\nДата выдачи результата: 2026-05-14 09:00:00\nПоказатель\tРезультат\tЕдиница\tРеференс\nLDL\t4.1\tmmol/L\t<3.0\n"
+      }
+    ],
+    "blocks": [
+      {
+        "blockId": "p0:b0",
+        "kind": "paragraph",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 0,
+          "endByte": 268
+        },
+        "normalizedText": "Лабораторные исследования Дата взятия материала: 2026-05-13 08:30:00 Дата выдачи результата: 2026-05-14 09:00:00 Показатель Результат Единица Референс LDL 4.1 mmol/L <3.0 ",
+        "mapping": [
+          {
+            "normalizedStartByte": 0,
+            "normalizedEndByte": 49,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 0,
+              "endByte": 49
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 49,
+            "normalizedEndByte": 50,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 49,
+              "endByte": 50
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 50,
+            "normalizedEndByte": 111,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 50,
+              "endByte": 111
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 111,
+            "normalizedEndByte": 112,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 111,
+              "endByte": 112
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 112,
+            "normalizedEndByte": 175,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 112,
+              "endByte": 175
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 175,
+            "normalizedEndByte": 176,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 175,
+              "endByte": 176
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 176,
+            "normalizedEndByte": 196,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 176,
+              "endByte": 196
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 196,
+            "normalizedEndByte": 197,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 196,
+              "endByte": 197
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 197,
+            "normalizedEndByte": 215,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 197,
+              "endByte": 215
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 215,
+            "normalizedEndByte": 216,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 215,
+              "endByte": 216
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 216,
+            "normalizedEndByte": 230,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 216,
+              "endByte": 230
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 230,
+            "normalizedEndByte": 231,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 230,
+              "endByte": 231
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 231,
+            "normalizedEndByte": 247,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 231,
+              "endByte": 247
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 247,
+            "normalizedEndByte": 248,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 247,
+              "endByte": 248
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 248,
+            "normalizedEndByte": 251,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 248,
+              "endByte": 251
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 251,
+            "normalizedEndByte": 252,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 251,
+              "endByte": 252
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 252,
+            "normalizedEndByte": 255,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 252,
+              "endByte": 255
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 255,
+            "normalizedEndByte": 256,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 255,
+              "endByte": 256
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 256,
+            "normalizedEndByte": 262,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 256,
+              "endByte": 262
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 262,
+            "normalizedEndByte": 263,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 262,
+              "endByte": 263
+            },
+            "operation": "WHITESPACE"
+          },
+          {
+            "normalizedStartByte": 263,
+            "normalizedEndByte": 267,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 263,
+              "endByte": 267
+            },
+            "operation": "IDENTITY"
+          },
+          {
+            "normalizedStartByte": 267,
+            "normalizedEndByte": 268,
+            "source": {
+              "pageIndex": 0,
+              "startByte": 267,
+              "endByte": 268
+            },
+            "operation": "WHITESPACE"
+          }
+        ]
+      }
+    ],
+    "irHash": "8d215cfa8cafdc0ea7df0b4d4420ef63a5032236554c9094b53ff7a5541ca3b0"
+  },
+  "laboratory": {
+    "schemaVersion": "lab-rows-v1",
+    "sourceIRHash": "8d215cfa8cafdc0ea7df0b4d4420ef63a5032236554c9094b53ff7a5541ca3b0",
+    "sourceHash": "1b6ba2f0ac77f150bc407d1d972bd6d79ee84d1c64c9f842ac49c558b196127c",
+    "rows": [
+      {
+        "name": "LDL",
+        "result": {
+          "raw": "4.1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "numericValue": "4.1"
+        },
+        "unit": "mmol/L",
+        "referenceRaw": "<3.0",
+        "subject": "UNKNOWN",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 248,
+          "endByte": 267
+        },
+        "sourceText": "LDL\t4.1\tmmol/L\t<3.0"
+      }
+    ],
+    "dates": [
+      {
+        "role": "SPECIMEN",
+        "iso": "2026-05-13",
+        "raw": "2026-05-13 08:30:00",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 50,
+          "endByte": 111
+        }
+      },
+      {
+        "role": "RESULT",
+        "iso": "2026-05-14",
+        "raw": "2026-05-14 09:00:00",
+        "source": {
+          "pageIndex": 0,
+          "startByte": 112,
+          "endByte": 175
+        }
+      }
+    ],
+    "subjectSources": [],
+    "issues": [],
+    "candidateRows": 1,
+    "coverage": "SUPPORTED_ROWS_ONLY",
+    "artifactHash": "58b0a7e59938eef6ed3b952b35c6b7f29d1a32db8d9b07b90c10fe4700d327ec"
+  },
+  "facts": [
+    {
+      "type": "LAB_RESULT",
+      "name": "LDL",
+      "valueText": "LDL\t4.1\tmmol/L\t<3.0",
+      "valueNumber": 4.1,
+      "unit": "mmol/L",
+      "eventDate": "2026-05-14",
+      "assertionStatus": "CONFIRMED",
+      "confidence": null,
+      "provenance": {
+        "page": 1,
+        "sourceText": "LDL\t4.1\tmmol/L\t<3.0"
+      }
+    }
+  ]
+}

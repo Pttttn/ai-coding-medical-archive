@@ -36,3 +36,12 @@ test('rejects a date role that differs from its source heading',()=>{
   const {artifactHash,...body}=lab;void artifactHash;lab.artifactHash=irHash(body);
   expect(()=>validateLaboratory(lab,f.sourceIR,f.facts)).toThrow();
 });
+
+
+test('accepts Python PDF-style result timestamp and date heading',()=>{
+  const f=JSON.parse(readFileSync(join(__dirname,'../../contracts/lab-rows-v1.pdf-date.synthetic.json'),'utf8'));
+  expect(()=>validateLaboratory(f.laboratory,f.sourceIR,f.facts)).not.toThrow();
+  f.laboratory.dates[1].raw='2026-05-14 28:00:00';
+  const {artifactHash,...body}=f.laboratory;void artifactHash;f.laboratory.artifactHash=irHash(body);
+  expect(()=>validateLaboratory(f.laboratory,f.sourceIR,f.facts)).toThrow();
+});
