@@ -199,9 +199,11 @@ class ArchiveRAG(CorrectiveRAG):
         today = today or date.today()
         start, end = resolve_period(question, date_from, date_to, today)
         catalog = {d["documentId"]: d.get("documentDate") for d in documents or []}
+        # Only each document's active processing revision is readable; None means legacy chunks.
+        revisions = {d["documentId"]: d.get("processingRevisionId") for d in documents} if documents else None
         allowed = set(document_ids) if document_ids is not None else None
         with self.corpus.lock:
-            indexed = [d for d in self.corpus.documents if allowed is None or d.metadata["documentId"] in allowed]
+            indexed = self.corpus.visible(document_ids, revisions)
         indexed_ids = {d.metadata["documentId"] for d in indexed}
         ids = indexed_ids | {i for i in catalog if allowed is None or i in allowed}
         undated = sum(not catalog.get(i) for i in ids)
@@ -211,7 +213,8 @@ class ArchiveRAG(CorrectiveRAG):
         limit = self.settings.archive_scan_chunks
         # Rank using the existing BM25 + dense RRF. Small archives are scanned in full;
         # large archives use diverse ranked candidates and explicitly report incomplete coverage.
-        ranked = self.corpus.retrieve(question, min(len(candidates), limit * 2), sorted(eligible_ids), archive_scan=True) if candidates else []
+        ranked = self.corpus.retrieve(question, min(len(candidates), limit * 2), sorted(eligible_ids), archive_scan=True,
+                                     revisions=revisions) if candidates else []
         first, rest, visited = [], [], set()
         for d in ranked:
             if d.metadata["documentId"] in visited:
