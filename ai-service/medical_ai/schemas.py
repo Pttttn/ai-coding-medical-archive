@@ -59,6 +59,14 @@ class Correction(StrictModel):
     reviewStatus: str
 
 
+class IndexSettings(StrictModel):
+    chunkerVersion: str = Field(max_length=200)
+    chunkSize: int
+    chunkOverlap: int
+    embeddingModel: str = Field(max_length=200)
+    embeddingDigest: str | None = Field(default=None, max_length=200)
+
+
 class IndexRequest(StrictModel):
     documentId: str = Field(min_length=1, max_length=200)
     title: str = Field(max_length=500)
@@ -68,6 +76,8 @@ class IndexRequest(StrictModel):
     corrections: list[Correction] = Field(default_factory=list)
     # Stage chunks for one processing revision without replacing the active one.
     revisionId: str | None = Field(default=None, min_length=1, max_length=200)
+    # Index settings from the revision's processing recipe; the indexer refuses to stage with others.
+    expectedIndexSettings: IndexSettings | None = None
 
 
 class RemoveRequest(StrictModel):

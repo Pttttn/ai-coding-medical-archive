@@ -1,3 +1,4 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from medical_ai.main import create_app
@@ -70,3 +71,58 @@ def test_internal_index_and_prune_contract(services):
         assert staged["revisionId"] == "B" and staged["documentChunks"] == 1 and len(staged["contentHash"]) == 64
         assert client.post("/internal/prune", headers=headers,
                            json={"documentId": "d", "keepRevisionId": "B"}).json() == {"ok": True, "removedChunks": 0}
+
+
+class DigestProvider:
+    """Deterministic embeddings with an Ollama-like model list whose embedding digest can change."""
+    def __init__(self, inner, settings):
+        self.inner, self.settings, self.digest, self.up = inner, settings, "sha256:embed-a", True
+
+    def embed(self, texts):
+        return self.inner.embed(texts)
+
+    def health(self):
+        if not self.up:
+            return {"ollama": False, "ready": False, "models": []}
+        return {"ollama": True, "models": [{"name": self.settings.embedding_model + ":latest", "digest": self.digest}]}
+
+
+def test_staged_revision_reports_the_index_settings_it_used(services):
+    from medical_ai.errors import ServiceError
+    from medical_ai.recipe import processing_recipe
+    archive = services.archive
+    provider = archive.provider = DigestProvider(archive.provider, services.settings)
+    first = archive.index_document("d", "d.md", 1, NEW, revision_id="B")
+    assert first["indexSettings"] == processing_recipe(services.settings, provider, "user-text-v1", "lab")["index"]
+    assert first["indexSettings"]["embeddingDigest"] == "sha256:embed-a"
+    provider.digest = "sha256:embed-b"
+    changed = archive.index_document("d", "d.md", 1, NEW, revision_id="B")
+    assert not changed.get("unchanged") and changed["indexSettings"]["embeddingDigest"] == "sha256:embed-b"
+    assert changed["contentHash"] != first["contentHash"]
+    provider.up = False
+    with pytest.raises(ServiceError) as error:
+        archive.index_document("d", "d.md", 1, NEW, revision_id="B")
+    assert error.value.code == "EMBEDDING_UNAVAILABLE"
+    assert texts(archive.visible(["d"], {"d": "B"})) == [NEW]
+    assert archive.index_document("d", "d.md", 1, OLD)["indexSettings"] is None
+
+
+def test_indexer_refuses_to_stage_a_revision_with_settings_other_than_its_recipe(services):
+    from medical_ai.errors import ServiceError
+    archive = services.archive
+    provider = archive.provider = DigestProvider(archive.provider, services.settings)
+    expected = archive.index_document("d", "d.md", 1, OLD, revision_id="A")["indexSettings"]
+    provider.digest = "sha256:embed-b"
+    with pytest.raises(ServiceError) as error:
+        archive.index_document("d", "d.md", 2, NEW, revision_id="A", expected_settings=expected)
+    assert error.value.code == "INDEX_RECIPE_MISMATCH"
+    assert texts(archive.visible(["d"], {"d": "A"})) == [OLD]
+    headers = {"X-Internal-Token": "test-secret"}
+    with TestClient(create_app(services)) as client:
+        body = {"documentId": "d", "title": "d.md", "version": 2, "text": NEW, "revisionId": "A"}
+        refused = client.post("/internal/index", headers=headers, json={**body, "expectedIndexSettings": expected})
+        assert refused.status_code == 409 and refused.json()["detail"]["code"] == "INDEX_RECIPE_MISMATCH"
+        current = {**expected, "embeddingDigest": "sha256:embed-b"}
+        staged = client.post("/internal/index", headers=headers, json={**body, "expectedIndexSettings": current}).json()
+    assert staged["indexSettings"] == current
+    assert texts(archive.visible(["d"], {"d": "A"})) == [NEW]
