@@ -23,6 +23,8 @@ export class Document {
   @Column('text',{array:true,default:'{}'}) tags: string[];
   @Column({default:0}) textVersion: number;
   @Column({default:1}) generation: number;
+  /** Processing revision whose facts and chunks are the document's current snapshot; null for legacy processing. */
+  @Column({type:'uuid',nullable:true}) activeProcessingRevisionId: string|null;
   @Column({type:'text',default:'',select:false}) searchText: string;
   @Column({type:'text',nullable:true}) errorCode: string|null;
   @Column({default:false}) isSeed: boolean;
@@ -64,6 +66,7 @@ export class MedicalFact {
   @Column({type:'double precision',nullable:true}) confidence:number|null;
   @Column('jsonb') originalValue:Record<string,unknown>;
   @Column({default:true}) active:boolean;
+  @Column({type:'uuid',nullable:true}) processingRevisionId:string|null;
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
   @UpdateDateColumn({type:'timestamptz'}) updatedAt:Date;
 }
@@ -121,6 +124,8 @@ export class ProcessingJob {
   @Column({type:'timestamptz',nullable:true}) availableAt:Date|null;
   /** Parse stage stored for this job; a retry extracts from it instead of parsing again. */
   @Column({type:'uuid',nullable:true}) sourceIrRevisionId:string|null;
+  /** Prepared processing revision of this job; a retry indexes and activates it instead of extracting again. */
+  @Column({type:'uuid',nullable:true}) processingRevisionId:string|null;
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
   @UpdateDateColumn({type:'timestamptz'}) updatedAt:Date;
 }
@@ -175,4 +180,17 @@ export class ConsultationResponse {
   @Column('text') content:string;
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
 }
-export const ENTITIES = [Document,TextRevision,Tag,MedicalFact,FactProvenance,FactRevision,AuditEvent,TimelineEvent,ProcessingJob,ExtractionRun,Consultation,ConsultationPrompt,ConsultationResponse];
+@Entity('processing_revisions')
+export class ProcessingRevision {
+  @PrimaryGeneratedColumn('uuid') id:string;
+  @Column('uuid') documentId:string;
+  @Column('uuid') sourceIrRevisionId:string;
+  @Column('uuid') textRevisionId:string;
+  @Column('uuid') extractionRunId:string;
+  @Column({type:'varchar',length:64}) recipeHash:string;
+  @Column({default:'PREPARED'}) status:'PREPARED'|'ACTIVE'|'SUPERSEDED'|'FAILED';
+  @Column({type:'jsonb',nullable:true}) indexManifest:{revisionId:string;documentChunks:number;contentHash:string|null}|null;
+  @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
+  @Column({type:'timestamptz',nullable:true}) activatedAt:Date|null;
+}
+export const ENTITIES = [ProcessingRevision,Document,TextRevision,Tag,MedicalFact,FactProvenance,FactRevision,AuditEvent,TimelineEvent,ProcessingJob,ExtractionRun,Consultation,ConsultationPrompt,ConsultationResponse];

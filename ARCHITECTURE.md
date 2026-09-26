@@ -23,9 +23,10 @@ Document хранит метаданные, статус, SHA256 и soft delete.
 Внутренний Python API (порт 8001, заголовок X-Internal-Token, отдельный от MCP):
 - POST /internal/parse: `{documentId,version,title,text?|filePath?}` → `{sourceIR,text,pages,warnings,parserVersion,parseRecipe}`; детерминированная стадия без вызова модели.
 - POST /internal/process: `{documentId,version,title,text?|filePath?|sourceIR?}` → `{text,pages:[{pageNumber,text}],extraction:{documentType,documentDate,summary,tags,facts:[{type,name,valueText,valueNumber,unit,eventDate,assertionStatus,confidence,provenance:{page,sourceText}}]},warnings,model,promptVersion,schemaVersion,parserVersion}`.
-- POST /internal/index: `{documentId,title,version,text,pages?,corrections?:[{id,name,valueText,valueNumber,unit,reviewStatus}]}` → статистика.
+- POST /internal/index: `{documentId,title,version,text,pages?,corrections?:[{id,name,valueText,valueNumber,unit,reviewStatus}],revisionId?}` → статистика и манифест `{revisionId,contentHash,documentChunks}`; с `revisionId` заменяются только chunks этой ревизии, остальные не видны и не трогаются.
+- POST /internal/prune: `{documentId,keepRevisionId}` → `{ok:true,removedChunks}`; удаляет chunks документа из других ревизий после активации.
 - POST /internal/remove: `{documentId}` → `{ok:true}`.
-- POST /internal/ask: `{question,documentIds?:string[]}` → `{answer,sources:[{documentId?,source,chunkId,position,pageNumber?,text?}],trace?,insufficientContext?}`.
+- POST /internal/ask: `{question,documentIds?:string[],documents?:[{documentId,documentDate,processingRevisionId?}]}` → `{answer,sources:[{documentId?,source,chunkId,position,pageNumber?,text?}],trace?,insufficientContext?}`.
 - POST /internal/consultation: `{question,contexts:[{text}]}` → `{content,warnings:string[]}`.
 - GET /health → доступность процесса/моделей (без вызова генерации).
 
@@ -101,7 +102,19 @@ Worker выполняет PROCESS в две стадии. Сначала `/inter
 
 `processingRecipe` описывает весь запуск: профиль и фактический путь (`lab`, `visit`, `visit-review`, `legacy`), parse recipe, модель и digest, параметры декодирования, версии аннотации/проекции/схемы фактов, лимит фактов и объявленные настройки индекса (chunker, размер, overlap, embedding и digest). Hash считается по тому же canonical JSON, что и IR; backend пересчитывает его и требует ссылку на hash сохранённой стадии разбора (`RECIPE_INVALID`). Значения recipe без float, чтобы Python и TypeScript сериализовали их одинаково. ExtractionRun хранит `sourceIrRevisionId` и `recipeHash`.
 
-Повтор той же задачи после сбоя модели или перезапуска worker берёт сохранённую стадию и не разбирает оригинал снова; новая задача reprocess разбирает заново, одинаковый IR не дублируется. Миграция `ProcessingStages1753000000000` только добавляет nullable-колонки, прежние записи не переписываются. Это ещё не processing revision P3: активация facts/chunks одной ревизией и staging индекса не реализованы, настройки индекса в recipe объявлены AI-сервисом, а не подтверждены индексатором.
+Повтор той же задачи после сбоя модели или перезапуска worker берёт сохранённую стадию и не разбирает оригинал снова; новая задача reprocess разбирает заново, одинаковый IR не дублируется. Миграция `ProcessingStages1753000000000` только добавляет nullable-колонки, прежние записи не переписываются. Активация facts/chunks одной ревизией добавлена в [срезе P3](#processing-revision-и-активация-facts-и-chunks-p3-26-сентября-2026); настройки индекса в recipe по-прежнему объявлены AI-сервисом, а не подтверждены индексатором.
+
+## Processing revision и активация facts и chunks (P3), 26 сентября 2026
+
+Каждое успешное извлечение создаёт запись `processing_revisions` (документ, source IR, TextRevision, ExtractionRun, `recipeHash`, статус `PREPARED`/`ACTIVE`/`SUPERSEDED`/`FAILED`, манифест индекса). Идентичность ревизии неизменяема (триггер), у документа не больше одной `ACTIVE` (частичный уникальный индекс), `documents.activeProcessingRevisionId` указывает на неё. Факты новой ревизии сохраняются с `processingRevisionId` и `active=false`, поэтому до активации не видны ни в карточке, ни в timeline, ни в ответах.
+
+Затем backend вызывает `/internal/index` с `revisionId`: AI-сервис кладёт chunks с `metadata.revisionId` рядом с прежними и возвращает манифест. Backend требует совпадения `revisionId` и корректного числа chunks (`INDEX_MANIFEST_INVALID`), затем одной короткой транзакцией под блокировкой документа и ревизии проверяет, что ревизия всё ещё `PREPARED` и текст не менялся, и активирует её: неактивные факты ревизии включаются (кроме дублей сохранённых проверенных фактов), непроверенные факты прежней ревизии выключаются, прежняя `ACTIVE` становится `SUPERSEDED`, тип, дата, сводка и теги документа берутся из того же ExtractionRun, timeline перестраивается, пишется аудит `PROCESSING_REVISION_ACTIVATED`. После commit вызывается `/internal/prune`; если он не прошёл, лишние chunks не видны, потому что поиск фильтрует по ревизии.
+
+`/internal/ask` получает для каждого документа снимка `processingRevisionId` и ищет только chunks этой ревизии; документ без chunks активной ревизии учитывается как непроиндексированный, без подмены chunks другой версии. Во время повторной обработки (`INDEXING`, `EXTRACTING`) документ остаётся в снимке ответа со своей активной ревизией, если её текст совпадает с текущим. Если активная ревизия сменилась во время ответа, ответ отбрасывается, как при удалении или правке.
+
+Сбой индексации оставляет ревизию `PREPARED`; повтор задачи переиспользует её без повторного извлечения. Окончательный сбой или несовпадение манифеста помечают ревизию `FAILED`, прежний снимок остаётся. Правка текста во время подготовки не даёт активировать устаревшую ревизию, и ставится новая обработка. Документы без ревизии (seed, до миграции) читают прежние chunks без `revisionId` до первой повторной обработки. Миграция `ProcessingRevisions1754000000000` только добавляет таблицу и nullable-колонки. MCP не меняется.
+
+Ограничения: правка текста пользователем по-прежнему сразу выключает непроверенные факты, потому что прежний снимок относится к другому тексту; настройки индекса в recipe объявлены, а не подтверждены индексатором; выбора «текущий текст или заново разобрать оригинал» при reprocess в UI нет.
 
 ## Экспериментальный LAB annotator, 25 сентября 2026
 

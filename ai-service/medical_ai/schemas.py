@@ -66,15 +66,23 @@ class IndexRequest(StrictModel):
     text: str = Field(max_length=2000000)
     pages: list[Page] | None = None
     corrections: list[Correction] = Field(default_factory=list)
+    # Stage chunks for one processing revision without replacing the active one.
+    revisionId: str | None = Field(default=None, min_length=1, max_length=200)
 
 
 class RemoveRequest(StrictModel):
     documentId: str
 
 
+class PruneRequest(StrictModel):
+    documentId: str = Field(min_length=1, max_length=200)
+    keepRevisionId: str = Field(min_length=1, max_length=200)
+
+
 class DocumentDate(StrictModel):
     documentId: str
     documentDate: date | None = None
+    processingRevisionId: str | None = None
 
 
 class AskRequest(StrictModel):

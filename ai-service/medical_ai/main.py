@@ -21,7 +21,7 @@ from .privacy import consultation
 from .rag import CorrectiveRAG
 from .recipe import parse_recipe, processing_recipe
 from .source_ir import IR_VERSION, SourceIR, build_source_ir
-from .schemas import AskRequest, ConsultationRequest, IndexRequest, Page, ProcessRequest, RemoveRequest
+from .schemas import AskRequest, ConsultationRequest, IndexRequest, Page, ProcessRequest, PruneRequest, RemoveRequest
 
 
 class Services:
@@ -132,7 +132,11 @@ def create_app(services: Services | None = None) -> FastAPI:
     @app.post("/internal/index", dependencies=[Depends(authorize)])
     def index(body: IndexRequest):
         return services.archive.index_document(body.documentId, body.title, body.version, body.text, body.pages,
-                                               [c.model_dump() for c in body.corrections])
+                                               [c.model_dump() for c in body.corrections], body.revisionId)
+
+    @app.post("/internal/prune", dependencies=[Depends(authorize)])
+    def prune(body: PruneRequest):
+        return services.archive.prune(body.documentId, body.keepRevisionId)
 
     @app.post("/internal/remove", dependencies=[Depends(authorize)])
     def remove(body: RemoveRequest):

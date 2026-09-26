@@ -50,6 +50,8 @@ class Corpus:
                                              metadata TEXT, embedding TEXT);
             CREATE INDEX IF NOT EXISTS chunks_doc ON chunks(document_id);
             CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);
+            CREATE TABLE IF NOT EXISTS revisions(document_id TEXT, revision_id TEXT, hash TEXT, indexed_at TEXT,
+                                                 PRIMARY KEY(document_id, revision_id));
         """)
         self.client = chromadb.PersistentClient(path=str(folder / "chroma"),
                                                settings=ChromaSettings(anonymized_telemetry=False))
@@ -95,16 +97,31 @@ class Corpus:
                     "corpus": self.name, "embeddingModel": self.settings.embedding_model,
                     "chunkSize": self.settings.chunk_size, "chunkOverlap": self.settings.chunk_overlap}
 
+    def _revision_chunk_ids(self, document_id: str, revision_id: str | None) -> list[str]:
+        if revision_id is None:
+            return [r[0] for r in self.db.execute("SELECT id FROM chunks WHERE document_id=?", (document_id,))]
+        return [r[0] for r in self.db.execute(
+            "SELECT id FROM chunks WHERE document_id=? AND json_extract(metadata,'$.revisionId')=?", (document_id, revision_id))]
+
     def index_document(self, document_id: str, title: str, version: int, text: str,
-                       pages: list[Page] | None = None, corrections: list[dict] | None = None) -> dict:
+                       pages: list[Page] | None = None, corrections: list[dict] | None = None,
+                       revision_id: str | None = None) -> dict:
+        """Without revision_id the document's chunks are replaced (legacy). With it, only that
+        processing revision is (re)staged: the active revision stays searchable until activation."""
         content_hash = hashlib.sha256(json.dumps([title, version, text,
             [p.model_dump() for p in pages] if pages else None, corrections,
-            self.settings.embedding_model, self.settings.chunk_size, self.settings.chunk_overlap, SPLITTER_VERSION],
+            self.settings.embedding_model, self.settings.chunk_size, self.settings.chunk_overlap, SPLITTER_VERSION]
+            + ([revision_id] if revision_id is not None else []),
             ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+        manifest = {"revisionId": revision_id, "contentHash": content_hash}
         with self.lock:
-            existing = self.db.execute("SELECT hash FROM documents WHERE id=?", (document_id,)).fetchone()
+            existing = (self.db.execute("SELECT hash FROM documents WHERE id=?", (document_id,)).fetchone()
+                        if revision_id is None else
+                        self.db.execute("SELECT hash FROM revisions WHERE document_id=? AND revision_id=?",
+                                        (document_id, revision_id)).fetchone())
             if existing and existing[0] == content_hash:
-                return {"ok": True, "unchanged": True, **self.status()}
+                return {"ok": True, "unchanged": True, **manifest,
+                        "documentChunks": len(self._revision_chunk_ids(document_id, revision_id)), **self.status()}
             splitter = MedicalTextSplitter(chunk_size=self.settings.chunk_size,
                                            chunk_overlap=self.settings.chunk_overlap)
             chunks = []
@@ -128,15 +145,23 @@ class Corpus:
                 metadata = {"chunkId": chunk_id, "documentId": document_id, "source": title,
                             "version": version, "position": position, "pageNumber": page,
                             "userCorrection": corrected}
+                if revision_id is not None:
+                    metadata["revisionId"] = revision_id
                 new_rows.append((chunk_id, document_id, chunk, json.dumps(metadata, ensure_ascii=False),
                                  json.dumps(embedding)))
-            old_ids = [r[0] for r in self.db.execute("SELECT id FROM chunks WHERE document_id=?", (document_id,))]
+            old_ids = self._revision_chunk_ids(document_id, revision_id)
+            now = datetime.now(timezone.utc).isoformat()
             try:
                 self.db.execute("BEGIN")
-                self.db.execute("DELETE FROM chunks WHERE document_id=?", (document_id,))
+                self.db.executemany("DELETE FROM chunks WHERE id=?", [(i,) for i in old_ids])
                 self.db.executemany("INSERT INTO chunks VALUES(?,?,?,?,?)", new_rows)
-                self.db.execute("INSERT OR REPLACE INTO documents VALUES(?,?,?,?)",
-                                (document_id, content_hash, title, datetime.now(timezone.utc).isoformat()))
+                if revision_id is None:
+                    self.db.execute("DELETE FROM revisions WHERE document_id=?", (document_id,))
+                    self.db.execute("INSERT OR REPLACE INTO documents VALUES(?,?,?,?)", (document_id, content_hash, title, now))
+                else:
+                    # Legacy hash no longer describes the document's chunks; keep the row for file counts.
+                    self.db.execute("INSERT OR REPLACE INTO documents VALUES(?,?,?,?)", (document_id, None, title, now))
+                    self.db.execute("INSERT OR REPLACE INTO revisions VALUES(?,?,?,?)", (document_id, revision_id, content_hash, now))
                 if old_ids:
                     self.collection.delete(ids=old_ids)
                 for start in range(0, len(new_rows), 100):
@@ -150,20 +175,43 @@ class Corpus:
                 self._restore()
                 raise
             self._refresh_sparse()
-            return {"ok": True, "unchanged": False, "documentChunks": len(new_rows), **self.status()}
+            return {"ok": True, "unchanged": False, **manifest, "documentChunks": len(new_rows), **self.status()}
+
+    def prune(self, document_id: str, keep_revision_id: str) -> dict:
+        """After activation: drop every other staged, superseded or legacy chunk set of the document."""
+        with self.lock:
+            ids = [r[0] for r in self.db.execute(
+                "SELECT id FROM chunks WHERE document_id=? AND json_extract(metadata,'$.revisionId') IS NOT ?",
+                (document_id, keep_revision_id))]
+            self.db.executemany("DELETE FROM chunks WHERE id=?", [(i,) for i in ids])
+            self.db.execute("DELETE FROM revisions WHERE document_id=? AND revision_id<>?", (document_id, keep_revision_id))
+            self.db.commit()
+            self._refresh_sparse()
+            if ids:
+                self.collection.delete(ids=ids)
+        return {"ok": True, "removedChunks": len(ids)}
+
+    def visible(self, document_ids: list[str] | None = None, revisions: dict[str, str | None] | None = None) -> list[Document]:
+        """Chunks readable in one snapshot: with `revisions`, only each document's active revision
+        (None = legacy chunks without a revision). Staged or superseded revisions are never visible."""
+        allowed = set(document_ids) if document_ids is not None else None
+        return [d for d in self.documents if (allowed is None or d.metadata["documentId"] in allowed)
+                and (revisions is None or d.metadata.get("revisionId") == revisions.get(d.metadata["documentId"]))]
 
     def remove(self, document_id: str):
         with self.lock:
             ids = [r[0] for r in self.db.execute("SELECT id FROM chunks WHERE document_id=?", (document_id,))]
             self.db.execute("DELETE FROM chunks WHERE document_id=?", (document_id,))
             self.db.execute("DELETE FROM documents WHERE id=?", (document_id,))
+            self.db.execute("DELETE FROM revisions WHERE document_id=?", (document_id,))
             self.db.commit()
             self._refresh_sparse()
             if ids:
                 self.collection.delete(ids=ids)
         return {"ok": True}
 
-    def retrieve(self, query: str, top_k: int = 5, document_ids: list[str] | None = None, *, archive_scan: bool = False) -> list[Document]:
+    def retrieve(self, query: str, top_k: int = 5, document_ids: list[str] | None = None, *, archive_scan: bool = False,
+                 revisions: dict[str, str | None] | None = None) -> list[Document]:
         maximum = 1000 if archive_scan and self.name == "archive" else 20
         if not 1 <= top_k <= maximum:
             raise ServiceError("INVALID_TOP_K", "top_k должен быть от 1 до 20.")
@@ -171,12 +219,12 @@ class Corpus:
             if not self.documents or document_ids == []:
                 return []
             allowed = set(document_ids) if document_ids is not None else None
-            eligible = [d for d in self.documents if allowed is None or d.metadata["documentId"] in allowed]
+            eligible = self.visible(document_ids, revisions)
             if not eligible:
                 return []
             depth = min(max(top_k * 2, self.settings.retrieval_k), len(eligible))
             # Recompute BM25 over the selected corpus so excluded documents cannot affect IDF.
-            sparse_model = self.bm25 if allowed is None else BM25Okapi([tokenize(d.page_content) for d in eligible])
+            sparse_model = self.bm25 if allowed is None and revisions is None else BM25Okapi([tokenize(d.page_content) for d in eligible])
             scores = sparse_model.get_scores(tokenize(query))
             sparse = [eligible[i] for i in sorted(range(len(eligible)), key=lambda i: (-scores[i], eligible[i].metadata["chunkId"]))[:depth]]
             where = {"documentId": {"$in": sorted(allowed)}} if allowed else None

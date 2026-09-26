@@ -6,7 +6,9 @@ export interface Document {
   visit?: Visit | null; laboratory?: Laboratory | null; pages?: { pageNumber: number | null; text: string }[];
   text?: string; textVersion?: number; originalFilename?: string; facts?: Fact[];
   textRevisions?: TextRevision[]; latestJob?: { id: string; status: string; error?: string; errorCode?: string; attempts?: number }; processingError?: string; processingWarnings?: string[]; isSeed?: boolean;
+  processingRevision?: { active: ProcessingRevisionView | null; prepared: ProcessingRevisionView | null };
 }
+export interface ProcessingRevisionView { id: string; status: string; recipeHash: string; textRevisionId: string; createdAt: string; activatedAt: string | null; indexedChunks: number | null }
 export interface TextRevision { id: string; version: number; text?: string; content?: string; createdAt: string; parser?: string }
 export interface Fact {
   id: string; documentId: string; type: string; name: string; valueText: string | null;

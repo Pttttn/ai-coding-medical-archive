@@ -3,10 +3,10 @@ import {irHash,SourceIR,validateSourceIR} from './source-ir';
 import {ParseRecipe,validateParseRecipe,validateProcessingRecipe} from './recipe';
 import {Laboratory,validateLaboratory} from './laboratory';
 import {Injectable,OnApplicationBootstrap,OnApplicationShutdown} from '@nestjs/common';
-import {DataSource} from 'typeorm';
+import {DataSource,EntityManager,In} from 'typeorm';
 import {AiClient,AiError,normalizeTags} from './core';
 import {audit,ensureTags,factSnapshot,rebuildTimeline} from './archive.service';
-import {ASSERTION_STATUSES,Document,DOCUMENT_TYPES,ExtractionRun,FACT_TYPES,FactProvenance,MedicalFact,Page,ProcessingJob,TextRevision} from './entities';
+import {ASSERTION_STATUSES,Document,DOCUMENT_TYPES,ExtractionRun,FACT_TYPES,FactProvenance,MedicalFact,Page,ProcessingJob,ProcessingRevision,TextRevision} from './entities';
 
 type ExtractedFact={type:string;name:string;valueText:string|null;valueNumber:number|null;unit:string|null;eventDate:string|null;assertionStatus:string;confidence:number|null;provenance:{page:number|null;sourceText:string}};
 export interface ProcessResult {
@@ -62,7 +62,7 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
     finally{this.running=false;}
   }
   async run(job:ProcessingJob) {
-    let run:ExtractionRun|undefined;
+    let run:ExtractionRun|undefined,preparedId:string|null=null;
     try {
       const doc=await this.db.getRepository(Document).createQueryBuilder('d').addSelect('d.storagePath').where('d.id=:id',{id:job.documentId}).getOne();
       if(!doc||doc.generation!==job.generation||(doc.deletedAt&&job.operation!=='REMOVE')) {
@@ -73,60 +73,69 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
         await this.db.getRepository(ProcessingJob).update(job.id,{status:'READY',errorCode:null});return;
       }
       let revision=await this.db.getRepository(TextRevision).findOneBy({documentId:doc.id,version:doc.textVersion});
+      let prepared:ProcessingRevision|null=null;
       if(job.operation==='PROCESS') {
         const stage=await this.parseStage(job,doc,revision);
         if(!stage){await this.db.getRepository(ProcessingJob).update(job.id,{status:'SUPERSEDED'});return;}
         revision=stage.revision;
-        await this.setStatus(doc.id,job.generation,'EXTRACTING');
-        run=await this.db.getRepository(ExtractionRun).save({documentId:doc.id,textVersion:revision.version,sourceIrRevisionId:stage.id,status:'RUNNING',validationErrors:[]});
-        const result=await this.ai.call<ProcessResult>('process',{documentId:doc.id,version:revision.version,title:doc.title,sourceIR:stage.ir});
-        result.warnings=[...stage.warnings,...(Array.isArray(result.warnings)?result.warnings:[])];
-        await this.db.getRepository(ExtractionRun).update(run.id,{rawJson:result as any,model:result.model??null,modelDigest:result.modelDigest??null,promptVersion:result.promptVersion??null,schemaVersion:result.schemaVersion??null,parserVersion:result.parserVersion??null});
-        validateExtraction(result);
-        // Extraction must be a projection of exactly the stored parse stage, never a re-parse.
-        if(result.text!==revision.content||irHash(result.pages)!==stage.ir.sourceHash||(result.sourceIR!==undefined&&result.sourceIR.irHash!==stage.ir.irHash))throw new AiError('SOURCE_IR_INVALID');
-        result.sourceIR=stage.ir;
-        const recipeHash=validateProcessingRecipe(result.processingRecipe,stage.parseRecipeHash);
-        if(result.laboratory!=null&&result.visit!=null)throw new AiError('VISIT_ARTIFACT_INVALID');
-        if(result.visit!=null)validateVisit(result.visit,result.sourceIR,result.extraction);
-        if(result.laboratory!=null)validateLaboratory(result.laboratory,result.sourceIR,result.extraction.facts);
-        const applied=await this.db.transaction(async m=>{
-          const current=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
-          if(!current||current.deletedAt||current.generation!==job.generation)return false;
-          if(current.textVersion!==revision!.version)return false;
-          const preserved=await m.getRepository(MedicalFact).createQueryBuilder('f').where('f."documentId"=:id AND f.active = true AND f."reviewStatus" <> :status',{id:doc.id,status:'UNREVIEWED'}).getMany();
-          await m.update(MedicalFact,{documentId:doc.id,reviewStatus:'UNREVIEWED',active:true},{active:false});
-          for(const incoming of result.extraction.facts) {
-            if(preserved.some(f=>sameReviewedFact(f,incoming)))continue;
-            const f=m.create(MedicalFact,{documentId:doc.id,type:incoming.type,name:incoming.name,valueText:incoming.valueText??null,valueNumber:incoming.valueNumber??null,unit:incoming.unit??null,eventDate:incoming.eventDate??null,assertionStatus:incoming.assertionStatus??'UNKNOWN',reviewStatus:'UNREVIEWED',confidence:incoming.confidence??null,originalValue:{},active:true});
-            f.originalValue=factSnapshot(f);await m.save(f);
-            await m.save(FactProvenance,m.create(FactProvenance,{factId:f.id,documentId:doc.id,textRevisionId:revision!.id,textVersion:revision!.version,pageNumber:incoming.provenance.page??null,sourceText:incoming.provenance.sourceText}));
-          }
-          if(!['NOTE','VISIT_TRANSCRIPT'].includes(current.documentType))current.documentType=result.extraction.documentType;
-          if(!current.documentDate)current.documentDate=result.extraction.documentDate??null;
-          current.summary=result.extraction.summary;
-          current.tags=normalizeTags([...current.tags,...result.extraction.tags]);await ensureTags(m,current.tags);
-          current.searchText=[current.title,current.summary,revision!.content].join('\n');current.status='INDEXING';
-          await m.save(current);await rebuildTimeline(m,current);
-          await m.update(ExtractionRun,run!.id,{textVersion:revision!.version,model:result.model??'unknown',modelDigest:result.modelDigest??null,promptVersion:result.promptVersion??'unknown',schemaVersion:result.schemaVersion??'unknown',parserVersion:result.parserVersion??'unknown',status:'READY',rawJson:result as any,recipeHash,completedAt:new Date()});
-          await audit(m,doc.id,'DOCUMENT',doc.id,'EXTRACTION_COMPLETED',null,{runId:run!.id,textVersion:revision!.version});
-          return true;
-        });
-        if(!applied){await this.db.getRepository(ExtractionRun).update(run.id,{status:'SUPERSEDED',completedAt:new Date()});await this.db.getRepository(ProcessingJob).update(job.id,{status:'SUPERSEDED'});return;}
+        prepared=await this.reusablePrepared(job,revision);
+        if(!prepared) {
+          await this.setStatus(doc.id,job.generation,'EXTRACTING');
+          run=await this.db.getRepository(ExtractionRun).save({documentId:doc.id,textVersion:revision.version,sourceIrRevisionId:stage.id,status:'RUNNING',validationErrors:[]});
+          const result=await this.ai.call<ProcessResult>('process',{documentId:doc.id,version:revision.version,title:doc.title,sourceIR:stage.ir});
+          result.warnings=[...stage.warnings,...(Array.isArray(result.warnings)?result.warnings:[])];
+          await this.db.getRepository(ExtractionRun).update(run.id,{rawJson:result as any,model:result.model??null,modelDigest:result.modelDigest??null,promptVersion:result.promptVersion??null,schemaVersion:result.schemaVersion??null,parserVersion:result.parserVersion??null});
+          validateExtraction(result);
+          // Extraction must be a projection of exactly the stored parse stage, never a re-parse.
+          if(result.text!==revision.content||irHash(result.pages)!==stage.ir.sourceHash||(result.sourceIR!==undefined&&result.sourceIR.irHash!==stage.ir.irHash))throw new AiError('SOURCE_IR_INVALID');
+          result.sourceIR=stage.ir;
+          const recipeHash=validateProcessingRecipe(result.processingRecipe,stage.parseRecipeHash);
+          if(result.laboratory!=null&&result.visit!=null)throw new AiError('VISIT_ARTIFACT_INVALID');
+          if(result.visit!=null)validateVisit(result.visit,result.sourceIR,result.extraction);
+          if(result.laboratory!=null)validateLaboratory(result.laboratory,result.sourceIR,result.extraction.facts);
+          // Prepare: new facts are stored inactive under a new revision; the active snapshot is untouched.
+          prepared=await this.db.transaction(async m=>{
+            const current=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
+            if(!current||current.deletedAt||current.generation!==job.generation||current.textVersion!==revision!.version)return null;
+            const rev=await m.save(ProcessingRevision,m.create(ProcessingRevision,{documentId:doc.id,sourceIrRevisionId:stage.id,textRevisionId:revision!.id,extractionRunId:run!.id,recipeHash,status:'PREPARED'}));
+            for(const incoming of result.extraction.facts) {
+              const f=m.create(MedicalFact,{documentId:doc.id,type:incoming.type,name:incoming.name,valueText:incoming.valueText??null,valueNumber:incoming.valueNumber??null,unit:incoming.unit??null,eventDate:incoming.eventDate??null,assertionStatus:incoming.assertionStatus??'UNKNOWN',reviewStatus:'UNREVIEWED',confidence:incoming.confidence??null,originalValue:{},active:false,processingRevisionId:rev.id});
+              f.originalValue=factSnapshot(f);await m.save(f);
+              await m.save(FactProvenance,m.create(FactProvenance,{factId:f.id,documentId:doc.id,textRevisionId:revision!.id,textVersion:revision!.version,pageNumber:incoming.provenance.page??null,sourceText:incoming.provenance.sourceText}));
+            }
+            await m.update(ExtractionRun,run!.id,{textVersion:revision!.version,model:result.model??'unknown',modelDigest:result.modelDigest??null,promptVersion:result.promptVersion??'unknown',schemaVersion:result.schemaVersion??'unknown',parserVersion:result.parserVersion??'unknown',status:'READY',rawJson:result as any,recipeHash,completedAt:new Date()});
+            await m.update(ProcessingJob,job.id,{processingRevisionId:rev.id});
+            await audit(m,doc.id,'DOCUMENT',doc.id,'EXTRACTION_COMPLETED',null,{runId:run!.id,textVersion:revision!.version,processingRevisionId:rev.id});
+            return rev;
+          });
+          if(!prepared){await this.db.getRepository(ExtractionRun).update(run.id,{status:'SUPERSEDED',completedAt:new Date()});await this.db.getRepository(ProcessingJob).update(job.id,{status:'SUPERSEDED'});return;}
+        }
+        preparedId=prepared.id;
       }
       if(!revision)throw new AiError('TEXT_UNAVAILABLE');
       const current=await this.db.getRepository(Document).findOneByOrFail({id:doc.id});
       if(current.deletedAt||current.generation!==job.generation){await this.db.getRepository(ProcessingJob).update(job.id,{status:'SUPERSEDED'});return;}
       await this.setStatus(doc.id,job.generation,'INDEXING');
+      // PROCESS stages the prepared revision; INDEX re-stages the active one (or legacy chunks without revision).
+      const target=prepared?.id??current.activeProcessingRevisionId??null;
       const corrections=await this.db.getRepository(MedicalFact).createQueryBuilder('f').where('f."documentId"=:id AND f.active=true AND f."reviewStatus"<>:status',{id:doc.id,status:'UNREVIEWED'}).getMany();
-      await this.ai.call('index',{documentId:doc.id,title:current.title,version:revision.version,text:revision.content,pages:revision.pages,corrections:corrections.map(f=>({id:f.id,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,reviewStatus:f.reviewStatus}))});
-      await this.db.transaction(async m=>{
+      const manifest=await this.ai.call<{revisionId?:string|null;documentChunks?:number;contentHash?:string}>('index',{documentId:doc.id,title:current.title,version:revision.version,text:revision.content,pages:revision.pages,corrections:corrections.map(f=>({id:f.id,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,reviewStatus:f.reviewStatus})),...(target?{revisionId:target}:{})});
+      if(target&&(manifest?.revisionId!==target||!Number.isSafeInteger(manifest.documentChunks)||manifest.documentChunks!<0))throw new AiError('INDEX_MANIFEST_INVALID');
+      const activated=await this.db.transaction(async m=>{
         const locked=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
-        if(!locked||locked.deletedAt||locked.generation!==job.generation){await m.update(ProcessingJob,job.id,{status:'SUPERSEDED'});return;}
+        if(!locked||locked.deletedAt||locked.generation!==job.generation){await m.update(ProcessingJob,job.id,{status:'SUPERSEDED'});return false;}
+        if(prepared) {
+          const rev=await m.getRepository(ProcessingRevision).findOne({where:{id:prepared.id},lock:{mode:'pessimistic_write'}});
+          if(!rev||rev.status!=='PREPARED'||locked.textVersion!==revision!.version||rev.textRevisionId!==revision!.id){await m.update(ProcessingJob,job.id,{status:'SUPERSEDED'});return false;}
+          await this.activate(m,locked,rev,{revisionId:rev.id,documentChunks:manifest.documentChunks!,contentHash:manifest.contentHash??null});
+        }
         locked.status='READY';locked.errorCode=null;await m.save(locked);
         await m.update(ProcessingJob,job.id,{status:'READY',errorCode:null});
-        await audit(m,doc.id,'DOCUMENT',doc.id,'INDEXING_COMPLETED',null,{textVersion:revision!.version});
+        await audit(m,doc.id,'DOCUMENT',doc.id,'INDEXING_COMPLETED',null,{textVersion:revision!.version,processingRevisionId:target});
+        return true;
       });
+      // Older chunk sets are unreadable once the pointer moved; removing them is only cleanup.
+      if(activated&&prepared)await this.ai.call('prune',{documentId:doc.id,keepRevisionId:prepared.id}).catch(()=>undefined);
     }catch(e) {
       const code=e instanceof AiError?e.safeCode:'PROCESSING_FAILED';
       if(run)await this.db.getRepository(ExtractionRun).update({id:run.id,status:'RUNNING'},{status:'FAILED',validationErrors:[code],completedAt:new Date()});
@@ -134,8 +143,37 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
       const retry=job.operation==='REMOVE'||(transient&&job.attempt<3);
       await this.db.getRepository(ProcessingJob).update(job.id,{status:retry?'QUEUED':'FAILED',errorCode:code,availableAt:retry?new Date(Date.now()+Math.min(job.attempt*15000,60000)):null});
       if(!retry||job.operation!=='REMOVE') await this.db.getRepository(Document).createQueryBuilder().update().set({status:code==='UNSUPPORTED_OCR_REQUIRED'?'UNSUPPORTED_OCR_REQUIRED':retry?'UPLOADED':'FAILED',errorCode:code}).where('id=:id AND generation=:generation AND "deletedAt" IS NULL',{id:job.documentId,generation:job.generation}).execute();
+      // A prepared revision that will not be retried never becomes visible.
+      if(!retry&&preparedId)await this.db.getRepository(ProcessingRevision).update({id:preparedId,status:'PREPARED'},{status:'FAILED'});
       if(!retry)await audit(this.db.manager,job.documentId,'DOCUMENT',job.documentId,'PROCESSING_FAILED',null,{code,jobId:job.id});
     }
+  }
+  /** A retry of the same job continues from its prepared revision instead of extracting again. */
+  private async reusablePrepared(job:ProcessingJob,revision:TextRevision):Promise<ProcessingRevision|null> {
+    if(!job.processingRevisionId)return null;
+    return this.db.getRepository(ProcessingRevision).findOneBy({id:job.processingRevisionId,documentId:job.documentId,textRevisionId:revision.id,status:'PREPARED'});
+  }
+  /** Switches the document's snapshot: facts, summary, timeline and the readable index revision change together. */
+  private async activate(m:EntityManager,doc:Document,rev:ProcessingRevision,indexManifest:NonNullable<ProcessingRevision['indexManifest']>) {
+    const run=await m.findOneByOrFail(ExtractionRun,{id:rev.extractionRunId});
+    const extraction=(run.rawJson as ProcessResult).extraction;
+    // Reviewed facts are the user's overlay and stay; a new fact duplicating one of them stays inactive.
+    const preserved=await m.getRepository(MedicalFact).createQueryBuilder('f').where('f."documentId"=:id AND f.active = true AND f."reviewStatus" <> :status',{id:doc.id,status:'UNREVIEWED'}).getMany();
+    await m.update(MedicalFact,{documentId:doc.id,reviewStatus:'UNREVIEWED',active:true},{active:false});
+    const incoming=await m.find(MedicalFact,{where:{processingRevisionId:rev.id}});
+    const visible=incoming.filter(f=>!preserved.some(p=>sameReviewedFact(p,f as unknown as ExtractedFact)));
+    if(visible.length)await m.update(MedicalFact,{id:In(visible.map(f=>f.id))},{active:true});
+    await m.update(ProcessingRevision,{documentId:doc.id,status:'ACTIVE'},{status:'SUPERSEDED'});
+    await m.update(ProcessingRevision,rev.id,{status:'ACTIVE',activatedAt:new Date(),indexManifest});
+    const text=await m.findOneByOrFail(TextRevision,{id:rev.textRevisionId});
+    if(!['NOTE','VISIT_TRANSCRIPT'].includes(doc.documentType))doc.documentType=extraction.documentType;
+    if(!doc.documentDate)doc.documentDate=extraction.documentDate??null;
+    doc.summary=extraction.summary;
+    doc.tags=normalizeTags([...doc.tags,...extraction.tags]);await ensureTags(m,doc.tags);
+    doc.searchText=[doc.title,doc.summary,text.content].join('\n');
+    doc.activeProcessingRevisionId=rev.id;
+    await m.save(doc);await rebuildTimeline(m,doc);
+    await audit(m,doc.id,'DOCUMENT',doc.id,'PROCESSING_REVISION_ACTIVATED',null,{processingRevisionId:rev.id,facts:visible.length,chunks:indexManifest.documentChunks});
   }
   /** Deterministic parse stage, committed before any model call. A retry of the same job reuses it. */
   private async parseStage(job:ProcessingJob,doc:Document,revision:TextRevision|null):Promise<{id:string;ir:SourceIR;parseRecipeHash:string;revision:TextRevision;warnings:string[]}|null> {

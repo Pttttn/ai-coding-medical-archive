@@ -61,7 +61,7 @@ def processing_recipe(settings, provider, parser_version: str, method: str) -> d
         'generationOptions': options,
         'annotation': {**annotation, 'factSchemaVersion': SCHEMA_VERSION,
                        'maxFactsPerBatch': None if method != 'legacy' else settings.extraction_max_facts_per_batch},
-        # Declared index settings of this AI service; per-revision index staging is P3.
+        # Declared index settings of this AI service; the index is staged per processing revision (P3).
         'index': {'chunkerVersion': SPLITTER_VERSION, 'chunkSize': settings.chunk_size, 'chunkOverlap': settings.chunk_overlap,
                   'embeddingModel': settings.embedding_model, 'embeddingDigest': _digest(models, settings.embedding_model)},
     })

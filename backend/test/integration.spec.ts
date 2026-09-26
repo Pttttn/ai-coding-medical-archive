@@ -13,7 +13,7 @@ import {AiClient,AiError,contentHash} from '../src/core';
 import {createDataSource} from '../src/database';
 import {ProcessingService} from '../src/processing.service';
 import {SafeErrorFilter} from '../src/error.filter';
-import {Document,ProcessingJob,Consultation,ExtractionRun} from '../src/entities';
+import {Document,ProcessingJob,Consultation,ExtractionRun,MedicalFact,ProcessingRevision} from '../src/entities';
 import {SeedService} from '../src/seed.service';
 
 const suite=process.env.TEST_DATABASE_URL?describe:describe.skip;
@@ -42,6 +42,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
       return {text,pages:[{pageNumber:null,text}],extraction:{documentType:'LAB_REPORT',documentDate:null,summary:'Local extraction',tags:['lipid'],facts:[{type:'LAB_RESULT',name:'LDL',valueText:null,valueNumber:4.7,unit:'mmol/L',eventDate:null,assertionStatus:'CONFIRMED',confidence:0.8,provenance:{page:null,sourceText:text}}]},model:'unit-double',promptVersion:'1',schemaVersion:'1',parserVersion:'1',processingRecipe:processingRecipe('synthetic-test')};
     }
     if(route==='ask')return {answer:'LDL 4.7 mmol/L.',sources:body.documentIds.map((id:string)=>({documentId:id,source:id,chunkId:'test-chunk',position:0,text:'LDL 4.7 mmol/L.'})),insufficientContext:false};
+    if(route==='index')return {ok:true,revisionId:body.revisionId??null,documentChunks:1,contentHash:'0'.repeat(64)};
     if(route==='consultation')return {content:'# Consultation\nNo fever. LDL 4.7 mmol/L. Dose 20 mg.',warnings:[]};
     return {ok:true};
   };
@@ -52,7 +53,8 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     await db.getRepository(Document).update(d.id,{documentDate:'2026-01-15'});
     ai.call.mockClear();
     await request(app.getHttpServer()).post('/api/ask').send({question:'Какие отклонения?',dateFrom:'2025-09-24',dateTo:'2026-09-24'}).expect(201);
-    expect(ai.call).toHaveBeenCalledWith('ask',expect.objectContaining({dateFrom:'2025-09-24',dateTo:'2026-09-24',documents:[{documentId:d.id,documentDate:'2026-01-15'}]}));
+    expect(ai.call).toHaveBeenCalledWith('ask',expect.objectContaining({dateFrom:'2025-09-24',dateTo:'2026-09-24',documents:[{documentId:d.id,documentDate:'2026-01-15',processingRevisionId:d.activeProcessingRevisionId}]}));
+    expect(d.activeProcessingRevisionId).toBeTruthy();
     ai.call.mockClear();
     await request(app.getHttpServer()).post('/api/ask').send({question:'Какие отклонения?',dateFrom:'2026-09-24',dateTo:'2025-09-24'}).expect(400);
     expect(ai.call).not.toHaveBeenCalled();
@@ -261,9 +263,83 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     expect(await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id])).toHaveLength(0);
     expect(calls('process')).toHaveLength(0);
   });
+  // P3: a reprocess whose extraction reports LDL 3.1 instead of 4.7, with hooks inside the index call.
+  const reprocessWith=(onIndex:(body:any)=>Promise<void>|void=()=>undefined)=>ai.call.mockImplementation(async(route:string,body:any)=>{
+    const r=await mock(route,body);
+    if(route==='process')r.extraction.facts[0].valueNumber=3.1;
+    if(route==='index')await onIndex(body);
+    return r;
+  });
+  const values=async(id:string)=>(await request(app.getHttpServer()).get('/api/documents/'+id).expect(200)).body.facts.map((f:any)=>f.valueNumber);
+  it('keeps the previous facts and chunks as one snapshot until the new revision is activated',async()=>{
+    const d=await ready();const first=d.activeProcessingRevisionId;
+    expect(d.processingRevision.active).toMatchObject({id:first,status:'ACTIVE',indexedChunks:1});
+    let during:any;
+    reprocessWith(async body=>{
+      const answer=(await request(app.getHttpServer()).post('/api/ask').send({question:'What is LDL?'}).expect(201)).body;
+      const asked=ai.call.mock.calls.filter(([r])=>r==='ask').at(-1)![1];
+      during={staged:body.revisionId,facts:await values(d.id),doc:await db.getRepository(Document).findOneByOrFail({id:d.id}),answer,asked};
+    });
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);await worker.tick();
+    expect(during.staged).not.toBe(first);expect(during.facts).toEqual([4.7]);expect(during.doc.activeProcessingRevisionId).toBe(first);
+    // While indexing, the unchanged document stays answerable from its previous complete snapshot.
+    expect(during.doc.status).toBe('INDEXING');expect(during.asked.documents).toEqual([expect.objectContaining({documentId:d.id,processingRevisionId:first})]);
+    expect(during.answer.insufficientContext).toBe(false);
+    const after=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(after.activeProcessingRevisionId).toBe(during.staged);expect(after.facts.map((f:any)=>f.valueNumber)).toEqual([3.1]);
+    expect(after.facts[0].processingRevisionId).toBe(during.staged);expect(after.processingRevision.prepared).toBeNull();
+    expect((await db.getRepository(ProcessingRevision).findOneByOrFail({id:first})).status).toBe('SUPERSEDED');
+    expect(ai.call).toHaveBeenCalledWith('prune',{documentId:d.id,keepRevisionId:during.staged});
+    await expect(db.query('UPDATE processing_revisions SET "recipeHash"=$1 WHERE id=$2',['0'.repeat(64),first])).rejects.toThrow('immutable');
+  });
+  it('keeps the old snapshot after an index failure and activates on retry without extracting again',async()=>{
+    const d=await ready();let failures=1;
+    reprocessWith(()=>{if(failures-->0)throw new AiError('EMBEDDING_UNAVAILABLE');});
+    const job=(await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201)).body.jobId;await worker.tick();
+    const pending=await db.getRepository(ProcessingJob).findOneByOrFail({id:job});
+    expect(pending.status).toBe('QUEUED');expect(pending.processingRevisionId).toBeTruthy();
+    expect(await values(d.id)).toEqual([4.7]);
+    expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).activeProcessingRevisionId).toBe(d.activeProcessingRevisionId);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body.processingRevision.prepared.id).toBe(pending.processingRevisionId);
+    const extractions=ai.call.mock.calls.filter(([r])=>r==='process').length;
+    await db.getRepository(ProcessingJob).update(job,{availableAt:null});await worker.tick();
+    expect(ai.call.mock.calls.filter(([r])=>r==='process')).toHaveLength(extractions);
+    expect(await values(d.id)).toEqual([3.1]);
+    expect(await db.getRepository(MedicalFact).countBy({processingRevisionId:pending.processingRevisionId!})).toBe(1);
+    expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).activeProcessingRevisionId).toBe(pending.processingRevisionId);
+  });
+  it('never exposes a revision whose index manifest does not match it',async()=>{
+    const d=await ready();
+    ai.call.mockImplementation(async(route:string,body:any)=>{const r=await mock(route,body);if(route==='process')r.extraction.facts[0].valueNumber=3.1;return route==='index'?{...r,revisionId:randomUUID()}:r;});
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);await worker.tick();
+    const doc=await db.getRepository(Document).findOneByOrFail({id:d.id});
+    expect(doc.errorCode).toBe('INDEX_MANIFEST_INVALID');expect(doc.activeProcessingRevisionId).toBe(d.activeProcessingRevisionId);
+    const failed=await db.getRepository(ProcessingRevision).findOneByOrFail({documentId:d.id,status:'FAILED'});
+    expect(await db.getRepository(MedicalFact).findBy({processingRevisionId:failed.id})).toEqual([expect.objectContaining({active:false,valueNumber:3.1})]);
+    expect(await db.getRepository(MedicalFact).findBy({documentId:d.id,active:true})).toEqual([expect.objectContaining({valueNumber:4.7})]);
+  });
+  it('supersedes a prepared revision edited during staging and processes the document again',async()=>{
+    const d=await ready();
+    reprocessWith(async()=>{await request(app.getHttpServer()).patch('/api/documents/'+d.id).send({title:'Renamed during indexing'}).expect(200);});
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);await worker.tick();
+    const doc=await db.getRepository(Document).findOneByOrFail({id:d.id});
+    expect(doc.activeProcessingRevisionId).toBe(d.activeProcessingRevisionId);
+    expect(await values(d.id)).toEqual([4.7]);
+    const next=await db.getRepository(ProcessingJob).findOneOrFail({where:{documentId:d.id},order:{createdAt:'DESC'}});
+    expect(next.operation).toBe('PROCESS');expect(next.status).toBe('QUEUED');
+    ai.call.mockImplementation(mock);await worker.tick();
+    expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('READY');
+  });
+  it('discards an answer when the document switched revision while it was generated',async()=>{
+    const d=await ready();
+    ai.call.mockImplementation(async(route:string,body:any)=>{if(route==='ask')await db.query('UPDATE documents SET "activeProcessingRevisionId"=NULL WHERE id=$1',[d.id]);return mock(route,body);});
+    const r=await request(app.getHttpServer()).post('/api/ask').send({question:'What is LDL?'}).expect(201);
+    expect(r.body.insufficientContext).toBe(true);expect(r.body.sources).toHaveLength(0);
+  });
   it('migrates existing source text without rewriting it',async()=>{
     // The note exists before source IR and processing stages are migrated in.
     const d=await note();
+    await db.undoLastMigration();
     await db.undoLastMigration();
     await db.undoLastMigration();
     await db.undoLastMigration();
@@ -273,7 +349,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     expect(after.text).toBe('LDL 4.7 mmol/L.');expect(after.textVersion).toBe(1);
     await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200);
   });
-  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(4);});
+  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(5);});
   it('validates unknown properties and empty title at the API boundary',async()=>{await request(app.getHttpServer()).post('/api/documents/note').send({title:' ',text:'ok text',storagePath:'/secret'}).expect(400);});
   it('returns durable IDs before inference and completes the worker job',async()=>{const d=await note();expect(d.jobId).toBeDefined();expect(ai.call).not.toHaveBeenCalled();await worker.tick();const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});expect(job.status).toBe('READY');expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('READY');});
   it('detects duplicate text documents with safe conflict error',async()=>{await note();const r=await request(app.getHttpServer()).post('/api/documents/note').send({title:'Second',text:'LDL 4.7 mmol/L.'}).expect(409);expect(r.body.code).toBe('DUPLICATE');expect(r.body).not.toHaveProperty('query');});
@@ -376,7 +452,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     expect((await request(app.getHttpServer()).get('/api/consultations?q=Review').expect(200)).body.items[0].responseCount).toBe(1);
   });
   it('upgrades existing reviewed consultations without losing drafts',async()=>{
-    await db.undoLastMigration();await db.undoLastMigration();
+    await db.undoLastMigration();await db.undoLastMigration();await db.undoLastMigration();
     const reviewed=await db.getRepository(Consultation).save({question:'Legacy reviewed',content:'Exact legacy text',contentHash:contentHash('Exact legacy text'),reviewedHash:contentHash('Exact legacy text'),status:'REVIEWED',warnings:[],sourceRefs:[],contexts:[]});
     const draft=await db.getRepository(Consultation).save({question:'Legacy draft',content:'Draft text',contentHash:contentHash('Draft text'),reviewedHash:null,warnings:[],sourceRefs:[],contexts:[]});
     await db.runMigrations();
