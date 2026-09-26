@@ -44,8 +44,49 @@ def letter_suffix(index: int) -> str:
             return suffix
 
 
+# Single words that are both personal names and medical words or eponyms. A lone name part from
+# this list is never propagated on its own: "Mark Stone" is hidden, "kidney stone" stays intact.
+MEDICAL_NAME_STOPLIST = frozenset({
+    "addison", "alzheimer", "baker", "barrett", "bell", "black", "blood", "bone", "bright", "brown",
+    "cold", "crohn", "cushing", "down", "fever", "fisher", "gilbert", "glass", "graves", "green",
+    "head", "heart", "hodgkin", "hunter", "huntington", "kaposi", "lamb", "liver", "lung", "march",
+    "marfan", "may", "paget", "parkinson", "raynaud", "reiter", "rose", "still", "stone", "tourette",
+    "turner", "white", "wilson", "young",
+    "аддисон", "альцгеймер", "базедов", "боткин", "вера", "крон", "кушинг", "любовь", "мороз",
+    "надежда", "паркинсон", "роза",
+})
+CYRILLIC_WORD = r"[А-ЯЁ][а-яё]+(?:-[А-ЯЁ][а-яё]+)?"
+PATRONYMIC = r"[А-ЯЁ][а-яё]+(?:ович|евич|ьич|ич|овна|евна|ична|инична)"
+# Unlabelled names that can be recognised without a model: Russian full names with a patronymic,
+# surnames with initials, and names after an honorific. Plain English "First Last" stays with the model.
+UNLABELLED_NAMES = (
+    ("PERSON", rf"(?<!\w)(?P<name>{CYRILLIC_WORD}[ \t]+{CYRILLIC_WORD}[ \t]+{PATRONYMIC}"
+               rf"|{CYRILLIC_WORD}[ \t]+{PATRONYMIC}(?:[ \t]+{CYRILLIC_WORD})?)(?!\w)"),
+    ("PERSON", rf"(?<!\w)(?P<name>{CYRILLIC_WORD}[ \t]+[А-ЯЁ]\.[ \t]?[А-ЯЁ]\."
+               rf"|[А-ЯЁ]\.[ \t]?[А-ЯЁ]\.[ \t]?{CYRILLIC_WORD}(?!\w))"),
+    ("DOCTOR", r"(?<!\w)(?P<name>(?:[Dd]r|[Pp]rof|[Дд]-р|[Пп]роф)\.?[ \t]+[A-ZА-ЯЁ][a-zа-яё]+(?:[ \t]+[A-ZА-ЯЁ][a-zа-яё]+)?)(?!\w)"),
+    ("PERSON", r"(?<!\w)(?P<name>(?:Mr|Mrs|Ms|Miss)\.?[ \t]+[A-Z][a-z]+(?:[ \t]+[A-Z][a-z]+)?)(?!\w)"),
+)
+HONORIFIC = r"(?i:dr|prof|mr|mrs|ms|miss|д-р|проф)\.?"
+
+
+def name_parts(name: str) -> list[str]:
+    """Words that identify the person, without honorifics and initials."""
+    return [part for part in name.split() if not re.fullmatch(HONORIFIC, part)
+            and not re.fullmatch(r"(?:[A-ZА-ЯЁ]\.)+", part)]
+
+
+def is_name_part_safe(part: str) -> bool:
+    return len(part) >= 3 and part[0].isupper() and part.casefold() not in MEDICAL_NAME_STOPLIST
+
+
 def redact_known_people(text: str, identifier_context: str = "") -> str:
-    """Propagate names from labels or participant/patient cues without crossing sentence/line boundaries."""
+    """Propagate names from labels, patronymics, initials or honorifics without crossing sentences.
+
+    Multi-word names are replaced regardless of case. A single name part is replaced only as a
+    capitalised, case-sensitive whole word that is not a medical word, so a surname never damages
+    the clinical text around it.
+    """
     # Name matching itself stays case-sensitive; only the cue/label is case-insensitive.
     # Horizontal whitespace never consumes a new line and a period ends the name.
     label_pattern = (
@@ -54,23 +95,35 @@ def redact_known_people(text: str, identifier_context: str = "") -> str:
         r"(?:[ \t]*[:=][ \t]*|[ \t]+(?:named[ \t]+|по[ \t]+имени[ \t]+)?)"
         r"(?P<name>[А-ЯA-ZЁ][а-яa-zё]+(?:[ \t]+[А-ЯA-ZЁ][а-яa-zё]+){1,2})"
     )
-    aliases = {}
-    for match in re.finditer(label_pattern, identifier_context + "\n" + text):
-        name = " ".join(match["name"].split())
-        parts = name.split()
+    source = identifier_context + "\n" + text
+    people = [(match.start(), "DOCTOR" if match["label"].casefold() in {"врач", "doctor"} else "PERSON",
+               match["name"]) for match in re.finditer(label_pattern, source)]
+    for kind, pattern in UNLABELLED_NAMES:
+        people += [(match.start(), kind, match["name"]) for match in re.finditer(pattern, source)]
+    phrases, words = {}, {}
+    for _, kind, raw in sorted(people):
+        name = " ".join(raw.split())
+        parts = name_parts(name)
         variants = {name}
         if len(parts) >= 2:
             pair = [parts[0], parts[1]] if re.search(r"[А-Яа-яЁё]", name) else [parts[0], parts[-1]]
             variants.update((" ".join(pair), " ".join(reversed(pair))))
-        existing = next((aliases[value.casefold()] for value in variants if value.casefold() in aliases), None)
+        existing = next((phrases.get(value.casefold()) or words.get(value) for value in variants
+                         if phrases.get(value.casefold()) or words.get(value)), None)
         if existing is None:
-            kind = "DOCTOR" if match["label"].casefold() in {"врач", "doctor"} else "PERSON"
-            existing = f"[{kind}_{letter_suffix(len(set(aliases.values())))}]"
-        variants.update(part for part in parts if len(part) >= 3)
+            existing = f"[{kind}_{letter_suffix(len(set(phrases.values()) | set(words.values())))}]"
         for value in variants:
-            aliases.setdefault(value.casefold(), existing)
-    for name in sorted(aliases, key=len, reverse=True):
-        text = re.sub(r"(?<!\w)" + re.escape(name) + r"(?!\w)", lambda _: aliases[name], text, flags=re.I)
+            if len(value.split()) >= 2:
+                phrases.setdefault(value.casefold(), existing)
+            elif is_name_part_safe(value):
+                words.setdefault(value, existing)
+        for part in parts:
+            if is_name_part_safe(part):
+                words.setdefault(part, existing)
+    for name in sorted(phrases, key=len, reverse=True):
+        text = re.sub(r"(?<!\w)" + re.escape(name) + r"(?!\w)", lambda _: phrases[name], text, flags=re.I)
+    for name in sorted(words, key=len, reverse=True):
+        text = re.sub(r"(?<!\w)" + re.escape(name) + r"(?!\w)", lambda _: words[name], text)
     return text
 
 
@@ -80,7 +133,11 @@ def deterministic_sanitize(text: str, identifier_context: str = "") -> str:
         (r"(?i)\b[\w.+-]+@[\w.-]+\.[a-zа-я]{2,}\b", "[EMAIL]"),
         (r"(?<!\w)(?:\+7|\+1|8)[ \t]*[(-]?\d{3}[) \t-]*\d{3}[ \t-]*\d{2}[ \t-]*\d{2}(?!\d)", "[PHONE]"),
         (r"(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b", "[INTERNAL_REF]"),
-        (r"(?i)(?:[A-Z]:[\\/]|/(?:data|home|Users|uploads|app)/)[^\s\n<>]+", "[LOCAL_PATH]"),
+        # Any absolute path with a directory, a home or relative ./ path, and a relative path to a document.
+        # Ratios (120/80), units (mg/kg, мг/кг/сут) and dates never start a segment after "/" without a letter before it.
+        (r"(?i)(?:[A-Z]:[\\/]|~/|(?<![\w/:.])\.{0,2}/(?=[\w.-]+/))[^\s<>]*[^\s<>.,;:!?)\]'\"]", "[LOCAL_PATH]"),
+        (r"(?i)(?<![\w/.-])[A-Za-z_][\w.-]*/(?:[\w.-]+/)*[\w.-]+\."
+         r"(?:pdf|docx?|txt|md|csv|json|ya?ml|png|jpe?g|tiff?|html?|xml|log)\b", "[LOCAL_PATH]"),
         (r"(?i)\b[^\s/\\]+\.(?:pdf|docx?|txt|md|csv|json|yaml)\b", "[SOURCE_FILE]"),
         (r"(?im)\b(?:адрес|address|клиника|clinic|hospital)[ \t]*[:=][ \t]*[^\n;.]+", "[LOCATION]"),
     ]
@@ -141,6 +198,12 @@ def reject_numeric_identifier_collisions(fields: list[str], context: str):
             if re.search(r"(?<!\w)" + re.escape(value) + r"(?!\w)", remaining):
                 raise ServiceError("CLINICAL_CONTENT_CHANGED", "Числовой идентификатор неоднозначен; выдача остановлена.", 502)
 
+def span_pattern(span: str) -> re.Pattern:
+    """Match a span only where it does not begin or end in the middle of a word."""
+    return re.compile(("(?<!\\w)" if re.match(r"\w", span) else "") + re.escape(span)
+                      + ("(?!\\w)" if re.search(r"\w$", span) else ""))
+
+
 def sanitize_fields(provider: Any, fields: list[str], *, identifier_context: str = "",
                     strict: bool = False) -> dict:
     """Shared rules + local model. Only substitutions are accepted, never rewritten model prose.
@@ -172,10 +235,11 @@ def sanitize_fields(provider: Any, fields: list[str], *, identifier_context: str
     except JSONSchemaError as exc:
         raise ServiceError("PRIVACY_CHECK_FAILED", "Локальная проверка приватности вернула неверный результат.", 502) from exc
     warnings, replacements = [], {}
-    combined = "\n".join(cleaned)
+    taken = set(re.findall(r"\[[A-Z]+_[A-Z]+\]", "\n".join(cleaned)))
     for item in output["identifiers"]:
         span, category = item["text"], item["category"]
-        if span not in combined:
+        # A span must lie inside one field; one that crosses fields could never be replaced.
+        if not any(span in value for value in cleaned):
             if strict:
                 raise ServiceError("PRIVACY_CHECK_FAILED", "Проверка приватности не завершена.", 502)
             continue
@@ -190,9 +254,22 @@ def sanitize_fields(provider: Any, fields: list[str], *, identifier_context: str
                 raise ServiceError("PRIVACY_CHECK_FAILED", "Проверка приватности не завершена.", 502)
             warnings.append("Обнаружен возможный идентификатор с числами/отрицанием: требуется ручное удаление.")
             continue
-        replacements.setdefault(span, f"[{category}_{letter_suffix(len(replacements))}]")
+        # A model span is replaced only as whole words. A short span, a medical word or a span that
+        # occurs only inside longer words ("ин" in "Метформин") would damage the text instead.
+        if (len(span.strip()) < 3 or span.strip().casefold() in MEDICAL_NAME_STOPLIST
+                or not any(span_pattern(span).search(value) for value in cleaned)):
+            if strict:
+                raise ServiceError("PRIVACY_CHECK_FAILED", "Проверка приватности не завершена.", 502)
+            warnings.append("Локальная модель отметила фрагмент, который нельзя заменить без порчи текста; проверьте его вручную.")
+            continue
+        if span not in replacements:
+            index = 0
+            while f"[{category}_{letter_suffix(index)}]" in taken:
+                index += 1
+            replacements[span] = f"[{category}_{letter_suffix(index)}]"
+            taken.add(replacements[span])
     for span in sorted(replacements, key=len, reverse=True):
-        cleaned = [value.replace(span, replacements[span]) for value in cleaned]
+        cleaned = [span_pattern(span).sub(lambda _: replacements[span], value) for value in cleaned]
     cleaned = [deterministic_sanitize(value, context) for value in cleaned]
     if ([clinical_signature(value) for value in cleaned] != before
             or [protected_clinical_values(value) for value in cleaned] != protected_before):
