@@ -132,7 +132,8 @@ def create_app(services: Services | None = None) -> FastAPI:
     @app.post("/internal/index", dependencies=[Depends(authorize)])
     def index(body: IndexRequest):
         return services.archive.index_document(body.documentId, body.title, body.version, body.text, body.pages,
-                                               [c.model_dump() for c in body.corrections], body.revisionId)
+                                               [c.model_dump() for c in body.corrections], body.revisionId,
+                                               body.expectedIndexSettings.model_dump() if body.expectedIndexSettings else None)
 
     @app.post("/internal/prune", dependencies=[Depends(authorize)])
     def prune(body: PruneRequest):

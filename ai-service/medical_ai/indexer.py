@@ -18,6 +18,7 @@ from .chunking import SPLITTER_VERSION, MedicalTextSplitter
 from .config import Settings
 from .errors import ServiceError
 from .parsing import SUPPORTED_EXTENSIONS, confined_path, parse_file
+from .recipe import index_settings
 from .schemas import Page
 
 
@@ -105,15 +106,26 @@ class Corpus:
 
     def index_document(self, document_id: str, title: str, version: int, text: str,
                        pages: list[Page] | None = None, corrections: list[dict] | None = None,
-                       revision_id: str | None = None) -> dict:
+                       revision_id: str | None = None, expected_settings: dict | None = None) -> dict:
         """Without revision_id the document's chunks are replaced (legacy). With it, only that
         processing revision is (re)staged: the active revision stays searchable until activation."""
+        # A staged revision reports the index settings actually used, so the backend can compare them with
+        # the extraction recipe; a changed embedding digest also changes the hash and forces re-embedding.
+        used = None
+        if revision_id is not None:
+            health = self.provider.health()
+            used = index_settings(self.settings, health.get("models", []))
+            if used["embeddingDigest"] is None and health.get("ollama") is False:
+                raise ServiceError("EMBEDDING_UNAVAILABLE", "Локальная embedding-модель недоступна.", 503)
+            # Refuse before writing: chunks of a revision are built only with the settings its recipe names.
+            if expected_settings is not None and expected_settings != used:
+                raise ServiceError("INDEX_RECIPE_MISMATCH", "Настройки индекса не совпадают с рецептом обработки.", 409)
         content_hash = hashlib.sha256(json.dumps([title, version, text,
             [p.model_dump() for p in pages] if pages else None, corrections,
             self.settings.embedding_model, self.settings.chunk_size, self.settings.chunk_overlap, SPLITTER_VERSION]
-            + ([revision_id] if revision_id is not None else []),
+            + ([revision_id, used] if revision_id is not None else []),
             ensure_ascii=False, sort_keys=True).encode()).hexdigest()
-        manifest = {"revisionId": revision_id, "contentHash": content_hash}
+        manifest = {"revisionId": revision_id, "contentHash": content_hash, "indexSettings": used}
         with self.lock:
             existing = (self.db.execute("SELECT hash FROM documents WHERE id=?", (document_id,)).fetchone()
                         if revision_id is None else

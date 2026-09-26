@@ -1,7 +1,7 @@
 import {Transform, Type} from 'class-transformer';
 import {ArrayMaxSize, IsArray, IsDateString, IsIn, IsInt, IsNumber, IsOptional, IsString, IsUUID, Length, Matches, Max, MaxLength, Min, ValidateIf} from 'class-validator';
 import {ApiProperty, ApiPropertyOptional} from '@nestjs/swagger';
-import {ASSERTION_STATUSES,DOCUMENT_TYPES,FACT_TYPES,REVIEW_STATUSES,STATUSES} from './entities';
+import {ASSERTION_STATUSES,DOCUMENT_TYPES,FACT_TYPES,REPROCESS_MODES,REVIEW_STATUSES,STATUSES} from './entities';
 
 export class PaginationDto {
   @ApiPropertyOptional({default:1,minimum:1}) @Type(()=>Number) @IsInt() @Min(1) page=1;
@@ -66,6 +66,10 @@ export class AskDto {
 export class PrepareConsultationDto extends AskDto {
   @ApiPropertyOptional({type:[String],maxItems:8,description:'Explicit ready source documents; omitted for automatic RAG selection'})
   @ArrayMaxSize(8) declare documentIds?:string[];
+}
+export class ReprocessDto {
+  @ApiPropertyOptional({enum:REPROCESS_MODES,description:'CURRENT_TEXT reuses the stored parse of the current text; ORIGINAL parses the original file again. Omitted: automatic choice.'})
+  @IsOptional() @IsIn(REPROCESS_MODES) mode?:typeof REPROCESS_MODES[number];
 }
 export class TagDto {
   @ApiProperty() @IsString() @Length(1,80) @Matches(/\S/) name:string;

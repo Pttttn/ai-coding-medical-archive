@@ -7,8 +7,11 @@ export interface Document {
   text?: string; textVersion?: number; originalFilename?: string; facts?: Fact[];
   textRevisions?: TextRevision[]; latestJob?: { id: string; status: string; error?: string; errorCode?: string; attempts?: number }; processingError?: string; processingWarnings?: string[]; isSeed?: boolean;
   processingRevision?: { active: ProcessingRevisionView | null; prepared: ProcessingRevisionView | null };
+  /** Reprocess modes the document supports; the text version the visible facts were extracted from. */
+  reprocessModes?: ReprocessMode[]; factsTextVersion?: number | null;
 }
-export interface ProcessingRevisionView { id: string; status: string; recipeHash: string; textRevisionId: string; createdAt: string; activatedAt: string | null; indexedChunks: number | null }
+export type ReprocessMode = 'CURRENT_TEXT' | 'ORIGINAL';
+export interface ProcessingRevisionView { id: string; status: string; recipeHash: string; textRevisionId: string; textVersion?: number | null; createdAt: string; activatedAt: string | null; indexedChunks: number | null }
 export interface TextRevision { id: string; version: number; text?: string; content?: string; createdAt: string; parser?: string }
 export interface Fact {
   id: string; documentId: string; type: string; name: string; valueText: string | null;
@@ -20,7 +23,7 @@ export interface Provenance { documentId?: string; page?: number; pageNumber?: n
 export interface FactSource { factId: string; documentId: string; textVersion: number; pageNumber: number | null; sourceText: string; documentTitle: string; textRevisionId: string }
 export interface FactRevision { id: string; factId: string; oldValue: unknown; newValue: unknown; changeType: string; createdAt: string }
 export interface HistoryEvent { id: string; action: string; entityType: string; entityId: string; documentId?: string; createdAt: string; payloadBefore?: unknown; payloadAfter?: unknown; before?: unknown; after?: unknown }
-export interface TimelineEvent { id: string; documentId: string; eventType: string; eventDate: string | null; title: string; description: string; category?: string; documentTitle?: string }
+export interface TimelineEvent { id: string; documentId: string; eventType: string; eventDate: string | null; title: string; description: string; category?: string; documentTitle?: string; earlierText?: boolean }
 export interface AskSource { documentDate?: string | null; documentId?: string; source: string; chunkId: string; position: number; pageNumber?: number; text?: string }
 export interface AskAnswer { answer: string; sources: AskSource[]; insufficientContext?: boolean; trace?: unknown; reasonCode?: string; warnings?: string[]; coverage?: { eligibleDocuments: number; scannedDocuments: number; complete: boolean; period: { from: string | null; to: string | null; asOf: string } } }
 export interface Consultation { prompts?: ConsultationPrompt[]; responses?: ConsultationResponse[]; id: string; question: string; content: string; contentHash: string; reviewedHash?: string | null; status: string; warnings: string[]; sourceRefs: {documentId: string; title: string; textVersion: number}[]; contexts?: { text: string }[]; createdAt: string }
