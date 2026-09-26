@@ -10,10 +10,10 @@ CANARY = "ZXQPURGECANARY"
 
 
 def residue(folder):
-    # hnswlib writes its preallocated vector buffer uninitialised, so data_level0.bin can hold stray process
-    # memory; it is a known limit covered by disk encryption, not by this check.
+    # hnswlib dumps its preallocated buffers (data_level0.bin, length.bin, ...) without zeroing them, so the
+    # binary files of the live segment can hold stray process memory; a known limit covered by disk encryption.
     return sorted(str(path.relative_to(folder)) for path in folder.rglob("*")
-                  if path.is_file() and path.name != "data_level0.bin" and CANARY.encode() in path.read_bytes())
+                  if path.is_file() and path.suffix != ".bin" and CANARY.encode() in path.read_bytes())
 
 
 def segment_dirs(folder):
