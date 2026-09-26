@@ -18,6 +18,20 @@ export async function enqueue(m:EntityManager,doc:Document,operation='PROCESS') 
 export async function ensureTags(m:EntityManager,names:string[]) {
   for(const name of normalizeTags(names)) await m.createQueryBuilder().insert().into(Tag).values({name}).orIgnore().execute();
 }
+// A fact value differs from what the document states; the source quote cannot vouch for it.
+const FACT_VALUE_FIELDS=['type','name','valueText','valueNumber','unit','eventDate','assertionStatus'] as const;
+export function differsFromSource(f:MedicalFact,fallback:Record<string,unknown>):boolean {
+  const source=Object.keys(f.originalValue??{}).length?f.originalValue:fallback;
+  return FACT_VALUE_FIELDS.some(k=>(f[k]??null)!==(source[k]??null));
+}
+// Metadata or fact edits only need reindexing when the current text was fully extracted.
+// A pending/failed extraction or a newer text version must be processed again, never skipped.
+export async function followUpOperation(m:EntityManager,doc:Document):Promise<'PROCESS'|'INDEX'> {
+  if(!doc.textVersion)return 'PROCESS';
+  if(await m.count(ProcessingJob,{where:{documentId:doc.id,operation:'PROCESS',status:In(['QUEUED','RUNNING'])}}))return 'PROCESS';
+  const run=await m.findOne(ExtractionRun,{where:{documentId:doc.id},order:{createdAt:'DESC'}});
+  return run?.status==='READY'&&run.textVersion===doc.textVersion?'INDEX':'PROCESS';
+}
 export function factSnapshot(f:MedicalFact):Record<string,unknown> {
   return {type:f.type,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,eventDate:f.eventDate,assertionStatus:f.assertionStatus,reviewStatus:f.reviewStatus};
 }
@@ -129,9 +143,10 @@ export class ArchiveService {
       }
       const revision=await m.findOneBy(TextRevision,{documentId:id,version:doc.textVersion});
       doc.searchText=`${doc.title}\n${doc.summary}\n${revision?.content??''}`;
-      doc.generation++;doc.status=text!==undefined?'UPLOADED':'INDEXING';doc.errorCode=null;
+      const operation=text!==undefined?'PROCESS':await followUpOperation(m,doc);
+      doc.generation++;doc.status=operation==='PROCESS'?'UPLOADED':'INDEXING';doc.errorCode=null;
       await m.save(doc);
-      const job=await enqueue(m,doc,text!==undefined?'PROCESS':doc.textVersion?'INDEX':'PROCESS');
+      const job=await enqueue(m,doc,operation);
       await rebuildTimeline(m,doc);
       await audit(m,id,'DOCUMENT',id,text!==undefined?'TEXT_EDITED':'METADATA_UPDATED',before,{...metadata,tags:doc.tags,textVersion:doc.textVersion});
       return {...doc,searchText:undefined,jobId:job.id};
@@ -151,9 +166,10 @@ export class ArchiveService {
     return this.db.transaction(async m=>{
       const doc=await this.document(id,true,m,true);
       if(!doc.deletedAt) throw new ConflictException('Документ уже активен');
-      doc.deletedAt=null;doc.generation++;doc.status=doc.textVersion?'INDEXING':'UPLOADED';doc.errorCode=null;
+      const operation=await followUpOperation(m,doc);
+      doc.deletedAt=null;doc.generation++;doc.status=operation==='INDEX'?'INDEXING':'UPLOADED';doc.errorCode=null;
       await m.save(doc);
-      const job=await enqueue(m,doc,doc.textVersion?'INDEX':'PROCESS');
+      const job=await enqueue(m,doc,operation);
       await audit(m,id,'DOCUMENT',id,'DOCUMENT_RESTORED');
       return {...doc,jobId:job.id};
     });
@@ -197,12 +213,14 @@ export class ArchiveService {
       if(!f.active) throw new ConflictException('Факт относится к устаревшей обработке');
       const before=factSnapshot(f);
       Object.assign(f,Object.fromEntries(Object.entries(dto).filter(([,value])=>value!==undefined)));
-      if(dto.reviewStatus===undefined) f.reviewStatus='CORRECTED';
+      // A user-changed value is always the user's correction, never a confirmed document claim.
+      if(dto.reviewStatus===undefined||(f.reviewStatus!=='REJECTED'&&differsFromSource(f,before))) f.reviewStatus='CORRECTED';
       await m.save(f);
       await m.save(FactRevision,m.create(FactRevision,{factId:id,oldValue:before,newValue:factSnapshot(f),changeType:f.reviewStatus}));
       await audit(m,f.documentId,'FACT',id,'FACT_CORRECTED',before,factSnapshot(f));
-      doc.generation++;doc.status='INDEXING';doc.errorCode=null;await m.save(doc);
-      const job=await enqueue(m,doc,'INDEX');
+      const operation=await followUpOperation(m,doc);
+      doc.generation++;doc.status=operation==='INDEX'?'INDEXING':'UPLOADED';doc.errorCode=null;await m.save(doc);
+      const job=await enqueue(m,doc,operation);
       await rebuildTimeline(m,doc);
       return {...f,jobId:job.id};
     });
