@@ -4,7 +4,7 @@ import {DataSource, EntityManager, In, IsNull} from 'typeorm';
 import {randomUUID,createHash} from 'node:crypto';
 import {mkdir,realpath,unlink,writeFile} from 'node:fs/promises';
 import {basename,resolve,relative,isAbsolute} from 'node:path';
-import {AuditEvent,Document,ExtractionRun,FactProvenance,FactRevision,MedicalFact,ProcessingJob,ProcessingRevision,Tag,TextRevision,TimelineEvent} from './entities';
+import {AuditEvent,Document,ExtractionRun,FactProvenance,FactRevision,MedicalFact,ProcessingJob,ProcessingRevision,ReprocessMode,Tag,TextRevision,TimelineEvent} from './entities';
 import {CreateNoteDto,DocumentQueryDto,PaginationDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
 import {Laboratory} from './laboratory';
 import {AiClient,contentHash,normalizeTags,paginate,safeStoragePath,validatePdf} from './core';
@@ -12,8 +12,23 @@ import {AiClient,contentHash,normalizeTags,paginate,safeStoragePath,validatePdf}
 export async function audit(m:EntityManager,documentId:string|null,entityType:string,entityId:string,action:string,before:unknown=null,after:unknown=null) {
   return m.save(AuditEvent,m.create(AuditEvent,{documentId,entityType,entityId,action,payloadBefore:before,payloadAfter:after}));
 }
-export async function enqueue(m:EntityManager,doc:Document,operation='PROCESS') {
-  return m.save(ProcessingJob,m.create(ProcessingJob,{documentId:doc.id,operation,generation:doc.generation,status:'QUEUED'}));
+export async function enqueue(m:EntityManager,doc:Document,operation='PROCESS',parseSource:ReprocessMode|null=null) {
+  return m.save(ProcessingJob,m.create(ProcessingJob,{documentId:doc.id,operation,generation:doc.generation,status:'QUEUED',parseSource}));
+}
+/** Stored parse stage of a text revision that CURRENT_TEXT can reuse without parsing again. */
+export async function storedParse(m:EntityManager,textRevisionId:string):Promise<{id:string;content:any;parseRecipeHash:string}|null> {
+  const [row]=await m.query('SELECT id,content,"parseRecipeHash" FROM source_ir_revisions WHERE "textRevisionId"=$1 AND "parseRecipeHash" IS NOT NULL ORDER BY "createdAt" DESC,id LIMIT 1',[textRevisionId]);
+  return row??null;
+}
+/** Reprocess modes a document supports: the current text needs a stored parse or a text without page layout
+ *  (parsing it again keeps it whole); the original needs a stored file. */
+export async function reprocessModes(m:EntityManager,documentId:string):Promise<ReprocessMode[]> {
+  const doc=await m.getRepository(Document).createQueryBuilder('d').addSelect('d.storagePath').where('d.id=:id',{id:documentId}).getOneOrFail();
+  const text=await m.findOneBy(TextRevision,{documentId,version:doc.textVersion});
+  const modes:ReprocessMode[]=[];
+  if(text&&(!text.pages.length||await storedParse(m,text.id)))modes.push('CURRENT_TEXT');
+  if(doc.storagePath)modes.push('ORIGINAL');
+  return modes;
 }
 export async function ensureTags(m:EntityManager,names:string[]) {
   for(const name of normalizeTags(names)) await m.createQueryBuilder().insert().into(Tag).values({name}).orIgnore().execute();
@@ -34,6 +49,16 @@ export async function followUpOperation(m:EntityManager,doc:Document):Promise<'P
   // An extraction prepared but never activated has not reached the archive yet: it must be processed again.
   const rev=await m.findOneBy(ProcessingRevision,{extractionRunId:run.id});
   return !rev||rev.status==='ACTIVE'?'INDEX':'PROCESS';
+}
+/** Text version the visible facts were extracted from: the active revision's, or the last extraction of a legacy
+ *  document. It precedes doc.textVersion while an edit is not yet processed (or its processing failed). */
+export async function factsTextVersion(m:EntityManager,doc:Document):Promise<number|null> {
+  if(doc.activeProcessingRevisionId) {
+    const [row]=await m.query('SELECT tr.version FROM processing_revisions pr JOIN text_revisions tr ON tr.id=pr."textRevisionId" WHERE pr.id=$1',[doc.activeProcessingRevisionId]);
+    return row?.version??null;
+  }
+  const run=await m.findOne(ExtractionRun,{where:{documentId:doc.id,status:'READY'},order:{createdAt:'DESC'}});
+  return run?.textVersion??null;
 }
 export function factSnapshot(f:MedicalFact):Record<string,unknown> {
   return {type:f.type,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,eventDate:f.eventDate,assertionStatus:f.assertionStatus,reviewStatus:f.reviewStatus};
@@ -119,7 +144,9 @@ export class ArchiveService {
       doc.activeProcessingRevisionId?this.db.getRepository(ProcessingRevision).findOneBy({id:doc.activeProcessingRevisionId}):null,
       this.db.getRepository(ProcessingRevision).findOne({where:{documentId:id,status:'PREPARED'},order:{createdAt:'DESC'}}),
     ]);
-    const revisionView=(r:ProcessingRevision|null)=>r?{id:r.id,status:r.status,recipeHash:r.recipeHash,textRevisionId:r.textRevisionId,createdAt:r.createdAt,activatedAt:r.activatedAt,indexedChunks:r.indexManifest?.documentChunks??null}:null;
+    const revisionView=(r:ProcessingRevision|null)=>r?{id:r.id,status:r.status,recipeHash:r.recipeHash,textRevisionId:r.textRevisionId,textVersion:textRevisions.find(t=>t.id===r.textRevisionId)?.version??null,createdAt:r.createdAt,activatedAt:r.activatedAt,indexedChunks:r.indexManifest?.documentChunks??null,indexSettings:r.indexManifest?.indexSettings??null}:null;
+    const modes=doc.deletedAt?[]:await reprocessModes(this.db.manager,id);
+    const factsVersion=await factsTextVersion(this.db.manager,doc);
     const rawWarnings=(extractionRun?.rawJson as {warnings?:unknown}|null)?.warnings;
     const processingWarnings=Array.isArray(rawWarnings)?rawWarnings.filter((warning):warning is string=>typeof warning==='string'):[];
     const recipe=(extractionRun?.rawJson as {processingRecipe?:Record<string,unknown>}|null)?.processingRecipe;
@@ -131,7 +158,7 @@ export class ArchiveService {
     const current=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion&&(!activeRevision||activeRevision.extractionRunId===extractionRun.id);
     const laboratory=current?raw?.laboratory??null:null;
     const visit=current?raw?.visit??null:null;
-    return {...doc,processingRevision:{active:revisionView(activeRevision),prepared:revisionView(preparedRevision)},text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,visit,processingRecipe,extractionProfile:raw?.extractionProfile??'legacy'};
+    return {...doc,reprocessModes:modes,factsTextVersion:factsVersion,processingRevision:{active:revisionView(activeRevision),prepared:revisionView(preparedRevision)},text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,visit,processingRecipe,extractionProfile:raw?.extractionProfile??'legacy'};
   }
   async revision(id:string,version:number) {
     await this.document(id,true);
@@ -149,7 +176,7 @@ export class ArchiveService {
         doc.textVersion++;
         if(doc.sourceType==='TEXT') doc.sha256=contentHash(text);
         await m.save(TextRevision,m.create(TextRevision,{documentId:id,version:doc.textVersion,content:text,pages:[],parser:'user-edit'}));
-        await m.update(MedicalFact,{documentId:id,reviewStatus:'UNREVIEWED'},{active:false});
+        // Facts of the previous text stay visible (marked as earlier) until the new processing revision activates.
       }
       const revision=await m.findOneBy(TextRevision,{documentId:id,version:doc.textVersion});
       doc.searchText=`${doc.title}\n${doc.summary}\n${revision?.content??''}`;
@@ -184,14 +211,16 @@ export class ArchiveService {
       return {...doc,jobId:job.id};
     });
   }
-  async reprocess(id:string) {
+  async reprocess(id:string,mode?:ReprocessMode) {
     return this.db.transaction(async m=>{
       const doc=await this.document(id,false,m,true);
+      if(mode&&!(await reprocessModes(m,id)).includes(mode))
+        throw new ConflictException({code:'REPROCESS_MODE_UNAVAILABLE',message:mode==='ORIGINAL'?'У документа нет сохранённого оригинала':'Для текущего текста нет сохранённого разбора; выберите разбор оригинала'});
       doc.generation++;doc.status='UPLOADED';doc.errorCode=null;
       await m.save(doc);
-      const job=await enqueue(m,doc);
-      await audit(m,id,'DOCUMENT',id,'REPROCESS_REQUESTED');
-      return {id,documentId:id,jobId:job.id,status:doc.status};
+      const job=await enqueue(m,doc,'PROCESS',mode??null);
+      await audit(m,id,'DOCUMENT',id,'REPROCESS_REQUESTED',null,{mode:mode??'AUTO'});
+      return {id,documentId:id,jobId:job.id,status:doc.status,mode:mode??null};
     });
   }
   async original(id:string) {
@@ -254,7 +283,10 @@ export class ArchiveService {
     if(q.to) qb.andWhere('t."eventDate" <= :to',{to:q.to});
     const [items,total]=await qb.orderBy('t.eventDate','DESC','NULLS LAST').addOrderBy('t.id','ASC').skip((q.page-1)*q.pageSize).take(q.pageSize).getManyAndCount();
     const docs=items.length?await this.db.getRepository(Document).findBy({id:In([...new Set(items.map(i=>i.documentId))])}):[];
-    return paginate(items.map(i=>({...i,documentTitle:docs.find(d=>d.id===i.documentId)?.title})),total,q.page,q.pageSize);
+    // Events of a document whose edit is not processed yet come from the earlier text and say so.
+    const earlier=new Set<string>();
+    for(const d of docs){const v=await factsTextVersion(this.db.manager,d);if(v!==null&&v!==d.textVersion)earlier.add(d.id);}
+    return paginate(items.map(i=>({...i,documentTitle:docs.find(d=>d.id===i.documentId)?.title,earlierText:earlier.has(i.documentId)})),total,q.page,q.pageSize);
   }
   async history(q:PaginationDto,documentId?:string) {
     if(documentId) await this.document(documentId,true);
@@ -296,7 +328,8 @@ export class ArchiveService {
     });
   }
   /** Documents with a complete readable snapshot: READY, or an activated revision of the current text while a
-   *  reprocess is pending or failed. A text edit or deletion drops the old snapshot. */
+   *  reprocess is pending or failed. Answers never read a snapshot of an earlier text (spec v1.2: a stale version is
+   *  excluded); after a text edit its facts stay visible in the card and timeline, marked as an earlier text. */
   private readable() {
     return this.db.getRepository(Document).createQueryBuilder('d')
       .leftJoin(ProcessingRevision,'pr','pr.id = d."activeProcessingRevisionId"').leftJoin(TextRevision,'tr','tr.id = pr."textRevisionId"')

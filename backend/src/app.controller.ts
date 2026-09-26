@@ -7,7 +7,7 @@ import {DataSource} from 'typeorm';
 import {createReadStream} from 'node:fs';
 import {ArchiveService} from './archive.service';
 import {ConsultationService} from './consultation.service';
-import {AddConsultationResponseDto,ConsultationQueryDto,AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
+import {AddConsultationResponseDto,ConsultationQueryDto,AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,ReprocessDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
 import {MAX_UPLOAD_BYTES} from './core';
 
 @ApiTags('Local archive')
@@ -40,7 +40,7 @@ export class AppController {
   @Post('documents/:id/restore') @ApiOperation({summary:'Restore and reindex a document'})
   restore(@Param('id',ParseUUIDPipe)id:string){return this.archive.restore(id);}
   @Post('documents/:id/reprocess') @ApiOperation({summary:'Queue local extraction while preserving reviewed facts'})
-  reprocess(@Param('id',ParseUUIDPipe)id:string){return this.archive.reprocess(id);}
+  reprocess(@Param('id',ParseUUIDPipe)id:string,@Body()dto:ReprocessDto){return this.archive.reprocess(id,dto.mode);}
   @Get('documents/:id/original') @ApiOperation({summary:'Read the immutable original PDF'})
   async original(@Param('id',ParseUUIDPipe)id:string,@Res()res:Response) {
     const original=await this.archive.original(id);

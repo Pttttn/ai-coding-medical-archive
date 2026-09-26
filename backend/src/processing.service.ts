@@ -1,11 +1,11 @@
 import {Visit,validateVisit} from './visit';
 import {irHash,SourceIR,validateSourceIR} from './source-ir';
-import {ParseRecipe,validateParseRecipe,validateProcessingRecipe} from './recipe';
+import {confirmIndexSettings,expectedIndexSettings,ParseRecipe,validateParseRecipe,validateProcessingRecipe} from './recipe';
 import {Laboratory,validateLaboratory} from './laboratory';
 import {Injectable,OnApplicationBootstrap,OnApplicationShutdown} from '@nestjs/common';
 import {DataSource,EntityManager,In} from 'typeorm';
 import {AiClient,AiError,normalizeTags} from './core';
-import {audit,ensureTags,factSnapshot,rebuildTimeline} from './archive.service';
+import {audit,ensureTags,factSnapshot,rebuildTimeline,storedParse} from './archive.service';
 import {ASSERTION_STATUSES,Document,DOCUMENT_TYPES,ExtractionRun,FACT_TYPES,FactProvenance,MedicalFact,Page,ProcessingJob,ProcessingRevision,TextRevision} from './entities';
 
 type ExtractedFact={type:string;name:string;valueText:string|null;valueNumber:number|null;unit:string|null;eventDate:string|null;assertionStatus:string;confidence:number|null;provenance:{page:number|null;sourceText:string}};
@@ -117,23 +117,28 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
       if(!revision)throw new AiError('TEXT_UNAVAILABLE');
       const current=await this.db.getRepository(Document).findOneByOrFail({id:doc.id});
       if(current.deletedAt||current.generation!==job.generation){await this.db.getRepository(ProcessingJob).update(job.id,{status:'SUPERSEDED'});return;}
-      await this.setStatus(doc.id,job.generation,'INDEXING');
       // PROCESS stages the prepared revision; INDEX re-stages the active one (or legacy chunks without revision).
-      const target=prepared?.id??current.activeProcessingRevisionId??null;
+      const target=prepared??(current.activeProcessingRevisionId?await this.db.getRepository(ProcessingRevision).findOneBy({id:current.activeProcessingRevisionId}):null);
+      // A revision's chunks are built from its own text; an active revision of an earlier text waits for its PROCESS job.
+      if(target&&!prepared&&target.textRevisionId!==revision.id){await this.db.getRepository(ProcessingJob).update(job.id,{status:'SUPERSEDED'});return;}
+      await this.setStatus(doc.id,job.generation,'INDEXING');
+      const expected=target?expectedIndexSettings((await this.db.getRepository(ExtractionRun).findOneByOrFail({id:target.extractionRunId})).rawJson):null;
       const corrections=await this.db.getRepository(MedicalFact).createQueryBuilder('f').where('f."documentId"=:id AND f.active=true AND f."reviewStatus"<>:status',{id:doc.id,status:'UNREVIEWED'}).getMany();
-      const manifest=await this.ai.call<{revisionId?:string|null;documentChunks?:number;contentHash?:string}>('index',{documentId:doc.id,title:current.title,version:revision.version,text:revision.content,pages:revision.pages,corrections:corrections.map(f=>({id:f.id,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,reviewStatus:f.reviewStatus})),...(target?{revisionId:target}:{})});
-      if(target&&(manifest?.revisionId!==target||!Number.isSafeInteger(manifest.documentChunks)||manifest.documentChunks!<0))throw new AiError('INDEX_MANIFEST_INVALID');
+      const manifest=await this.ai.call<{revisionId?:string|null;documentChunks?:number;contentHash?:string;indexSettings?:unknown}>('index',{documentId:doc.id,title:current.title,version:revision.version,text:revision.content,pages:revision.pages,corrections:corrections.map(f=>({id:f.id,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,reviewStatus:f.reviewStatus})),...(target?{revisionId:target.id}:{}),...(expected?{expectedIndexSettings:expected}:{})});
+      if(target&&(manifest?.revisionId!==target.id||!Number.isSafeInteger(manifest.documentChunks)||manifest.documentChunks!<0))throw new AiError('INDEX_MANIFEST_INVALID');
+      // The indexer reports the settings it used; they must be the ones the extraction recipe named.
+      if(expected)confirmIndexSettings(expected,manifest.indexSettings);
       const activated=await this.db.transaction(async m=>{
         const locked=await lockDocument(m,doc.id);
         if(!locked||locked.deletedAt||locked.generation!==job.generation){await m.update(ProcessingJob,job.id,{status:'SUPERSEDED'});return false;}
         if(prepared) {
           const rev=await m.getRepository(ProcessingRevision).findOne({where:{id:prepared.id},lock:{mode:'pessimistic_write'}});
           if(!rev||rev.status!=='PREPARED'||locked.textVersion!==revision!.version||rev.textRevisionId!==revision!.id){await m.update(ProcessingJob,job.id,{status:'SUPERSEDED'});return false;}
-          await this.activate(m,locked,rev,{revisionId:rev.id,documentChunks:manifest.documentChunks!,contentHash:manifest.contentHash??null});
+          await this.activate(m,locked,rev,{revisionId:rev.id,documentChunks:manifest.documentChunks!,contentHash:manifest.contentHash??null,indexSettings:expected});
         }
         locked.status='READY';locked.errorCode=null;await m.save(locked);
         await m.update(ProcessingJob,job.id,{status:'READY',errorCode:null});
-        await audit(m,doc.id,'DOCUMENT',doc.id,'INDEXING_COMPLETED',null,{textVersion:revision!.version,processingRevisionId:target});
+        await audit(m,doc.id,'DOCUMENT',doc.id,'INDEXING_COMPLETED',null,{textVersion:revision!.version,processingRevisionId:target?.id??null});
         return true;
       });
       // Older chunk sets are unreadable once the pointer moved; removing them is only cleanup.
@@ -183,8 +188,24 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
       const [row]=await this.db.query('SELECT id,content,"parseRecipeHash" FROM source_ir_revisions WHERE id=$1 AND "documentId"=$2 AND "textRevisionId"=$3',[job.sourceIrRevisionId,doc.id,revision.id]);
       if(row?.parseRecipeHash)return {id:row.id,ir:row.content,parseRecipeHash:row.parseRecipeHash,revision,warnings:[]};
     }
+    // CURRENT_TEXT reuses the stored parse of the current text; the next stage re-verifies it before extraction.
+    if(job.parseSource==='CURRENT_TEXT'&&revision) {
+      const stored=await storedParse(this.db.manager,revision.id);
+      if(stored)return this.db.transaction(async m=>{
+        const current=await lockDocument(m,doc.id);
+        if(!current||current.deletedAt||current.generation!==job.generation||current.textVersion!==revision.version)return null;
+        await m.update(ProcessingJob,job.id,{sourceIrRevisionId:stored.id});
+        await audit(m,doc.id,'DOCUMENT',doc.id,'PARSE_REUSED',null,{jobId:job.id,textVersion:revision.version,parseRecipeHash:stored.parseRecipeHash});
+        return {id:stored.id,ir:stored.content,parseRecipeHash:stored.parseRecipeHash,revision,warnings:[]};
+      });
+      // Parsing a paged text again as plain text would lose its pages.
+      if(revision.pages.length)throw new AiError('REPROCESS_MODE_UNAVAILABLE');
+    }
+    if(job.parseSource==='ORIGINAL'&&!doc.storagePath)throw new AiError('REPROCESS_MODE_UNAVAILABLE');
+    const input=job.parseSource==='ORIGINAL'?{filePath:doc.storagePath}:job.parseSource==='CURRENT_TEXT'&&revision?{text:revision.content}
+      :doc.sourceType==='PDF'&&revision?.parser!=='user-edit'?{filePath:doc.storagePath}:revision?{text:revision.content}:{filePath:doc.storagePath};
     await this.setStatus(doc.id,job.generation,'PARSING');
-    const parsed=await this.ai.call<ParseResult>('parse',{documentId:doc.id,version:revision?.version??1,title:doc.title,...(doc.sourceType==='PDF'&&revision?.parser!=='user-edit'?{filePath:doc.storagePath}:revision?{text:revision.content}:{filePath:doc.storagePath})});
+    const parsed=await this.ai.call<ParseResult>('parse',{documentId:doc.id,version:revision?.version??1,title:doc.title,...input});
     if(!parsed||typeof parsed.text!=='string'||!parsed.text.trim()||parsed.text.length>2_000_000||!Array.isArray(parsed.pages)||!parsed.pages.length)throw new AiError('SOURCE_IR_INVALID');
     validateSourceIR(parsed.sourceIR,doc.id,parsed.pages);
     if(parsed.text!==parsed.pages.map(p=>p.text).join('\n\n'))throw new AiError('SOURCE_IR_INVALID');

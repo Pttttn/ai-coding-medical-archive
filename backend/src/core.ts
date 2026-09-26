@@ -33,6 +33,8 @@ export class AiError extends ServiceUnavailableException {
 const ERROR_MESSAGES:Record<string,string>={
   RECIPE_INVALID:'Версии обработки документа не прошли проверку', SOURCE_IR_INVALID:'Исходное представление документа не прошло проверку',
   VISIT_ARTIFACT_INVALID:'Клинические утверждения не прошли проверку источника',
+  INDEX_RECIPE_MISMATCH:'Настройки индекса изменились после извлечения; обработайте документ снова',
+  INDEX_MANIFEST_INVALID:'Поисковый индекс вернул неполный результат', REPROCESS_MODE_UNAVAILABLE:'Выбранный режим повторной обработки недоступен',
   UNSUPPORTED_OCR_REQUIRED:'В PDF нет текстового слоя; OCR не входит в MVP', MALFORMED_PDF:'PDF повреждён или не поддерживается',
   MODEL_UNAVAILABLE:'Локальная модель недоступна', EXTRACTION_INVALID:'Ответ модели не прошёл проверку структуры',
   MODEL_OUTPUT_LIMIT:'Модель исчерпала лимит ответа; попробуйте сократить запрос',
