@@ -4,7 +4,7 @@ import {DataSource, EntityManager, In, IsNull} from 'typeorm';
 import {randomUUID,createHash} from 'node:crypto';
 import {mkdir,realpath,unlink,writeFile} from 'node:fs/promises';
 import {basename,resolve,relative,isAbsolute} from 'node:path';
-import {AuditEvent,Document,ExtractionRun,FactProvenance,FactRevision,MedicalFact,ProcessingJob,Tag,TextRevision,TimelineEvent} from './entities';
+import {AuditEvent,Document,ExtractionRun,FactProvenance,FactRevision,MedicalFact,ProcessingJob,ProcessingRevision,Tag,TextRevision,TimelineEvent} from './entities';
 import {CreateNoteDto,DocumentQueryDto,PaginationDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
 import {Laboratory} from './laboratory';
 import {AiClient,contentHash,normalizeTags,paginate,safeStoragePath,validatePdf} from './core';
@@ -30,7 +30,10 @@ export async function followUpOperation(m:EntityManager,doc:Document):Promise<'P
   if(!doc.textVersion)return 'PROCESS';
   if(await m.count(ProcessingJob,{where:{documentId:doc.id,operation:'PROCESS',status:In(['QUEUED','RUNNING'])}}))return 'PROCESS';
   const run=await m.findOne(ExtractionRun,{where:{documentId:doc.id},order:{createdAt:'DESC'}});
-  return run?.status==='READY'&&run.textVersion===doc.textVersion?'INDEX':'PROCESS';
+  if(run?.status!=='READY'||run.textVersion!==doc.textVersion)return 'PROCESS';
+  // An extraction prepared but never activated has not reached the archive yet: it must be processed again.
+  const rev=await m.findOneBy(ProcessingRevision,{extractionRunId:run.id});
+  return !rev||rev.status==='ACTIVE'?'INDEX':'PROCESS';
 }
 export function factSnapshot(f:MedicalFact):Record<string,unknown> {
   return {type:f.type,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,eventDate:f.eventDate,assertionStatus:f.assertionStatus,reviewStatus:f.reviewStatus};
@@ -112,6 +115,11 @@ export class ArchiveService {
       this.db.getRepository(ProcessingJob).findOne({where:{documentId:id},order:{createdAt:'DESC'}}),
       this.db.getRepository(ExtractionRun).findOne({where:{documentId:id},order:{createdAt:'DESC'}}),
     ]);
+    const [activeRevision,preparedRevision]=await Promise.all([
+      doc.activeProcessingRevisionId?this.db.getRepository(ProcessingRevision).findOneBy({id:doc.activeProcessingRevisionId}):null,
+      this.db.getRepository(ProcessingRevision).findOne({where:{documentId:id,status:'PREPARED'},order:{createdAt:'DESC'}}),
+    ]);
+    const revisionView=(r:ProcessingRevision|null)=>r?{id:r.id,status:r.status,recipeHash:r.recipeHash,textRevisionId:r.textRevisionId,createdAt:r.createdAt,activatedAt:r.activatedAt,indexedChunks:r.indexManifest?.documentChunks??null}:null;
     const rawWarnings=(extractionRun?.rawJson as {warnings?:unknown}|null)?.warnings;
     const processingWarnings=Array.isArray(rawWarnings)?rawWarnings.filter((warning):warning is string=>typeof warning==='string'):[];
     const recipe=(extractionRun?.rawJson as {processingRecipe?:Record<string,unknown>}|null)?.processingRecipe;
@@ -119,9 +127,11 @@ export class ArchiveService {
     const extraction=extractionRun?{id:extractionRun.id,textVersion:extractionRun.textVersion,model:extractionRun.model,modelDigest:extractionRun.modelDigest,promptVersion:extractionRun.promptVersion,schemaVersion:extractionRun.schemaVersion,parserVersion:extractionRun.parserVersion,recipeHash:extractionRun.recipeHash,status:extractionRun.status,validationErrors:extractionRun.validationErrors,createdAt:extractionRun.createdAt,completedAt:extractionRun.completedAt}:null;
     // Never expose a failed, deleted, superseded or earlier-text lab artifact as current.
     const raw=extractionRun?.rawJson as {laboratory?:Laboratory;visit?:Visit;extractionProfile?:string}|null;
-    const laboratory=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.laboratory??null:null;
-    const visit=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.visit??null:null;
-    return {...doc,text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,visit,processingRecipe,extractionProfile:raw?.extractionProfile??'legacy'};
+    // With processing revisions, only the active revision's artifact is current.
+    const current=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion&&(!activeRevision||activeRevision.extractionRunId===extractionRun.id);
+    const laboratory=current?raw?.laboratory??null:null;
+    const visit=current?raw?.visit??null:null;
+    return {...doc,processingRevision:{active:revisionView(activeRevision),prepared:revisionView(preparedRevision)},text:revision?.content??'',pages:revision?.pages??[],facts,textRevisions,latestJob,processingWarnings,extraction, laboratory,visit,processingRecipe,extractionProfile:raw?.extractionProfile??'legacy'};
   }
   async revision(id:string,version:number) {
     await this.document(id,true);
@@ -285,16 +295,24 @@ export class ArchiveService {
       await m.delete(Tag,id);await audit(m,null,'TAG',id,'TAG_DELETED',{name:tag.name});return {ok:true};
     });
   }
+  /** Documents with a complete readable snapshot: READY, or an activated revision of the current text while a
+   *  reprocess is pending or failed. A text edit or deletion drops the old snapshot. */
+  private readable() {
+    return this.db.getRepository(Document).createQueryBuilder('d')
+      .leftJoin(ProcessingRevision,'pr','pr.id = d."activeProcessingRevisionId"').leftJoin(TextRevision,'tr','tr.id = pr."textRevisionId"')
+      .where('d."deletedAt" IS NULL AND (d.status = :status OR tr.version = d."textVersion")',{status:'READY'});
+  }
   async ask(question:string,documentIds?:string[],dateFrom?:string,dateTo?:string) {
     if(dateFrom&&dateTo&&dateFrom>dateTo)throw new BadRequestException({code:'INVALID_PERIOD',message:'Начало периода должно быть не позже конца'});
-    const qb=this.db.getRepository(Document).createQueryBuilder('d').select(['d.id','d.generation','d.textVersion','d.documentDate']).where('d."deletedAt" IS NULL AND d.status = :status',{status:'READY'});
+    const qb=this.readable().select(['d.id','d.generation','d.textVersion','d.documentDate','d.activeProcessingRevisionId']);
     if(documentIds!==undefined){if(!documentIds.length)return {answer:'В выбранном контексте нет доступных документов.',sources:[],insufficientContext:true};qb.andWhere('d.id IN (:...ids)',{ids:documentIds});}
     const snapshots=await qb.getMany();
     const allowed=snapshots.map(d=>d.id);
     if(!allowed.length) return {answer:'В архиве пока нет готовых документов для ответа.',sources:[],insufficientContext:true};
-    const result=await this.ai.call('ask',{question,documentIds:allowed,documents:snapshots.map(d=>({documentId:d.id,documentDate:d.documentDate})),dateFrom,dateTo});
-    const current=await this.db.getRepository(Document).find({where:{id:In(allowed),deletedAt:IsNull(),status:'READY'},select:['id','generation','textVersion']});
-    const stillAllowed=new Set(current.filter(d=>snapshots.some(s=>s.id===d.id&&s.generation===d.generation&&s.textVersion===d.textVersion)).map(d=>d.id));
+    const result=await this.ai.call('ask',{question,documentIds:allowed,documents:snapshots.map(d=>({documentId:d.id,documentDate:d.documentDate,processingRevisionId:d.activeProcessingRevisionId})),dateFrom,dateTo});
+    const current=await this.readable().select(['d.id','d.generation','d.textVersion','d.activeProcessingRevisionId']).andWhere('d.id IN (:...ids)',{ids:allowed}).getMany();
+    // The answer read one snapshot per document: activating another revision meanwhile invalidates it.
+    const stillAllowed=new Set(current.filter(d=>snapshots.some(s=>s.id===d.id&&s.generation===d.generation&&s.textVersion===d.textVersion&&s.activeProcessingRevisionId===d.activeProcessingRevisionId)).map(d=>d.id));
     // Never return an answer derived from a document deleted/edited while generation was running.
     if((result.sources??[]).some((s:any)=>!stillAllowed.has(s.documentId))) return {answer:'Состав архива изменился во время ответа. Повторите вопрос.',sources:[],insufficientContext:true};
     return {...result,sources:(result.sources??[]).map((s:any)=>({...s,textVersion:snapshots.find(d=>d.id===s.documentId)?.textVersion,generation:snapshots.find(d=>d.id===s.documentId)?.generation}))};
