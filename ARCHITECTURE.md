@@ -23,7 +23,7 @@ Document хранит метаданные, статус, SHA256 и soft delete.
 Внутренний Python API (порт 8001, заголовок X-Internal-Token, отдельный от MCP):
 - POST /internal/parse: `{documentId,version,title,text?|filePath?}` → `{sourceIR,text,pages,warnings,parserVersion,parseRecipe}`; детерминированная стадия без вызова модели.
 - POST /internal/process: `{documentId,version,title,text?|filePath?|sourceIR?}` → `{text,pages:[{pageNumber,text}],extraction:{documentType,documentDate,summary,tags,facts:[{type,name,valueText,valueNumber,unit,eventDate,assertionStatus,confidence,provenance:{page,sourceText}}]},warnings,model,promptVersion,schemaVersion,parserVersion}`.
-- POST /internal/index: `{documentId,title,version,text,pages?,corrections?:[{id,name,valueText,valueNumber,unit,reviewStatus}],revisionId?}` → статистика и манифест `{revisionId,contentHash,documentChunks}`; с `revisionId` заменяются только chunks этой ревизии, остальные не видны и не трогаются.
+- POST /internal/index: `{documentId,title,version,text,pages?,corrections?:[{id,name,valueText,valueNumber,unit,reviewStatus}],revisionId?,expectedIndexSettings?}` → статистика и манифест `{revisionId,contentHash,documentChunks,indexSettings}`; с `revisionId` заменяются только chunks этой ревизии, остальные не видны и не трогаются. `indexSettings` — фактически использованные chunker, размер, overlap, embedding-модель и её digest; если они не равны `expectedIndexSettings`, индексатор отвечает 409 `INDEX_RECIPE_MISMATCH` до записи.
 - POST /internal/prune: `{documentId,keepRevisionId}` → `{ok:true,removedChunks}`; удаляет chunks документа из других ревизий после активации.
 - POST /internal/remove: `{documentId}` → `{ok:true}`.
 - POST /internal/ask: `{question,documentIds?:string[],documents?:[{documentId,documentDate,processingRevisionId?}]}` → `{answer,sources:[{documentId?,source,chunkId,position,pageNumber?,text?}],trace?,insufficientContext?}`.
@@ -102,7 +102,7 @@ Worker выполняет PROCESS в две стадии. Сначала `/inter
 
 `processingRecipe` описывает весь запуск: профиль и фактический путь (`lab`, `visit`, `visit-review`, `legacy`), parse recipe, модель и digest, параметры декодирования, версии аннотации/проекции/схемы фактов, лимит фактов и объявленные настройки индекса (chunker, размер, overlap, embedding и digest). Hash считается по тому же canonical JSON, что и IR; backend пересчитывает его и требует ссылку на hash сохранённой стадии разбора (`RECIPE_INVALID`). Значения recipe без float, чтобы Python и TypeScript сериализовали их одинаково. ExtractionRun хранит `sourceIrRevisionId` и `recipeHash`.
 
-Повтор той же задачи после сбоя модели или перезапуска worker берёт сохранённую стадию и не разбирает оригинал снова; новая задача reprocess разбирает заново, одинаковый IR не дублируется. Миграция `ProcessingStages1753000000000` только добавляет nullable-колонки, прежние записи не переписываются. Активация facts/chunks одной ревизией добавлена в [срезе P3](#processing-revision-и-активация-facts-и-chunks-p3-26-сентября-2026); настройки индекса в recipe по-прежнему объявлены AI-сервисом, а не подтверждены индексатором.
+Повтор той же задачи после сбоя модели или перезапуска worker берёт сохранённую стадию и не разбирает оригинал снова; новая задача reprocess разбирает заново, одинаковый IR не дублируется. Миграция `ProcessingStages1753000000000` только добавляет nullable-колонки, прежние записи не переписываются. Активация facts/chunks одной ревизией добавлена в [срезе P3](#processing-revision-и-активация-facts-и-chunks-p3-26-сентября-2026); настройки индекса подтверждает индексатор ([P3, продолжение](#режим-reprocess-подтверждённые-настройки-индекса-и-правка-текста-p3-26-сентября-2026)).
 
 ## Processing revision и активация facts и chunks (P3), 26 сентября 2026
 
@@ -114,7 +114,17 @@ Worker выполняет PROCESS в две стадии. Сначала `/inter
 
 Сбой индексации оставляет ревизию `PREPARED`; повтор задачи переиспользует её без повторного извлечения. Окончательный сбой или несовпадение манифеста помечают ревизию `FAILED`, прежний снимок остаётся. Правка текста во время подготовки не даёт активировать устаревшую ревизию, и ставится новая обработка. Документы без ревизии (seed, до миграции) читают прежние chunks без `revisionId` до первой повторной обработки. Миграция `ProcessingRevisions1754000000000` только добавляет таблицу и nullable-колонки. MCP не меняется.
 
-Ограничения: правка текста пользователем по-прежнему сразу выключает непроверенные факты, потому что прежний снимок относится к другому тексту; настройки индекса в recipe объявлены, а не подтверждены индексатором; выбора «текущий текст или заново разобрать оригинал» при reprocess в UI нет.
+Ограничения этого среза (правка текста, настройки индекса, режим reprocess) закрыты в следующем разделе.
+
+## Режим reprocess, подтверждённые настройки индекса и правка текста (P3), 26 сентября 2026
+
+`POST /api/documents/:id/reprocess` принимает необязательный `{mode}`. `CURRENT_TEXT` берёт сохранённую стадию разбора текущей TextRevision без вызова `/internal/parse` (аудит `PARSE_REUSED`); без неё допускается только текст без страничной разметки (заметка, правка пользователя), потому что повторный разбор как простого текста потерял бы страницы. `ORIGINAL` разбирает сохранённый оригинал заново; если результат отличается от текущего текста, создаётся новая TextRevision, а правка пользователя остаётся предыдущей версией в истории. Без `mode` сохраняется прежний автоматический выбор. Режим хранится в `processing_jobs.parseSource` (миграция `ReprocessModes1755000000000`), недоступный режим отклоняется `409 REPROCESS_MODE_UNAVAILABLE`; карточка документа отдаёт `reprocessModes`, UI предлагает только их.
+
+Индексатор подтверждает настройки индекса: backend передаёт `expectedIndexSettings` из `processingRecipe.index` ревизии, AI-сервис сравнивает их с фактически используемыми (включая digest embedding-модели) и отказывает до записи chunks. Backend дополнительно сверяет `indexSettings` манифеста по canonical hash и сохраняет их в `indexManifest`. Расхождение (`INDEX_RECIPE_MISMATCH`) не повторяется автоматически: ревизия становится `FAILED`, прежний снимок остаётся, нужен reprocess. Повторная индексация активной ревизии индексирует её собственный текст и проверяется так же. Digest embedding-модели входит в hash индексации ревизии, поэтому смена модели не оставляет старые векторы под новым отчётом.
+
+Правка текста больше не выключает непроверенные факты сразу. Факты и события хронологии прежней версии остаются видны до активации ревизии нового текста (или после сбоя её обработки); карточка отдаёт `factsTextVersion`, хронология — `earlierText`, UI помечает их как относящиеся к предыдущей версии текста. Ответы по архиву такой документ по-прежнему не используют: по спецификации v1.2 устаревшая версия либо исключается, либо явно показывается её состояние, и для ответа выбрано исключение.
+
+Worker блокирует документ вместе со столбцом `storagePath`: раньше сохранение документа, загруженного без этого `select:false` столбца, очищало путь к оригиналу, и после обработки кнопка «Оригинал» и повторный разбор оригинала переставали работать. Уже очищенные пути миграция не восстанавливает.
 
 ## Экспериментальный LAB annotator, 25 сентября 2026
 
