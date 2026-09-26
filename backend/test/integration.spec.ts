@@ -5,7 +5,7 @@ import {INestApplication,ValidationPipe} from '@nestjs/common';
 import request from 'supertest';
 import {DataSource} from 'typeorm';
 import {randomUUID} from 'node:crypto';
-import {mkdtemp,readFile,rm} from 'node:fs/promises';
+import {mkdtemp,readFile,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {AppModule} from '../src/app.module';
@@ -528,5 +528,87 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   });
   it('imports complete synthetic seed idempotently with original TXT and PDF files',async()=>{process.env.SEED_ENABLED='true';process.env.SEED_DIR=resolve(__dirname,'../../seed');try{const seed=new SeedService(db);await seed.onModuleInit();await seed.onModuleInit();const docs=await db.getRepository(Document).find();expect(docs).toHaveLength(36);const original=await app.get(ArchiveServiceForTest()).original(docs.find(d=>d.sourceType==='PDF')!.id);expect((await readFile(original.path)).subarray(0,5).toString()).toBe('%PDF-');const textDoc=docs.find(d=>d.sourceType==='TEXT')!;expect((await app.get(ArchiveServiceForTest()).original(textDoc.id)).mimeType).toContain('text/plain');expect((await request(app.getHttpServer()).get('/api/history?pageSize=100').expect(200)).body.total).toBeGreaterThanOrEqual(41);}finally{process.env.SEED_ENABLED='false';}},30000);
   it('recovers persisted RUNNING jobs after worker restart',async()=>{const d=await note();await db.getRepository(ProcessingJob).update(d.jobId,{status:'RUNNING'});const restarted=new ProcessingService(db,ai as any);process.env.WORKER_ENABLED='true';try{await restarted.onApplicationBootstrap();for(let n=0;n<30;n++){const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});if(job.status==='READY')break;await new Promise(r=>setTimeout(r,30));}expect((await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId})).status).toBe('READY');}finally{await restarted.onApplicationShutdown();process.env.WORKER_ENABLED='false';}});
+  describe('permanent deletion from trash',()=>{
+    const perDocumentTables=['text_revisions','source_ir_revisions','extraction_runs','processing_revisions','medical_facts','fact_provenance','timeline_events','processing_jobs','audit_events'];
+    const leftovers=async(id:string)=>{const counts:Record<string,number>={};for(const t of perDocumentTables)counts[t]=(await db.query(`SELECT count(*)::int AS n FROM ${t} WHERE "documentId"=$1`,[id]))[0].n;return counts;};
+    const pdf=async(title:string)=>{
+      const r=(await request(app.getHttpServer()).post('/api/documents/upload').field('title',title).attach('file',Buffer.from('%PDF-1.7\nsynthetic purge '+title),{filename:'purge.pdf',contentType:'application/pdf'}).expect(201)).body;
+      const file=(await db.query('SELECT "storagePath" FROM documents WHERE id=$1',[r.id]))[0].storagePath as string;
+      await worker.tick();
+      const doc=(await request(app.getHttpServer()).get('/api/documents/'+r.id).expect(200)).body;
+      expect(doc.status).toBe('READY');expect(doc.facts.length).toBeGreaterThan(0);
+      return {doc,file};
+    };
+    it('deletes the original, every revision, facts, history and consultations built from it',async()=>{
+      const {doc:d,file}=await pdf('Synthetic purge PDF'),keep=await ready();
+      await request(app.getHttpServer()).patch('/api/facts/'+d.facts[0].id).send({valueNumber:5.1,reviewStatus:'CONFIRMED'}).expect(200);
+      await worker.tick();
+      const c=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Purge consultation',documentIds:[d.id]}).expect(201)).body;
+      await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/review').send({contentHash:c.contentHash}).expect(201);
+      const prompt=(await request(app.getHttpServer()).get('/api/consultations/'+c.id).expect(200)).body.prompts[0];
+      await request(app.getHttpServer()).post('/api/consultations/'+c.id+'/responses').send({id:randomUUID(),promptId:prompt.id,model:'Synthetic test model',content:'Synthetic response'}).expect(201);
+      const unrelated=(await request(app.getHttpServer()).post('/api/consultations/prepare').send({question:'Unrelated consultation',documentIds:[keep.id]}).expect(201)).body;
+      await expect(readFile(file)).resolves.toBeTruthy();
+      // Only a trashed document can be purged.
+      await request(app.getHttpServer()).get('/api/documents/'+d.id+'/purge').expect(409);
+      await request(app.getHttpServer()).post('/api/documents/'+d.id+'/purge').send({confirmTitle:d.title,consultationIds:[c.id]}).expect(409);
+      await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+      await worker.tick();
+      const preview=(await request(app.getHttpServer()).get('/api/documents/'+d.id+'/purge').expect(200)).body;
+      expect(preview).toMatchObject({id:d.id,title:d.title});
+      expect(preview.consultations).toEqual([expect.objectContaining({id:c.id,question:'Purge consultation',responseCount:1})]);
+      // Wrong confirmation or an unseen consultation list deletes nothing.
+      await request(app.getHttpServer()).post('/api/documents/'+d.id+'/purge').send({confirmTitle:'wrong',consultationIds:[c.id]}).expect(400);
+      await request(app.getHttpServer()).post('/api/documents/'+d.id+'/purge').send({confirmTitle:d.title,consultationIds:[]}).expect(409);
+      expect((await leftovers(d.id)).text_revisions).toBeGreaterThan(0);
+      ai.call.mockClear();
+      const result=(await request(app.getHttpServer()).post('/api/documents/'+d.id+'/purge').send({confirmTitle:d.title,consultationIds:[c.id]}).expect(201)).body;
+      expect(result).toEqual({id:d.id,purged:true,consultationsDeleted:1});
+      expect(ai.call).toHaveBeenCalledWith('remove',{documentId:d.id,purge:true});
+      expect(Object.values(await leftovers(d.id)).every(n=>n===0)).toBe(true);
+      expect((await db.query('SELECT count(*)::int AS n FROM documents WHERE id=$1',[d.id]))[0].n).toBe(0);
+      for(const t of ['consultations','consultation_prompts','consultation_responses'])
+        expect((await db.query(`SELECT count(*)::int AS n FROM ${t} WHERE ${t==='consultations'?'id':'"consultationId"'}=$1`,[c.id]))[0].n).toBe(0);
+      expect((await db.query(`SELECT count(*)::int AS n FROM audit_events WHERE "entityId"=$1`,[c.id]))[0].n).toBe(0);
+      await expect(readFile(file)).rejects.toThrow();
+      const trace=await db.query(`SELECT "documentId","payloadBefore","payloadAfter" FROM audit_events WHERE action='DOCUMENT_PURGED' AND "entityId"=$1`,[d.id]);
+      expect(trace).toEqual([{documentId:null,payloadBefore:null,payloadAfter:{consultationsDeleted:1}}]);
+      expect(JSON.stringify(await db.query('SELECT * FROM audit_events'))).not.toContain(d.title);
+      await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(404);
+      await request(app.getHttpServer()).get('/api/consultations/'+unrelated.id).expect(200);
+      expect((await request(app.getHttpServer()).get('/api/documents/'+keep.id).expect(200)).body.facts).toHaveLength(keep.facts.length);
+      await request(app.getHttpServer()).post('/api/documents/'+d.id+'/purge').send({confirmTitle:d.title,consultationIds:[]}).expect(404);
+    });
+    it('deletes nothing when the AI index cannot be cleared',async()=>{
+      const {doc:d,file}=await pdf('Synthetic purge unavailable');
+      await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+      ai.call.mockImplementation(async(route:string,body:any)=>{if(route==='remove')throw new AiError('AI_UNAVAILABLE');return mock(route,body);});
+      await request(app.getHttpServer()).post('/api/documents/'+d.id+'/purge').send({confirmTitle:d.title,consultationIds:[]}).expect(503);
+      expect((await leftovers(d.id)).text_revisions).toBeGreaterThan(0);
+      await expect(readFile(file)).resolves.toBeTruthy();
+      await request(app.getHttpServer()).post('/api/documents/'+d.id+'/restore').expect(201);
+    });
+    it('deletes the original by its stored path',async()=>{
+      const r=(await request(app.getHttpServer()).post('/api/documents/upload').field('title','Synthetic purge stored').attach('file',Buffer.from('%PDF-1.7\nstored path'),{filename:'purge.pdf',contentType:'application/pdf'}).expect(201)).body;
+      const file=(await db.query('SELECT "storagePath" FROM documents WHERE id=$1',[r.id]))[0].storagePath as string;
+      expect(file).toBeTruthy();
+      await request(app.getHttpServer()).delete('/api/documents/'+r.id).expect(200);
+      await request(app.getHttpServer()).post('/api/documents/'+r.id+'/purge').send({confirmTitle:'Synthetic purge stored',consultationIds:[]}).expect(201);
+      await expect(readFile(file)).rejects.toThrow();
+      expect((await db.query('SELECT count(*)::int AS n FROM processing_jobs WHERE "documentId"=$1',[r.id]))[0].n).toBe(0);
+    });
+    it('finds an original whose stored path was lost by its hash and keeps other files',async()=>{
+      const {doc:d,file}=await pdf('Synthetic purge lost path');
+      await db.query('UPDATE documents SET "storagePath"=NULL WHERE id=$1',[d.id]);
+      const unrelated=join(uploads,randomUUID()+'.pdf'),foreign=join(uploads,'notes.pdf');
+      await writeFile(unrelated,'%PDF-1.7\nunrelated');await writeFile(foreign,'%PDF-1.7\nsynthetic purge');
+      await request(app.getHttpServer()).delete('/api/documents/'+d.id).expect(200);
+      await request(app.getHttpServer()).post('/api/documents/'+d.id+'/purge').send({confirmTitle:d.title,consultationIds:[]}).expect(201);
+      await expect(readFile(file)).rejects.toThrow();
+      await expect(readFile(unrelated)).resolves.toBeTruthy();
+      await expect(readFile(foreign)).resolves.toBeTruthy();
+      await rm(unrelated);await rm(foreign);
+    });
+  });
 });
 function ArchiveServiceForTest(){return require('../src/archive.service').ArchiveService;}
