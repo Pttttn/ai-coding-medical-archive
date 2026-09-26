@@ -38,6 +38,8 @@ export function sameReviewedFact(f:MedicalFact,incoming:ExtractedFact):boolean {
   return [f,original].some(v=>v?.type===incoming.type&&norm(String(v.name)).toLocaleLowerCase()===norm(incoming.name).toLocaleLowerCase()&&(v.eventDate??null)===(incoming.eventDate??null));
 }
 
+/** Locks the document with every column: saving an entity loaded without select:false storagePath would clear it. */
+const lockDocument=(m:EntityManager,id:string)=>m.getRepository(Document).createQueryBuilder('d').addSelect('d.storagePath').where('d.id=:id',{id}).setLock('pessimistic_write').getOne();
 @Injectable()
 export class ProcessingService implements OnApplicationBootstrap,OnApplicationShutdown {
   private timer:ReturnType<typeof setInterval>|undefined;
@@ -95,7 +97,7 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
           if(result.laboratory!=null)validateLaboratory(result.laboratory,result.sourceIR,result.extraction.facts);
           // Prepare: new facts are stored inactive under a new revision; the active snapshot is untouched.
           prepared=await this.db.transaction(async m=>{
-            const current=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
+            const current=await lockDocument(m,doc.id);
             if(!current||current.deletedAt||current.generation!==job.generation||current.textVersion!==revision!.version)return null;
             const rev=await m.save(ProcessingRevision,m.create(ProcessingRevision,{documentId:doc.id,sourceIrRevisionId:stage.id,textRevisionId:revision!.id,extractionRunId:run!.id,recipeHash,status:'PREPARED'}));
             for(const incoming of result.extraction.facts) {
@@ -122,7 +124,7 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
       const manifest=await this.ai.call<{revisionId?:string|null;documentChunks?:number;contentHash?:string}>('index',{documentId:doc.id,title:current.title,version:revision.version,text:revision.content,pages:revision.pages,corrections:corrections.map(f=>({id:f.id,name:f.name,valueText:f.valueText,valueNumber:f.valueNumber,unit:f.unit,reviewStatus:f.reviewStatus})),...(target?{revisionId:target}:{})});
       if(target&&(manifest?.revisionId!==target||!Number.isSafeInteger(manifest.documentChunks)||manifest.documentChunks!<0))throw new AiError('INDEX_MANIFEST_INVALID');
       const activated=await this.db.transaction(async m=>{
-        const locked=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
+        const locked=await lockDocument(m,doc.id);
         if(!locked||locked.deletedAt||locked.generation!==job.generation){await m.update(ProcessingJob,job.id,{status:'SUPERSEDED'});return false;}
         if(prepared) {
           const rev=await m.getRepository(ProcessingRevision).findOne({where:{id:prepared.id},lock:{mode:'pessimistic_write'}});
@@ -189,7 +191,7 @@ export class ProcessingService implements OnApplicationBootstrap,OnApplicationSh
     validateParseRecipe(parsed.parseRecipe,parsed.sourceIR);
     const warnings=Array.isArray(parsed.warnings)?parsed.warnings.filter((w):w is string=>typeof w==='string'):[];
     return this.db.transaction(async m=>{
-      const current=await m.getRepository(Document).findOne({where:{id:doc.id},lock:{mode:'pessimistic_write'}});
+      const current=await lockDocument(m,doc.id);
       if(!current||current.deletedAt||current.generation!==job.generation)return null;
       let stored=await m.getRepository(TextRevision).findOneBy({documentId:doc.id,version:current.textVersion});
       if(!stored||stored.content!==parsed.text||JSON.stringify(stored.pages.length?stored.pages:[{pageNumber:null,text:stored.content}])!==JSON.stringify(parsed.pages)) {
