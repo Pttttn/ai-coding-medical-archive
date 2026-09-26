@@ -140,7 +140,7 @@ def create_app(services: Services | None = None) -> FastAPI:
 
     @app.post("/internal/remove", dependencies=[Depends(authorize)])
     def remove(body: RemoveRequest):
-        return services.archive.remove(body.documentId)
+        return services.archive.remove(body.documentId, purge=body.purge)
 
     @app.post("/internal/ask", dependencies=[Depends(authorize)])
     def ask(body: AskRequest):

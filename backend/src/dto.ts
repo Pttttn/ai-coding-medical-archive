@@ -86,3 +86,8 @@ export class AddConsultationResponseDto {
   @ApiProperty() @IsString() @Length(1,200) @Matches(/\S/) model:string;
   @ApiProperty() @IsString() @Length(1,100000) @Matches(/\S/) content:string;
 }
+export class PurgeDocumentDto {
+  @ApiProperty({description:'Exact document title, typed by the user to confirm permanent deletion'}) @IsString() @Length(1,200) confirmTitle:string;
+  @ApiProperty({description:'Every consultation built from this document, as listed by the purge preview; they are deleted too',type:[String]})
+  @IsArray() @ArrayMaxSize(1000) @IsUUID('all',{each:true}) consultationIds:string[];
+}

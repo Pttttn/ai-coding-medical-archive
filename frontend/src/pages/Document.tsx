@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { LaboratoryPanel } from '../LaboratoryPanel';
 import type { FormEvent } from 'react';
 import { ArrowLeft, ArchiveRestore, Check, ExternalLink, FileText, History, Pencil, Quote, RotateCw, Save, Sparkles, Trash2 } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { PurgePanel } from '../PurgePanel';
 import { api, json, message } from '../api';
 import { Badge, Empty, ErrorNotice, HistoryList, Loading, Notice, Pagination, Tags } from '../components';
 import { useApi } from '../hooks';
@@ -12,6 +13,7 @@ import { assertions, date, dateInput, dateTime, documentTypes, factTypes, hasFac
 
 export function DocumentPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const state = useApi<Document>(`/documents/${id}`, 5000);
   const [tab, setTab] = useState('facts');
   const [editing, setEditing] = useState(false);
@@ -31,7 +33,7 @@ export function DocumentPage() {
     <header className="document-heading"><div className="document-hero-icon"><FileText size={29} strokeWidth={1.5} /></div><div><div className="eyebrow">{documentTypes[doc.documentType] || doc.documentType}</div><h1>{doc.title}</h1><div className="document-meta">{date(doc.documentDate)}<span>·</span>Добавлен {date(doc.createdAt)}</div></div><Badge status={doc.status} /></header>
     <div className="document-actions"><Tags tags={doc.tags} /><div>{!doc.deletedAt && <><button className="button secondary small" onClick={() => setEditing(!editing)}><Pencil size={15} /> Изменить</button><button className="button secondary small" disabled={busy || isProcessing(doc.status)} onClick={() => void action('reprocess')}><RotateCw size={15} /> Обработать снова</button></>}{doc.originalFilename && !doc.deletedAt && <a className="button secondary small" href={`/api/documents/${id}/original`} target="_blank" rel="noreferrer"><ExternalLink size={15} /> Оригинал</a>}<button className="icon-button" aria-label={doc.deletedAt ? 'Восстановить документ' : 'Переместить документ в корзину'} disabled={busy} onClick={() => void action(doc.deletedAt ? 'restore' : 'delete')}>{doc.deletedAt ? <ArchiveRestore size={18} /> : <Trash2 size={18} />}</button></div></div>
     <ErrorNotice error={error || state.error} />{success && <Notice variant="success">{success}</Notice>}
-    {doc.isSeed && <Notice>Синтетический демодокумент. Первоначальные извлечения подготовлены заранее для демонстрации; повторная обработка использует локальную модель.</Notice>}{doc.deletedAt && <Notice variant="warning">Документ находится в корзине и исключён из поиска и хронологии.</Notice>}
+    {doc.isSeed && <Notice>Синтетический демодокумент. Первоначальные извлечения подготовлены заранее для демонстрации; повторная обработка использует локальную модель.</Notice>}{doc.deletedAt && <><Notice variant="warning">Документ находится в корзине и исключён из поиска и хронологии.</Notice><PurgePanel documentId={doc.id} onPurged={() => navigate('/archive?deleted=true')} /></>}
     {doc.processingWarnings && doc.processingWarnings.length > 0 && <Notice variant="warning"><strong>Обратите внимание на результат обработки</strong><ul>{doc.processingWarnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul></Notice>}{isProcessing(doc.status) && <Notice>Обработка выполняется локально. Статус и результаты обновятся автоматически.</Notice>}{revisionNotice(doc) && <Notice>{revisionNotice(doc)}</Notice>}
     {['FAILED', 'UNSUPPORTED_OCR_REQUIRED'].includes(doc.status) && <Notice variant="warning">{doc.status === 'UNSUPPORTED_OCR_REQUIRED' ? 'В PDF не найден текстовый слой. Добавьте документ с выделяемым текстом или вставьте текст вручную.' : `Не удалось завершить обработку. ${doc.latestJob?.errorCode || ''} Повторите её после проверки локальной модели.`}</Notice>}
     {editing && <MetadataEditor doc={doc} onSaved={() => { setEditing(false); state.reload(); setSuccess('Изменения сохранены.'); }} onCancel={() => setEditing(false)} />}
