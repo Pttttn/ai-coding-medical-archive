@@ -72,6 +72,8 @@ class IndexRequest(StrictModel):
 
 class RemoveRequest(StrictModel):
     documentId: str
+    # Permanent deletion: also compact local storage so the removed text leaves no residue on disk.
+    purge: bool = False
 
 
 class PruneRequest(StrictModel):
