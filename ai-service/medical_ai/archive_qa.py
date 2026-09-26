@@ -76,22 +76,9 @@ def complete_excerpt(proposed: str, source: str) -> str | None:
     # Include full source lines: exact substrings alone can drop negation,
     # family-history qualifiers, lab units or the reference interval.
     start = source.find(exact)
-    finish = start + len(exact)
     if start < 0:
-        # The shared verifier also accepts separate verbatim lines. Restore the
-        # entire intervening source span instead of silently dropping context.
-        cursor, starts = 0, []
-        for part in exact.splitlines():
-            if not part.strip():
-                continue
-            pos = source.find(part, cursor)
-            if pos < 0:
-                return None
-            starts.append(pos)
-            cursor = pos + len(part)
-        if not starts:
-            return None
-        start, finish = starts[0], cursor
+        return None
+    finish = start + len(exact)
     line_start = source.rfind("\n", 0, start) + 1
     line_end = source.find("\n", finish)
     result = source[line_start:line_end if line_end >= 0 else len(source)]

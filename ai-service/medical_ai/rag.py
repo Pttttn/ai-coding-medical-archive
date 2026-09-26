@@ -36,8 +36,16 @@ ANSWER_SCHEMA = {"type": "object", "additionalProperties": False, "properties": 
 
 
 
+MAX_SPAN_EXCERPT = 2400
+
+
 def verified_excerpt(proposed: str, source: str) -> str | None:
-    """Return only exact source bytes, tolerating model whitespace and separate verbatim lines."""
+    """Return one contiguous span of exact source bytes, tolerating model whitespace.
+
+    Separate proposed lines are accepted only when each one is a whole source line
+    and they follow source order; the returned text is then the full source span
+    between them. Fragments are never glued into a claim the source does not make.
+    """
     proposed = re.sub(r"(?<=\d)([.,])\s+(?=\d)", r"\1", proposed.strip())
     if not proposed:
         return None
@@ -48,10 +56,23 @@ def verified_excerpt(proposed: str, source: str) -> str | None:
     if match:
         return match[0]
     lines = [line.strip() for line in proposed.splitlines() if line.strip()]
-    if len(lines) > 1 and all(line in source for line in lines):
-        substantive = [line for line in lines if not line.startswith("#")]
-        if substantive:
-            return "\n".join(substantive)
+    if len(lines) < 2:
+        return None
+    start = finish = None
+    position = 0
+    wanted = iter(lines)
+    line = next(wanted)
+    for raw in source.splitlines(keepends=True):
+        body = raw.rstrip("\r\n")
+        if body.strip() == line:
+            offset = position + len(body) - len(body.lstrip())
+            start = offset if start is None else start
+            finish = position + len(body.rstrip())
+            line = next(wanted, None)
+            if line is None:
+                span = source[start:finish]
+                return span if len(span) <= MAX_SPAN_EXCERPT else None
+        position += len(raw)
     return None
 
 
