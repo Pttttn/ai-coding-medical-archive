@@ -46,6 +46,8 @@ class ProcessRequest(StrictModel):
     title: str = Field(max_length=500)
     text: str | None = Field(default=None, max_length=2000000)
     filePath: str | None = None
+    # Stored SOURCE_ONLY IR from /internal/parse; verified again before extraction.
+    sourceIR: dict | None = None
 
 
 class Correction(StrictModel):

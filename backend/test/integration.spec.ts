@@ -20,10 +20,26 @@ const suite=process.env.TEST_DATABASE_URL?describe:describe.skip;
 suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   let db:DataSource,app:INestApplication,worker:ProcessingService,uploads:string;
   const ai={call:jest.fn()};
+  const recipe=({recipeHash,...body}:Record<string,unknown>)=>{void recipeHash;return {...body,recipeHash:irHash(body)};};
+  const parseRecipe=(ir:Pick<SourceIR,'parserVersion'>)=>recipe({recipeVersion:'processing-recipe-v1',stage:'SOURCE_ONLY',parserVersion:ir.parserVersion,sourceIRVersion:'source-ir-v1',normalizerVersion:'whitespace-map-v1'});
+  const processingRecipe=(parserVersion:string,method='legacy')=>recipe({recipeVersion:'processing-recipe-v1',profile:'legacy',method,parse:parseRecipe({parserVersion}),sourceIRVersion:'source-ir-v1',normalizerVersion:'whitespace-map-v1',model:'unit-double',modelDigest:null,generationOptions:null,annotation:{promptVersion:'1'},index:{chunkerVersion:'1'}});
+  const singleBlockIR=(documentId:string,pages:any[]):SourceIR=>{
+    const text=pages[0].text,length=Buffer.byteLength(text),span={pageIndex:0,startByte:0,endByte:length};
+    const content={schemaVersion:'source-ir-v1',stage:'SOURCE_ONLY',documentId,parserVersion:'synthetic-test',normalizerVersion:'whitespace-map-v1',sourceHash:irHash(pages),pages,blocks:[{blockId:'p0:b0',kind:'paragraph',source:span,normalizedText:text,mapping:[{normalizedStartByte:0,normalizedEndByte:length,source:span,operation:'IDENTITY'}]}]};
+    return {...content,irHash:irHash(content)} as SourceIR;
+  };
+  // The parse stage of every double is derived from the extraction double currently installed, so a
+  // test that changes extraction output changes the stored IR the same way the real AI service would.
+  const parseFromProcess=async(body:any)=>{
+    const r=await (ai.call.getMockImplementation()??mock)('process',body);
+    const sourceIR=r.sourceIR??singleBlockIR(body.documentId,r.pages);
+    return {text:r.text,pages:r.pages,sourceIR,parseRecipe:parseRecipe(sourceIR),warnings:[],parserVersion:sourceIR.parserVersion};
+  };
   const mock=async(route:string,body:any):Promise<any>=>{
+    if(route==='parse')return parseFromProcess(body);
     if(route==='process'){
-      const text=body.text??'LDL 4.7 mmol/L.';
-      return {text,pages:[{pageNumber:null,text}],extraction:{documentType:'LAB_REPORT',documentDate:null,summary:'Local extraction',tags:['lipid'],facts:[{type:'LAB_RESULT',name:'LDL',valueText:null,valueNumber:4.7,unit:'mmol/L',eventDate:null,assertionStatus:'CONFIRMED',confidence:0.8,provenance:{page:null,sourceText:text}}]},model:'unit-double',promptVersion:'1',schemaVersion:'1',parserVersion:'1'};
+      const text=body.text??body.sourceIR?.pages.map((p:any)=>p.text).join('\n\n')??'LDL 4.7 mmol/L.';
+      return {text,pages:[{pageNumber:null,text}],extraction:{documentType:'LAB_REPORT',documentDate:null,summary:'Local extraction',tags:['lipid'],facts:[{type:'LAB_RESULT',name:'LDL',valueText:null,valueNumber:4.7,unit:'mmol/L',eventDate:null,assertionStatus:'CONFIRMED',confidence:0.8,provenance:{page:null,sourceText:text}}]},model:'unit-double',promptVersion:'1',schemaVersion:'1',parserVersion:'1',processingRecipe:processingRecipe('synthetic-test')};
     }
     if(route==='ask')return {answer:'LDL 4.7 mmol/L.',sources:body.documentIds.map((id:string)=>({documentId:id,source:id,chunkId:'test-chunk',position:0,text:'LDL 4.7 mmol/L.'})),insufficientContext:false};
     if(route==='consultation')return {content:'# Consultation\nNo fever. LDL 4.7 mmol/L. Dose 20 mg.',warnings:[]};
@@ -59,10 +75,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
   const withIR=async(route:string,body:any)=>{
     const result=await mock(route,body);
     if(route!=='process')return result;
-    const text=result.pages[0].text,length=Buffer.byteLength(text);
-    const span={pageIndex:0,startByte:0,endByte:length};
-    const content={schemaVersion:'source-ir-v1',stage:'SOURCE_ONLY',documentId:body.documentId,parserVersion:'synthetic-test',normalizerVersion:'whitespace-map-v1',sourceHash:irHash(result.pages),pages:result.pages,blocks:[{blockId:'p0:b0',kind:'paragraph',source:span,normalizedText:text,mapping:[{normalizedStartByte:0,normalizedEndByte:length,source:span,operation:'IDENTITY'}]}]};
-    return {...result,sourceIR:{...content,irHash:irHash(content)} as SourceIR};
+    return {...result,sourceIR:singleBlockIR(body.documentId,result.pages)};
   };
   const visitMock=async(route:string,body:any,reviewed=false)=>{
     if(route!=='process')return mock(route,body);
@@ -71,7 +84,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     const {irHash:old,...irBody}=f.sourceIR;void old;f.sourceIR.irHash=irHash(irBody);
     f.visit.sourceIRHash=f.sourceIR.irHash;
     const {artifactHash:previous,...visitBody}=f.visit;void previous;f.visit.artifactHash=irHash(visitBody);
-    return {...f,text:f.sourceIR.pages[0].text,pages:f.sourceIR.pages,extractionProfile:'clinical-v1',model:'unit-double'};
+    return {...f,text:f.sourceIR.pages[0].text,pages:f.sourceIR.pages,extractionProfile:'clinical-v1',model:'unit-double',processingRecipe:processingRecipe(f.sourceIR.parserVersion,'visit')};
   };
   it('persists visit annotation, keeps review separate and hides stale results',async()=>{
     ai.call.mockImplementation(visitMock);const d=await ready();
@@ -128,7 +141,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     const {artifactHash:previous,...labBody}=laboratory;void previous;laboratory.artifactHash=irHash(labBody);
     return {text:sourceIR.pages[0].text,pages:sourceIR.pages,sourceIR,laboratory,extractionProfile:'lab-rows-v1',
       extraction:{documentType:'LAB_REPORT',documentDate:'2026-06-18',summary:'Synthetic lab',tags:[],facts:fixture.facts},
-      model:'deterministic:lab-rows-v1',promptVersion:'lab-rows-v1',schemaVersion:'medical-facts-v1'};
+      model:'deterministic:lab-rows-v1',promptVersion:'lab-rows-v1',schemaVersion:'medical-facts-v1',processingRecipe:processingRecipe(sourceIR.parserVersion,'lab')};
   };
   it('persists typed lab annotation, preserves reviewed overlay and hides artifact during pending/edit/delete',async()=>{
     ai.call.mockImplementation(labMock);const d=await ready();
@@ -186,17 +199,81 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     expect(d.status).toBe('FAILED');expect(d.errorCode).toBe('SOURCE_IR_INVALID');expect(d.facts).toHaveLength(0);
     expect(await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id])).toHaveLength(0);
   });
-  it('migrates existing source text without rewriting it',async()=>{
-    await db.undoLastMigration();
-    await db.undoLastMigration();
+  const withRecipe=withIR;
+  const calls=(route:string)=>ai.call.mock.calls.filter(([r])=>r===route);
+  it('stores the parse stage before extraction and retries extraction from it without parsing again',async()=>{
+    let failures=1;
+    ai.call.mockImplementation(async(route,body)=>{if(route==='process'&&body.sourceIR&&failures-->0)throw new AiError('MODEL_UNAVAILABLE');return withRecipe(route,body);});
+    const d=await note();await worker.tick();
+    const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});
+    expect(job.status).toBe('QUEUED');expect(job.errorCode).toBe('MODEL_UNAVAILABLE');expect(job.sourceIrRevisionId).toBeTruthy();
+    const [stage]=await db.query('SELECT "parseRecipe","parseRecipeHash" FROM source_ir_revisions WHERE id=$1',[job.sourceIrRevisionId]);
+    expect(stage.parseRecipeHash).toBe(stage.parseRecipe.recipeHash);
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200)).body.parseRecipe.recipeHash).toBe(stage.parseRecipeHash);
+    expect(calls('parse')).toHaveLength(1);
+    // The process call carries the stored IR, never the original input.
+    expect(calls('process')[0][1]).toEqual({documentId:d.id,version:1,title:'Лабораторная заметка',sourceIR:expect.objectContaining({irHash:expect.any(String)})});
+    await db.getRepository(ProcessingJob).update(job.id,{availableAt:null});await worker.tick();await worker.tick();
+    expect(calls('parse')).toHaveLength(1);expect(calls('process')).toHaveLength(2);
+    const doc=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
+    expect(doc.status).toBe('READY');expect(doc.textVersion).toBe(1);expect(doc.facts).toHaveLength(1);
+    expect(doc.processingRecipe.parse.recipeHash).toBe(stage.parseRecipeHash);
+    const runs=await db.getRepository(ExtractionRun).find({where:{documentId:d.id},order:{createdAt:'ASC'}});
+    expect(runs.map(r=>r.status)).toEqual(['FAILED','READY']);
+    expect(runs.every(r=>r.sourceIrRevisionId===job.sourceIrRevisionId)).toBe(true);
+    expect(runs[1].recipeHash).toBe(doc.processingRecipe.recipeHash);expect(doc.extraction.recipeHash).toBe(runs[1].recipeHash);
+    // A new reprocess job parses again; identical IR is not duplicated.
+    await request(app.getHttpServer()).post('/api/documents/'+d.id+'/reprocess').expect(201);await worker.tick();
+    expect(calls('parse')).toHaveLength(2);
+    expect(await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id])).toHaveLength(1);
+  });
+  it('keeps the stored parse stage after an interrupted extraction and resumes from it',async()=>{
+    ai.call.mockImplementation(withRecipe);
     const d=await note();
+    ai.call.mockImplementation(async(route,body)=>{if(route==='process'&&body.sourceIR)await db.query("UPDATE processing_jobs SET status='RUNNING' WHERE id=$1",[d.jobId]).then(()=>{throw new Error('crash');});return withRecipe(route,body);});
+    await worker.tick();
+    // Simulated restart: interrupted jobs are requeued, the parse stage link survives.
+    await db.query("UPDATE processing_jobs SET status='QUEUED',\"errorCode\"='INTERRUPTED_RETRY',\"availableAt\"=NULL WHERE id=$1",[d.jobId]);
+    ai.call.mockClear();ai.call.mockImplementation(withRecipe);await worker.tick();await worker.tick();
+    expect(calls('parse')).toHaveLength(0);
+    expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('READY');
+  });
+  it('rejects extraction that is not a projection of the stored parse stage',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await withRecipe(route,body);if(route==='process'){r.text='LDL 1.4 mmol/L.';r.pages=[{pageNumber:null,text:r.text}];r.extraction.facts[0].provenance.sourceText=r.text;}return r;});
+    const d=await note();await worker.tick();
+    const doc=await db.getRepository(Document).findOneByOrFail({id:d.id});
+    expect(doc.status).toBe('FAILED');expect(doc.errorCode).toBe('SOURCE_IR_INVALID');
+    expect((await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body.facts).toHaveLength(0);
+  });
+  it('rejects a missing recipe, a wrong hash or one naming another parse stage',async()=>{
+    for(const tamper of [(r:any)=>{delete r.processingRecipe;},(r:any)=>{r.processingRecipe.model='other';},(r:any)=>{r.processingRecipe=recipe({...r.processingRecipe,parse:parseRecipe({...r.sourceIR,parserVersion:'other'})});}]){
+      ai.call.mockImplementation(async(route,body)=>{const r=await withRecipe(route,body);if(route==='process')tamper(r);return r;});
+      const d=await note('LDL '+Math.random()+' mmol/L.');await worker.tick();
+      const doc=await db.getRepository(Document).findOneByOrFail({id:d.id});
+      expect(doc.errorCode).toBe('RECIPE_INVALID');
+      expect(await db.query('SELECT id FROM medical_facts WHERE "documentId"=$1',[d.id])).toHaveLength(0);
+    }
+  });
+  it('rejects a parse stage whose recipe does not describe its IR before storing anything',async()=>{
+    ai.call.mockImplementation(async(route,body)=>{const r=await mock(route,body);if(route==='parse')r.parseRecipe=recipe({...r.parseRecipe,parserVersion:'other'});return r;});
+    const d=await note();await worker.tick();
+    expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).errorCode).toBe('RECIPE_INVALID');
+    expect(await db.query('SELECT id FROM source_ir_revisions WHERE "documentId"=$1',[d.id])).toHaveLength(0);
+    expect(calls('process')).toHaveLength(0);
+  });
+  it('migrates existing source text without rewriting it',async()=>{
+    // The note exists before source IR and processing stages are migrated in.
+    const d=await note();
+    await db.undoLastMigration();
+    await db.undoLastMigration();
+    await db.undoLastMigration();
     await db.runMigrations();
     ai.call.mockImplementation(withIR);await worker.tick();
     const after=(await request(app.getHttpServer()).get('/api/documents/'+d.id).expect(200)).body;
     expect(after.text).toBe('LDL 4.7 mmol/L.');expect(after.textVersion).toBe(1);
     await request(app.getHttpServer()).get('/api/documents/'+d.id+'/source-ir').expect(200);
   });
-  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(3);});
+  it('migrates actual PostgreSQL and responds with readiness',async()=>{await request(app.getHttpServer()).get('/api/health').expect(200);const migrations=await db.query('SELECT * FROM migrations');expect(migrations).toHaveLength(4);});
   it('validates unknown properties and empty title at the API boundary',async()=>{await request(app.getHttpServer()).post('/api/documents/note').send({title:' ',text:'ok text',storagePath:'/secret'}).expect(400);});
   it('returns durable IDs before inference and completes the worker job',async()=>{const d=await note();expect(d.jobId).toBeDefined();expect(ai.call).not.toHaveBeenCalled();await worker.tick();const job=await db.getRepository(ProcessingJob).findOneByOrFail({id:d.jobId});expect(job.status).toBe('READY');expect((await db.getRepository(Document).findOneByOrFail({id:d.id})).status).toBe('READY');});
   it('detects duplicate text documents with safe conflict error',async()=>{await note();const r=await request(app.getHttpServer()).post('/api/documents/note').send({title:'Second',text:'LDL 4.7 mmol/L.'}).expect(409);expect(r.body.code).toBe('DUPLICATE');expect(r.body).not.toHaveProperty('query');});
@@ -299,7 +376,7 @@ suite('PostgreSQL migration and REST integration (local AI double)',()=>{
     expect((await request(app.getHttpServer()).get('/api/consultations?q=Review').expect(200)).body.items[0].responseCount).toBe(1);
   });
   it('upgrades existing reviewed consultations without losing drafts',async()=>{
-    await db.undoLastMigration();
+    await db.undoLastMigration();await db.undoLastMigration();
     const reviewed=await db.getRepository(Consultation).save({question:'Legacy reviewed',content:'Exact legacy text',contentHash:contentHash('Exact legacy text'),reviewedHash:contentHash('Exact legacy text'),status:'REVIEWED',warnings:[],sourceRefs:[],contexts:[]});
     const draft=await db.getRepository(Consultation).save({question:'Legacy draft',content:'Draft text',contentHash:contentHash('Draft text'),reviewedHash:null,warnings:[],sourceRefs:[],contexts:[]});
     await db.runMigrations();

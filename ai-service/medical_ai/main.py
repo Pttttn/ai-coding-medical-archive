@@ -19,6 +19,7 @@ from .ollama import Ollama
 from .parsing import LAB_TABLE_PARSER_VERSION, PARSER_VERSION, confined_path, parse_file, parse_pdf_lab_tables
 from .privacy import consultation
 from .rag import CorrectiveRAG
+from .recipe import parse_recipe, processing_recipe
 from .source_ir import IR_VERSION, SourceIR, build_source_ir
 from .schemas import AskRequest, ConsultationRequest, IndexRequest, Page, ProcessRequest, RemoveRequest
 
@@ -56,10 +57,8 @@ def create_app(services: Services | None = None) -> FastAPI:
         return {"status": "running", "sourceIRVersion": IR_VERSION, "extractionProfile": services.settings.extraction_profile, **services.provider.health(), "promptVersion": PROMPT_VERSION,
                 "schemaVersion": SCHEMA_VERSION, "parserVersion": PARSER_VERSION, "archivePromptVersion": ARCHIVE_PROMPT_VERSION}
 
-    @app.post("/internal/process", dependencies=[Depends(authorize)])
-    def process(body: ProcessRequest):
-        if (body.text is None) == (body.filePath is None):
-            raise ServiceError("INVALID_INPUT", "Укажите ровно одно из text и filePath.")
+    def parse_input(body: ProcessRequest):
+        """Deterministic stage before any model call; the backend stores its IR before extraction."""
         warnings = []
         parser_version = PARSER_VERSION if body.filePath else "user-text-v1"
         if body.filePath is not None:
@@ -74,33 +73,57 @@ def create_app(services: Services | None = None) -> FastAPI:
                     parser_version = LAB_TABLE_PARSER_VERSION
         else:
             text, pages = body.text or "", [Page(text=body.text or "")]
-        source_ir = build_source_ir(body.documentId, pages, parser_version)
+        return text, pages, warnings, build_source_ir(body.documentId, pages, parser_version)
+
+    @app.post("/internal/parse", dependencies=[Depends(authorize)])
+    def parse(body: ProcessRequest):
+        if body.sourceIR is not None or (body.text is None) == (body.filePath is None):
+            raise ServiceError("INVALID_INPUT", "Укажите ровно одно из text и filePath.")
+        text, pages, warnings, source_ir = parse_input(body)
+        return {"sourceIR": source_ir, "text": text, "pages": [p.model_dump() for p in pages], "warnings": warnings,
+                "parserVersion": source_ir["parserVersion"], "parseRecipe": parse_recipe(source_ir["parserVersion"])}
+
+    @app.post("/internal/process", dependencies=[Depends(authorize)])
+    def process(body: ProcessRequest):
+        if sum(v is not None for v in (body.text, body.filePath, body.sourceIR)) != 1:
+            raise ServiceError("INVALID_INPUT", "Укажите ровно одно из text, filePath и sourceIR.")
+        if body.sourceIR is not None:
+            # Extraction from a stored parse stage: never re-parse, only re-verify the immutable IR.
+            try:
+                ir = SourceIR.model_validate(body.sourceIR)
+            except ValueError:
+                raise ServiceError("SOURCE_IR_INVALID", "Исходное представление документа повреждено.") from None
+            if ir.documentId != body.documentId:
+                raise ServiceError("SOURCE_IR_INVALID", "Исходное представление документа повреждено.")
+            pages, warnings, source_ir = ir.pages, [], ir.model_dump(mode="json")
+            text = "\n\n".join(p.text for p in pages)
+        else:
+            text, pages, warnings, source_ir = parse_input(body)
+            ir = SourceIR.model_validate(source_ir)
+        parser_version = source_ir["parserVersion"]
         laboratory, visit = None, None
         if services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE, REVIEW_PROFILE}:
-            ir = SourceIR.model_validate(source_ir)
             laboratory = annotate_laboratory(ir)
         if laboratory is not None:
+            method = "lab"
             extracted, extraction_warnings = project_laboratory(ir, laboratory)
         elif services.settings.extraction_profile == REVIEW_PROFILE and supports_visit(ir):
+            method = "visit-review"
             visit = annotate_reviewed_visit(services.provider, ir)
             extracted, extraction_warnings = project_reviewed_visit(ir, visit)
         elif services.settings.extraction_profile == CLINICAL_PROFILE and supports_visit(ir):
+            method = "visit"
             visit = annotate_visit(services.provider, ir)
             extracted, extraction_warnings = project_visit(ir, visit)
         else:
+            method = "legacy"
             extracted, extraction_warnings = extract(services.provider, body.title, pages)
-        model_meta = services.provider.health().get("models", [])
-        model_digest = next((m.get("digest") for m in model_meta if isinstance(m, dict)
-                             and m.get("name") in {services.settings.llm_model, services.settings.llm_model + ":latest"}), None)
+        recipe = processing_recipe(services.settings, services.provider, parser_version, method)
         return {"sourceIR": source_ir, "visit": visit.model_dump(mode="json") if visit is not None else None,
                 "laboratory": laboratory.model_dump(mode="json") if laboratory is not None else None,
                 "extractionProfile": services.settings.extraction_profile,
-                "processingRecipe": {"profile": services.settings.extraction_profile,
-                    "sourceIRVersion": IR_VERSION, "normalizerVersion": source_ir['normalizerVersion'],
-                    "model": None if laboratory is not None else services.settings.llm_model,
-                    "modelDigest": None if laboratory is not None else model_digest,
-                    "generationOptions": None if laboratory is not None else services.provider.generation_options("TASK: extraction") if hasattr(services.provider, 'generation_options') else None},
-                "modelDigest": None if laboratory is not None else model_digest, "text": text, "pages": [p.model_dump() for p in pages],
+                "processingRecipe": recipe,
+                "modelDigest": recipe["modelDigest"], "text": text, "pages": [p.model_dump() for p in pages],
                 "extraction": extracted.model_dump(mode="json"), "warnings": warnings + extraction_warnings,
                 "model": "deterministic:lab-rows-v1" if laboratory is not None else services.settings.llm_model,
                 "promptVersion": LAB_PROJECTION_VERSION if laboratory is not None else REVIEW_PROMPT_VERSION if visit is not None and services.settings.extraction_profile == REVIEW_PROFILE else VISIT_PROMPT_VERSION if visit is not None else PROMPT_VERSION,

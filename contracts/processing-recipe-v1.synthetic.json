@@ -1,0 +1,50 @@
+{
+  "_comment": "Synthetic cross-language fixture: output of ai-service medical_ai.recipe for source-ir-v1.synthetic.json; hashes are checked by ai-service/tests/test_processing_stages.py and backend/test/recipe.spec.ts.",
+  "sourceIR": "source-ir-v1.synthetic.json",
+  "parseRecipe": {
+    "recipeVersion": "processing-recipe-v1",
+    "stage": "SOURCE_ONLY",
+    "parserVersion": "synthetic-parser",
+    "sourceIRVersion": "source-ir-v1",
+    "normalizerVersion": "whitespace-map-v1",
+    "recipeHash": "260b4eacc06530d64c0106cc0d6102bdd0084c9b11b039a0e363f1b1a311196c"
+  },
+  "processingRecipe": {
+    "recipeVersion": "processing-recipe-v1",
+    "profile": "clinical-v1",
+    "method": "visit",
+    "parse": {
+      "recipeVersion": "processing-recipe-v1",
+      "stage": "SOURCE_ONLY",
+      "parserVersion": "synthetic-parser",
+      "sourceIRVersion": "source-ir-v1",
+      "normalizerVersion": "whitespace-map-v1",
+      "recipeHash": "260b4eacc06530d64c0106cc0d6102bdd0084c9b11b039a0e363f1b1a311196c"
+    },
+    "sourceIRVersion": "source-ir-v1",
+    "normalizerVersion": "whitespace-map-v1",
+    "model": "qwen3.5:9b",
+    "modelDigest": "sha256:synthetic-model",
+    "generationOptions": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 2048
+    },
+    "annotation": {
+      "annotationVersion": "visit-assertions-v1",
+      "projectionVersion": null,
+      "promptVersion": "visit-extract-v2",
+      "factSchemaVersion": "medical-facts-v1",
+      "maxFactsPerBatch": null
+    },
+    "index": {
+      "chunkerVersion": "medical-structure-v1",
+      "chunkSize": 900,
+      "chunkOverlap": 120,
+      "embeddingModel": "nomic-embed-text",
+      "embeddingDigest": "sha256:synthetic-embed"
+    },
+    "recipeHash": "b6e62ea0ea82a563ea96b24c8fbf7950e29e4f0b4969ce6978db9706e46be9ab"
+  }
+}

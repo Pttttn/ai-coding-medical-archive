@@ -57,7 +57,7 @@ export class ArchiveService {
   }
   async sourceIR(id:string) {
     await this.document(id);
-    const rows=await this.db.query('SELECT i.id,i."textRevisionId",i."irHash",i.content FROM source_ir_revisions i JOIN text_revisions t ON t.id=i."textRevisionId" JOIN documents d ON d.id=i."documentId" WHERE d.id=$1 AND d."deletedAt" IS NULL AND t.version=d."textVersion" ORDER BY i."createdAt" DESC,i.id LIMIT 1',[id]);
+    const rows=await this.db.query('SELECT i.id,i."textRevisionId",i."irHash",i.content,i."parseRecipe" FROM source_ir_revisions i JOIN text_revisions t ON t.id=i."textRevisionId" JOIN documents d ON d.id=i."documentId" WHERE d.id=$1 AND d."deletedAt" IS NULL AND t.version=d."textVersion" ORDER BY i."createdAt" DESC,i.id LIMIT 1',[id]);
     if(!rows.length)throw new NotFoundException({message:'Исходное представление ещё не создано',code:'SOURCE_IR_UNAVAILABLE'});
     return rows[0];
   }
@@ -115,8 +115,8 @@ export class ArchiveService {
     const rawWarnings=(extractionRun?.rawJson as {warnings?:unknown}|null)?.warnings;
     const processingWarnings=Array.isArray(rawWarnings)?rawWarnings.filter((warning):warning is string=>typeof warning==='string'):[];
     const recipe=(extractionRun?.rawJson as {processingRecipe?:Record<string,unknown>}|null)?.processingRecipe;
-    const processingRecipe=recipe?Object.fromEntries(['profile','sourceIRVersion','normalizerVersion','model','modelDigest','generationOptions'].map(k=>[k,recipe[k]])):null;
-    const extraction=extractionRun?{id:extractionRun.id,textVersion:extractionRun.textVersion,model:extractionRun.model,modelDigest:extractionRun.modelDigest,promptVersion:extractionRun.promptVersion,schemaVersion:extractionRun.schemaVersion,parserVersion:extractionRun.parserVersion,status:extractionRun.status,validationErrors:extractionRun.validationErrors,createdAt:extractionRun.createdAt,completedAt:extractionRun.completedAt}:null;
+    const processingRecipe=recipe?Object.fromEntries(['recipeVersion','recipeHash','profile','method','parse','sourceIRVersion','normalizerVersion','model','modelDigest','generationOptions','annotation','index'].filter(k=>k in recipe).map(k=>[k,recipe[k]])):null;
+    const extraction=extractionRun?{id:extractionRun.id,textVersion:extractionRun.textVersion,model:extractionRun.model,modelDigest:extractionRun.modelDigest,promptVersion:extractionRun.promptVersion,schemaVersion:extractionRun.schemaVersion,parserVersion:extractionRun.parserVersion,recipeHash:extractionRun.recipeHash,status:extractionRun.status,validationErrors:extractionRun.validationErrors,createdAt:extractionRun.createdAt,completedAt:extractionRun.completedAt}:null;
     // Never expose a failed, deleted, superseded or earlier-text lab artifact as current.
     const raw=extractionRun?.rawJson as {laboratory?:Laboratory;visit?:Visit;extractionProfile?:string}|null;
     const laboratory=!doc.deletedAt&&doc.status==='READY'&&extractionRun?.status==='READY'&&extractionRun.textVersion===doc.textVersion?raw?.laboratory??null:null;

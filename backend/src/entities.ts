@@ -119,6 +119,8 @@ export class ProcessingJob {
   @Column() generation:number;
   @Column({type:'text',nullable:true}) errorCode:string|null;
   @Column({type:'timestamptz',nullable:true}) availableAt:Date|null;
+  /** Parse stage stored for this job; a retry extracts from it instead of parsing again. */
+  @Column({type:'uuid',nullable:true}) sourceIrRevisionId:string|null;
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
   @UpdateDateColumn({type:'timestamptz'}) updatedAt:Date;
 }
@@ -132,6 +134,8 @@ export class ExtractionRun {
   @Column({type:'text',nullable:true}) promptVersion:string|null;
   @Column({type:'text',nullable:true}) schemaVersion:string|null;
   @Column({type:'text',nullable:true}) parserVersion:string|null;
+  @Column({type:'uuid',nullable:true}) sourceIrRevisionId:string|null;
+  @Column({type:'varchar',length:64,nullable:true}) recipeHash:string|null;
   @Column() status:string;
   @Column({type:'jsonb',nullable:true}) rawJson:unknown;
   @Column({type:'jsonb',default:[]}) validationErrors:string[];
