@@ -1,3 +1,4 @@
+import type { Document } from './types';
 export const documentTypes: Record<string, string> = {
   LAB_REPORT: 'Результаты анализов', VISIT: 'Приём врача', VISIT_TRANSCRIPT: 'Транскрипт приёма',
   DISCHARGE_SUMMARY: 'Выписка', PRESCRIPTION: 'Назначение', IMAGING_REPORT: 'Исследование',
@@ -61,4 +62,15 @@ export function hasFactCorrection(fact: { reviewStatus: string; originalValue?: 
   if (fact.reviewStatus === 'CORRECTED') return true;
   if (!fact.originalValue) return false;
   return ['type', 'name', 'valueText', 'valueNumber', 'unit', 'eventDate', 'assertionStatus'].some(key => Object.hasOwn(fact.originalValue!, key) && (fact[key] ?? null) !== (fact.originalValue![key] ?? null));
+}
+
+/** Facts and search always show one activated processing revision; say so while a newer one is pending or failed. */
+export function revisionNotice(doc: Pick<Document, 'status' | 'processingRevision' | 'textVersion' | 'textRevisions'>): string | null {
+  const active = doc.processingRevision?.active;
+  // After a text edit the old snapshot no longer describes the document and is not shown.
+  const currentText = doc.textRevisions?.find(r => r.version === doc.textVersion)?.id;
+  if (!active || active.textRevisionId !== currentText) return null;
+  if (doc.status === 'FAILED') return 'Новая обработка не завершилась. Факты и поиск показывают последнюю успешную версию обработки.';
+  if (doc.processingRevision?.prepared || isProcessing(doc.status)) return 'Пока идёт обработка, факты и поиск показывают предыдущую версию целиком. Новая версия появится сразу вся, когда будет готов её поисковый индекс.';
+  return null;
 }
