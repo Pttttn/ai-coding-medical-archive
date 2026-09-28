@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     max_file_bytes: int = 20 * 1024 * 1024
     internal_port: int = 8001
     mcp_port: int = 8002
+    mcp_max_concurrent: int = Field(default=1, ge=1, le=8)
+    mcp_max_waiting: int = Field(default=4, ge=0, le=64)
     bind_host: str = "0.0.0.0"
 
     @model_validator(mode="after")
