@@ -1,6 +1,7 @@
 import hashlib
 import json
 import re
+import shutil
 import sqlite3
 import threading
 from datetime import datetime, timezone
@@ -40,6 +41,7 @@ class Corpus:
         self.name, self.settings, self.provider = name, settings, provider
         folder = settings.mcp_demo_dir if name == "mcp_demo" and settings.mcp_demo_dir else settings.data_dir / name
         folder.mkdir(parents=True, exist_ok=True)
+        self.folder = folder
         self.lock = threading.RLock()
         self.db = sqlite3.connect(folder / "metadata.sqlite3", check_same_thread=False)
         self.db.row_factory = sqlite3.Row
@@ -198,7 +200,7 @@ class Corpus:
         return [d for d in self.documents if (allowed is None or d.metadata["documentId"] in allowed)
                 and (revisions is None or d.metadata.get("revisionId") == revisions.get(d.metadata["documentId"]))]
 
-    def remove(self, document_id: str):
+    def remove(self, document_id: str, *, purge: bool = False):
         with self.lock:
             ids = [r[0] for r in self.db.execute("SELECT id FROM chunks WHERE document_id=?", (document_id,))]
             self.db.execute("DELETE FROM chunks WHERE document_id=?", (document_id,))
@@ -208,7 +210,36 @@ class Corpus:
             self._refresh_sparse()
             if ids:
                 self.collection.delete(ids=ids)
+            if purge:
+                self._compact()
         return {"ok": True}
+
+    def _compact(self):
+        """Leave no removed text on disk: SQLite free pages and WAL, Chroma's log and full-text index.
+
+        Chroma keeps every upsert in its own log and FTS segments, so the collection is rebuilt from
+        the authoritative SQLite rows (with their stored embeddings) and both databases are vacuumed.
+        """
+        self.db.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        self.db.execute("VACUUM")
+        self.db.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        self.client.delete_collection("chunks")
+        self.collection = self.client.get_or_create_collection("chunks", embedding_function=None,
+                                                               metadata={"hnsw:space": "cosine"})
+        self._restore()
+        chroma = self.folder / "chroma" / "chroma.sqlite3"
+        if chroma.exists():
+            # Chroma is idle here: every collection call in this process runs under self.lock.
+            connection = sqlite3.connect(chroma)
+            try:
+                segments = {row[0] for row in connection.execute("SELECT id FROM segments")}
+                connection.execute("VACUUM")
+            finally:
+                connection.close()
+            # The dropped collection's vector files stay on disk; only live segment folders are kept.
+            for path in chroma.parent.iterdir():
+                if path.is_dir() and re.fullmatch(r"[0-9a-f-]{36}", path.name) and path.name not in segments:
+                    shutil.rmtree(path)
 
     def retrieve(self, query: str, top_k: int = 5, document_ids: list[str] | None = None, *, archive_scan: bool = False,
                  revisions: dict[str, str | None] | None = None) -> list[Document]:

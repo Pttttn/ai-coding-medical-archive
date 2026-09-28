@@ -7,7 +7,8 @@ import {DataSource} from 'typeorm';
 import {createReadStream} from 'node:fs';
 import {ArchiveService} from './archive.service';
 import {ConsultationService} from './consultation.service';
-import {AddConsultationResponseDto,ConsultationQueryDto,AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
+import {PurgeService} from './purge.service';
+import {AddConsultationResponseDto,ConsultationQueryDto,AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,PurgeDocumentDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
 import {MAX_UPLOAD_BYTES} from './core';
 
 @ApiTags('Local archive')
@@ -17,7 +18,7 @@ import {MAX_UPLOAD_BYTES} from './core';
 @ApiResponse({status:503,description:'Local AI or model unavailable'})
 @Controller()
 export class AppController {
-  constructor(private readonly archive:ArchiveService,private readonly consultation:ConsultationService,private readonly db:DataSource){}
+  constructor(private readonly archive:ArchiveService,private readonly consultation:ConsultationService,private readonly purger:PurgeService,private readonly db:DataSource){}
   @Get('health') @ApiOperation({summary:'Database-backed readiness'})
   async health(){await this.db.query('SELECT 1');return {status:'ok',service:'local-medical-archive'};}
   @Post('documents/note') @ApiOperation({summary:'Create note or visit transcript; processing is queued'})
@@ -39,6 +40,10 @@ export class AppController {
   remove(@Param('id',ParseUUIDPipe)id:string){return this.archive.remove(id);}
   @Post('documents/:id/restore') @ApiOperation({summary:'Restore and reindex a document'})
   restore(@Param('id',ParseUUIDPipe)id:string){return this.archive.restore(id);}
+  @Get('documents/:id/purge') @ApiOperation({summary:'Preview permanent deletion of a trashed document: consultations built from it are deleted too'})
+  purgePreview(@Param('id',ParseUUIDPipe)id:string){return this.purger.preview(id);}
+  @Post('documents/:id/purge') @ApiOperation({summary:'Permanently delete a trashed document: original, revisions, facts, index, history and its consultations'})
+  purge(@Param('id',ParseUUIDPipe)id:string,@Body()dto:PurgeDocumentDto){return this.purger.purge(id,dto);}
   @Post('documents/:id/reprocess') @ApiOperation({summary:'Queue local extraction while preserving reviewed facts'})
   reprocess(@Param('id',ParseUUIDPipe)id:string){return this.archive.reprocess(id);}
   @Get('documents/:id/original') @ApiOperation({summary:'Read the immutable original PDF'})
