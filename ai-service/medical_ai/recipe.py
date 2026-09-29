@@ -37,6 +37,12 @@ def _digest(models, name):
     return next((m.get('digest') for m in models if isinstance(m, dict) and m.get('name') in {name, name + ':latest'}), None)
 
 
+def index_settings(settings, models) -> dict:
+    """Settings that shape a document's chunks and vectors; the indexer reports the ones it actually used."""
+    return {'chunkerVersion': SPLITTER_VERSION, 'chunkSize': settings.chunk_size, 'chunkOverlap': settings.chunk_overlap,
+            'embeddingModel': settings.embedding_model, 'embeddingDigest': _digest(models, settings.embedding_model)}
+
+
 def processing_recipe(settings, provider, parser_version: str, method: str) -> dict:
     """Full recipe of one extraction run. `method` is the path actually taken for this document:
     'lab' (deterministic rows), 'visit', 'visit-review' or 'legacy' (LLM facts)."""
@@ -61,8 +67,7 @@ def processing_recipe(settings, provider, parser_version: str, method: str) -> d
         'generationOptions': options,
         'annotation': {**annotation, 'factSchemaVersion': SCHEMA_VERSION,
                        'maxFactsPerBatch': None if method != 'legacy' else settings.extraction_max_facts_per_batch},
-        # Declared index settings of this AI service; the index is staged per processing revision (P3).
-        'index': {'chunkerVersion': SPLITTER_VERSION, 'chunkSize': settings.chunk_size, 'chunkOverlap': settings.chunk_overlap,
-                  'embeddingModel': settings.embedding_model, 'embeddingDigest': _digest(models, settings.embedding_model)},
+        # Expected index settings; the indexer confirms the ones it used in the revision's index manifest.
+        'index': index_settings(settings, models),
     })
 

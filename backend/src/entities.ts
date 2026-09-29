@@ -112,6 +112,8 @@ export class TimelineEvent {
   @Column('text') description:string;
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
 }
+export const REPROCESS_MODES=['CURRENT_TEXT','ORIGINAL'] as const;
+export type ReprocessMode=typeof REPROCESS_MODES[number];
 @Entity('processing_jobs')
 export class ProcessingJob {
   @PrimaryGeneratedColumn('uuid') id:string;
@@ -126,6 +128,8 @@ export class ProcessingJob {
   @Column({type:'uuid',nullable:true}) sourceIrRevisionId:string|null;
   /** Prepared processing revision of this job; a retry indexes and activates it instead of extracting again. */
   @Column({type:'uuid',nullable:true}) processingRevisionId:string|null;
+  /** Parse source a reprocess asked for; null keeps the automatic choice (original PDF unless the text was edited). */
+  @Column({type:'varchar',nullable:true}) parseSource:ReprocessMode|null;
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
   @UpdateDateColumn({type:'timestamptz'}) updatedAt:Date;
 }
@@ -189,7 +193,7 @@ export class ProcessingRevision {
   @Column('uuid') extractionRunId:string;
   @Column({type:'varchar',length:64}) recipeHash:string;
   @Column({default:'PREPARED'}) status:'PREPARED'|'ACTIVE'|'SUPERSEDED'|'FAILED';
-  @Column({type:'jsonb',nullable:true}) indexManifest:{revisionId:string;documentChunks:number;contentHash:string|null}|null;
+  @Column({type:'jsonb',nullable:true}) indexManifest:{revisionId:string;documentChunks:number;contentHash:string|null;indexSettings?:Record<string,any>|null}|null;
   @CreateDateColumn({type:'timestamptz'}) createdAt:Date;
   @Column({type:'timestamptz',nullable:true}) activatedAt:Date|null;
 }

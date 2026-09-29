@@ -1,4 +1,4 @@
-import type { Document } from './types';
+import type { Document, ReprocessMode } from './types';
 export const documentTypes: Record<string, string> = {
   LAB_REPORT: 'Результаты анализов', VISIT: 'Приём врача', VISIT_TRANSCRIPT: 'Транскрипт приёма',
   DISCHARGE_SUMMARY: 'Выписка', PRESCRIPTION: 'Назначение', IMAGING_REPORT: 'Исследование',
@@ -65,12 +65,18 @@ export function hasFactCorrection(fact: { reviewStatus: string; originalValue?: 
 }
 
 /** Facts and search always show one activated processing revision; say so while a newer one is pending or failed. */
-export function revisionNotice(doc: Pick<Document, 'status' | 'processingRevision' | 'textVersion' | 'textRevisions'>): string | null {
+export function revisionNotice(doc: Pick<Document, 'status' | 'processingRevision' | 'textVersion' | 'textRevisions' | 'factsTextVersion'>): string | null {
+  // After a text edit the facts of the earlier text stay until the new one is processed; answers skip the document.
+  if (doc.factsTextVersion != null && doc.textVersion && doc.factsTextVersion !== doc.textVersion) {
+    const shown = `Факты и хронология показаны по версии текста ${doc.factsTextVersion}; ответы по архиву не используют этот документ, пока текущая версия ${doc.textVersion} не обработана.`;
+    return doc.status === 'FAILED' ? `Обработка изменённого текста не завершилась. ${shown}` : `Текст изменён. ${shown}`;
+  }
   const active = doc.processingRevision?.active;
-  // After a text edit the old snapshot no longer describes the document and is not shown.
   const currentText = doc.textRevisions?.find(r => r.version === doc.textVersion)?.id;
   if (!active || active.textRevisionId !== currentText) return null;
   if (doc.status === 'FAILED') return 'Новая обработка не завершилась. Факты и поиск показывают последнюю успешную версию обработки.';
   if (doc.processingRevision?.prepared || isProcessing(doc.status)) return 'Пока идёт обработка, факты и поиск показывают предыдущую версию целиком. Новая версия появится сразу вся, когда будет готов её поисковый индекс.';
   return null;
 }
+
+export const reprocessModeLabels: Record<'' | ReprocessMode, string> = { '': 'Автоматически', CURRENT_TEXT: 'Текущий текст, без повторного разбора', ORIGINAL: 'Заново разобрать оригинал' };

@@ -22,3 +22,14 @@ export function validateProcessingRecipe(recipe:unknown,parseRecipeHash:string):
     throw new AiError('RECIPE_INVALID');
   return recipe.recipeHash;
 }
+/** Index settings the extraction recipe named for its revision; runs without a recipe (legacy) have none. */
+export function expectedIndexSettings(rawJson:unknown):Record<string,unknown>|null {
+  const index=isObject(rawJson)&&isObject(rawJson.processingRecipe)?rawJson.processingRecipe.index:null;
+  return isObject(index)?index:null;
+}
+/** The indexer's report of the settings it used must equal the recipe's, whatever the key order. */
+export function confirmIndexSettings(expected:Record<string,unknown>,used:unknown):void {
+  let same=false;
+  try {same=isObject(used)&&irHash(used)===irHash(expected);}catch {same=false;}
+  if(!same)throw new AiError('INDEX_RECIPE_MISMATCH');
+}

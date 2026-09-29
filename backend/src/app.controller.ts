@@ -8,7 +8,7 @@ import {createReadStream} from 'node:fs';
 import {ArchiveService} from './archive.service';
 import {ConsultationService} from './consultation.service';
 import {PurgeService} from './purge.service';
-import {AddConsultationResponseDto,ConsultationQueryDto,AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,PurgeDocumentDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
+import {AddConsultationResponseDto,ConsultationQueryDto,AskDto,CreateNoteDto,DocumentQueryDto,EditConsultationDto,PaginationDto,PrepareConsultationDto,PurgeDocumentDto,ReprocessDto,ReviewDto,TagDto,TimelineQueryDto,UpdateDocumentDto,UpdateFactDto,UploadDto} from './dto';
 import {MAX_UPLOAD_BYTES} from './core';
 
 @ApiTags('Local archive')
@@ -45,7 +45,7 @@ export class AppController {
   @Post('documents/:id/purge') @ApiOperation({summary:'Permanently delete a trashed document: original, revisions, facts, index, history and its consultations'})
   purge(@Param('id',ParseUUIDPipe)id:string,@Body()dto:PurgeDocumentDto){return this.purger.purge(id,dto);}
   @Post('documents/:id/reprocess') @ApiOperation({summary:'Queue local extraction while preserving reviewed facts'})
-  reprocess(@Param('id',ParseUUIDPipe)id:string){return this.archive.reprocess(id);}
+  reprocess(@Param('id',ParseUUIDPipe)id:string,@Body()dto:ReprocessDto){return this.archive.reprocess(id,dto.mode);}
   @Get('documents/:id/original') @ApiOperation({summary:'Read the immutable original PDF'})
   async original(@Param('id',ParseUUIDPipe)id:string,@Res()res:Response) {
     const original=await this.archive.original(id);
