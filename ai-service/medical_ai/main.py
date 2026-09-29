@@ -3,6 +3,7 @@ import secrets
 from functools import lru_cache
 from typing import Annotated
 
+import anyio
 from fastapi import Depends, FastAPI, Header, Request
 from fastapi.responses import JSONResponse
 from fastmcp import FastMCP
@@ -160,6 +161,27 @@ def create_app(services: Services | None = None) -> FastAPI:
 def create_mcp(services: Services | None = None) -> FastMCP:
     services = services or get_services()
     public = services.public_output
+    # Tools run in worker threads: a minutes-long ask_question must not stall /health or /internal/*,
+    # which share this event loop. Model-bound tools queue behind a small limiter and a full queue is refused.
+    heavy = anyio.CapacityLimiter(services.settings.mcp_max_concurrent)
+    waiting = 0
+
+    async def offload(fn, limit=True):
+        nonlocal waiting
+        if not limit:
+            return await anyio.to_thread.run_sync(fn)
+        if not heavy.available_tokens and waiting >= services.settings.mcp_max_waiting:
+            raise ServiceError("MCP_BUSY", "Сервис занят.", 503)
+        waiting += 1
+        try:
+            await heavy.acquire()
+        finally:
+            waiting -= 1
+        try:
+            return await anyio.to_thread.run_sync(fn)
+        finally:
+            heavy.release()
+
     mcp = FastMCP("Local Medical Archive — synthetic medical archive", mask_error_details=True,
         middleware=[PublicToolErrors()], instructions=
         "Search the SYNTHETIC medical archive for visits, laboratory results, prescriptions, timelines and "
@@ -172,24 +194,23 @@ def create_mcp(services: Services | None = None) -> FastMCP:
               "fixed allowed ./sample_docs folder. Supports Markdown, plain text and text PDF. "
               "Returns safe numerical statistics. Uses local embeddings, no generative model. "
               "Re-index after source changes; arbitrary folders and the private archive are inaccessible.")
-    def index_folder(path: str = "./sample_docs", glob: str = "**/*") -> dict:
-        return public.indexing(services.demo.index_folder(path, glob))
+    async def index_folder(path: str = "./sample_docs", glob: str = "**/*") -> dict:
+        return await offload(lambda: public.indexing(services.demo.index_folder(path, glob)))
 
     @mcp.tool(description="Check numerical file/chunk statistics of the synthetic medical archive. "
               "No document content, paths or model calls. Empty means index_folder must be called before "
               "asking about synthetic visits, lab values or prescription details.")
-    def index_status() -> dict:
-        return public.status(services.demo.status())
+    async def index_status() -> dict:
+        return await offload(lambda: public.status(services.demo.status()), limit=False)
 
     @mcp.tool(description="Find relevant medical source excerpts using BM25 plus vector search and RRF. "
               "A local privacy model checks and cleans ALL excerpts before returning them with per-response "
               "source aliases. No answer generation, query rewrite or relevance grading is performed. "
               "If privacy validation fails, no raw excerpts are returned.")
-    def find_relevant_docs(query: str, top_k: int = 5) -> dict:
+    async def find_relevant_docs(query: str, top_k: int = 5) -> dict:
         if not query.strip() or len(query) > 4000:
             raise ServiceError("INVALID_QUESTION", "Недопустимый запрос.")
-        sources = [source_of(d, demo=True) for d in services.demo.retrieve(query, top_k)]
-        return public.checked(sources)
+        return await offload(lambda: public.checked([source_of(d, demo=True) for d in services.demo.retrieve(query, top_k)]))
 
     @mcp.tool(description="Answer factual questions about synthetic medical visits, lab measurements, "
               "prescriptions, intervals and negations. Runs Corrective RAG: query rewrite, hybrid retrieval, "
@@ -197,9 +218,11 @@ def create_mcp(services: Services | None = None) -> FastMCP:
               "insufficient-data response. A local privacy check cleans BOTH answer and source excerpts. "
               "Returns only checked text and per-response source aliases. No raw identifying metadata, "
               "raw source filenames or traces. No raw fallback if checking fails.")
-    def ask_question(question: str) -> dict:
-        raw = services.demo_rag.ask(question)
-        return public.checked(raw["sources"], answer=raw["answer"],
-                              insufficient_context=raw["insufficientContext"], answer_parts=raw.get("answerParts"))
+    async def ask_question(question: str) -> dict:
+        def run():
+            raw = services.demo_rag.ask(question)
+            return public.checked(raw["sources"], answer=raw["answer"], insufficient_context=raw["insufficientContext"],
+                                  answer_parts=raw.get("answerParts"))
+        return await offload(run)
 
     return mcp

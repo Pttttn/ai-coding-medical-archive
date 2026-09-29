@@ -30,7 +30,7 @@ Document хранит метаданные, статус, SHA256 и soft delete.
 - POST /internal/consultation: `{question,contexts:[{text}]}` → `{content,warnings:string[]}`.
 - GET /health → доступность процесса/моделей (без вызова генерации).
 
-MCP Streamable HTTP /mcp на 8002: index_folder(path,glob), index_status(), find_relevant_docs(query,top_k), ask_question(question). Только mcp_demo. При чистом старте пуст. Shared uploads смонтированы read-only в AI. Python не имеет доступа к PostgreSQL.
+MCP Streamable HTTP /mcp на 8002: index_folder(path,glob), index_status(), find_relevant_docs(query,top_k), ask_question(question). Только mcp_demo. При чистом старте пуст. Tools выполняются в рабочих потоках, а не в общем event loop с внутренним API: долгий ask_question не подвешивает /health и /internal/*. find_relevant_docs, ask_question и index_folder идут через ограничитель (`MCP_MAX_CONCURRENT=1`), очередь ожидания ограничена (`MCP_MAX_WAITING=4`), сверх неё вызов получает фиксированную публичную ошибку; index_status ограничителем не задерживается. Shared uploads смонтированы read-only в AI. Python не имеет доступа к PostgreSQL.
 
 ## Запуск и проверка
 

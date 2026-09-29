@@ -15,7 +15,7 @@ uv run python -m medical_ai
 
 For native execution, point `OLLAMA_BASE_URL` to the local host Ollama and set the storage/source directories appropriately. Compose configures these paths automatically. Internal routes require `X-Internal-Token`; the internal archive listener is separate and not published by Compose.
 
-Configuration: `OLLAMA_BASE_URL` (alias `LLM_BASE_URL`), `LLM_MODEL=qwen3.5:2b`, `EMBEDDING_MODEL=nomic-embed-text`, `INTERNAL_TOKEN` (alias `INTERNAL_API_TOKEN`), `DATA_DIR` (alias `AI_DATA_DIR`), optional `MCP_DEMO_DIR`, `SAMPLE_DOCS_DIR`, `UPLOAD_DIR`. Defaults: `CHUNK_SIZE=900`, `CHUNK_OVERLAP=120`, `RETRIEVAL_K=5`, `MIN_RELEVANT_CHUNKS=1`, `RAG_MAX_CORRECTIVE_RETRIES=2` (maximum 2). Only local Ollama endpoints are accepted. Demo and archive storage must not overlap.
+Configuration: `OLLAMA_BASE_URL` (alias `LLM_BASE_URL`), `LLM_MODEL=qwen3.5:2b`, `EMBEDDING_MODEL=nomic-embed-text`, `INTERNAL_TOKEN` (alias `INTERNAL_API_TOKEN`), `DATA_DIR` (alias `AI_DATA_DIR`), optional `MCP_DEMO_DIR`, `SAMPLE_DOCS_DIR`, `UPLOAD_DIR`, `MCP_MAX_CONCURRENT=1` (1..8) and `MCP_MAX_WAITING=4` (0..64). Defaults: `CHUNK_SIZE=900`, `CHUNK_OVERLAP=120`, `RETRIEVAL_K=5`, `MIN_RELEVANT_CHUNKS=1`, `RAG_MAX_CORRECTIVE_RETRIES=2` (maximum 2). Only local Ollama endpoints are accepted. Demo and archive storage must not overlap.
 
 ## Parsing, persistence and chunking
 
@@ -45,6 +45,8 @@ The four tools are a deliberate project choice, fixed to synthetic `mcp_demo`; n
 | `index_status()` | Safe `status`, fixed `corpus`, file/chunk counts and chunk parameters. No timestamps, source list, document content or model calls |
 | `find_relevant_docs(query, top_k=5)` | Hybrid RRF retrieval, followed by rules and a local **privacy LLM** over all excerpts. No answer generation, query rewrite or relevance grading |
 | `ask_question(question)` | Full Corrective RAG followed by privacy checks over the answer and every returned source excerpt |
+
+Public tools run in worker threads, never on the event loop shared with the internal API, so a long `ask_question` does not stall `/health` or `/internal/*`. `index_folder`, `find_relevant_docs` and `ask_question` share a limiter of `MCP_MAX_CONCURRENT` slots; at most `MCP_MAX_WAITING` further calls wait, and any call beyond that gets the fixed public error. `index_status` is not held behind the limiter.
 
 `PublicOutput` builds an allowlisted schema rather than forwarding internal dictionaries. Ask returns `responseRef`, `answer`, `sources: [{reference: "S1", text: "..."}]`, `insufficientContext` and `privacy`. Find returns `responseRef`, `chunks: [{reference, text}]` and `privacy`. `privacy.status` is `checked`; warnings are fixed safe categories. Original titles, paths, document/chunk IDs, arbitrary metadata and traces do not leave through MCP.
 
