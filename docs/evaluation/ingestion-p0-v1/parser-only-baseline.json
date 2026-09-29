@@ -1,0 +1,2713 @@
+{
+  "kind": "p0-parser-only",
+  "createdAt": "2026-09-29T11:42:33.722096+00:00",
+  "dataset": "ingestion-p0-v1",
+  "goldSha256": "80d5aeef4755dd8654c5526e4bf443f067d5977c44e69285ac0551549bc1b4e4",
+  "goldReview": "AI-authored from generator definitions; independent human review pending (gold/GOLD_REVIEW.md).",
+  "split": "all",
+  "plannedRepeats": 1,
+  "plannedCasesPerRepeat": 24,
+  "complete": true,
+  "codeHashes": {
+    "scripts/evaluate_ingestion_p0.py": "25d3fd33347f83d3527e492cae90b5f0d0d7059b399b4ca27d83943337f99677",
+    "scripts/p0_metrics.py": "390dcdd5ef970a7a8759914a394c54519264c5f235d9769e8caf7ed73545abb4",
+    "ai-service/medical_ai/laboratory.py": "68e3f13f0fb90015c63344cba6a7a970ce3e966f92f91ea03a8840189187b35e",
+    "ai-service/medical_ai/visit.py": "3e4efa47d05633e475c6f75a6650edf38807823815cfaeac1d9996759ff53224",
+    "ai-service/medical_ai/extraction.py": "afbfe1c553f2a698c63b0816e83f84aa5e62134c578fcb56b8674f5f0a9ba7d9",
+    "ai-service/medical_ai/parsing.py": "2d797968eb737be955bb440db877190680ff6739ce053d7c94005ac5461e5e23",
+    "ai-service/medical_ai/source_ir.py": "61fed93e79286703a839d1e31f1e76798add849d5ef6c5a168694f228c2ca871",
+    "backend/src/processing.service.ts": "e168ef31bc12adcfea14887860e45266a6238bf014e329d90678bc60726b2569"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "system": "Linux"
+  },
+  "limitations": [
+    "24 fictional originals (12 LAB_REPORT, 12 VISIT) with layouts not used to tune lab-rows-v1 or clinical-v1. Held-out documents must not be used for tuning. Small correlated synthetic set.",
+    "Exact tuple; unsupported/failed documents keep all gold items as FN. Not a clinical validation.",
+    "Parser-only measures deterministic stages without a model; it is not an end-to-end or LLM result."
+  ],
+  "results": [
+    {
+      "case": "lab-01",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 10,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "fields": {
+          "test": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "comparator": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "value": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "unit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "reference": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "lab",
+      "actual": 0,
+      "candidateRows": 0,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 13
+      },
+      "reason": "NO_SUPPORTED_ROWS",
+      "seconds": 0.34
+    },
+    {
+      "case": "lab-02",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "md",
+      "repeat": 1,
+      "expected": 11,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "fields": {
+          "test": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "comparator": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "value": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "unit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "reference": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "none",
+      "actual": 0,
+      "reason": "NOT_RECOGNISED_AS_LAB",
+      "seconds": 0.003
+    },
+    {
+      "case": "lab-03",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "pdf",
+      "repeat": 1,
+      "expected": 12,
+      "score": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "fields": {
+          "test": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "kind": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "value": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "reference": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "dates": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          },
+          "source": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "pypdf-6.5.0/text-v1+pdfplumber-table-v1",
+      "visitClassifier": false,
+      "method": "lab",
+      "actual": 12,
+      "candidateRows": 12,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 3
+      },
+      "seconds": 0.093
+    },
+    {
+      "case": "lab-04",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 10,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "fields": {
+          "test": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "comparator": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "value": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "unit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "reference": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "lab",
+      "actual": 0,
+      "candidateRows": 0,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 13
+      },
+      "reason": "NO_SUPPORTED_ROWS",
+      "seconds": 0.003
+    },
+    {
+      "case": "lab-05",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "pdf",
+      "repeat": 1,
+      "expected": 10,
+      "score": {
+        "tp": 0,
+        "fp": 10,
+        "fn": 10,
+        "fields": {
+          "test": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "kind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "value": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "reference": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 10,
+            "fn": 10
+          },
+          "subject": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "source": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "pypdf-6.5.0/text-v1+pdfplumber-table-v1",
+      "visitClassifier": false,
+      "method": "lab",
+      "actual": 10,
+      "candidateRows": 10,
+      "issues": {
+        "DATE_CONFLICT": 1,
+        "UNSUPPORTED_CONTENT": 4
+      },
+      "seconds": 0.109
+    },
+    {
+      "case": "lab-06",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 10,
+      "score": {
+        "tp": 0,
+        "fp": 10,
+        "fn": 10,
+        "fields": {
+          "test": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "kind": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "comparator": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "value": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "unit": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "reference": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "dates": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 10,
+            "fn": 10
+          },
+          "source": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "lab",
+      "actual": 10,
+      "candidateRows": 10,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 3
+      },
+      "seconds": 0.004
+    },
+    {
+      "case": "lab-07",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "pdf",
+      "repeat": 1,
+      "expected": 10,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "fields": {
+          "test": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "comparator": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "value": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "unit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "reference": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": false,
+      "measured": true,
+      "reason": "LAB_TABLE_PARSE_FAILED",
+      "seconds": 0.076
+    },
+    {
+      "case": "lab-08",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "md",
+      "repeat": 1,
+      "expected": 10,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "fields": {
+          "test": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "comparator": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "value": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "unit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "reference": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "none",
+      "actual": 0,
+      "reason": "NOT_RECOGNISED_AS_LAB",
+      "seconds": 0.003
+    },
+    {
+      "case": "lab-09",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 11,
+      "score": {
+        "tp": 8,
+        "fp": 3,
+        "fn": 3,
+        "fields": {
+          "test": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "kind": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "comparator": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "value": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "unit": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "reference": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "dates": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "subject": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          },
+          "source": {
+            "tp": 8,
+            "fp": 3,
+            "fn": 3
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "lab",
+      "actual": 11,
+      "candidateRows": 14,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 5,
+        "UNSUPPORTED_ROW": 3
+      },
+      "seconds": 0.015
+    },
+    {
+      "case": "lab-10",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "pdf",
+      "repeat": 1,
+      "expected": 11,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "fields": {
+          "test": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "comparator": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "value": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "unit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "reference": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "pypdf-6.5.0/text-v1",
+      "visitClassifier": false,
+      "method": "none",
+      "actual": 0,
+      "reason": "NOT_RECOGNISED_AS_LAB",
+      "seconds": 0.11
+    },
+    {
+      "case": "lab-11",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 11,
+      "score": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 3,
+        "fields": {
+          "test": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "kind": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "comparator": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "value": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "unit": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "reference": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "dates": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "subject": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          },
+          "source": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "lab",
+      "actual": 8,
+      "candidateRows": 11,
+      "issues": {
+        "UNSUPPORTED_CONTENT": 2,
+        "UNSUPPORTED_ROW": 3
+      },
+      "seconds": 0.004
+    },
+    {
+      "case": "lab-12",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "md",
+      "repeat": 1,
+      "expected": 11,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 11,
+        "fields": {
+          "test": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "comparator": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "value": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "unit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "reference": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "dates": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 11
+          }
+        },
+        "criticalValueErrors": 0
+      },
+      "scored": true,
+      "measured": true,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "none",
+      "actual": 0,
+      "reason": "NOT_RECOGNISED_AS_LAB",
+      "seconds": 0.002
+    },
+    {
+      "case": "visit-01",
+      "type": "VISIT",
+      "split": "development",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.002
+    },
+    {
+      "case": "visit-02",
+      "type": "VISIT",
+      "split": "development",
+      "format": "md",
+      "repeat": 1,
+      "expected": 8,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 7
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.002
+    },
+    {
+      "case": "visit-03",
+      "type": "VISIT",
+      "split": "development",
+      "format": "pdf",
+      "repeat": 1,
+      "expected": 8,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 7
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "pypdf-6.5.0/text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.062
+    },
+    {
+      "case": "visit-04",
+      "type": "VISIT",
+      "split": "development",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.004
+    },
+    {
+      "case": "visit-05",
+      "type": "VISIT",
+      "split": "development",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 6,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          }
+        },
+        "classes": {
+          "subject": {
+            "OTHER": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "legacy-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.004
+    },
+    {
+      "case": "visit-06",
+      "type": "VISIT",
+      "split": "development",
+      "format": "md",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.004
+    },
+    {
+      "case": "visit-07",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "pdf",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "pypdf-6.5.0/text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.026
+    },
+    {
+      "case": "visit-08",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "md",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.002
+    },
+    {
+      "case": "visit-09",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.002
+    },
+    {
+      "case": "visit-10",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "pdf",
+      "repeat": 1,
+      "expected": 7,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "NOT_CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "RULED_OUT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "PRESCRIBED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "FUTURE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "pypdf-6.5.0/text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.025
+    },
+    {
+      "case": "visit-11",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "txt",
+      "repeat": 1,
+      "expected": 6,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": false,
+      "method": "legacy-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.002
+    },
+    {
+      "case": "visit-12",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "md",
+      "repeat": 1,
+      "expected": 8,
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "fields": {
+          "name": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "kind": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "subject": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "assertion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "medicationState": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "temporality": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "source": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          }
+        },
+        "classes": {
+          "subject": {
+            "FAMILY": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "PATIENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 7
+            }
+          },
+          "assertion": {
+            "CONFIRMED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            },
+            "NEGATED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "SUSPECTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "UNKNOWN": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3
+            }
+          },
+          "medicationState": {
+            "NOT_APPLICABLE": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5
+            },
+            "NOT_STARTED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "STOPPED": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            },
+            "TAKING": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 1
+            }
+          },
+          "temporality": {
+            "CURRENT": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 6
+            },
+            "HISTORICAL": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2
+            }
+          }
+        },
+        "criticalPromotions": 0
+      },
+      "scored": false,
+      "measured": false,
+      "status": "PARSED",
+      "parserVersion": "user-text-v1",
+      "visitClassifier": true,
+      "method": "visit-model",
+      "reason": "MODEL_REQUIRED",
+      "seconds": 0.003
+    }
+  ],
+  "summary": [
+    {
+      "split": "all",
+      "type": "LAB_REPORT",
+      "repeat": 1,
+      "documents": 12,
+      "measured": 12,
+      "notMeasured": 0,
+      "scored": 11,
+      "expected": 127,
+      "tp": 28,
+      "fp": 23,
+      "fn": 99,
+      "precision": 0.54902,
+      "recall": 0.220472,
+      "fields": {
+        "test": {
+          "tp": 48,
+          "fp": 3,
+          "fn": 79,
+          "precision": 0.941176,
+          "recall": 0.377953
+        },
+        "kind": {
+          "tp": 48,
+          "fp": 3,
+          "fn": 79,
+          "precision": 0.941176,
+          "recall": 0.377953
+        },
+        "comparator": {
+          "tp": 48,
+          "fp": 3,
+          "fn": 79,
+          "precision": 0.941176,
+          "recall": 0.377953
+        },
+        "value": {
+          "tp": 48,
+          "fp": 3,
+          "fn": 79,
+          "precision": 0.941176,
+          "recall": 0.377953
+        },
+        "unit": {
+          "tp": 48,
+          "fp": 3,
+          "fn": 79,
+          "precision": 0.941176,
+          "recall": 0.377953
+        },
+        "reference": {
+          "tp": 48,
+          "fp": 3,
+          "fn": 79,
+          "precision": 0.941176,
+          "recall": 0.377953
+        },
+        "dates": {
+          "tp": 38,
+          "fp": 13,
+          "fn": 89,
+          "precision": 0.745098,
+          "recall": 0.299213
+        },
+        "subject": {
+          "tp": 38,
+          "fp": 13,
+          "fn": 89,
+          "precision": 0.745098,
+          "recall": 0.299213
+        },
+        "source": {
+          "tp": 48,
+          "fp": 3,
+          "fn": 79,
+          "precision": 0.941176,
+          "recall": 0.377953
+        }
+      },
+      "reasons": {
+        "NO_SUPPORTED_ROWS": 2,
+        "NOT_RECOGNISED_AS_LAB": 4,
+        "LAB_TABLE_PARSE_FAILED": 1
+      },
+      "seconds": {
+        "total": 0.76,
+        "p50": 0.015,
+        "p95": 0.11
+      },
+      "criticalValueErrors": 0
+    },
+    {
+      "split": "all",
+      "type": "VISIT",
+      "repeat": 1,
+      "documents": 12,
+      "measured": 0,
+      "notMeasured": 12
+    },
+    {
+      "split": "development",
+      "type": "LAB_REPORT",
+      "repeat": 1,
+      "documents": 6,
+      "measured": 6,
+      "notMeasured": 0,
+      "scored": 6,
+      "expected": 63,
+      "tp": 12,
+      "fp": 20,
+      "fn": 51,
+      "precision": 0.375,
+      "recall": 0.190476,
+      "fields": {
+        "test": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 31,
+          "precision": 1.0,
+          "recall": 0.507937
+        },
+        "kind": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 31,
+          "precision": 1.0,
+          "recall": 0.507937
+        },
+        "comparator": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 31,
+          "precision": 1.0,
+          "recall": 0.507937
+        },
+        "value": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 31,
+          "precision": 1.0,
+          "recall": 0.507937
+        },
+        "unit": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 31,
+          "precision": 1.0,
+          "recall": 0.507937
+        },
+        "reference": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 31,
+          "precision": 1.0,
+          "recall": 0.507937
+        },
+        "dates": {
+          "tp": 22,
+          "fp": 10,
+          "fn": 41,
+          "precision": 0.6875,
+          "recall": 0.349206
+        },
+        "subject": {
+          "tp": 22,
+          "fp": 10,
+          "fn": 41,
+          "precision": 0.6875,
+          "recall": 0.349206
+        },
+        "source": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 31,
+          "precision": 1.0,
+          "recall": 0.507937
+        }
+      },
+      "reasons": {
+        "NO_SUPPORTED_ROWS": 2,
+        "NOT_RECOGNISED_AS_LAB": 1
+      },
+      "seconds": {
+        "total": 0.55,
+        "p50": 0.004,
+        "p95": 0.34
+      },
+      "criticalValueErrors": 0
+    },
+    {
+      "split": "development",
+      "type": "VISIT",
+      "repeat": 1,
+      "documents": 6,
+      "measured": 0,
+      "notMeasured": 6
+    },
+    {
+      "split": "held-out",
+      "type": "LAB_REPORT",
+      "repeat": 1,
+      "documents": 6,
+      "measured": 6,
+      "notMeasured": 0,
+      "scored": 5,
+      "expected": 64,
+      "tp": 16,
+      "fp": 3,
+      "fn": 48,
+      "precision": 0.842105,
+      "recall": 0.25,
+      "fields": {
+        "test": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "kind": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "comparator": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "value": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "unit": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "reference": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "dates": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "subject": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        },
+        "source": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 48,
+          "precision": 0.842105,
+          "recall": 0.25
+        }
+      },
+      "reasons": {
+        "LAB_TABLE_PARSE_FAILED": 1,
+        "NOT_RECOGNISED_AS_LAB": 3
+      },
+      "seconds": {
+        "total": 0.21,
+        "p50": 0.004,
+        "p95": 0.11
+      },
+      "criticalValueErrors": 0
+    },
+    {
+      "split": "held-out",
+      "type": "VISIT",
+      "repeat": 1,
+      "documents": 6,
+      "measured": 0,
+      "notMeasured": 6
+    }
+  ]
+}
