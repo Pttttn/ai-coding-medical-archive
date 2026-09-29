@@ -1,0 +1,2997 @@
+{
+  "version": "ingestion-p0-v1",
+  "schemaVersion": "p0-gold-v1",
+  "synthetic": true,
+  "goldReview": "AI-authored from generator definitions; independent human review pending (gold/GOLD_REVIEW.md).",
+  "scope": "24 fictional originals (12 LAB_REPORT, 12 VISIT) with layouts not used to tune lab-rows-v1 or clinical-v1. Held-out documents must not be used for tuning. Small correlated synthetic set.",
+  "cases": [
+    {
+      "id": "lab-01",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "txt",
+      "layout": "fixed-width columns without separators",
+      "originalFile": "lab-01.txt",
+      "sha256": "497f546efbf55964deae9aa0f4deafb6a73d889857176a7d55beb4e7fc548cdf",
+      "rows": [
+        {
+          "test": "Гемоглобин",
+          "result": "131",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "131",
+          "unit": "г/л",
+          "reference": "130–160",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Эритроциты",
+          "result": "4,38",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.38",
+          "unit": "10^12/л",
+          "reference": "4,0–5,0",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Гематокрит",
+          "result": "39,5",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "39.5",
+          "unit": "%",
+          "reference": "40–48",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Лейкоциты",
+          "result": "11,2",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "11.2",
+          "unit": "10^9/л",
+          "reference": "4,0–9,0",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Нейтрофилы сегментоядерные",
+          "result": "71",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "71",
+          "unit": "%",
+          "reference": "47–72",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Лимфоциты",
+          "result": "18",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "18",
+          "unit": "%",
+          "reference": "19–37",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Моноциты",
+          "result": "7",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "7",
+          "unit": "%",
+          "reference": "3–11",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Эозинофилы",
+          "result": "3",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3",
+          "unit": "%",
+          "reference": "0,5–5",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Тромбоциты",
+          "result": "265",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "265",
+          "unit": "10^9/л",
+          "reference": "180–320",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "СОЭ",
+          "result": "24",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "24",
+          "unit": "мм/ч",
+          "reference": "2–15",
+          "dates": {
+            "SPECIMEN": "2026-02-03",
+            "RESULT": "2026-02-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-02",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "md",
+      "layout": "markdown table, five columns with flag",
+      "originalFile": "lab-02.md",
+      "sha256": "5b1aa5b6a83bdacc483807651b19132b8792f1e6be04693d567f38ccfa12b109",
+      "rows": [
+        {
+          "test": "Глюкоза",
+          "result": "6,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "6.4",
+          "unit": "ммоль/л",
+          "reference": "3,9–6,1",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Креатинин",
+          "result": "118",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "118",
+          "unit": "мкмоль/л",
+          "reference": "62–106",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "СКФ (CKD-EPI)",
+          "result": ">60",
+          "kind": "NUMERIC",
+          "comparator": ">",
+          "value": "60",
+          "unit": "мл/мин/1,73м²",
+          "reference": ">60",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Мочевая кислота",
+          "result": "452",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "452",
+          "unit": "мкмоль/л",
+          "reference": "202–416",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Общий белок",
+          "result": "71",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "71",
+          "unit": "г/л",
+          "reference": "64–83",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Альбумин",
+          "result": "44",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "44",
+          "unit": "г/л",
+          "reference": "35–52",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Билирубин общий",
+          "result": "9,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "9.8",
+          "unit": "мкмоль/л",
+          "reference": "3,4–20,5",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "АЛТ",
+          "result": "<7",
+          "kind": "NUMERIC",
+          "comparator": "<",
+          "value": "7",
+          "unit": "Ед/л",
+          "reference": "<41",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "АСТ",
+          "result": "19",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "19",
+          "unit": "Ед/л",
+          "reference": "<40",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Щелочная фосфатаза",
+          "result": "87",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "87",
+          "unit": "Ед/л",
+          "reference": "40–129",
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Амилаза",
+          "result": "58",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "58",
+          "unit": "Ед/л",
+          "reference": null,
+          "dates": {
+            "SPECIMEN": "2026-02-10",
+            "RESULT": "2026-02-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-03",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "pdf",
+      "layout": "PDF grid table over two pages, letterhead, wrapped cells",
+      "originalFile": "lab-03.pdf",
+      "sha256": "afd1bd2b0e4f181d02eb8be854eb4748dfbc0230d3473a44e4ca3badbf78a8e2",
+      "rows": [
+        {
+          "test": "Холестерин общий",
+          "result": "5,9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "5.9",
+          "unit": "ммоль/л",
+          "reference": "<5,2",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Холестерин липопротеинов высокой плотности",
+          "result": "1,02",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.02",
+          "unit": "ммоль/л",
+          "reference": ">1,0",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Холестерин липопротеинов низкой плотности",
+          "result": "3,84",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3.84",
+          "unit": "ммоль/л",
+          "reference": "желательно <3,0; погранично 3,0–4,1",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Триглицериды",
+          "result": "1,9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.9",
+          "unit": "ммоль/л",
+          "reference": "<1,7",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Аполипопротеин A1",
+          "result": "1,31",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.31",
+          "unit": "г/л",
+          "reference": "1,05–2,05",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Аполипопротеин B",
+          "result": "1,12",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.12",
+          "unit": "г/л",
+          "reference": "0,6–1,17",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Липопротеин (а)",
+          "result": "74",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "74",
+          "unit": "нмоль/л",
+          "reference": "<75",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Гомоцистеин",
+          "result": "13,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "13.8",
+          "unit": "мкмоль/л",
+          "reference": "5–15",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "hs-СРБ",
+          "result": "3,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3.4",
+          "unit": "мг/л",
+          "reference": "<1,0",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "Ферритин",
+          "result": "96",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "96",
+          "unit": "мкг/л",
+          "reference": "30–400",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "Витамин D (25-OH)",
+          "result": "21,5",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "21.5",
+          "unit": "нг/мл",
+          "reference": "30–100",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "NT-proBNP",
+          "result": "88",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "88",
+          "unit": "пг/мл",
+          "reference": "<125",
+          "dates": {
+            "SPECIMEN": "2026-03-05",
+            "RESULT": "2026-03-06"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "lab-04",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "txt",
+      "layout": "dash list with unit and parenthesised reference",
+      "originalFile": "lab-04.txt",
+      "sha256": "aa1153cbec59dbb9c60c235482665f2fecf6800854544ea02bc740226e4e7995",
+      "rows": [
+        {
+          "test": "Глюкоза",
+          "result": "99",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "99",
+          "unit": "мг/дл",
+          "reference": "70–99",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Холестерин общий",
+          "result": "212",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "212",
+          "unit": "мг/дл",
+          "reference": "<200",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Холестерин ЛПНП",
+          "result": "138",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "138",
+          "unit": "мг/дл",
+          "reference": "<130",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Холестерин ЛПВП",
+          "result": "47",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "47",
+          "unit": "мг/дл",
+          "reference": ">40",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Триглицериды",
+          "result": "135",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "135",
+          "unit": "мг/дл",
+          "reference": "<150",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Креатинин",
+          "result": "1,05",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.05",
+          "unit": "мг/дл",
+          "reference": "0,7–1,2",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Мочевина",
+          "result": "31",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "31",
+          "unit": "мг/дл",
+          "reference": "17–43",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Кальций общий",
+          "result": "9,6",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "9.6",
+          "unit": "мг/дл",
+          "reference": "8,6–10,3",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Калий",
+          "result": "4,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.4",
+          "unit": "ммоль/л",
+          "reference": "3,5–5,1",
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Инсулин",
+          "result": "14,2",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "14.2",
+          "unit": "мкЕд/мл",
+          "reference": null,
+          "dates": {
+            "STUDY": "2026-03-12"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-05",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "pdf",
+      "layout": "PDF, two panels with different specimen dates, repeated tests",
+      "originalFile": "lab-05.pdf",
+      "sha256": "eb0b991ba25b4fc39c3244877f6c55431af67c72290954da61499df03dc84d28",
+      "rows": [
+        {
+          "test": "Железо сывороточное",
+          "result": "7,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "7.4",
+          "unit": "мкмоль/л",
+          "reference": "10,7–32,2",
+          "dates": {
+            "SPECIMEN": "2026-04-01",
+            "RESULT": "2026-04-02"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "ОЖСС",
+          "result": "78",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "78",
+          "unit": "мкмоль/л",
+          "reference": "45–77",
+          "dates": {
+            "SPECIMEN": "2026-04-01",
+            "RESULT": "2026-04-02"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Ферритин",
+          "result": "9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "9",
+          "unit": "мкг/л",
+          "reference": "15–150",
+          "dates": {
+            "SPECIMEN": "2026-04-01",
+            "RESULT": "2026-04-02"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Трансферрин",
+          "result": "3,9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3.9",
+          "unit": "г/л",
+          "reference": "2,0–3,6",
+          "dates": {
+            "SPECIMEN": "2026-04-01",
+            "RESULT": "2026-04-02"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Витамин B12",
+          "result": "162",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "162",
+          "unit": "пг/мл",
+          "reference": "187–883",
+          "dates": {
+            "SPECIMEN": "2026-04-01",
+            "RESULT": "2026-04-02"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Железо сывороточное",
+          "result": "9,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "9.1",
+          "unit": "мкмоль/л",
+          "reference": "10,7–32,2",
+          "dates": {
+            "SPECIMEN": "2026-04-08",
+            "RESULT": "2026-04-09"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Ферритин",
+          "result": "11",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "11",
+          "unit": "мкг/л",
+          "reference": "15–150",
+          "dates": {
+            "SPECIMEN": "2026-04-08",
+            "RESULT": "2026-04-09"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Гемоглобин",
+          "result": "112",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "112",
+          "unit": "г/л",
+          "reference": "120–140",
+          "dates": {
+            "SPECIMEN": "2026-04-08",
+            "RESULT": "2026-04-09"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Ретикулоциты",
+          "result": "2,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "2.4",
+          "unit": "%",
+          "reference": "0,5–1,5",
+          "dates": {
+            "SPECIMEN": "2026-04-08",
+            "RESULT": "2026-04-09"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Фолиевая кислота",
+          "result": ">20",
+          "kind": "NUMERIC",
+          "comparator": ">",
+          "value": "20",
+          "unit": "нг/мл",
+          "reference": "3,1–20,5",
+          "dates": {
+            "SPECIMEN": "2026-04-08",
+            "RESULT": "2026-04-09"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-06",
+      "type": "LAB_REPORT",
+      "split": "development",
+      "format": "txt",
+      "layout": "pipe table, results of a family member",
+      "originalFile": "lab-06.txt",
+      "sha256": "f50ed96d63041e53a3d8afc0d46bedb95937c6317848bb91f2199d70ab428267",
+      "rows": [
+        {
+          "test": "ТТГ",
+          "result": "6,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "6.8",
+          "unit": "мМЕ/л",
+          "reference": "0,4–4,0",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "Свободный Т4",
+          "result": "10,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "10.1",
+          "unit": "пмоль/л",
+          "reference": "9–19",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "АТ-ТПО",
+          "result": ">1000",
+          "kind": "NUMERIC",
+          "comparator": ">",
+          "value": "1000",
+          "unit": "МЕ/мл",
+          "reference": "<34",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "АТ к рецептору ТТГ",
+          "result": "<0,8",
+          "kind": "NUMERIC",
+          "comparator": "<",
+          "value": "0.8",
+          "unit": "МЕ/л",
+          "reference": "<1,75",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "Тиреоглобулин",
+          "result": "3,2",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3.2",
+          "unit": "нг/мл",
+          "reference": "3,5–77",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "Кальцитонин",
+          "result": "<2",
+          "kind": "NUMERIC",
+          "comparator": "<",
+          "value": "2",
+          "unit": "пг/мл",
+          "reference": "<6,4",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "Пролактин",
+          "result": "312",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "312",
+          "unit": "мМЕ/л",
+          "reference": "102–496",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "Кортизол",
+          "result": "455",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "455",
+          "unit": "нмоль/л",
+          "reference": "171–536",
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "Антитела к тиреоглобулину",
+          "result": "отрицательно",
+          "kind": "QUALITATIVE",
+          "comparator": null,
+          "value": null,
+          "unit": null,
+          "reference": null,
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        },
+        {
+          "test": "Паратгормон",
+          "result": "5,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "5.1",
+          "unit": "пмоль/л",
+          "reference": null,
+          "dates": {
+            "RESULT": "2026-01-20"
+          },
+          "subject": "FAMILY",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-07",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "pdf",
+      "layout": "PDF, two tables side by side on one page",
+      "originalFile": "lab-07.pdf",
+      "sha256": "d247c44efb07d8bba6c4344300691cf4ce79a7ca18206b3da02adc48140a489b",
+      "rows": [
+        {
+          "test": "Удельный вес",
+          "result": "1,028",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.028",
+          "unit": null,
+          "reference": "1,010–1,025",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "pH",
+          "result": "5,5",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "5.5",
+          "unit": null,
+          "reference": "5,0–7,0",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Белок",
+          "result": "0,3",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "0.3",
+          "unit": "г/л",
+          "reference": "<0,14",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Глюкоза",
+          "result": "не обнаружено",
+          "kind": "QUALITATIVE",
+          "comparator": null,
+          "value": null,
+          "unit": null,
+          "reference": "не обнаружено",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Лейкоциты",
+          "result": "3",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3",
+          "unit": "в п/з",
+          "reference": "0–5",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Альбумин/креатинин",
+          "result": "4,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.1",
+          "unit": "мг/ммоль",
+          "reference": "<3,0",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Креатинин мочи",
+          "result": "12,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "12.4",
+          "unit": "ммоль/л",
+          "reference": null,
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Натрий мочи",
+          "result": "146",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "146",
+          "unit": "ммоль/сут",
+          "reference": "40–220",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Калий мочи",
+          "result": "58",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "58",
+          "unit": "ммоль/сут",
+          "reference": "25–125",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Кальций мочи",
+          "result": "6,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "6.8",
+          "unit": "ммоль/сут",
+          "reference": "2,5–7,5",
+          "dates": {
+            "SPECIMEN": "2026-05-14",
+            "RESULT": "2026-05-15"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-08",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "md",
+      "layout": "English markdown table with different headers",
+      "originalFile": "lab-08.md",
+      "sha256": "02ffe2ad9917d98830ad80f50d93a6ea2feaed0f1122c7af5bb6919749d6fed6",
+      "rows": [
+        {
+          "test": "Hemoglobin A1c",
+          "result": "7.2",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "7.2",
+          "unit": "%",
+          "reference": "4.0–5.6",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Fasting glucose",
+          "result": "8.1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "8.1",
+          "unit": "mmol/L",
+          "reference": "3.9–5.5",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "C-peptide",
+          "result": "0.42",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "0.42",
+          "unit": "nmol/L",
+          "reference": "0.37–1.47",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Microalbumin",
+          "result": ">150",
+          "kind": "NUMERIC",
+          "comparator": ">",
+          "value": "150",
+          "unit": "mg/L",
+          "reference": "<20",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "eGFR",
+          "result": "74",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "74",
+          "unit": "mL/min/1.73m²",
+          "reference": ">90",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Cystatin C",
+          "result": "1.09",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.09",
+          "unit": "mg/L",
+          "reference": "0.61–0.95",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "GAD antibodies",
+          "result": "negative",
+          "kind": "QUALITATIVE",
+          "comparator": null,
+          "value": null,
+          "unit": null,
+          "reference": null,
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Ketones (urine)",
+          "result": "negative",
+          "kind": "QUALITATIVE",
+          "comparator": null,
+          "value": null,
+          "unit": null,
+          "reference": "negative",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Lactate",
+          "result": "1.6",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.6",
+          "unit": "mmol/L",
+          "reference": "0.5–2.2",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Uric acid",
+          "result": "6.9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "6.9",
+          "unit": "mg/dL",
+          "reference": "3.5–7.2",
+          "dates": {
+            "SPECIMEN": "2026-06-03",
+            "RESULT": "2026-06-04"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-09",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "txt",
+      "layout": "pipe table with wrapped test names and page break",
+      "originalFile": "lab-09.txt",
+      "sha256": "ad2c062ad9bcf567cf889f7b99c8e911e6b3f6e75eefe4cee738c3bc4c2a9188",
+      "rows": [
+        {
+          "test": "Холестерин липопротеинов низкой плотности",
+          "result": "4,6",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.6",
+          "unit": "ммоль/л",
+          "reference": "<3,0",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Холестерин общий",
+          "result": "6,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "6.8",
+          "unit": "ммоль/л",
+          "reference": "<5,2",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Триглицериды",
+          "result": "2,9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "2.9",
+          "unit": "ммоль/л",
+          "reference": "<1,7",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Коэффициент атерогенности",
+          "result": "4,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.1",
+          "unit": null,
+          "reference": "<3,0",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Глюкоза",
+          "result": "5,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "5.8",
+          "unit": "ммоль/л",
+          "reference": "4,1–5,9",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Гликированный гемоглобин",
+          "result": "6,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "6.1",
+          "unit": "%",
+          "reference": "<6,0",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Аланинаминотрансфераза (АЛТ)",
+          "result": "62",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "62",
+          "unit": "Ед/л",
+          "reference": "<41",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Аспартатаминотрансфераза (АСТ)",
+          "result": "44",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "44",
+          "unit": "Ед/л",
+          "reference": "<40",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Гамма-глутамилтрансфераза",
+          "result": "97",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "97",
+          "unit": "Ед/л",
+          "reference": "10–71",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Билирубин прямой",
+          "result": "4,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.1",
+          "unit": "мкмоль/л",
+          "reference": "<5,0",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Щелочная фосфатаза",
+          "result": "101",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "101",
+          "unit": "Ед/л",
+          "reference": "40–129",
+          "dates": {
+            "SPECIMEN": "2026-06-21",
+            "RESULT": "2026-06-22"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-10",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "pdf",
+      "layout": "PDF over three pages, running header/footer, other column names",
+      "originalFile": "lab-10.pdf",
+      "sha256": "f9d704ca7059886f853f9fa9f11b1217afab2209060f2a10278338a7069cf66f",
+      "rows": [
+        {
+          "test": "ТТГ",
+          "result": "2,31",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "2.31",
+          "unit": "мкМЕ/мл",
+          "reference": "0,4–4,0",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Т4 свободный",
+          "result": "14,6",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "14.6",
+          "unit": "пмоль/л",
+          "reference": "9–19",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Т3 свободный",
+          "result": "4,9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.9",
+          "unit": "пмоль/л",
+          "reference": "2,6–5,7",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Антитела к ТПО",
+          "result": "<5",
+          "kind": "NUMERIC",
+          "comparator": "<",
+          "value": "5",
+          "unit": "МЕ/мл",
+          "reference": "<34",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Эстрадиол",
+          "result": "412",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "412",
+          "unit": "пмоль/л",
+          "reference": "зависит от фазы цикла",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "ЛГ",
+          "result": "7,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "7.8",
+          "unit": "мМЕ/мл",
+          "reference": "2,4–12,6",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "ФСГ",
+          "result": "6,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "6.1",
+          "unit": "мМЕ/мл",
+          "reference": "3,5–12,5",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "Прогестерон",
+          "result": "1,2",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.2",
+          "unit": "нмоль/л",
+          "reference": null,
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 2
+        },
+        {
+          "test": "Витамин B12",
+          "result": "518",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "518",
+          "unit": "пг/мл",
+          "reference": "187–883",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 3
+        },
+        {
+          "test": "Витамин D (25-OH)",
+          "result": "38,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "38.4",
+          "unit": "нг/мл",
+          "reference": "30–100",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 3
+        },
+        {
+          "test": "Цинк",
+          "result": "11,9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "11.9",
+          "unit": "мкмоль/л",
+          "reference": "10,7–18,4",
+          "dates": {
+            "SPECIMEN": "2026-07-02",
+            "RESULT": "2026-07-03"
+          },
+          "subject": "PATIENT",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "lab-11",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "txt",
+      "layout": "labelled lines with ×10⁹ units, thousands separator, flags",
+      "originalFile": "lab-11.txt",
+      "sha256": "58b4b060af2fcc406303266561d751c5d895321d5b13d4a232c35f6af9003c6c",
+      "rows": [
+        {
+          "test": "Лейкоциты",
+          "result": "5,6",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "5.6",
+          "unit": "×10⁹/л",
+          "reference": "4,0–9,0",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Нейтрофилы абс.",
+          "result": "3,4",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3.4",
+          "unit": "×10⁹/л",
+          "reference": "1,8–7,7",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "D-димер",
+          "result": "1 250",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1250",
+          "unit": "нг/мл FEU",
+          "reference": "<500",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Прокальцитонин",
+          "result": "<0,05",
+          "kind": "NUMERIC",
+          "comparator": "<",
+          "value": "0.05",
+          "unit": "нг/мл",
+          "reference": "<0,5",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "СРБ",
+          "result": "12,6",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "12.6",
+          "unit": "мг/л",
+          "reference": "0–5",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Фибриноген",
+          "result": "4,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.1",
+          "unit": "г/л",
+          "reference": "2,0–4,0",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "МНО",
+          "result": "1,12",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "1.12",
+          "unit": null,
+          "reference": "0,85–1,15",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Лактатдегидрогеназа",
+          "result": "245",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "245",
+          "unit": "Ед/л",
+          "reference": "135–225",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Ферритин",
+          "result": "380",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "380",
+          "unit": "мкг/л",
+          "reference": "30–400",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Интерлейкин-6",
+          "result": "4,2",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.2",
+          "unit": "пг/мл",
+          "reference": "не установлен",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        },
+        {
+          "test": "Тропонин T высокочувствительный",
+          "result": "9",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "9",
+          "unit": "нг/л",
+          "reference": "<14",
+          "dates": {
+            "SPECIMEN": "2026-08-10",
+            "RESULT": "2026-08-11"
+          },
+          "subject": "PATIENT",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "lab-12",
+      "type": "LAB_REPORT",
+      "split": "held-out",
+      "format": "md",
+      "layout": "markdown bullets, no subject, specimen date only",
+      "originalFile": "lab-12.md",
+      "sha256": "4478918d067a760c6a2339975f0fe56e47685fd4ccc675d0aa025ac3d5afcb97",
+      "rows": [
+        {
+          "test": "Ферритин",
+          "result": "12",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "12",
+          "unit": "мкг/л",
+          "reference": "15–150",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "Железо",
+          "result": "8,2",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "8.2",
+          "unit": "мкмоль/л",
+          "reference": "9–30,4",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "Трансферрин",
+          "result": "3,7",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3.7",
+          "unit": "г/л",
+          "reference": "2,0–3,6",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "Насыщение трансферрина железом",
+          "result": "11",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "11",
+          "unit": "%",
+          "reference": "20–50",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "Витамин B12",
+          "result": "205",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "205",
+          "unit": "пг/мл",
+          "reference": "187–883",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "Фолиевая кислота",
+          "result": "4,3",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "4.3",
+          "unit": "нг/мл",
+          "reference": "3,1–20,5",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "Гемоглобин",
+          "result": "109",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "109",
+          "unit": "г/л",
+          "reference": "120–140",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "MCV",
+          "result": "76",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "76",
+          "unit": "фл",
+          "reference": "80–100",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "MCH",
+          "result": "24,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "24.1",
+          "unit": "пг",
+          "reference": "27–31",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "RDW-CV",
+          "result": "16,8",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "16.8",
+          "unit": "%",
+          "reference": "11,5–14,5",
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        },
+        {
+          "test": "Гепсидин",
+          "result": "3,1",
+          "kind": "NUMERIC",
+          "comparator": "=",
+          "value": "3.1",
+          "unit": "нг/мл",
+          "reference": null,
+          "dates": {
+            "SPECIMEN": "2026-09-01"
+          },
+          "subject": "UNKNOWN",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-01",
+      "type": "VISIT",
+      "split": "development",
+      "format": "txt",
+      "layout": "prose sections, two dates, doses",
+      "originalFile": "visit-01.txt",
+      "sha256": "795b67b2b70131b42e90c427cd5729ec355ca42b09a9bc302df8d11ddb00f3f7",
+      "statements": [
+        {
+          "name": "изжогу",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Пациент жалуется на изжогу после еды в течение трёх недель.",
+          "page": 1
+        },
+        {
+          "name": "Боли за грудиной",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Боли за грудиной при нагрузке пациент отрицает.",
+          "page": 1
+        },
+        {
+          "name": "язвенная болезнь двенадцатиперстной кишки",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "В 2021 году у пациента диагностирована язвенная болезнь двенадцатиперстной кишки.",
+          "page": 1
+        },
+        {
+          "name": "рак желудка",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "У матери пациента рак желудка выявлен в 58 лет.",
+          "page": 1
+        },
+        {
+          "name": "гастроэзофагеальная рефлюксная болезнь",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Предварительно: гастроэзофагеальная рефлюксная болезнь, требуется подтверждение после ФГДС.",
+          "page": 1
+        },
+        {
+          "name": "омепразол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "CURRENT",
+          "sourceText": "Назначен омепразол 20 мг 2 раза в день за 30 минут до еды на 4 недели.",
+          "page": 1
+        },
+        {
+          "name": "ибупрофен",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "CURRENT",
+          "sourceText": "Ранее принимавшийся ибупрофен 400 мг отменён.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-02",
+      "type": "VISIT",
+      "split": "development",
+      "format": "md",
+      "layout": "markdown headings and bullets",
+      "originalFile": "visit-02.md",
+      "sha256": "823fbe0edb8c895571ad4ee956ffa0fd775b838b59a263eb01ac270733c3810f",
+      "statements": [
+        {
+          "name": "сердцебиение",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Периодическое сердцебиение по вечерам.",
+          "page": 1
+        },
+        {
+          "name": "Одышка",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Одышка при нагрузке не беспокоит.",
+          "page": 1
+        },
+        {
+          "name": "Гипертоническая болезнь",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Гипертоническая болезнь с 2018 года, наблюдается постоянно.",
+          "page": 1
+        },
+        {
+          "name": "инфаркт миокарда",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "У отца инфаркт миокарда в 52 года.",
+          "page": 1
+        },
+        {
+          "name": "фибрилляция предсердий",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У брата пациента фибрилляция предсердий не подтверждена.",
+          "page": 1
+        },
+        {
+          "name": "Бисопролол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Бисопролол 2,5 мг утром принимает регулярно, продолжить.",
+          "page": 1
+        },
+        {
+          "name": "Аторвастатин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Аторвастатин 20 мг назначен, пациент пока не начал приём.",
+          "page": 1
+        },
+        {
+          "name": "Пароксизмальная тахикардия",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Пароксизмальная тахикардия предполагается, назначено суточное мониторирование ЭКГ.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-03",
+      "type": "VISIT",
+      "split": "development",
+      "format": "pdf",
+      "layout": "PDF over two pages",
+      "originalFile": "visit-03.pdf",
+      "sha256": "e5b2c0f37ef8d783a02b63c1e8d2a8441628870ff43c331d9764983b37b96bc1",
+      "statements": [
+        {
+          "name": "головные боли",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Пациент отмечает головные боли давящего характера 2–3 раза в неделю.",
+          "page": 1
+        },
+        {
+          "name": "Тошнота",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Тошнота на высоте головной боли отсутствует.",
+          "page": 1
+        },
+        {
+          "name": "Онемение в левой руке",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "Онемение в левой руке было в ноябре 2025 года, сейчас не повторяется.",
+          "page": 1
+        },
+        {
+          "name": "мигрень с аурой",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У сестры пациента мигрень с аурой подтверждена неврологом.",
+          "page": 1
+        },
+        {
+          "name": "Мигрень без ауры",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Мигрень без ауры у пациента не исключена, но критериев недостаточно.",
+          "page": 2
+        },
+        {
+          "name": "Рассеянный склероз",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Рассеянный склероз по данным МРТ исключён.",
+          "page": 2
+        },
+        {
+          "name": "Амитриптилин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "FUTURE",
+          "sourceText": "Амитриптилин 10 мг на ночь назначен с понедельника.",
+          "page": 2
+        },
+        {
+          "name": "Суматриптан",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Суматриптан 50 мг пациент принимал в 2024 году, прекратил из-за побочных эффектов.",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "visit-04",
+      "type": "VISIT",
+      "split": "development",
+      "format": "txt",
+      "layout": "hard-wrapped lines inside sentences",
+      "originalFile": "visit-04.txt",
+      "sha256": "b6172cab86132549062ad7408858ed85dfc3d24e04772c65411aa8995484bb80",
+      "statements": [
+        {
+          "name": "Сахарный диабет 2 типа",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Сахарный диабет 2 типа диагностирован в 2019 году и остаётся под наблюдением.",
+          "page": 1
+        },
+        {
+          "name": "Жажда",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Жажда и учащённое мочеиспускание в последний месяц не отмечаются.",
+          "page": 1
+        },
+        {
+          "name": "учащённое мочеиспускание",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Жажда и учащённое мочеиспускание в последний месяц не отмечаются.",
+          "page": 1
+        },
+        {
+          "name": "Диабетическая ретинопатия",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Диабетическая ретинопатия не подтверждена при осмотре окулиста.",
+          "page": 1
+        },
+        {
+          "name": "метформин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Пациент принимает метформин 1000 мг 2 раза в день.",
+          "page": 1
+        },
+        {
+          "name": "Эмпаглифлозин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Эмпаглифлозин 10 мг был назначен в марте и отменён через две недели.",
+          "page": 1
+        },
+        {
+          "name": "сахарный диабет 2 типа",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У матери пациента сахарный диабет 2 типа.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-05",
+      "type": "VISIT",
+      "split": "development",
+      "format": "txt",
+      "layout": "telephone note without a visit heading",
+      "originalFile": "visit-05.txt",
+      "sha256": "8d9bfbd5a72ec0f57949350a1e071a70f0bba473d443b5c7fa8d286054af78e3",
+      "statements": [
+        {
+          "name": "кашель",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "Пациент сообщает, что кашель прошёл неделю назад.",
+          "page": 1
+        },
+        {
+          "name": "Лихорадка",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Лихорадка отсутствует.",
+          "page": 1
+        },
+        {
+          "name": "Амоксициллин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Амоксициллин 500 мг пациент допил полностью, курс завершён.",
+          "page": 1
+        },
+        {
+          "name": "Пневмония",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Пневмония по контрольному снимку исключена.",
+          "page": 1
+        },
+        {
+          "name": "Ацетилцистеин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Ацетилцистеин рекомендован, но пациент его не начинал.",
+          "page": 1
+        },
+        {
+          "name": "бронхит",
+          "kind": "CONDITION",
+          "subject": "OTHER",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У супруги пациента сейчас бронхит.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-06",
+      "type": "VISIT",
+      "split": "development",
+      "format": "md",
+      "layout": "markdown bullets, biopsy date",
+      "originalFile": "visit-06.md",
+      "sha256": "85535ebc4c84d850b92baf8d8ce305427fc7b2aa5ff36f76d4039e58a113b1d7",
+      "statements": [
+        {
+          "name": "Атопический дерматит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "Атопический дерматит был в детстве.",
+          "page": 1
+        },
+        {
+          "name": "Зуд",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Зуд беспокоит по ночам.",
+          "page": 1
+        },
+        {
+          "name": "Псориаз",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Псориаз у пациента подозревается, ждём гистологию.",
+          "page": 1
+        },
+        {
+          "name": "Микоз стоп",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Микоз стоп по посеву не подтверждён.",
+          "page": 1
+        },
+        {
+          "name": "псориаз",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У дочери пациента псориаз подтверждён.",
+          "page": 1
+        },
+        {
+          "name": "Мометазон",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "CURRENT",
+          "sourceText": "Мометазон крем 0,1% 1 раз в день на 14 дней назначен.",
+          "page": 1
+        },
+        {
+          "name": "Цетиризин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Цетиризин 10 мг пациент принимает сам последние две недели.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-07",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "pdf",
+      "layout": "PDF with two text columns",
+      "originalFile": "visit-07.pdf",
+      "sha256": "5a978f35135abe831b9bd62ebc600cf9bf08067062e52e8efc60e4546256e218",
+      "statements": [
+        {
+          "name": "вздутие живота",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Пациент жалуется на вздутие живота после молочных продуктов.",
+          "page": 1
+        },
+        {
+          "name": "Кровь в стуле",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Кровь в стуле пациент отрицает.",
+          "page": 1
+        },
+        {
+          "name": "Целиакия",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Целиакия по данным серологии исключена.",
+          "page": 1
+        },
+        {
+          "name": "Лактазная недостаточность",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Лактазная недостаточность предполагается.",
+          "page": 1
+        },
+        {
+          "name": "болезнь Крона",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У отца пациента болезнь Крона.",
+          "page": 1
+        },
+        {
+          "name": "Мебеверин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "CURRENT",
+          "sourceText": "Мебеверин 200 мг 2 раза в день назначен на 4 недели.",
+          "page": 1
+        },
+        {
+          "name": "Пантопразол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Пантопразол пациент перестал принимать в мае.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-08",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "md",
+      "layout": "English clinical note",
+      "originalFile": "visit-08.md",
+      "sha256": "2c1c6833f7f4ea2520351256b51a216ea38fc3623e9593fbc391a260b601a424",
+      "statements": [
+        {
+          "name": "palpitations",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "The patient reports intermittent palpitations.",
+          "page": 1
+        },
+        {
+          "name": "Chest pain",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Chest pain is denied.",
+          "page": 1
+        },
+        {
+          "name": "Atrial fibrillation",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Atrial fibrillation was ruled out on Holter monitoring.",
+          "page": 1
+        },
+        {
+          "name": "Hypothyroidism",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Hypothyroidism is suspected; TSH is pending.",
+          "page": 1
+        },
+        {
+          "name": "atrial fibrillation",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "The patient's mother has atrial fibrillation.",
+          "page": 1
+        },
+        {
+          "name": "Metoprolol",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Metoprolol 25 mg was prescribed but not started.",
+          "page": 1
+        },
+        {
+          "name": "Aspirin",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Aspirin 75 mg was discontinued last year.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-09",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "txt",
+      "layout": "outpatient extract, period and extract date",
+      "originalFile": "visit-09.txt",
+      "sha256": "b67f96466470b04d4916b186d356f61c169f6e6feaf0eba2f1cabb61f47e0e68",
+      "statements": [
+        {
+          "name": "Бронхиальная астма",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Бронхиальная астма установлена в 2015 году, в настоящее время контролируемая.",
+          "page": 1
+        },
+        {
+          "name": "Приступы удушья",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Приступы удушья за последний год не отмечались.",
+          "page": 1
+        },
+        {
+          "name": "Аллергический ринит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Аллергический ринит у пациента предполагается по сезонности симптомов.",
+          "page": 1
+        },
+        {
+          "name": "бронхиальная астма",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "У бабушки пациента по материнской линии была бронхиальная астма.",
+          "page": 1
+        },
+        {
+          "name": "Будесонид/формотерол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Будесонид/формотерол 160/4,5 мкг по 1 вдоху 2 раза в день пациент получает постоянно.",
+          "page": 1
+        },
+        {
+          "name": "Монтелукаст",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Монтелукаст 10 мг отменён в марте 2026 года.",
+          "page": 1
+        },
+        {
+          "name": "Сальбутамол",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Сальбутамол по потребности назначен, пациент не использовал ни разу.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-10",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "pdf",
+      "layout": "PDF, narrow column over two pages",
+      "originalFile": "visit-10.pdf",
+      "sha256": "ee314c29c337542d53addf553e15abb5b071f563a818f13cfbaf823c74fbd6ee",
+      "statements": [
+        {
+          "name": "Боли в мелких суставах кистей",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Боли в мелких суставах кистей беспокоят около двух месяцев.",
+          "page": 1
+        },
+        {
+          "name": "Утренняя скованность",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Утренняя скованность отсутствует.",
+          "page": 1
+        },
+        {
+          "name": "Ревматоидный артрит",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "NOT_CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Ревматоидный артрит пока не подтверждён, ожидаются результаты АЦЦП.",
+          "page": 1
+        },
+        {
+          "name": "Подагра",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "RULED_OUT",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Подагра у пациента исключена.",
+          "page": 1
+        },
+        {
+          "name": "системная красная волчанка",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У тёти пациента системная красная волчанка.",
+          "page": 2
+        },
+        {
+          "name": "Нимесулид",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "Нимесулид 100 мг пациент принимал до июля, сейчас не принимает.",
+          "page": 2
+        },
+        {
+          "name": "Гидроксихлорохин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "PRESCRIBED",
+          "temporality": "FUTURE",
+          "sourceText": "Гидроксихлорохин 200 мг назначен с 15.08.2026.",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "visit-11",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "txt",
+      "layout": "patient diary in first person, no visit heading",
+      "originalFile": "visit-11.txt",
+      "sha256": "f21636886893a82f4cb03a7e29158432ec3740f17c84a94dd72a91e5a1c338ed",
+      "statements": [
+        {
+          "name": "Бессонница",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Бессонница сохраняется почти каждую ночь.",
+          "page": 1
+        },
+        {
+          "name": "Тревожность",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Тревожность стала меньше.",
+          "page": 1
+        },
+        {
+          "name": "Мелатонин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "Мелатонин 3 мг принимаю на ночь с 2 сентября.",
+          "page": 1
+        },
+        {
+          "name": "Золпидем",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "Золпидем врач выписал, но я его не начинал.",
+          "page": 1
+        },
+        {
+          "name": "депрессия",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У мамы давно депрессия, она лечится.",
+          "page": 1
+        },
+        {
+          "name": "Панические атаки",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Панические атаки на этой неделе не повторялись.",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "visit-12",
+      "type": "VISIT",
+      "split": "held-out",
+      "format": "md",
+      "layout": "markdown bullets and a medication table",
+      "originalFile": "visit-12.md",
+      "sha256": "6178ab5fa14e2fb91b8b55eeb38ca622b3eeca4671278d88d2cd255161487c9e",
+      "statements": [
+        {
+          "name": "Учащённое ночное мочеиспускание",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Учащённое ночное мочеиспускание до 3 раз за ночь.",
+          "page": 1
+        },
+        {
+          "name": "Боли при мочеиспускании",
+          "kind": "SYMPTOM",
+          "subject": "PATIENT",
+          "assertion": "NEGATED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Боли при мочеиспускании нет.",
+          "page": 1
+        },
+        {
+          "name": "Мочекаменная болезнь",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "HISTORICAL",
+          "sourceText": "Мочекаменная болезнь в 2022 году, камень отошёл самостоятельно.",
+          "page": 1
+        },
+        {
+          "name": "Доброкачественная гиперплазия предстательной железы",
+          "kind": "CONDITION",
+          "subject": "PATIENT",
+          "assertion": "SUSPECTED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "Доброкачественная гиперплазия предстательной железы предполагается по УЗИ.",
+          "page": 1
+        },
+        {
+          "name": "рак предстательной железы",
+          "kind": "CONDITION",
+          "subject": "FAMILY",
+          "assertion": "CONFIRMED",
+          "medicationState": "NOT_APPLICABLE",
+          "temporality": "CURRENT",
+          "sourceText": "У отца пациента рак предстательной железы.",
+          "page": 1
+        },
+        {
+          "name": "Тамсулозин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "TAKING",
+          "temporality": "CURRENT",
+          "sourceText": "| Тамсулозин | 0,4 мг на ночь | принимает |",
+          "page": 1
+        },
+        {
+          "name": "Финастерид",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "NOT_STARTED",
+          "temporality": "CURRENT",
+          "sourceText": "| Финастерид | 5 мг утром | назначен, не начат |",
+          "page": 1
+        },
+        {
+          "name": "Доксазозин",
+          "kind": "MEDICATION",
+          "subject": "PATIENT",
+          "assertion": "UNKNOWN",
+          "medicationState": "STOPPED",
+          "temporality": "HISTORICAL",
+          "sourceText": "| Доксазозин | 2 мг | отменён в 2026-08 |",
+          "page": 1
+        }
+      ]
+    }
+  ]
+}
