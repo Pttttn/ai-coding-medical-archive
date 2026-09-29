@@ -17,12 +17,12 @@ from .indexer import Corpus, source_of
 from .visit import CLINICAL_PROFILE, VISIT_PROMPT_VERSION, annotate_visit, project_visit, supports_visit
 from .laboratory import LAB_PROJECTION_VERSION, LAB_VERSION, annotate_laboratory, project_laboratory
 from .ollama import Ollama
-from .parsing import LAB_TABLE_PARSER_VERSION, PARSER_VERSION, confined_path, parse_file, parse_pdf_lab_tables
+from .parsing import PARSER_VERSION, confined_path, parse_original
 from .privacy import consultation
 from .rag import CorrectiveRAG
 from .recipe import parse_recipe, processing_recipe
 from .source_ir import IR_VERSION, SourceIR, build_source_ir
-from .schemas import AskRequest, ConsultationRequest, IndexRequest, Page, ProcessRequest, PruneRequest, RemoveRequest
+from .schemas import AskRequest, ConsultationRequest, IndexRequest, ProcessRequest, PruneRequest, RemoveRequest
 
 
 class Services:
@@ -60,20 +60,14 @@ def create_app(services: Services | None = None) -> FastAPI:
 
     def parse_input(body: ProcessRequest):
         """Deterministic stage before any model call; the backend stores its IR before extraction."""
-        warnings = []
-        parser_version = PARSER_VERSION if body.filePath else "user-text-v1"
+        path = None
         if body.filePath is not None:
             path = confined_path(body.filePath, services.settings.upload_dir)
             if not path.is_file():
                 raise ServiceError("FILE_NOT_FOUND", "Исходный файл не найден.", 404)
-            text, pages, warnings = parse_file(path, services.settings.max_file_bytes)
-            if path.suffix.lower() == ".pdf" and services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE, REVIEW_PROFILE}:
-                tabular = parse_pdf_lab_tables(path)
-                if tabular is not None:
-                    text, pages = tabular
-                    parser_version = LAB_TABLE_PARSER_VERSION
-        else:
-            text, pages = body.text or "", [Page(text=body.text or "")]
+        text, pages, warnings, parser_version = parse_original(
+            path, body.text, services.settings.max_file_bytes,
+            services.settings.extraction_profile in {LAB_VERSION, CLINICAL_PROFILE, REVIEW_PROFILE})
         return text, pages, warnings, build_source_ir(body.documentId, pages, parser_version)
 
     @app.post("/internal/parse", dependencies=[Depends(authorize)])

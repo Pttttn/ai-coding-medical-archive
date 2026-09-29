@@ -115,3 +115,19 @@ def parse_pdf_lab_tables(path: Path) -> tuple[str, list[Page]] | None:
     if pages and not pages[0].text.startswith("Лабораторные исследования\n"):
         pages[0].text = "Лабораторные исследования\n" + pages[0].text
     return "\n\n".join(p.text for p in pages), pages
+
+
+def parse_original(file_path: Path | None, text: str | None, max_bytes: int,
+                   lab_tables: bool) -> tuple[str, list[Page], list[str], str]:
+    """Deterministic stage before any model call: one original (file) or user text, no LLM.
+
+    Shared by the service and the offline parser-only evaluation so both run the same code.
+    """
+    if file_path is None:
+        return text or "", [Page(text=text or "")], [], "user-text-v1"
+    parsed_text, pages, warnings = parse_file(file_path, max_bytes)
+    if file_path.suffix.lower() == ".pdf" and lab_tables:
+        tabular = parse_pdf_lab_tables(file_path)
+        if tabular is not None:
+            return *tabular, warnings, LAB_TABLE_PARSER_VERSION
+    return parsed_text, pages, warnings, PARSER_VERSION
